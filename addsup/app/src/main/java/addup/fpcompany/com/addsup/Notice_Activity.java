@@ -155,7 +155,8 @@ public class Notice_Activity extends AppCompatActivity implements View.OnClickLi
                 }
                 break;
             case (R.id.noticeIns):
-
+                Intent intent = new Intent(Notice_Activity.this, NoticeInsertActivity.class);
+                startActivity(intent);
                 break;
         }
     }

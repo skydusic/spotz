@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp"
+    tools:context="addup.fpcompany.com.addsup.NoticeInsertActivity">
+
+    <TextView
+        android:id="@+id/mainTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:text="제목"
+        android:textSize="18sp" />
+
+    <EditText
+        android:id="@+id/titleEt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/mainTv"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/edittext"
+        android:minHeight="40dp" />
+
+    <TextView
+        android:id="@+id/contentsTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/titleEt"
+        android:layout_marginTop="20dp"
+        android:text="공지내용"
+        android:textSize="18sp" />
+
+    <EditText
+        android:id="@+id/contentsEt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/contentsTv"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/edittext"
+        android:minHeight="300dp" />
+
+    <Button
+        android:id="@+id/insertBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="공지쓰기"
+        android:layout_alignParentRight="true"
+        android:layout_margin="10dp"/>
+
+</RelativeLayout>

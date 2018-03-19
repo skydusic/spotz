@@ -63,7 +63,8 @@
             android:name=".myPageOption"
             android:theme="@style/Theme.AppCompat.Light.Dialog" />
         <activity android:name=".Notice_Activity" />
-        <activity android:name=".Notice_Detail"></activity>
+        <activity android:name=".Notice_Detail" />
+        <activity android:name=".NoticeInsertActivity"></activity>
     </application>
 
 </manifest>
