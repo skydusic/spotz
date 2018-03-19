@@ -7,54 +7,49 @@
     android:padding="5dp"
     tools:context="addup.fpcompany.com.addsup.Notice_Detail">
 
+    <TextView
+        android:id="@+id/idxTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:text="idx" />
+
+    <TextView
+        android:id="@+id/noticeTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:layout_toRightOf="@id/idxTv"
+        android:text="공지사항" />
+
+    <TextView
+        android:id="@+id/createdTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_margin="10dp"
+        android:text="created" />
+
     <android.support.v4.view.ViewPager
         android:id="@+id/viewPager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@id/idxTv"
         android:padding="10dp"
-        android:visibility="gone"
-        >
+        android:visibility="gone">
 
     </android.support.v4.view.ViewPager>
 
-    <RelativeLayout
-        android:id="@+id/textviewLayout"
+
+    <TextView
+        android:id="@+id/contentsTv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone">
-
-        <TextView
-            android:id="@+id/idxTv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:text="idx" />
-
-        <TextView
-            android:id="@+id/noticeTv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:layout_toRightOf="@id/idx"
-            android:text="공지사항" />
-
-        <TextView
-            android:id="@+id/createdTv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="created"
-            android:layout_alignParentRight="true"
-            android:layout_margin="10dp"/>
-
-        <TextView
-            android:id="@+id/contentsTv"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/idx"
-            android:padding="10dp"
-            android:text="공지사항"
-            android:textSize="18dp" />
-    </RelativeLayout>
+        android:padding="10dp"
+        android:layout_below="@id/idxTv"
+        android:text="공지사항"
+        android:textSize="18dp"
+        android:visibility="gone"/>
 
 
 </RelativeLayout>

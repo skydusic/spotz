@@ -24,15 +24,15 @@ public class NoticeInsertActivity extends AppCompatActivity implements View.OnCl
     EditText titleEt;
     EditText contentsEt;
     TextView insertBtn;
-    String url = "";
+    String url = "http://spotz.co.kr/var/www/html/noticeinsert.php";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notice_insert);
 
-        titleEt = findViewById(R.id.titleET);
-        contentsEt = findViewById(R.id.contentsET);
+        titleEt = findViewById(R.id.titleEt);
+        contentsEt = findViewById(R.id.contentsEt);
         insertBtn = findViewById(R.id.insertBtn);
         insertBtn.setOnClickListener(this);
 
@@ -42,6 +42,7 @@ public class NoticeInsertActivity extends AppCompatActivity implements View.OnCl
     public void onClick(View v) {
         writeNot writeNot = new writeNot();
         writeNot.requestPost(url);
+        finish();
     }
 
     class writeNot {
@@ -50,9 +51,12 @@ public class NoticeInsertActivity extends AppCompatActivity implements View.OnCl
 
         public void requestPost(String url) {
 
+            String title = titleEt.getText().toString().trim();
+            String contents = contentsEt.getText().toString().trim();
+
             RequestBody requestBody = new FormBody.Builder().
-                    add("title", titleEt.getText().toString()).
-                    add("contents", contentsEt.getText().toString()).
+                    add("title", title).
+                    add("contents", contents).
                     build();
 
             request = new Request.Builder().url(url).post(requestBody).build();

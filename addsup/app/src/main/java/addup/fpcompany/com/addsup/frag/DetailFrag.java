@@ -32,7 +32,7 @@ public class DetailFrag extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View layout = inflater.inflate(R.layout.detail_lay, container, false);
 
-        imgView = (ImageView) layout.findViewById(R.id.imageV);
+        imgView = layout.findViewById(R.id.imageV);
         Glide.with(this).load(imgsrc).into(imgView);
 
         return layout;

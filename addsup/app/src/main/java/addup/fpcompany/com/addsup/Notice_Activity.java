@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -18,9 +19,12 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import addup.fpcompany.com.addsup.adapter.NoticeAdapter;
+import addup.fpcompany.com.addsup.adapter.RecyclerItemClickListener;
 import okhttp3.Call;
 import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
@@ -28,7 +32,7 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public class Notice_Activity extends AppCompatActivity implements View.OnClickListener {
+public class Notice_Activity extends AppCompatActivity implements View.OnClickListener, RecyclerView.OnItemTouchListener {
 
     TextView noticeTv;
     Button noticeIns;
@@ -50,6 +54,7 @@ public class Notice_Activity extends AppCompatActivity implements View.OnClickLi
     private static final String TAG_IMAGE = "image";
 
     JSONArray topic = new JSONArray();
+    getPost getPost = new getPost();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,15 +65,35 @@ public class Notice_Activity extends AppCompatActivity implements View.OnClickLi
         noticeIns = findViewById(R.id.noticeIns);
         recyclerView = findViewById(R.id.recyclerView);
 
-        getPost getPost = new getPost();
         getPost.requestPost(url);
-
         handler.sendEmptyMessage(100);
 
         if(MainActivity.mUser.getEmail().equals("skydusic@gmail.com")){
             noticeIns.setVisibility(View.VISIBLE);
             noticeIns.setOnClickListener(this);
         }
+
+        recyclerView.addOnItemTouchListener(
+                new RecyclerItemClickListener(this, recyclerView ,new RecyclerItemClickListener.OnItemClickListener() {
+                    @Override public void onItemClick(View v, int position) {
+                        // do whatever
+                        
+                        Intent intent = new Intent(v.getContext(), Notice_Detail.class);
+                        intent.putExtra("listname", "공지사항");
+                        intent.putExtra("idx", noticeArr.get(position).getIdx());
+                        intent.putExtra("title", noticeArr.get(position).getTitle());
+                        intent.putExtra("contents", noticeArr.get(position).getContents());
+                        intent.putExtra("created", noticeArr.get(position).getCreated());
+                        intent.putExtra("image", noticeArr.get(position).getImage());
+                        v.getContext().startActivity(intent);
+                    }
+
+                    @Override public void onLongItemClick(View view, int position) {
+                        // do whatever
+                    }
+                })
+        );
+
 
     }
 
@@ -89,13 +114,37 @@ public class Notice_Activity extends AppCompatActivity implements View.OnClickLi
     };
 
     protected void showList() {
+        noticeArr.clear();
         try {
             JSONObject jsonObj = new JSONObject(myJSON);
             topic = jsonObj.getJSONArray(TAG_RESULTS);
 
             for (int i = 0; i < topic.length(); i++) {
+                ArrayList<String> result = new ArrayList<>();
                 JSONObject c = topic.getJSONObject(i);
-                noticeArr.add(new noticeItem(c.getString(TAG_IDX),c.getString(TAG_TITLE),c.getString(TAG_CONTENTS), c.getString(TAG_IMAGE), c.getString(TAG_CREATED)));
+
+                String[] temp1 = c.getString(TAG_CREATED).split(" ");
+                    String[] temp2 = temp1[0].split("-");
+                    for (int k = 0; k < temp2.length; k++) {
+                        result.add(temp2[k]);
+                    }
+                    String[] temp3 = temp1[1].split(":");
+                for (int j = 0; j < temp3.length; j++) {
+                    result.add(temp3[j]);
+                }
+
+//                yyyy-MM-dd HH:mm:ss
+                String curtime = new SimpleDateFormat("dd").format(new Date(System.currentTimeMillis()));
+
+                Log.d("heu", "Array : " + result.toString());
+                Log.d("heu", "posted : " + curtime);
+
+                if(result.get(2).equals(curtime)){
+                    String time = result.get(3) + " : " + result.get(4);
+                    noticeArr.add(new noticeItem(c.getString(TAG_IDX), c.getString(TAG_TITLE), c.getString(TAG_CONTENTS), c.getString(TAG_IMAGE), time));
+                } else {
+                    noticeArr.add(new noticeItem(c.getString(TAG_IDX), c.getString(TAG_TITLE), c.getString(TAG_CONTENTS), c.getString(TAG_IMAGE), c.getString(TAG_CREATED)));
+                }
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -109,6 +158,21 @@ public class Notice_Activity extends AppCompatActivity implements View.OnClickLi
         recyclerView.setLayoutManager(layoutManager);
         adapter = new NoticeAdapter(getApplicationContext(), noticeArr);
         recyclerView.setAdapter(adapter);
+    }
+
+    @Override
+    public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
+        return false;
+    }
+
+    @Override
+    public void onTouchEvent(RecyclerView rv, MotionEvent e) {
+
+    }
+
+    @Override
+    public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
+
     }
 
     class getPost {
@@ -165,5 +229,14 @@ public class Notice_Activity extends AppCompatActivity implements View.OnClickLi
     protected void onDestroy() {
         super.onDestroy();
         handler.removeMessages(100);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        myJSON = "";
+        getPost.requestPost(url);
+        handler.sendEmptyMessage(100);
     }
 }

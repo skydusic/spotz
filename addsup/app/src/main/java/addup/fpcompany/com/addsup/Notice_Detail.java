@@ -6,18 +6,16 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 
 import addup.fpcompany.com.addsup.adapter.PagerAdapter;
-import addup.fpcompany.com.addsup.frag.NoticeFrag;
+import addup.fpcompany.com.addsup.frag.DetailFrag;
 
 public class Notice_Detail extends AppCompatActivity implements View.OnClickListener {
 
     ViewPager viewPager;
-    RelativeLayout textviewLayout;
     TextView idxTv;
     TextView noticeTv;
     TextView createdTv;
@@ -41,7 +39,6 @@ public class Notice_Detail extends AppCompatActivity implements View.OnClickList
         setContentView(R.layout.activity_notice_detail);
 
         viewPager = findViewById(R.id.viewPager);
-        textviewLayout = findViewById(R.id.textviewLayout);
         idxTv = findViewById(R.id.idxTv);
         noticeTv = findViewById(R.id.noticeTv);
         createdTv = findViewById(R.id.createdTv);
@@ -59,19 +56,18 @@ public class Notice_Detail extends AppCompatActivity implements View.OnClickList
         createdTv.setText(created);
         contentsTV.setText(contents);
 
-        setRecyclerView();
+        setView();
 
     }
 
-    private void setRecyclerView() {
+    private void setView() {
         if(image.equals("")){
-            textviewLayout.setVisibility(View.VISIBLE);
+            contentsTV.setVisibility(View.VISIBLE);
         } else {
             viewPager.setVisibility(View.VISIBLE);
-
             imageArr = image.split(",");
             for (int i = 0; i < imageArr.length; i++) {
-                fragArr.add(new NoticeFrag(url + "/" + String.valueOf(idx) + "/" + imageArr[i]));
+                fragArr.add(new DetailFrag(url + "/" + String.valueOf(idx) + "/" + imageArr[i]));
             }
             PagerAdapter adapter = new PagerAdapter(getSupportFragmentManager(), fragArr);
             viewPager.setAdapter(adapter);

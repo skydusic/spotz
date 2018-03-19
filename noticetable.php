@@ -8,7 +8,7 @@
 
     session_start();
 
-    $sql ="select * from noticetable order by created";
+    $sql ="select * from noticetable order by created desc";
 
     $result = mysql_query($sql, $connect);
 

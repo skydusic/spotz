@@ -25,6 +25,7 @@ import addup.fpcompany.com.addsup.listItem;
 
 public class MainListAdater extends RecyclerView.Adapter<MainListAdater.ViewHolder> implements View.OnClickListener {
 
+
     Context context;
     ArrayList<listItem> itemArr;
     listItem listItem;
@@ -57,9 +58,9 @@ public class MainListAdater extends RecyclerView.Adapter<MainListAdater.ViewHold
         return itemArr.size();
     }
 
+
     @Override
     public void onClick(View v) {
-
         Intent intent = new Intent(v.getContext(), DetailList.class);
         intent.putExtra("listname", listItem.getListname());
         intent.putExtra("idx", listItem.getIdx());

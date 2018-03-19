@@ -1,7 +1,6 @@
 package addup.fpcompany.com.addsup.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,7 +13,6 @@ import com.bumptech.glide.Glide;
 import java.util.ArrayList;
 
 import addup.fpcompany.com.addsup.MainActivity;
-import addup.fpcompany.com.addsup.Notice_Detail;
 import addup.fpcompany.com.addsup.R;
 import addup.fpcompany.com.addsup.noticeItem;
 
@@ -22,7 +20,7 @@ import addup.fpcompany.com.addsup.noticeItem;
  * Created by song02 on 2018-03-17.
  */
 
-public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.ViewHolder> implements View.OnClickListener {
+public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.ViewHolder> {
 
     Context context;
     ArrayList<noticeItem> itemArr;
@@ -57,8 +55,10 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.ViewHolder
         return itemArr.size();
     }
 
-    @Override
+    /*@Override
     public void onClick(View v) {
+        Log.d("heu", "id : " + v.getId());
+        int pos = 0;
         Intent intent = new Intent(v.getContext(), Notice_Detail.class);
         intent.putExtra("listname", "공지사항");
         intent.putExtra("idx", listItem.getIdx());
@@ -67,7 +67,7 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.ViewHolder
         intent.putExtra("created", listItem.getCreated());
         intent.putExtra("image", listItem.getImage());
         v.getContext().startActivity(intent);
-    }
+    }*/
 
     class ViewHolder extends RecyclerView.ViewHolder {
         TextView idHolder, titleHolder, timeHolder;
@@ -75,7 +75,6 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.ViewHolder
 
         public ViewHolder(View itemView) {
             super(itemView);
-            itemView.setOnClickListener(NoticeAdapter.this);
             idHolder = itemView.findViewById(R.id.idx);
             titleHolder = itemView.findViewById(R.id.title);
             timeHolder = itemView.findViewById(R.id.created);
