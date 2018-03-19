@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "688533934226",
+    "firebase_url": "https://addsup-1e524.firebaseio.com",
+    "project_id": "addsup-1e524",
+    "storage_bucket": "addsup-1e524.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:688533934226:android:8b6650e00aec3fda",
+        "android_client_info": {
+          "package_name": "addup.fpcompany.com.addsup"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "688533934226-kpbdiae0djkk5sjic025aonn4723gnb2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "addup.fpcompany.com.addsup",
+            "certificate_hash": "a67bfbe6f665b6f78c5b7bac1ec3817b76dab056"
+          }
+        },
+        {
+          "client_id": "688533934226-c7vhkr61cp1osjmhcd2p22oq8njk3b0n.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBqcV9435cJwkxblKGVWpqks1jhgrtFlI8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "688533934226-c7vhkr61cp1osjmhcd2p22oq8njk3b0n.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

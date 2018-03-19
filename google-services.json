@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "409580418752",
+    "firebase_url": "https://fpccompany-503a8.firebaseio.com",
+    "project_id": "fpccompany-503a8",
+    "storage_bucket": "fpccompany-503a8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:409580418752:android:6ea369198bbf2eb3",
+        "android_client_info": {
+          "package_name": "addup.fpcompany.com.addupsports"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "409580418752-7l730bmu401jvritgmq06hi0orfetfl4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCq5NbAkelw7BIX8QGWmEFc1Xs9iScPVAg"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

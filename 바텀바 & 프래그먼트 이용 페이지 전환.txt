@@ -1,0 +1,15 @@
+bottomBar.setOnTabSelectListener(new OnTabSelectListener() {
+            @Override
+            public void onTabSelected(int tabId) {
+                Log.d("heu", "id : " + tabId);
+
+                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+                if(tabId == R.id.tab_favorites){
+                    transaction.replace(R.id.프레임레이아웃, callLogFragment(클래스임)).commit();
+                }
+            }
+        });
+
+
+참고 사이트 http://deliorange.tistory.com/92
