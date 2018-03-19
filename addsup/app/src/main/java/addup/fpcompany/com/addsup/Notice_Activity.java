@@ -136,9 +136,6 @@ public class Notice_Activity extends AppCompatActivity implements View.OnClickLi
 //                yyyy-MM-dd HH:mm:ss
                 String curtime = new SimpleDateFormat("dd").format(new Date(System.currentTimeMillis()));
 
-                Log.d("heu", "Array : " + result.toString());
-                Log.d("heu", "posted : " + curtime);
-
                 if(result.get(2).equals(curtime)){
                     String time = result.get(3) + " : " + result.get(4);
                     noticeArr.add(new noticeItem(c.getString(TAG_IDX), c.getString(TAG_TITLE), c.getString(TAG_CONTENTS), c.getString(TAG_IMAGE), time));

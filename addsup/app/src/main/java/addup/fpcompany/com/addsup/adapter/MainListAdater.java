@@ -1,7 +1,6 @@
 package addup.fpcompany.com.addsup.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,7 +12,6 @@ import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 
-import addup.fpcompany.com.addsup.DetailList;
 import addup.fpcompany.com.addsup.MainActivity;
 import addup.fpcompany.com.addsup.R;
 import addup.fpcompany.com.addsup.listItem;
@@ -23,7 +21,7 @@ import addup.fpcompany.com.addsup.listItem;
  */
 
 
-public class MainListAdater extends RecyclerView.Adapter<MainListAdater.ViewHolder> implements View.OnClickListener {
+public class MainListAdater extends RecyclerView.Adapter<MainListAdater.ViewHolder> {
 
 
     Context context;
@@ -58,28 +56,12 @@ public class MainListAdater extends RecyclerView.Adapter<MainListAdater.ViewHold
         return itemArr.size();
     }
 
-
-    @Override
-    public void onClick(View v) {
-        Intent intent = new Intent(v.getContext(), DetailList.class);
-        intent.putExtra("listname", listItem.getListname());
-        intent.putExtra("idx", listItem.getIdx());
-        intent.putExtra("title", listItem.getTitle());
-        intent.putExtra("contents", listItem.getContents());
-        intent.putExtra("created", listItem.getCreated());
-        intent.putExtra("image1", listItem.getImage1());
-        intent.putExtra("image2", listItem.getImage2());
-        intent.putExtra("image3", listItem.getImage3());
-        v.getContext().startActivity(intent);
-    }
-
     class ViewHolder extends RecyclerView.ViewHolder {
         TextView idHolder, titleHolder, timeHolder;
         ImageView imageViewHolder;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            itemView.setOnClickListener(MainListAdater.this);
             idHolder = itemView.findViewById(R.id.idx);
             titleHolder = itemView.findViewById(R.id.title);
             timeHolder = itemView.findViewById(R.id.created);

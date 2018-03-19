@@ -19,9 +19,11 @@ $username=isset($_POST['username']) ? $_POST['username'] : '';
 $image1=isset($_POST['image1']) ? $_POST['image1'] : '';
 $image2=isset($_POST['image2']) ? $_POST['image2'] : '';
 $image3=isset($_POST['image3']) ? $_POST['image3'] : '';
+$spindata1=isset($_POST['spindata1']) ? $_POST['spindata1'] : '';
+$spindata2=isset($_POST['spindata2']) ? $_POST['spindata2'] : '';
 
 if ($title !="" and $contents !="" ){   
-    $sql="insert into freelancer(title,contents,username,image1,image2,image3) values('$title','$contents','$username','$image1','$image2','$image3')";
+    $sql="insert into freelancer(title,contents,username,image1,image2,image3,spindata1,spindata2) values('$title','$contents','$username','$image1','$image2','$image3','$spindata1','$spindata2')";
     $result=mysqli_query($link,$sql);  
     if($result){  
        echo "SQL문 처리 성공";  

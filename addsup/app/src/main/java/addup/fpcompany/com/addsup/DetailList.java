@@ -97,7 +97,6 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
         if (!image3.equals("")) {
             arr.add(url + image3);
         }
-
         for (int i = 0; i < arr.size(); i++) {
             fragArr.add(new DetailFrag(arr.get(i)));
         }

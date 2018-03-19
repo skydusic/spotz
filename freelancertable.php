@@ -10,11 +10,15 @@
     session_start();
 
     $idx=isset($_POST['idx']) ? $_POST['idx'] : '';
+    $spindata1=isset($_POST['spindata1']) ? $_POST['spindata1'] : '';
+    $spindata2=isset($_POST['spindata2']) ? $_POST['spindata2'] : '';
 
-    if($idx == ''){
-        $sql = "select * from freelancer";
-    } else {
-        $sql = "select * from freelancer where idx = '$idx'";
+    if($spindata == -1){
+        $sql ="select * from freelancer order by addedtime";
+    } else if($spindata == -2){
+        $sql = "select * from freelancer where spindata2 = '$spindata2' order by addedtime";
+    } else if ($spindata1 != -1){
+        $sql = "select * from freelancer where spindata1 = '$spindata1'";
     }
 
     

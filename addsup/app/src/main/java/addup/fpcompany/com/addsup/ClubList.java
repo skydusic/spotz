@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import addup.fpcompany.com.addsup.adapter.MainListAdater;
+import addup.fpcompany.com.addsup.adapter.RecyclerItemClickListener;
 import okhttp3.Call;
 import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
@@ -131,6 +132,31 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
         });
         spinner2.setOnItemSelectedListener(this);
 
+        recyclerView.addOnItemTouchListener(
+                new RecyclerItemClickListener(this, recyclerView ,new RecyclerItemClickListener.OnItemClickListener() {
+                    @Override public void onItemClick(View v, int position) {
+                        // do whatever
+                        Intent intent = new Intent(v.getContext(), DetailList.class);
+                        intent.putExtra("listname", "공지사항");
+                        intent.putExtra("idx", listItems.get(position).getIdx());
+                        intent.putExtra("title", listItems.get(position).getTitle());
+                        intent.putExtra("contents", listItems.get(position).getContents());
+                        intent.putExtra("created", listItems.get(position).getCreated());
+
+                        /** 해야할 일 이미지를 스플릿으로 저장 & 불러오기 */
+
+                        intent.putExtra("image1", listItems.get(position).getImage1());
+                        intent.putExtra("image2", listItems.get(position).getImage2());
+                        intent.putExtra("image3", listItems.get(position).getImage3());
+                        v.getContext().startActivity(intent);
+                    }
+
+                    @Override public void onLongItemClick(View view, int position) {
+                        // do whatever
+                    }
+                })
+        );
+
     }
 
     private void setRecyclerView() {
@@ -139,6 +165,8 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
         recyclerView.setLayoutManager(layoutManager);
         adapter = new MainListAdater(getApplicationContext(), listItems);
         recyclerView.setAdapter(adapter);
+
+        Log.d("heu", "리스트아이템즈 : " + listItems.toString());
     }
 
     public int authorityChk() {
@@ -208,7 +236,7 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
     };
 
     protected void showList() {
-
+        listItems.clear();
         try {
             JSONObject jsonObj = new JSONObject(myJSON);
             topic = jsonObj.getJSONArray(TAG_RESULTS);
