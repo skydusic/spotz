@@ -46,8 +46,9 @@ public class MainListAdater extends RecyclerView.Adapter<MainListAdater.ViewHold
         holder.idHolder.setText(listItem.getIdx());
         holder.titleHolder.setText(listItem.getTitle());
         holder.timeHolder.setText(listItem.getCreated());
-        if (!listItem.getImage1().equals("")) {
-            Glide.with(context).load(url + listItem.getImage1()).into(holder.imageViewHolder);
+        if (!listItem.getImage().equals("")) {
+            String[] temp = listItem.getImage().split(",");
+            Glide.with(context).load(url + temp[0]).into(holder.imageViewHolder);
         }
     }
 

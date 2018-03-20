@@ -12,7 +12,6 @@ import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.media.ExifInterface;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -33,17 +32,12 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 
@@ -69,6 +63,10 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
     ImageView imView1;
     ImageView imView2;
     ImageView imView3;
+    ImageView imView4;
+    ImageView imView5;
+    ImageView imView6;
+    ImageView imView7;
     HorizontalScrollView horScrollView;
     Spinner spinner1;
     Spinner spinner2;
@@ -82,15 +80,11 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
 
     String serverUri;
     String imagePath;
-    String imageAddress1;
-    String imageAddress2;
-    String imageAddress3;
+    String imageAddress1 = "";
     String listName;
     String title;
     String contents;
-    String image1;
-    String image2;
-    String image3;
+    String image;
     public static final String url = MainActivity.serverUrl;
     int postNum;
 
@@ -108,6 +102,10 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
         imView1 = findViewById(R.id.imView1);
         imView2 = findViewById(R.id.imView2);
         imView3 = findViewById(R.id.imView3);
+        imView4 = findViewById(R.id.imView4);
+        imView5 = findViewById(R.id.imView5);
+        imView6 = findViewById(R.id.imView6);
+        imView7 = findViewById(R.id.imView7);
         insertImg = findViewById(R.id.insertImg);
         imgFind = findViewById(R.id.imgFind);
         contentsET = findViewById(R.id.contentsET);
@@ -120,24 +118,15 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
         title = clubInt.getStringExtra("title");
         contents = clubInt.getStringExtra("contents");
         listName = clubInt.getStringExtra("listname");
-        image1 = clubInt.getStringExtra("image1");
-        image2 = clubInt.getStringExtra("image2");
-        image3 = clubInt.getStringExtra("image3");
+        image = clubInt.getStringExtra("image");
 
         spinnerAdapter1 = new ArrayAdapter<>(this, R.layout.support_simple_spinner_dropdown_item, MainActivity.spinList1);
 
-        if (listName.equals("clubtable")) {
-            if (postNum == 0) {
-                serverUri = "http://spotz.co.kr/var/www/html/clubinsert.php";
-            } else if (postNum == 1) {
-                serverUri = "http://spotz.co.kr/var/www/html/clubupdate.php";
-            }
-        } else if (listName.equals("freelancer")) {
-            if (postNum == 0) {
-                serverUri = "http://spotz.co.kr/var/www/html/freelancerinsert.php";
-            } else if (postNum == 1) {
-                serverUri = "http://spotz.co.kr/var/www/html/clubupdate.php";
-            }
+
+        if (postNum == 0) {
+            serverUri = "http://spotz.co.kr/var/www/html/clubinsert.php";
+        } else if (postNum == 1) {
+            serverUri = "http://spotz.co.kr/var/www/html/clubupdate.php";
         }
 
         if (title != null) {
@@ -145,27 +134,39 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
             contentsET.setText(contents);
 
             String tempUrl = url + "userImageFoler/";
-            if(!image1.equals("")) {
-                Glide.with(this).load(tempUrl + image1).into(imView1);
-                horScrollView.setVisibility(View.VISIBLE);
-            }
-            if(!image2.equals("")) {
-                Glide.with(this).load(tempUrl + image2).into(imView2);
-            }
-            if(!image3.equals("")) {
-                Glide.with(this).load(tempUrl + image3).into(imView3);
-            }
+            String[] temp = image.split(",");
 
-
-            if (image1.equals(null)) {
-//                filenameList.add(image1.substring(image1.lastIndexOf('/')));
-                imageAddress1 = image1.substring(image1.lastIndexOf('/'));
-            }
-            if (image2.equals(null)) {
-                filenameList.add(image2.substring(image2.lastIndexOf('/')));
-            }
-            if (image3.equals(null)) {
-                filenameList.add(image3.substring(image3.lastIndexOf('/')));
+            for (int i = 0; i < temp.length; i++) {
+                switch (i) {
+                    case 0:
+                        Glide.with(this).load(tempUrl+temp[0]).into(imView1);
+                        imView1.setVisibility(View.VISIBLE);
+                        break;
+                    case 1:
+                        Glide.with(this).load(tempUrl+temp[1]).into(imView2);
+                        imView2.setVisibility(View.VISIBLE);
+                        break;
+                    case 2:
+                        Glide.with(this).load(tempUrl+temp[2]).into(imView3);
+                        imView3.setVisibility(View.VISIBLE);
+                        break;
+                    case 3:
+                        Glide.with(this).load(tempUrl+temp[3]).into(imView4);
+                        imView4.setVisibility(View.VISIBLE);
+                        break;
+                    case 4:
+                        Glide.with(this).load(tempUrl+temp[4]).into(imView5);
+                        imView5.setVisibility(View.VISIBLE);
+                        break;
+                    case 5:
+                        Glide.with(this).load(tempUrl+temp[5]).into(imView6);
+                        imView6.setVisibility(View.VISIBLE);
+                        break;
+                    case 6:
+                        Glide.with(this).load(tempUrl+temp[6]).into(imView7);
+                        imView7.setVisibility(View.VISIBLE);
+                        break;
+                }
             }
         }
 
@@ -177,27 +178,25 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
 
                 if (!title.equals("") && !contents.equals("")) {
                     DelFolder delFolder = new DelFolder();
-                    delFolder.requestPost(MainActivity.mUsername,listName);
+                    delFolder.requestPost(MainActivity.mUsername, listName);
                     InsertData task = new InsertData();
                     ConnectServer connectServer = new ConnectServer();
                     for (int i = 0; i < imagePathArr.size(); i++) {
                         connectServer.requestPost(url, MainActivity.mUsername, listName, uriList.get(i));
                     }
                     for (int i = 0; i < filenameList.size(); i++) {
-                        switch (i) {
-                            case (0):
-                                imageAddress1 = filenameList.get(0).toString();
-                                break;
-                            case (1):
-                                imageAddress2 = filenameList.get(1).toString();
-                                break;
-                            case (2):
-                                imageAddress3 = filenameList.get(2).toString();
-                                break;
+
+                        imageAddress1 += filenameList.get(i).toString();
+
+                        Log.d("heu", "이미지 : " + imageAddress1);
+
+                        if(filenameList.size() > i){
+                            imageAddress1 += ",";
                         }
+
                     }
 
-                    task.execute(title, contents, serverUri, MainActivity.mUsername, imageAddress1, imageAddress2, imageAddress3, listName, String.valueOf(spinnerNumber1), String.valueOf(spinnerNumber2));
+                    task.request(title, contents, serverUri, MainActivity.mUsername, imageAddress1, listName, String.valueOf(spinnerNumber1), String.valueOf(spinnerNumber2));
                     finish();
                 } else {
                     Toast.makeText(insertActivity.this, "내용을 입력해주세요.", Toast.LENGTH_SHORT).show();
@@ -255,25 +254,47 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
                     ClipData clipData = data.getClipData();
 
                     if (clipData != null) {
-                        for (int i = 0; i < 3; i++) {
-                            if (i < clipData.getItemCount()) {
-                                Uri urione = clipData.getItemAt(i).getUri();
-                                File sourceFile = new File(getRealPathFromURI(urione));
-                                filenameList.add(sourceFile.getName().toString());
-                                imagePathArr.add(getRealPathFromURI(urione));
-                                uriList.add(urione);
-                                switch (i) {
-                                    case 0:
-                                        Glide.with(this).load(urione).into(imView1);
-                                        break;
-                                    case 1:
-                                        Glide.with(this).load(urione).into(imView2);
-                                        break;
-                                    case 2:
-                                        Glide.with(this).load(urione).into(imView3);
-                                        break;
-                                }
+                        for (int i = 0; i < clipData.getItemCount(); i++) {
+                            if(i==7){
+                                break;
                             }
+                            Uri urione = clipData.getItemAt(i).getUri();
+                            File sourceFile = new File(getRealPathFromURI(urione));
+                            filenameList.add(sourceFile.getName().toString());
+                            imagePathArr.add(getRealPathFromURI(urione));
+                            uriList.add(urione);
+                            switch (i) {
+                                case 0:
+                                    Glide.with(this).load(urione).into(imView1);
+                                    imView1.setVisibility(View.VISIBLE);
+                                    break;
+                                case 1:
+                                    Glide.with(this).load(urione).into(imView2);
+                                    imView2.setVisibility(View.VISIBLE);
+                                    break;
+                                case 2:
+                                    Glide.with(this).load(urione).into(imView3);
+                                    imView3.setVisibility(View.VISIBLE);
+                                    break;
+                                case 3:
+                                    Glide.with(this).load(urione).into(imView4);
+                                    imView4.setVisibility(View.VISIBLE);
+                                    break;
+                                case 4:
+                                    Glide.with(this).load(urione).into(imView5);
+                                    imView5.setVisibility(View.VISIBLE);
+                                    break;
+                                case 5:
+                                    Glide.with(this).load(urione).into(imView6);
+                                    imView6.setVisibility(View.VISIBLE);
+                                    break;
+                                case 6:
+                                    Glide.with(this).load(urione).into(imView7);
+                                    imView7.setVisibility(View.VISIBLE);
+                                    break;
+                            }
+
+
                         }
                         horScrollView.setVisibility(View.VISIBLE);
 
@@ -286,6 +307,11 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
             }
 
         }
+    }
+
+    private void setImage() {
+
+
     }
 
     private Bitmap resize(Bitmap bm) {
@@ -471,86 +497,53 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
 
     }
 
-    class InsertData extends AsyncTask<String, Void, String> {
+    class InsertData {
         ProgressDialog progressDialog;
         String serverURL;
         String username;
 
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            /*progressDialog = progressDialog.show(insertActivity.this, "Please Wait"
-                    , null, true, true);*/
-        }
+        OkHttpClient client = new OkHttpClient();
 
-        @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-            /*progressDialog.dismiss();*/
-//            mTextViewResult.setText(s);
-            Log.d(TAG, "POST response - " + s);
-        }
-
-        @Override
-        protected String doInBackground(String... params) {
+        protected void request(String... params) {
 
             String title = params[0];
             String contents = params[1];
             serverURL = params[2];
             username = params[3];
-            String image1 = params[4];
-            String image2 = params[5];
-            String image3 = params[6];
-            String listName = params[7];
-            String spindata1 = params[8];
-            String spindata2 = params[9];
+            String image = params[4];
+            String listname = params[5];
+            String spindata1 = params[6];
+            String spindata2 = params[7];
 
-            // 주소, 파라미터 설정
-//            String serverURL = "http://skydusic.dothome.co.kr/var/www/html/insert.php";
-            String postParameters = "title=" + title + "&contents=" + contents + "&username=" + username +
-                    "&image1=" + checkImg(image1) + "&image2=" + checkImg(image2) + "&image3=" + checkImg(image3) + "&listname=" + listName + "&spindata1=" + spindata1 + "&spindata2=" + spindata2;
+            Log.d("heu", "스핀1 : " + spindata1);
 
-            try {
-                URL url = new URL(serverURL);
-                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
-                httpURLConnection.setReadTimeout(5000);
-                httpURLConnection.setConnectTimeout(5000);
-                httpURLConnection.setRequestMethod("POST");
-//                httpURLConnection.setRequestProperty("content-type", "application/json");
-                httpURLConnection.setDoInput(true);
-                httpURLConnection.connect();
+            RequestBody requestBody = new FormBody.Builder().
+                    add("title", title).
+                    add("contents", contents).
+                    add("username", username).
+                    add("image", checkImg(image)).
+                    add("listname", listname).
+                    add("spindata1", spindata1).
+                    add("spindata2", spindata2).
+                    build();
 
-                OutputStream outputStream = httpURLConnection.getOutputStream();
-                outputStream.write(postParameters.getBytes("UTF-8"));
-                outputStream.flush();
-                outputStream.close();
-
-                int responseStatusCode = httpURLConnection.getResponseCode();
-                Log.d(TAG, "POST response code - " + responseStatusCode);
-
-                InputStream inputStream;
-                if (responseStatusCode == HttpURLConnection.HTTP_OK) {
-                    inputStream = httpURLConnection.getInputStream();
-                } else {
-                    inputStream = httpURLConnection.getErrorStream();
+            Request request = new Request.Builder().url(serverURL).post(requestBody).build();
+            client.newCall(request).enqueue(new Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
+                    Log.d(TAG, "Connect Server Error is " + e.toString());
                 }
-                InputStreamReader inputStreamReader = new InputStreamReader(inputStream, "UTF-8");
-                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-                StringBuilder sb = new StringBuilder();
-                String line = null;
-                while ((line = bufferedReader.readLine()) != null) {
-                    sb.append(line);
+
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+                    Log.d(TAG, "Response Body is " + response.body().string());
                 }
-                bufferedReader.close();
-                return sb.toString();
-            } catch (Exception e) {
-                Log.d(TAG, "InsertData : Error ", e);
-                return new String("Error" + e.getMessage());
-            }
+            });
+
         }
 
         private String checkImg(String image) {
-
+//            이미지 주소에 테이블 이름 붙이는 메소드
             String add = "";
             if (image != null) {
                 if (listName.equals("clubtable")) {
@@ -631,7 +624,7 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
     private class DelFolder {
         OkHttpClient client = new OkHttpClient();
 
-        public void requestPost(String username, String listname){
+        public void requestPost(String username, String listname) {
             String url = "http://spotz.co.kr/var/www/html/delfolder.php";
             RequestBody requestBody = new FormBody.Builder().
                     add("username", username).

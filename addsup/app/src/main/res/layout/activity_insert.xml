@@ -67,17 +67,44 @@
                     android:id="@+id/imView1"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
-                    android:layout_gravity="center" />
+                    android:layout_gravity="center"
+                    android:visibility="gone"/>
                 <ImageView
                     android:id="@+id/imView2"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
-                    android:layout_gravity="center" />
+                    android:layout_gravity="center"
+                    android:visibility="gone"/>
                 <ImageView
                     android:id="@+id/imView3"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
-                    android:layout_gravity="center" />
+                    android:layout_gravity="center"
+                    android:visibility="gone"/>
+                <ImageView
+                    android:id="@+id/imView4"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_gravity="center"
+                    android:visibility="gone"/>
+                <ImageView
+                    android:id="@+id/imView5"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_gravity="center"
+                    android:visibility="gone"/>
+                <ImageView
+                    android:id="@+id/imView6"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_gravity="center"
+                    android:visibility="gone"/>
+                <ImageView
+                    android:id="@+id/imView7"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_gravity="center"
+                    android:visibility="gone"/>
             </LinearLayout>
         </HorizontalScrollView>
 

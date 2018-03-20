@@ -53,9 +53,7 @@ public class myPageActivity extends AppCompatActivity implements View.OnClickLis
     private static final String TAG_USERNAME = "username";
     private static final String TAG_CONTENTS = "contents";
     private static final String TAG_CREATED = "created";
-    private static final String TAG_IMAGE1 = "image1";
-    private static final String TAG_IMAGE2 = "image2";
-    private static final String TAG_IMAGE3 = "image3";
+    private static final String TAG_IMAGE = "image";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -156,7 +154,7 @@ public class myPageActivity extends AppCompatActivity implements View.OnClickLis
             for (int i = 0; i < post.length(); i++) {
                 JSONObject c = post.getJSONObject(i);
                 listArr.add(new listItem(String.valueOf(c.getInt(TAG_ID)), c.getString(TAG_USERNAME), c.getString(TAG_TITLE), c.getString(TAG_CONTENTS),
-                        c.getString(TAG_IMAGE1), c.getString(TAG_IMAGE2), c.getString(TAG_IMAGE3), c.getString(TAG_CREATED), c.getString("listname")));
+                        c.getString(TAG_IMAGE), c.getString(TAG_CREATED), c.getString("listname")));
             }
         } catch (JSONException e) {
             e.printStackTrace();

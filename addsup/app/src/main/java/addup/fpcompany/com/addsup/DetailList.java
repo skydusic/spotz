@@ -42,9 +42,7 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
     String title = "";
     String contents = "";
     String created = "";
-    String image1 = "";
-    String image2 = "";
-    String image3 = "";
+    String image = "";
     String listname = "";
 
     String url = MainActivity.serverUrl + "userImageFolder/";
@@ -73,9 +71,7 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
         detailNameTv.setText(idx + " : " + title);
         contentsTv.setText(contents);
 
-        image1 = intent.getStringExtra("image1");
-        image2 = intent.getStringExtra("image2");
-        image3 = intent.getStringExtra("image3");
+        image = intent.getStringExtra("image");
 
         // 이미지 세팅
         setRecyclerView();
@@ -88,15 +84,13 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
     }
 
     private void setRecyclerView() {
-        if (!image1.equals("")) {
-            arr.add(url + image1);
+        if (!image.equals("")) {
+            String[] temp = image.split(",");
+            for (int i = 0; i < temp.length; i++) {
+                arr.add(url + temp[i]);
+            }
         }
-        if (!image2.equals("")) {
-            arr.add(url + image2);
-        }
-        if (!image3.equals("")) {
-            arr.add(url + image3);
-        }
+
         for (int i = 0; i < arr.size(); i++) {
             fragArr.add(new DetailFrag(arr.get(i)));
         }
@@ -185,6 +179,8 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
                     add("idx", idx).
                     build();
             String url = "http://spotz.co.kr/var/www/html/hitupdate.php";
+
+            Log.d("heu", "리스트네임 : " + listname);
 
             Request request = new Request.Builder().url(url).post(requestBody).build();
             client.newCall(request).enqueue(new Callback() {

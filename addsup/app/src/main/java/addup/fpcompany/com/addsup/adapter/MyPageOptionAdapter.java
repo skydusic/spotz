@@ -68,7 +68,8 @@ public class MyPageOptionAdapter extends ArrayAdapter {
             viewHolder.idHolder.setText(itemArr.get(position).getIdx());
             viewHolder.titleHolder.setText(itemArr.get(position).getTitle());
             viewHolder.timeHolder.setText(itemArr.get(position).getCreated());
-            Glide.with(context).load(url + itemArr.get(position).getImage1()).into(viewHolder.imageViewHolder);
+            String[] temp = itemArr.get(position).getImage().split(",");
+            Glide.with(context).load(url + temp[0]).into(viewHolder.imageViewHolder);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (RowDataViewHolder) convertView.getTag();

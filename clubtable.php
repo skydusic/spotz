@@ -10,16 +10,26 @@
     session_start();
 
     $idx=isset($_POST['idx']) ? $_POST['idx'] : '';
+    $listname=isset($_POST['listname']) ? $_POST['listname'] : '';
     $spindata1=isset($_POST['spindata1']) ? $_POST['spindata1'] : '';
     $spindata2=isset($_POST['spindata2']) ? $_POST['spindata2'] : '';
 
-
-    if($spindata == -1){
-        $sql ="select * from clubtable order by addedtime";
-    } else if($spindata == -2){
-        $sql = "select * from clubtable where spindata2 = '$spindata2' order by addedtime";
-    } else if ($spindata1 != -1){
-        $sql = "select * from clubtable where spindata1 = '$spindata1'";
+    if($listname == "clubtable"){
+        if($spindata1 == 0){
+            $sql ="select * from clubtable order by addedtime";
+        } else if($spindata1 == -2){
+            $sql = "select * from clubtable where spindata2 = '$spindata2' order by addedtime";
+        } else if ($spindata1 != 0){
+            $sql = "select * from clubtable where spindata1 = '$spindata1'";
+        } 
+    } else if($listname == "freelancer"){
+        if($spindata1 == 0){
+            $sql ="select * from freelancer order by addedtime";
+        } else if($spindata1 == -2){
+            $sql = "select * from freelancer where spindata2 = '$spindata2' order by addedtime";
+        } else if ($spindata1 != 0){
+            $sql = "select * from freelancer where spindata1 = '$spindata1'";
+        }
     }
 
     $result = mysql_query($sql, $connect);
@@ -32,7 +42,7 @@
     {
       mysql_data_seek($result, $i);
       $row = mysql_fetch_array($result);
-      echo "{\"idx\":$row[idx],\"title\":\"$row[title]\",\"contents\":\"$row[contents]\",\"username\":\"$row[username]\",\"created\":\"$row[created]\",\"image1\":\"$row[image1]\",\"image2\":\"$row[image2]\",\"image3\":\"$row[image3]\"}";
+      echo "{\"idx\":$row[idx],\"title\":\"$row[title]\",\"contents\":\"$row[contents]\",\"username\":\"$row[username]\",\"created\":\"$row[created]\",\"image\":\"$row[image]\"}";
 
     if($i<$total_record-1){
       echo ",";

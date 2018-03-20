@@ -17,14 +17,17 @@ mysqli_set_charset($link,"utf8");
 $title=isset($_POST['title']) ? $_POST['title'] : '';
 $contents=isset($_POST['contents']) ? $_POST['contents'] : '';
 $username=isset($_POST['username']) ? $_POST['username'] : '';
-$image1=isset($_POST['image1']) ? $_POST['image1'] : '';
-$image2=isset($_POST['image2']) ? $_POST['image2'] : '';
-$image3=isset($_POST['image3']) ? $_POST['image3'] : '';
+$image=isset($_POST['image']) ? $_POST['image'] : '';
+$listname=isset($_POST['listname']) ? $_POST['listname'] : '';
 $spindata1=isset($_POST['spindata1']) ? $_POST['spindata1'] : '';
 $spindata2=isset($_POST['spindata2']) ? $_POST['spindata2'] : '';
 
-if ($title !="" and $contents !="" ){   
-    $sql="insert into clubtable(title,contents,username,image1,image2,image3,spindata1,spindata2) values('$title','$contents','$username','$image1','$image2','$image3','$spindata1','$spindata2')"; 
+if ($title !="" and $contents !="" ){
+    if($listname == "clubtable"){
+        $sql="insert into clubtable(title,contents,username,image,spindata1,spindata2) values('$title','$contents','$username','$image','$spindata1','$spindata2')";
+    } else if ($listname == "freelancer"){
+        $sql="insert into freelancer(title,contents,username,image,spindata1,spindata2) values('$title','$contents','$username','$image','$spindata1','$spindata2')";
+    }
     $result=mysqli_query($link,$sql);  
     if($result){
        echo "SQL문 처리 성공";

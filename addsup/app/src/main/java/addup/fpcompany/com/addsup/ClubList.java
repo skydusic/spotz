@@ -51,9 +51,7 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
     private static final String TAG_USERNAME = "username";
     private static final String TAG_CONTENTS = "contents";
     private static final String TAG_CREATED = "created";
-    private static final String TAG_IMAGE1 = "image1";
-    private static final String TAG_IMAGE2 = "image2";
-    private static final String TAG_IMAGE3 = "image3";
+    private static final String TAG_IMAGE = "image";
 
     JSONArray topic = new JSONArray();
 
@@ -92,14 +90,15 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
         //Json 확인
         handler.sendEmptyMessage(100);
 
+        boardUrl = "http://spotz.co.kr/var/www/html/clubtable.php";
+
         //넘어온 경로에 따라 다른리스트를 받는다
         if (listName.equals("clubtable")) {
             listTopName.setText("스포츠 클럽");
-            boardUrl = "http://spotz.co.kr/var/www/html/clubtable.php";
+
 
         } else if (listName.equals("freelancer")) {
             listTopName.setText("스포츠 프리랜서");
-            boardUrl = "http://spotz.co.kr/var/www/html/freelancertable.php";
         }
 
         //권한 체크 순서
@@ -113,7 +112,7 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
         spinner1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                getPost.requestPost(boardUrl, position, 0);
+                getPost.requestPost(boardUrl, position, 0, listName);
 
                 spinner2.setVisibility(View.INVISIBLE);
                 spinnerAdapter2 = new ArrayAdapter<>(ClubList.this, R.layout.support_simple_spinner_dropdown_item, MainActivity.spinList2.get(position));
@@ -144,10 +143,9 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
                         intent.putExtra("created", listItems.get(position).getCreated());
 
                         /** 해야할 일 이미지를 스플릿으로 저장 & 불러오기 */
-
-                        intent.putExtra("image1", listItems.get(position).getImage1());
-                        intent.putExtra("image2", listItems.get(position).getImage2());
-                        intent.putExtra("image3", listItems.get(position).getImage3());
+                        String image = listItems.get(position).getImage();
+                        String[] temp = image.split(",");
+                        intent.putExtra("image", temp[0]);
                         v.getContext().startActivity(intent);
                     }
 
@@ -205,9 +203,7 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
                         postNum = 1;
                         postHashmap.put(TAG_CONTENTS, c.getString(TAG_CONTENTS));
                         postHashmap.put(TAG_TITLE, c.getString(TAG_TITLE));
-                        postHashmap.put(TAG_IMAGE1, c.getString(TAG_IMAGE1));
-                        postHashmap.put(TAG_IMAGE2, c.getString(TAG_IMAGE2));
-                        postHashmap.put(TAG_IMAGE3, c.getString(TAG_IMAGE3));
+                        postHashmap.put(TAG_IMAGE, c.getString(TAG_IMAGE));
                         break;
                     } else {
                         postNum = 0;
@@ -225,6 +221,7 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             if (!myJSON.equals("")) {
+                Log.d("heu", "제이슨 : " + myJSON);
                 showList();
                 setRecyclerView();
                 removeMessages(100);
@@ -244,7 +241,7 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
             for (int i = 0; i < topic.length(); i++) {
                 JSONObject c = topic.getJSONObject(i);
                 listItems.add(new listItem(String.valueOf(c.getInt(TAG_ID)), c.getString(TAG_USERNAME), c.getString(TAG_TITLE),
-                        c.getString(TAG_CONTENTS), c.getString(TAG_IMAGE1), c.getString(TAG_IMAGE2), c.getString(TAG_IMAGE3), c.getString(TAG_CREATED), listName));
+                        c.getString(TAG_CONTENTS), c.getString(TAG_IMAGE), c.getString(TAG_CREATED), listName));
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -258,12 +255,14 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
         OkHttpClient client = new OkHttpClient();
         Request request;
 
-        public void requestPost(String url, int spindata1, int spindata2) {
+        public void requestPost(String url, int spindata1, int spindata2, String listname) {
 
 
             RequestBody requestBody = new FormBody.Builder().
                     add("spindata1", String.valueOf(spindata1)).
-                    add("spindata2", String.valueOf(spindata2)).build();
+                    add("spindata2", String.valueOf(spindata2)).
+                    add("listname", listname).
+                    build();
 
             request = new Request.Builder().url(url).post(requestBody).build();
             client.newCall(request).enqueue(new okhttp3.Callback() {
@@ -293,9 +292,7 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
                 if (postNum == 1) {
                     intent.putExtra("title", postHashmap.get(TAG_TITLE));
                     intent.putExtra("contents", postHashmap.get(TAG_CONTENTS));
-                    intent.putExtra("image1", postHashmap.get(TAG_IMAGE1));
-                    intent.putExtra("image2", postHashmap.get(TAG_IMAGE2));
-                    intent.putExtra("image3", postHashmap.get(TAG_IMAGE3));
+                    intent.putExtra("image", postHashmap.get(TAG_IMAGE));
                 }
                 startActivityForResult(intent, 2400);
                 break;
@@ -325,6 +322,7 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == 2400) {
+            getPost.requestPost(boardUrl, 0, 0, listName);
             handler.sendEmptyMessageDelayed(24, 300);
         }
     }
@@ -346,7 +344,7 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         if (position != 0) {
-            getPost.requestPost(boardUrl, -2, spinner1Num);
+            getPost.requestPost(boardUrl, -2, spinner1Num, listName);
         }
 
     }
