@@ -140,7 +140,8 @@ public class Notice_Activity extends AppCompatActivity implements View.OnClickLi
                     String time = result.get(3) + " : " + result.get(4);
                     noticeArr.add(new noticeItem(c.getString(TAG_IDX), c.getString(TAG_TITLE), c.getString(TAG_CONTENTS), c.getString(TAG_IMAGE), time));
                 } else {
-                    noticeArr.add(new noticeItem(c.getString(TAG_IDX), c.getString(TAG_TITLE), c.getString(TAG_CONTENTS), c.getString(TAG_IMAGE), c.getString(TAG_CREATED)));
+                    String time = result.get(1) + "/" + result.get(2);
+                    noticeArr.add(new noticeItem(c.getString(TAG_IDX), c.getString(TAG_TITLE), c.getString(TAG_CONTENTS), c.getString(TAG_IMAGE), time));
                 }
             }
         } catch (JSONException e) {

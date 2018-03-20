@@ -20,7 +20,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 
 import addup.fpcompany.com.addsup.adapter.MainListAdater;
@@ -240,8 +242,30 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
 
             for (int i = 0; i < topic.length(); i++) {
                 JSONObject c = topic.getJSONObject(i);
-                listItems.add(new listItem(String.valueOf(c.getInt(TAG_ID)), c.getString(TAG_USERNAME), c.getString(TAG_TITLE),
-                        c.getString(TAG_CONTENTS), c.getString(TAG_IMAGE), c.getString(TAG_CREATED), listName));
+//                시간 설정
+                ArrayList<String> result = new ArrayList<>();
+                String[] temp1 = c.getString(TAG_CREATED).split(" ");
+                String[] temp2 = temp1[0].split("-");
+                for (int k = 0; k < temp2.length; k++) {
+                    result.add(temp2[k]);
+                }
+                String[] temp3 = temp1[1].split(":");
+                for (int j = 0; j < temp3.length; j++) {
+                    result.add(temp3[j]);
+                }
+
+//                yyyy-MM-dd HH:mm:ss
+                String curtime = new SimpleDateFormat("dd").format(new Date(System.currentTimeMillis()));
+
+                if(result.get(2).equals(curtime)){
+                    String time = result.get(3) + " : " + result.get(4);
+                    listItems.add(new listItem(String.valueOf(c.getInt(TAG_ID)), c.getString(TAG_USERNAME), c.getString(TAG_TITLE),
+                            c.getString(TAG_CONTENTS), c.getString(TAG_IMAGE), time, listName));
+                } else {
+                    String time = result.get(1) + "/" + result.get(2);
+                    listItems.add(new listItem(String.valueOf(c.getInt(TAG_ID)), c.getString(TAG_USERNAME), c.getString(TAG_TITLE),
+                            c.getString(TAG_CONTENTS), c.getString(TAG_IMAGE), time, listName));
+                }
             }
         } catch (JSONException e) {
             e.printStackTrace();
