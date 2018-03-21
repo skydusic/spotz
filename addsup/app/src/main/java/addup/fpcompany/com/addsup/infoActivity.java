@@ -27,7 +27,7 @@ public class infoActivity extends AppCompatActivity implements View.OnClickListe
 
     String TAG = "heu";
     String myJSON = "";
-    String url = "http://spotz.co.kr/var/www/html/infoInsert.php";
+    String url = "http://spotz.co.kr/var/www/html/infoinsert.php";
 
     Intent intent;
     FirebaseUser mUser = MainActivity.mUser;
@@ -49,6 +49,7 @@ public class infoActivity extends AppCompatActivity implements View.OnClickListe
             case (R.id.insertBtn):
                 writeInfo writeInfo = new writeInfo();
                 writeInfo.requestPost(url);
+                finish();
                 break;
 
             case (R.id.bottomHome):
