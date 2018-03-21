@@ -19,9 +19,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 import addup.fpcompany.com.addsup.adapter.NoticeAdapter;
 import addup.fpcompany.com.addsup.adapter.RecyclerItemClickListener;
@@ -68,16 +66,17 @@ public class Notice_Activity extends AppCompatActivity implements View.OnClickLi
         getPost.requestPost(url);
         handler.sendEmptyMessage(100);
 
-        if(MainActivity.mUser.getEmail().equals("skydusic@gmail.com")){
+        if (MainActivity.mUser.getEmail().equals("skydusic@gmail.com")) {
             noticeIns.setVisibility(View.VISIBLE);
             noticeIns.setOnClickListener(this);
         }
 
         recyclerView.addOnItemTouchListener(
-                new RecyclerItemClickListener(this, recyclerView ,new RecyclerItemClickListener.OnItemClickListener() {
-                    @Override public void onItemClick(View v, int position) {
+                new RecyclerItemClickListener(this, recyclerView, new RecyclerItemClickListener.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(View v, int position) {
                         // do whatever
-                        
+
                         Intent intent = new Intent(v.getContext(), Notice_Detail.class);
                         intent.putExtra("listname", "공지사항");
                         intent.putExtra("idx", noticeArr.get(position).getIdx());
@@ -88,7 +87,8 @@ public class Notice_Activity extends AppCompatActivity implements View.OnClickLi
                         v.getContext().startActivity(intent);
                     }
 
-                    @Override public void onLongItemClick(View view, int position) {
+                    @Override
+                    public void onLongItemClick(View view, int position) {
                         // do whatever
                     }
                 })
@@ -120,29 +120,8 @@ public class Notice_Activity extends AppCompatActivity implements View.OnClickLi
             topic = jsonObj.getJSONArray(TAG_RESULTS);
 
             for (int i = 0; i < topic.length(); i++) {
-                ArrayList<String> result = new ArrayList<>();
                 JSONObject c = topic.getJSONObject(i);
-
-                String[] temp1 = c.getString(TAG_CREATED).split(" ");
-                    String[] temp2 = temp1[0].split("-");
-                    for (int k = 0; k < temp2.length; k++) {
-                        result.add(temp2[k]);
-                    }
-                    String[] temp3 = temp1[1].split(":");
-                for (int j = 0; j < temp3.length; j++) {
-                    result.add(temp3[j]);
-                }
-
-//                yyyy-MM-dd HH:mm:ss
-                String curtime = new SimpleDateFormat("dd").format(new Date(System.currentTimeMillis()));
-
-                if(result.get(2).equals(curtime)){
-                    String time = result.get(3) + " : " + result.get(4);
-                    noticeArr.add(new noticeItem(c.getString(TAG_IDX), c.getString(TAG_TITLE), c.getString(TAG_CONTENTS), c.getString(TAG_IMAGE), time));
-                } else {
-                    String time = result.get(1) + "/" + result.get(2);
-                    noticeArr.add(new noticeItem(c.getString(TAG_IDX), c.getString(TAG_TITLE), c.getString(TAG_CONTENTS), c.getString(TAG_IMAGE), time));
-                }
+                noticeArr.add(new noticeItem(c.getString(TAG_IDX), c.getString(TAG_TITLE), c.getString(TAG_CONTENTS), c.getString(TAG_IMAGE), ClubList.settingTimes(c.getString(TAG_CREATED))));
             }
         } catch (JSONException e) {
             e.printStackTrace();

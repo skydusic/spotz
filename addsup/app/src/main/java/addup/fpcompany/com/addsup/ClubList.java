@@ -134,8 +134,9 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
         spinner2.setOnItemSelectedListener(this);
 
         recyclerView.addOnItemTouchListener(
-                new RecyclerItemClickListener(this, recyclerView ,new RecyclerItemClickListener.OnItemClickListener() {
-                    @Override public void onItemClick(View v, int position) {
+                new RecyclerItemClickListener(this, recyclerView, new RecyclerItemClickListener.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(View v, int position) {
                         // do whatever
                         Intent intent = new Intent(v.getContext(), DetailList.class);
                         intent.putExtra("listname", "공지사항");
@@ -151,7 +152,8 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
                         v.getContext().startActivity(intent);
                     }
 
-                    @Override public void onLongItemClick(View view, int position) {
+                    @Override
+                    public void onLongItemClick(View view, int position) {
                         // do whatever
                     }
                 })
@@ -243,29 +245,10 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
             for (int i = 0; i < topic.length(); i++) {
                 JSONObject c = topic.getJSONObject(i);
 //                시간 설정
-                ArrayList<String> result = new ArrayList<>();
-                String[] temp1 = c.getString(TAG_CREATED).split(" ");
-                String[] temp2 = temp1[0].split("-");
-                for (int k = 0; k < temp2.length; k++) {
-                    result.add(temp2[k]);
-                }
-                String[] temp3 = temp1[1].split(":");
-                for (int j = 0; j < temp3.length; j++) {
-                    result.add(temp3[j]);
-                }
 
-//                yyyy-MM-dd HH:mm:ss
-                String curtime = new SimpleDateFormat("dd").format(new Date(System.currentTimeMillis()));
+                listItems.add(new listItem(String.valueOf(c.getInt(TAG_ID)), c.getString(TAG_USERNAME), c.getString(TAG_TITLE),
+                        c.getString(TAG_CONTENTS), c.getString(TAG_IMAGE), settingTimes(c.getString(TAG_CREATED)), listName));
 
-                if(result.get(2).equals(curtime)){
-                    String time = result.get(3) + " : " + result.get(4);
-                    listItems.add(new listItem(String.valueOf(c.getInt(TAG_ID)), c.getString(TAG_USERNAME), c.getString(TAG_TITLE),
-                            c.getString(TAG_CONTENTS), c.getString(TAG_IMAGE), time, listName));
-                } else {
-                    String time = result.get(1) + "/" + result.get(2);
-                    listItems.add(new listItem(String.valueOf(c.getInt(TAG_ID)), c.getString(TAG_USERNAME), c.getString(TAG_TITLE),
-                            c.getString(TAG_CONTENTS), c.getString(TAG_IMAGE), time, listName));
-                }
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -273,6 +256,33 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
         }
 
         checkSelect();
+    }
+
+//    쓴날짜가 오늘일 때 써진시간으로 보여주는 메소드
+    static public String settingTimes(String created) {
+        String time;
+        ArrayList<String> result = new ArrayList<>();
+        String[] temp1 = created.split(" ");
+        String[] temp2 = temp1[0].split("-");
+
+        for (int k = 0; k < temp2.length; k++) {
+            result.add(temp2[k]);
+        }
+        String[] temp3 = temp1[1].split(":");
+        for (int j = 0; j < temp3.length; j++) {
+            result.add(temp3[j]);
+        }
+
+        //                yyyy-MM-dd HH:mm:ss
+        String curtime = new SimpleDateFormat("dd").format(new Date(System.currentTimeMillis()));
+
+        if (result.get(2).equals(curtime)) {
+            time = result.get(3) + " : " + result.get(4);
+        } else {
+            time = result.get(1) + "/" + result.get(2);
+        }
+
+        return time;
     }
 
     class getPost {

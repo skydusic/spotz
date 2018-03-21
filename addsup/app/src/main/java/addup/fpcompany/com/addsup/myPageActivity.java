@@ -153,8 +153,13 @@ public class myPageActivity extends AppCompatActivity implements View.OnClickLis
 
             for (int i = 0; i < post.length(); i++) {
                 JSONObject c = post.getJSONObject(i);
-                listArr.add(new listItem(String.valueOf(c.getInt(TAG_ID)), c.getString(TAG_USERNAME), c.getString(TAG_TITLE), c.getString(TAG_CONTENTS),
-                        c.getString(TAG_IMAGE), c.getString(TAG_CREATED), c.getString("listname")));
+                try {
+                    listArr.add(new listItem(String.valueOf(c.getInt(TAG_ID)), c.getString(TAG_USERNAME), c.getString(TAG_TITLE), c.getString(TAG_CONTENTS),
+                            c.getString(TAG_IMAGE), ClubList.settingTimes(c.getString(TAG_CREATED)), c.getString("listname")));
+                } catch (JSONException e){
+                    listArr.add(new listItem(String.valueOf(c.getInt(TAG_ID)), c.getString(TAG_USERNAME), c.getString(TAG_TITLE), c.getString(TAG_CONTENTS),
+                            "basic_image.png", c.getString(TAG_CREATED), c.getString("listname")));
+                }
             }
         } catch (JSONException e) {
             e.printStackTrace();

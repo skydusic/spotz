@@ -26,7 +26,7 @@ public class MyPageOptionAdapter extends ArrayAdapter {
     LayoutInflater lnf;
     ArrayList<listItem> itemArr;
     Context context;
-    String url = MainActivity.serverUrl + "userImagefolder/";
+    String url = MainActivity.serverUrl + "userImageFolder/";
 
     public MyPageOptionAdapter(Activity context, ArrayList<listItem> itemArr) {
         super(context, R.layout.list_item, itemArr);

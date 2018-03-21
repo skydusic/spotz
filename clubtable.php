@@ -20,7 +20,7 @@
         } else if($spindata1 == -2){
             $sql = "select * from clubtable where spindata2 = '$spindata2' order by addedtime";
         } else if ($spindata1 != 0){
-            $sql = "select * from clubtable where spindata1 = '$spindata1'";
+            $sql = "select * from clubtable where spindata1 = '$spindata1' order by addedtime";
         } 
     } else if($listname == "freelancer"){
         if($spindata1 == 0){
@@ -28,7 +28,7 @@
         } else if($spindata1 == -2){
             $sql = "select * from freelancer where spindata2 = '$spindata2' order by addedtime";
         } else if ($spindata1 != 0){
-            $sql = "select * from freelancer where spindata1 = '$spindata1'";
+            $sql = "select * from freelancer where spindata1 = '$spindata1' order by addedtime";
         }
     }
 
