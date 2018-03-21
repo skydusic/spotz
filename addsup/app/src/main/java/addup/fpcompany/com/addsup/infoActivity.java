@@ -1,11 +1,14 @@
 package addup.fpcompany.com.addsup;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+
+import com.google.firebase.auth.FirebaseUser;
 
 import java.io.IOException;
 
@@ -26,6 +29,9 @@ public class infoActivity extends AppCompatActivity implements View.OnClickListe
     String myJSON = "";
     String url = "http://spotz.co.kr/var/www/html/infoInsert.php";
 
+    Intent intent;
+    FirebaseUser mUser = MainActivity.mUser;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,6 +49,32 @@ public class infoActivity extends AppCompatActivity implements View.OnClickListe
             case (R.id.insertBtn):
                 writeInfo writeInfo = new writeInfo();
                 writeInfo.requestPost(url);
+                break;
+
+            case (R.id.bottomHome):
+                intent = new Intent(infoActivity.this, MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+                break;
+
+            case (R.id.bottomNotice):
+                intent = new Intent(infoActivity.this, Notice_Activity.class);
+                startActivity(intent);
+                break;
+
+            case (R.id.bottomInfo):
+                intent = new Intent(infoActivity.this, infoActivity.class);
+                startActivity(intent);
+                break;
+
+            case (R.id.bottomMember):
+                if (MainActivity.mUser == null) {
+                    Intent intent = new Intent(infoActivity.this, SignInActivity.class);
+                    startActivityForResult(intent, 10);
+                } else {
+                    Intent intent = new Intent(infoActivity.this, myPageActivity.class);
+                    startActivityForResult(intent, 1000);
+                }
                 break;
         }
     }

@@ -115,8 +115,8 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
         ConnectServer connectServer = new ConnectServer();
         connectServer.execute();
 
-        if(SplashActivity.makeMsg < 1){
-            if(mUsername != null){
+        if (SplashActivity.makeMsg < 1) {
+            if (mUsername != null) {
                 Toast.makeText(this, MainActivity.mUsername + "님 환영합니다", Toast.LENGTH_SHORT).show();
             }
         }
@@ -153,7 +153,7 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
     };
 
     @SuppressLint("StaticFieldLeak")
-    class ConnectServer extends AsyncTask<String, Void, String>{
+    class ConnectServer extends AsyncTask<String, Void, String> {
         OkHttpClient client = new OkHttpClient();
 
         @Override
@@ -161,7 +161,7 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
 
             Request request = new Request.Builder().url("http://spotz.co.kr/var/www/html/getImage.php").build();
 
-            try(Response response = client.newCall(request).execute()){
+            try (Response response = client.newCall(request).execute()) {
                 return response.body().string();
             } catch (IOException e) {
                 Log.d("heu", "서버접속 에러(메인) : " + e);
@@ -178,7 +178,7 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
         }
     }
 
-    class getAd extends AsyncTask<String, Void, String>{
+    class getAd extends AsyncTask<String, Void, String> {
         OkHttpClient client = new OkHttpClient();
 
         @Override
@@ -186,7 +186,7 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
 
             Request request = new Request.Builder().url("http://spotz.co.kr/var/www/html/getadsrc.php").build();
 
-            try(Response response = client.newCall(request).execute()){
+            try (Response response = client.newCall(request).execute()) {
                 return response.body().string();
             } catch (IOException e) {
                 Log.d("heu", "서버접속 에러(메인) : " + e);
@@ -210,7 +210,7 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
         }
     }
 
-    class getSpinner extends AsyncTask<String, Void, String>{
+    class getSpinner extends AsyncTask<String, Void, String> {
         OkHttpClient client = new OkHttpClient();
 
         @Override
@@ -218,7 +218,7 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
 
             Request request = new Request.Builder().url("http://spotz.co.kr/var/www/html/getspinner.php").build();
 
-            try(Response response = client.newCall(request).execute()){
+            try (Response response = client.newCall(request).execute()) {
                 return response.body().string();
             } catch (IOException e) {
                 Log.d("heu", "서버접속 에러(메인) : " + e);
@@ -285,8 +285,13 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
                 startActivity(intent);
                 break;
 
+            case (R.id.bottomInfo):
+                intent = new Intent(MainActivity.this, infoActivity.class);
+                startActivity(intent);
+                break;
+
             case (R.id.bottomMember):
-                if(mUser == null){
+                if (mUser == null) {
                     Intent intent = new Intent(MainActivity.this, SignInActivity.class);
                     startActivityForResult(intent, 10);
                 } else {
@@ -332,7 +337,7 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
         long intervalTime = tempTime - backPressedTime;
 
         // 메뉴가 열렸으면 닫기!
-         if (0 <= intervalTime && FINISH_INTERVAL_TIME >= intervalTime) {
+        if (0 <= intervalTime && FINISH_INTERVAL_TIME >= intervalTime) {
             super.onBackPressed();
         } else {
             backPressedTime = tempTime;

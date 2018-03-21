@@ -127,6 +127,11 @@ public class myPageActivity extends AppCompatActivity implements View.OnClickLis
                 startActivity(intent);
                 break;
 
+            case (R.id.bottomInfo):
+                intent = new Intent(myPageActivity.this, infoActivity.class);
+                startActivity(intent);
+                break;
+
             case (R.id.bottomMember):
                 /*Intent intent1 = new Intent(myPageActivity.this, myPageActivity.class);
                 startActivity(intent1);*/
