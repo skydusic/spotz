@@ -43,7 +43,6 @@ public class MainListAdater extends RecyclerView.Adapter<MainListAdater.ViewHold
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         listItem = itemArr.get(position);
-        holder.idHolder.setText(listItem.getIdx());
         holder.titleHolder.setText(listItem.getTitle());
         holder.timeHolder.setText(listItem.getCreated());
         if (!listItem.getImage().equals("")) {
@@ -58,12 +57,11 @@ public class MainListAdater extends RecyclerView.Adapter<MainListAdater.ViewHold
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
-        TextView idHolder, titleHolder, timeHolder;
+        TextView titleHolder, timeHolder;
         ImageView imageViewHolder;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            idHolder = itemView.findViewById(R.id.idx);
             titleHolder = itemView.findViewById(R.id.title);
             timeHolder = itemView.findViewById(R.id.created);
             imageViewHolder = itemView.findViewById(R.id.imageView);

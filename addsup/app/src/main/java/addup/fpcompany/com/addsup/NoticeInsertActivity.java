@@ -39,18 +39,18 @@ public class NoticeInsertActivity extends AppCompatActivity implements View.OnCl
 
     @Override
     public void onClick(View v) {
+        String title = titleEt.getText().toString().trim();
+        String contents = contentsEt.getText().toString().trim();
+
         writeNot writeNot = new writeNot();
-        writeNot.requestPost(url);
+        writeNot.requestPost(url, title, contents);
         finish();
     }
 
     class writeNot {
         OkHttpClient client = new OkHttpClient();
 
-        public void requestPost(String url) {
-
-            String title = titleEt.getText().toString().trim();
-            String contents = contentsEt.getText().toString().trim();
+        public void requestPost(String url, String title, String contents) {
 
             RequestBody requestBody = new FormBody.Builder().
                     add("title", title).

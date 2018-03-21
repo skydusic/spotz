@@ -59,13 +59,10 @@ public class MyPageOptionAdapter extends ArrayAdapter {
         if (convertView == null) {
             convertView = lnf.inflate(R.layout.list_item, parent, false);
             viewHolder = new RowDataViewHolder();
-            viewHolder.idHolder = convertView.findViewById(R.id.idx);
             viewHolder.titleHolder = convertView.findViewById(R.id.title);
             viewHolder.descHolder = convertView.findViewById(R.id.contents);
             viewHolder.timeHolder = convertView.findViewById(R.id.created);
             viewHolder.imageViewHolder = convertView.findViewById(R.id.imageView);
-
-            viewHolder.idHolder.setText(itemArr.get(position).getIdx());
             viewHolder.titleHolder.setText(itemArr.get(position).getTitle());
             viewHolder.timeHolder.setText(itemArr.get(position).getCreated());
             String[] temp = itemArr.get(position).getImage().split(",");
@@ -79,7 +76,6 @@ public class MyPageOptionAdapter extends ArrayAdapter {
     }
 
     public class RowDataViewHolder {
-        public TextView idHolder;
         public TextView titleHolder;
         public TextView descHolder;
         public TextView timeHolder;

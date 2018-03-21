@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseUser;
 
@@ -47,9 +48,16 @@ public class infoActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case (R.id.insertBtn):
-                writeInfo writeInfo = new writeInfo();
-                writeInfo.requestPost(url);
-                finish();
+                String title = titleET.getText().toString().trim();
+                String contents = contentsET.getText().toString().trim();
+
+                if(contents.length() > 300) {
+                    Toast.makeText( infoActivity.this, "글자 제한을 초과했습니다. (" + String.valueOf(contents.length()) + " / 300자)", Toast.LENGTH_LONG).show();
+                } else {
+                    writeInfo writeInfo = new writeInfo();
+                    writeInfo.requestPost(url, title, contents);
+                    finish();
+                }
                 break;
 
             case (R.id.bottomHome):
@@ -83,10 +91,9 @@ public class infoActivity extends AppCompatActivity implements View.OnClickListe
     class writeInfo {
         OkHttpClient client = new OkHttpClient();
 
-        public void requestPost(String url) {
+        public void requestPost(String url, String title , String contents) {
 
-            String title = titleET.getText().toString().trim();
-            String contents = contentsET.getText().toString().trim();
+
 
             RequestBody requestBody = new FormBody.Builder().
                     add("title", title).
