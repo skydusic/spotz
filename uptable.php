@@ -38,5 +38,4 @@
        echo mysqli_error($connect);
     }
     mysql_close();
-
 ?>

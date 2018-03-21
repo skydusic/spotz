@@ -337,6 +337,11 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
                 startActivity(intent3);
                 break;
 
+            case (R.id.bottomNotice):
+                intent = new Intent(ClubList.this, Notice_Activity.class);
+                startActivity(intent);
+                break;
+
             case (R.id.bottomMember):
                 if (MainActivity.mUser == null) {
                     Intent intent1 = new Intent(ClubList.this, SignInActivity.class);

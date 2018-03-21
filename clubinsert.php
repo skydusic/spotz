@@ -44,26 +44,3 @@ if ($title !="" and $contents !="" ){
 
 mysqli_close($link);
 ?>
-
-<?php
-
-$android = strpos($_SERVER['HTTP_USER_AGENT'], "Android");
-
-if (!$android){
-?>
-
-<html>
-   <head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"></head>
-   <body>
-   
-      <form action="<?php $_PHP_SELF ?>" method="POST">
-         Title: <input type = "text" name = "title" />
-         contents: <input type = "text" name = "contents" />
-         <input type = "submit" />
-      </form>
-   
-   </body>
-</html>
-<?php
-}
-?>

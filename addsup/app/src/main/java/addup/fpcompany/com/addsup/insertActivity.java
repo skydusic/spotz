@@ -139,31 +139,31 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
             for (int i = 0; i < temp.length; i++) {
                 switch (i) {
                     case 0:
-                        Glide.with(this).load(tempUrl+temp[0]).into(imView1);
+                        Glide.with(this).load(tempUrl + temp[0]).into(imView1);
                         imView1.setVisibility(View.VISIBLE);
                         break;
                     case 1:
-                        Glide.with(this).load(tempUrl+temp[1]).into(imView2);
+                        Glide.with(this).load(tempUrl + temp[1]).into(imView2);
                         imView2.setVisibility(View.VISIBLE);
                         break;
                     case 2:
-                        Glide.with(this).load(tempUrl+temp[2]).into(imView3);
+                        Glide.with(this).load(tempUrl + temp[2]).into(imView3);
                         imView3.setVisibility(View.VISIBLE);
                         break;
                     case 3:
-                        Glide.with(this).load(tempUrl+temp[3]).into(imView4);
+                        Glide.with(this).load(tempUrl + temp[3]).into(imView4);
                         imView4.setVisibility(View.VISIBLE);
                         break;
                     case 4:
-                        Glide.with(this).load(tempUrl+temp[4]).into(imView5);
+                        Glide.with(this).load(tempUrl + temp[4]).into(imView5);
                         imView5.setVisibility(View.VISIBLE);
                         break;
                     case 5:
-                        Glide.with(this).load(tempUrl+temp[5]).into(imView6);
+                        Glide.with(this).load(tempUrl + temp[5]).into(imView6);
                         imView6.setVisibility(View.VISIBLE);
                         break;
                     case 6:
-                        Glide.with(this).load(tempUrl+temp[6]).into(imView7);
+                        Glide.with(this).load(tempUrl + temp[6]).into(imView7);
                         imView7.setVisibility(View.VISIBLE);
                         break;
                 }
@@ -176,31 +176,28 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
                 String title = titleET.getText().toString().trim();
                 String contents = contentsET.getText().toString().trim();
 
-                if (!title.equals("") && !contents.equals("")) {
-                    DelFolder delFolder = new DelFolder();
-                    delFolder.requestPost(MainActivity.mUsername, listName);
-                    InsertData task = new InsertData();
-                    ConnectServer connectServer = new ConnectServer();
-                    for (int i = 0; i < imagePathArr.size(); i++) {
-                        connectServer.requestPost(url, MainActivity.mUsername, listName, uriList.get(i));
-                    }
-                    for (int i = 0; i < filenameList.size(); i++) {
+                if (contents.length() > 300) {
+                    Toast.makeText( insertActivity.this, "글자 제한을 초과했습니다. (" + String.valueOf(contents.length()) + " / 300자)", Toast.LENGTH_LONG).show();
 
-                        imageAddress1 += filenameList.get(i).toString();
-
-                        Log.d("heu", "이미지 : " + imageAddress1);
-
-                        if(filenameList.size() > i){
-                            imageAddress1 += ",";
-                        }
-
-                    }
-
-                    task.request(title, contents, serverUri, MainActivity.mUsername, imageAddress1, listName, String.valueOf(spinnerNumber1), String.valueOf(spinnerNumber2));
-                    finish();
                 } else {
-                    Toast.makeText(insertActivity.this, "내용을 입력해주세요.", Toast.LENGTH_SHORT).show();
+                    if (!title.equals("") && !contents.equals("")) {
+                        InsertData task = new InsertData();
+                        ConnectServer connectServer = new ConnectServer();
+                        for (int i = 0; i < imagePathArr.size(); i++) {
+                            connectServer.requestPost(url, MainActivity.mUsername, listName, uriList.get(i));
+                        }
+                        for (int i = 0; i < filenameList.size(); i++) {
+                            imageAddress1 += filenameList.get(i).toString();
+                            if (filenameList.size() > i) {
+                                imageAddress1 += ",";
+                            }
+                        }
+                        task.request(title, contents, serverUri, MainActivity.mUsername, imageAddress1, listName, String.valueOf(spinnerNumber1), String.valueOf(spinnerNumber2));
+                        finish();
+                    } else {
+                        Toast.makeText(insertActivity.this, "내용을 입력해주세요.", Toast.LENGTH_SHORT).show();
 
+                    }
                 }
             }
         });
@@ -209,7 +206,6 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
         spinner1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
                 spinnerNumber1 = position;
                 spinner2.setVisibility(View.INVISIBLE);
                 spinnerAdapter2 = new ArrayAdapter<>(insertActivity.this, R.layout.support_simple_spinner_dropdown_item, MainActivity.spinList2.get(position));
@@ -229,12 +225,12 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
         imgFind.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                DelFolder delFolder = new DelFolder();
+                delFolder.requestPost(MainActivity.mUsername, listName);
                 show();
             }
         });
-
         checkDangerousPermissions();
-
     }
 
     @Override
@@ -255,7 +251,7 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
 
                     if (clipData != null) {
                         for (int i = 0; i < clipData.getItemCount(); i++) {
-                            if(i==7){
+                            if (i == 7) {
                                 break;
                             }
                             Uri urione = clipData.getItemAt(i).getUri();
@@ -293,11 +289,8 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
                                     imView7.setVisibility(View.VISIBLE);
                                     break;
                             }
-
-
                         }
                         horScrollView.setVisibility(View.VISIBLE);
-
                     } else if (uri != null) {
                         imView1.setImageURI(uri);
                     }
@@ -305,7 +298,6 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
                 default:
                     break;
             }
-
         }
     }
 

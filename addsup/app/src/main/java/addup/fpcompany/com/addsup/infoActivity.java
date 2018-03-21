@@ -4,8 +4,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import java.io.IOException;
 
@@ -16,45 +16,49 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public class NoticeInsertActivity extends AppCompatActivity implements View.OnClickListener {
+public class infoActivity extends AppCompatActivity implements View.OnClickListener{
+
+    Button insertBtn;
+    EditText titleET;
+    EditText contentsET;
 
     String TAG = "heu";
     String myJSON = "";
-
-    EditText titleEt;
-    EditText contentsEt;
-    TextView insertBtn;
-    String url = "http://spotz.co.kr/var/www/html/noticeinsert.php";
+    String url = "http://spotz.co.kr/var/www/html/infoInsert.php";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_notice_insert);
+        setContentView(R.layout.activity_info);
 
-        titleEt = findViewById(R.id.titleEt);
-        contentsEt = findViewById(R.id.contentsEt);
         insertBtn = findViewById(R.id.insertBtn);
+        titleET = findViewById(R.id.titleET);
+        contentsET = findViewById(R.id.contentsET);
         insertBtn.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
-        writeNot writeNot = new writeNot();
-        writeNot.requestPost(url);
-        finish();
+        switch (v.getId()) {
+            case (R.id.insertBtn):
+                writeInfo writeInfo = new writeInfo();
+                writeInfo.requestPost(url);
+                break;
+        }
     }
 
-    class writeNot {
+    class writeInfo {
         OkHttpClient client = new OkHttpClient();
 
         public void requestPost(String url) {
 
-            String title = titleEt.getText().toString().trim();
-            String contents = contentsEt.getText().toString().trim();
+            String title = titleET.getText().toString().trim();
+            String contents = contentsET.getText().toString().trim();
 
             RequestBody requestBody = new FormBody.Builder().
                     add("title", title).
                     add("contents", contents).
+                    add("username", MainActivity.mUsername).
                     build();
 
             Request request = new Request.Builder().url(url).post(requestBody).build();
@@ -70,8 +74,6 @@ public class NoticeInsertActivity extends AppCompatActivity implements View.OnCl
                     myJSON = response.body().string();
                 }
             });
-
         }
     }
-
 }

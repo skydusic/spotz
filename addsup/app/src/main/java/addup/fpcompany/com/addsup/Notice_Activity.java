@@ -195,6 +195,12 @@ public class Notice_Activity extends AppCompatActivity implements View.OnClickLi
                     startActivityForResult(intent, 1000);
                 }
                 break;
+
+            case (R.id.bottomNotice):
+                intent = new Intent(Notice_Activity.this, Notice_Activity.class);
+                startActivity(intent);
+                break;
+
             case (R.id.noticeIns):
                 Intent intent = new Intent(Notice_Activity.this, NoticeInsertActivity.class);
                 startActivity(intent);

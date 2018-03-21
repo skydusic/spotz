@@ -55,20 +55,6 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.ViewHolder
         return itemArr.size();
     }
 
-    /*@Override
-    public void onClick(View v) {
-        Log.d("heu", "id : " + v.getId());
-        int pos = 0;
-        Intent intent = new Intent(v.getContext(), Notice_Detail.class);
-        intent.putExtra("listname", "공지사항");
-        intent.putExtra("idx", listItem.getIdx());
-        intent.putExtra("title", listItem.getTitle());
-        intent.putExtra("contents", listItem.getContents());
-        intent.putExtra("created", listItem.getCreated());
-        intent.putExtra("image", listItem.getImage());
-        v.getContext().startActivity(intent);
-    }*/
-
     class ViewHolder extends RecyclerView.ViewHolder {
         TextView idHolder, titleHolder, timeHolder;
         ImageView imageViewHolder;
