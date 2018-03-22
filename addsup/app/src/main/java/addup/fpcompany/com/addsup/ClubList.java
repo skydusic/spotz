@@ -141,7 +141,7 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
                     public void onItemClick(View v, int position) {
                         // do whatever
                         Intent intent = new Intent(v.getContext(), DetailList.class);
-                        intent.putExtra("listname", "공지사항");
+                        intent.putExtra("listname", listName);
                         intent.putExtra("idx", listItems.get(position).getIdx());
                         intent.putExtra("title", listItems.get(position).getTitle());
                         intent.putExtra("contents", listItems.get(position).getContents());
@@ -227,7 +227,6 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             if (!myJSON.equals("")) {
-                Log.d("heu", "제이슨 : " + myJSON);
                 showList();
                 setRecyclerView();
                 removeMessages(100);

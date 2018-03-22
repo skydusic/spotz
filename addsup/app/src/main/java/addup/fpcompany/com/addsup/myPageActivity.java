@@ -94,8 +94,6 @@ public class myPageActivity extends AppCompatActivity implements View.OnClickLis
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             if (!Json.equals("")) {
-                Log.d("heu", "Json : " + Json);
-                Log.d("heu", "마이페이지 제이슨!");
                 showList(Json);
                 removeMessages(100);
                 Json = "";

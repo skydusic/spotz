@@ -1,9 +1,9 @@
 <?php
 
-    $connect=mysql_connect( "localhost", "spotz", "tongood77") or die( "Unable to connect to SQL server");
+    $connect=mysqli_connect( "localhost", "spotz", "tongood77") or die( "Unable to connect to SQL server");
 
-    mysql_query("SET NAMES UTF8");
-    mysql_select_db("spotz",$connect) or die("Unable to select database");
+    mysqli_set_charset($connect,"utf8");  
+    mysqli_select_db($connect,"spotz") or die("Unable to select database");
     session_start();
 
     $listname=isset($_POST['listname']) ? $_POST['listname'] : '';
@@ -16,8 +16,8 @@
     }
 
 
-    $result = mysql_query($sql, $connect);
-    $pre = mysql_fetch_array($result);
+    $result = mysqli_query($connect,$sql);
+    $pre = mysqli_fetch_array($result);
     
     $hit = $pre[hit] + 1;
     
@@ -29,7 +29,7 @@
     } else if ($listname == 'freelancer'){
         $sql = "update freelancer set hit = '$hit' where idx='$idx'";
     }
-    $result2 = mysql_query($sql, $connect);
+    $result2 = mysqli_query($connect,$sql);
 
     if($result2){
        echo "SQL문 처리 성공";
@@ -38,6 +38,8 @@
        echo "SQL문 처리중 에러 발생 : ";
        echo mysqli_error($connect);
     }
-    mysql_close();
 
+    if($result !=null){
+        mysqli_free_result($result);
+    }
 ?>
