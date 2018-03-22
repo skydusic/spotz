@@ -41,6 +41,5 @@ if ($title !="" and $contents !="" ){
     echo "데이터를 입력하세요 ";
 }
 
-
 mysqli_close($link);
 ?>

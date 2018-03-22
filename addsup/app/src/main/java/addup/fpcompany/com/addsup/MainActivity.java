@@ -123,6 +123,8 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
         SplashActivity.makeMsg++;
 
         //스피너정보 가져오기
+        spinList1.clear();
+        spinList2.clear();
         getSpinner getSpinner = new getSpinner();
         getSpinner.execute();
 

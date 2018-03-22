@@ -192,7 +192,7 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
                                 imageAddress1 += ",";
                             }
                         }
-                        task.request(title, contents, serverUri, MainActivity.mUsername, imageAddress1, listName, String.valueOf(spinnerNumber1), String.valueOf(spinnerNumber2));
+                        task.request(title, contents, serverUri, MainActivity.mUsername, imageAddress1, listName, MainActivity.spinList1.get(spinnerNumber1), MainActivity.spinList2.get(spinnerNumber1).get(spinnerNumber2));
                         finish();
                     } else {
                         Toast.makeText(insertActivity.this, "내용을 입력해주세요.", Toast.LENGTH_SHORT).show();
@@ -491,21 +491,9 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
 
     class InsertData {
         ProgressDialog progressDialog;
-        String serverURL;
-        String username;
-
         OkHttpClient client = new OkHttpClient();
 
-        protected void request(String... params) {
-
-            String title = params[0];
-            String contents = params[1];
-            serverURL = params[2];
-            username = params[3];
-            String image = params[4];
-            String listname = params[5];
-            String spindata1 = params[6];
-            String spindata2 = params[7];
+        protected void request(String title, String contents, String serverURL, String username, String image, String listname, String spindata1, String spindata2) {
 
             Log.d("heu", "스핀1 : " + spindata1);
 

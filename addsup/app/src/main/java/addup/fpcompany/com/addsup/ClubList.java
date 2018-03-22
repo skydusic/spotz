@@ -114,7 +114,9 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
         spinner1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                getPost.requestPost(boardUrl, position, 0, listName);
+                getPost.requestPost(boardUrl, MainActivity.spinList1.get(position), "", listName);
+
+                Log.d("heu", "스피너1 : " + MainActivity.spinList1.get(position));
 
                 spinner2.setVisibility(View.INVISIBLE);
                 spinnerAdapter2 = new ArrayAdapter<>(ClubList.this, R.layout.support_simple_spinner_dropdown_item, MainActivity.spinList2.get(position));
@@ -289,12 +291,12 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
         OkHttpClient client = new OkHttpClient();
         Request request;
 
-        public void requestPost(String url, int spindata1, int spindata2, String listname) {
+        public void requestPost(String url, String spindata1, String spindata2, String listname) {
 
 
             RequestBody requestBody = new FormBody.Builder().
-                    add("spindata1", String.valueOf(spindata1)).
-                    add("spindata2", String.valueOf(spindata2)).
+                    add("spindata1", spindata1).
+                    add("spindata2", spindata2).
                     add("listname", listname).
                     build();
 
@@ -366,7 +368,7 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == 2400) {
-            getPost.requestPost(boardUrl, 0, 0, listName);
+            getPost.requestPost(boardUrl, "", "", listName);
             handler.sendEmptyMessageDelayed(24, 300);
         }
     }
@@ -388,7 +390,7 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         if (position != 0) {
-            getPost.requestPost(boardUrl, -2, spinner1Num, listName);
+            getPost.requestPost(boardUrl, "", MainActivity.spinList2.get(spinner1Num).get(position), listName);
         }
 
     }
