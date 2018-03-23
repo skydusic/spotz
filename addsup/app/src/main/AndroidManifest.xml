@@ -65,7 +65,8 @@
         <activity android:name=".Notice_Activity" />
         <activity android:name=".Notice_Detail" />
         <activity android:name=".NoticeInsertActivity" />
-        <activity android:name=".infoActivity"></activity>
+        <activity android:name=".infoActivity" />
+        <activity android:name=".ActionDetailActivity"></activity>
     </application>
 
 </manifest>

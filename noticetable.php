@@ -8,7 +8,7 @@
         exit(); 
     }
     
-    mysqli_set_charset($link,"utf8");  
+    mysqli_set_charset($connect,"utf8");  
     mysqli_select_db($connect,"spotz") or die("Unable to select database");
     session_start();
 
@@ -34,5 +34,5 @@
 
     echo "]}";
 
-    mysqli_close($link);
+    mysqli_close($connect);
 ?>
