@@ -9,6 +9,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.io.IOException;
@@ -35,6 +36,7 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
     TextView midDetailTv4;
     TextView contentsTv;
     ViewPager viewPager;
+    ImageView favorite;
     ArrayList<String> arr = new ArrayList<>();
     ArrayList<Fragment> fragArr = new ArrayList<>();
 
@@ -59,6 +61,7 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
         midDetailTv4 = findViewById(R.id.midDetailTv4);
         contentsTv = findViewById(R.id.contents);
         viewPager = findViewById(R.id.viewPager);
+        favorite = findViewById(R.id.favorite);
 
 
         // 인텐트로 정보 가져옴
@@ -80,6 +83,8 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
 
         hitUpdate hitUpdate = new hitUpdate();
         hitUpdate.requestPost();
+
+        favorite.setOnClickListener(this);
 
     }
 
@@ -118,6 +123,9 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
                     finish();
                     startActivityForResult(intent2, 1000);
                 }
+                break;
+            case (R.id.favorite):
+                favorite.setImageResource(R.drawable.yellowstar);
                 break;
         }
     }
