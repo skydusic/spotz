@@ -15,7 +15,7 @@ import java.util.ArrayList;
 
 import addup.fpcompany.com.addsup.R;
 import addup.fpcompany.com.addsup.adapter.MainListAdater;
-import addup.fpcompany.com.addsup.listItem;
+import addup.fpcompany.com.addsup.java.listItem;
 
 /**
  * Created by song02 on 2018-03-23.

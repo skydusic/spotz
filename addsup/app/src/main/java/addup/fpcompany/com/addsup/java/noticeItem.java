@@ -1,4 +1,4 @@
-package addup.fpcompany.com.addsup;
+package addup.fpcompany.com.addsup.java;
 
 
 public class noticeItem {

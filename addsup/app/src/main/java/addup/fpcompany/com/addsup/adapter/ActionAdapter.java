@@ -2,7 +2,6 @@ package addup.fpcompany.com.addsup.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,7 +33,6 @@ public class ActionAdapter extends RecyclerView.Adapter<ActionAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        Log.d("heu", "액션 어댑터 itemarr : " + itemArr.toString());
         String temp = itemArr.get(position).toString();
         holder.titleHolder.setText(temp);
     }

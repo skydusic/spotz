@@ -14,7 +14,7 @@ import java.util.ArrayList;
 
 import addup.fpcompany.com.addsup.MainActivity;
 import addup.fpcompany.com.addsup.R;
-import addup.fpcompany.com.addsup.listItem;
+import addup.fpcompany.com.addsup.java.listItem;
 
 /**
  * Created by Administrator on 2017-12-05.
@@ -47,7 +47,12 @@ public class MainListAdater extends RecyclerView.Adapter<MainListAdater.ViewHold
         holder.timeHolder.setText(listItem.getCreated());
         if (!listItem.getImage().equals("")) {
             String[] temp = listItem.getImage().split(",");
-            Glide.with(context).load(url + temp[0]).into(holder.imageViewHolder);
+            if(temp.equals("")){
+                Glide.with(context).load(url + "basic_image.png").into(holder.imageViewHolder);
+            } else {
+                Glide.with(context).load(url + temp[0]).into(holder.imageViewHolder);
+            }
+
         }
     }
 

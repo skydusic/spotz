@@ -23,6 +23,7 @@ import java.util.ArrayList;
 
 import addup.fpcompany.com.addsup.adapter.NoticeAdapter;
 import addup.fpcompany.com.addsup.adapter.RecyclerItemClickListener;
+import addup.fpcompany.com.addsup.java.noticeItem;
 import okhttp3.Call;
 import okhttp3.FormBody;
 import okhttp3.OkHttpClient;

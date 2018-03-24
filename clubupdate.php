@@ -24,9 +24,9 @@ $spindata2=isset($_POST['spindata2']) ? $_POST['spindata2'] : '';
 
 if ($title !="" and $contents !="" ){
     if($listname == 'clubtable'){
-        $sql="update clubtable set title = '$title', contents = '$contents', image ='$image', spindata1 = $spindata1, spindata2 = $spindata2 WHERE username = '$username'"; 
+        $sql="update clubtable set title = '$title', contents = '$contents', image ='$image', spindata1 = '$spindata1', spindata2 = '$spindata2' WHERE username = '$username'"; 
     } else if ($listname == 'freelancer'){
-        $sql="update freelancer set title = '$title', contents = '$contents', image ='$image', spindata1 = $spindata1, spindata2 = $spindata2 WHERE username = '$username'"; 
+        $sql="update freelancer set title = '$title', contents = '$contents', image ='$image', spindata1 = '$spindata1', spindata2 = '$spindata2' WHERE username = '$username'"; 
     }
     $result=mysqli_query($link,$sql);  
     if($result){

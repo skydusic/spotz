@@ -69,6 +69,7 @@ public class myPageActivity extends AppCompatActivity implements View.OnClickLis
             public void onItemClick(View view, int position) {
                 Intent intent = new Intent(myPageActivity.this, ActionDetailActivity.class);
                 intent.putExtra("actionName", actionArr.get(position).toString());
+                startActivity(intent);
             }
 
             @Override
@@ -80,7 +81,6 @@ public class myPageActivity extends AppCompatActivity implements View.OnClickLis
     }
 
     private void getActionList() {
-        // 리스트에 옵션(즐겨찾기, 내글보기 ... 등)
 
         actionArr.add("내글 보기");
         actionArr.add("즐겨찾기");
@@ -135,7 +135,7 @@ public class myPageActivity extends AppCompatActivity implements View.OnClickLis
         if (currentUser == null) {
 
         } else {
-            MainActivity.mUsername = MainActivity.mUser.getDisplayName();
+
             if (currentUser.getPhotoUrl() != null) {
                 MainActivity.mPhotoUrl = currentUser.getPhotoUrl().toString();
             }

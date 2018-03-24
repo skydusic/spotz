@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
@@ -20,6 +21,7 @@ import java.util.ArrayList;
 
 import addup.fpcompany.com.addsup.adapter.MainListAdater;
 import addup.fpcompany.com.addsup.adapter.RecyclerItemClickListener;
+import addup.fpcompany.com.addsup.java.listItem;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.FormBody;
@@ -32,11 +34,15 @@ public class ActionDetailActivity extends AppCompatActivity {
 
     TextView detailTv;
     RecyclerView recyclerView;
+    MainListAdater adapter;
     Intent intent;
     String url;
-    String Json;
+    String Json = "";
     JSONArray post;
     ArrayList<listItem> listArr = new ArrayList<>();
+
+    String pageName;
+    listItem item;
 
     private static final String TAG_RESULTS = "results";
     private static final String TAG_ID = "idx";
@@ -55,15 +61,15 @@ public class ActionDetailActivity extends AppCompatActivity {
         detailTv = findViewById(R.id.detailTv);
         recyclerView = findViewById(R.id.recyclerView);
         intent = getIntent();
-        String pageName = intent.getStringExtra("actionName");
+        pageName = intent.getStringExtra("actionName");
         detailTv.setText(pageName);
 
-        if (pageName.equals("내글 보기")) {
+        if (pageName.equals("내 글 보기")) {
             url = "http://spotz.co.kr/var/www/html/getPostOfName.php";
         } else if (pageName.equals("즐겨찾기")) {
-
+            url = "";
         } else if (pageName.equals("최근 본 글")) {
-
+            url = "";
         }
 
         getData();
@@ -78,13 +84,8 @@ public class ActionDetailActivity extends AppCompatActivity {
 
             for (int i = 0; i < post.length(); i++) {
                 JSONObject c = post.getJSONObject(i);
-                try {
                     listArr.add(new listItem(String.valueOf(c.getInt(TAG_ID)), c.getString(TAG_USERNAME), c.getString(TAG_TITLE), c.getString(TAG_CONTENTS),
                             c.getString(TAG_IMAGE), ClubList.settingTimes(c.getString(TAG_CREATED)), c.getString("listname")));
-                } catch (JSONException e) {
-                    listArr.add(new listItem(String.valueOf(c.getInt(TAG_ID)), c.getString(TAG_USERNAME), c.getString(TAG_TITLE), c.getString(TAG_CONTENTS),
-                            "basic_image.png", c.getString(TAG_CREATED), c.getString("listname")));
-                }
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -94,12 +95,22 @@ public class ActionDetailActivity extends AppCompatActivity {
             Log.d("heu", "adapter ETC Excep : " + e);
         }
 
-        MainListAdater adapter = new MainListAdater(this, listArr);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        recyclerView.setLayoutManager(layoutManager);
+        adapter = new MainListAdater(getApplicationContext(), listArr);
         recyclerView.setAdapter(adapter);
+
         recyclerView.addOnItemTouchListener(
                 new RecyclerItemClickListener(ActionDetailActivity.this, recyclerView, new RecyclerItemClickListener.OnItemClickListener() {
                     @Override
                     public void onItemClick(View view, int position) {
+
+                        if (pageName.equals("내 글 보기")) {
+                            item = listArr.get(position);
+                            Intent intent = new Intent(ActionDetailActivity.this, myPageOption.class);
+                            startActivity(intent);
+                        }
 
                     }
 
@@ -133,7 +144,6 @@ public class ActionDetailActivity extends AppCompatActivity {
                 removeMessages(100);
                 Json = "";
             } else {
-                Log.d("heu", "마이페이지 엘스!");
                 handler1.sendEmptyMessageDelayed(100, 200);
             }
         }
@@ -146,8 +156,6 @@ public class ActionDetailActivity extends AppCompatActivity {
         OkHttpClient client = new OkHttpClient();
 
         public void requestPost(String url, String username) {
-
-            /*** 마이페이지에서 누를때 변경되는 로직 필요 ***/
 
             //Request Body에 서버에 보낼 데이터 작성
             RequestBody requestBody = new FormBody.Builder().add("username", username).build();

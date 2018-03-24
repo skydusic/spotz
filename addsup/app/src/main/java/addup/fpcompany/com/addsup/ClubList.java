@@ -27,6 +27,7 @@ import java.util.HashMap;
 
 import addup.fpcompany.com.addsup.adapter.MainListAdater;
 import addup.fpcompany.com.addsup.adapter.RecyclerItemClickListener;
+import addup.fpcompany.com.addsup.java.listItem;
 import okhttp3.Call;
 import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
@@ -170,7 +171,6 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
         adapter = new MainListAdater(getApplicationContext(), listItems);
         recyclerView.setAdapter(adapter);
 
-        Log.d("heu", "리스트아이템즈 : " + listItems.toString());
     }
 
     public int authorityChk() {
@@ -366,8 +366,8 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == 2400) {
-            getPost.requestPost(boardUrl, "", "", listName);
+        if (resultCode == 2400) {
+            getPost.requestPost(boardUrl, "전국", "", listName);
             handler.sendEmptyMessageDelayed(24, 300);
         }
     }

@@ -14,7 +14,7 @@ import java.util.ArrayList;
 
 import addup.fpcompany.com.addsup.MainActivity;
 import addup.fpcompany.com.addsup.R;
-import addup.fpcompany.com.addsup.noticeItem;
+import addup.fpcompany.com.addsup.java.noticeItem;
 
 /**
  * Created by song02 on 2018-03-17.

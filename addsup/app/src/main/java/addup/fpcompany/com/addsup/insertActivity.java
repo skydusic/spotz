@@ -193,6 +193,7 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
                             }
                         }
                         task.request(title, contents, serverUri, MainActivity.mUsername, imageAddress1, listName, MainActivity.spinList1.get(spinnerNumber1), MainActivity.spinList2.get(spinnerNumber1).get(spinnerNumber2));
+                        setResult(2400);
                         finish();
                     } else {
                         Toast.makeText(insertActivity.this, "내용을 입력해주세요.", Toast.LENGTH_SHORT).show();
@@ -495,7 +496,7 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
 
         protected void request(String title, String contents, String serverURL, String username, String image, String listname, String spindata1, String spindata2) {
 
-            Log.d("heu", "스핀1 : " + spindata1);
+            Log.d("heu", "이미지 : " + checkImg(image));
 
             RequestBody requestBody = new FormBody.Builder().
                     add("title", title).
@@ -525,13 +526,15 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
         private String checkImg(String image) {
 //            이미지 주소에 테이블 이름 붙이는 메소드
             String add = "";
-            if (image != null) {
+            if (!image.equals("")) {
                 if (listName.equals("clubtable")) {
                     add += "clubtable/";
                 } else if (listName.equals("freelancer")) {
                     add += "freelancer/";
                 }
                 add += MainActivity.mUsername + '/';
+            } else {
+                return " ";
             }
             return add + image;
         }
@@ -573,8 +576,6 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
             url += "/imagesave.php";
 
             File file = new File(fileToBitmap(uri));
-
-            String path = file.getPath();
             String filename = file.getName().toString();
 
             //Request Body에 서버에 보낼 데이터 작성

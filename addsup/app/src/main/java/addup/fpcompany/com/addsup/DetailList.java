@@ -180,8 +180,6 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
                     build();
             String url = "http://spotz.co.kr/var/www/html/hitupdate.php";
 
-            Log.d("heu", "리스트네임 : " + listname);
-
             Request request = new Request.Builder().url(url).post(requestBody).build();
             client.newCall(request).enqueue(new Callback() {
                 @Override
