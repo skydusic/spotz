@@ -15,7 +15,7 @@
     session_start();
 
     $idx=isset($_POST['idx']) ? $_POST['idx'] : '';
-    $sql = "delete from favorite where idx = '$idx'";
+    $sql = "delete from history where idx = '$idx'";
     $result = mysqli_query($link,$sql);
 
     if($result){

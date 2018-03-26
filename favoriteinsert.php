@@ -2,7 +2,6 @@
     error_reporting(E_ALL); 
     ini_set('display_errors',1); 
 
-    //$link=mysqli_connect("localhost","root id","root pw","db name");
     $link=mysqli_connect("localhost","spotz","tongood77","spotz");
     if (!$link)  
     { 
