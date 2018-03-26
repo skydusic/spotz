@@ -17,6 +17,7 @@ import java.util.ArrayList;
 
 import addup.fpcompany.com.addsup.adapter.PagerAdapter;
 import addup.fpcompany.com.addsup.frag.DetailFrag;
+import addup.fpcompany.com.addsup.java.favoriteItem;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.FormBody;
@@ -48,6 +49,11 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
     String listname = "";
 
     String url = MainActivity.serverUrl + "userImageFolder/";
+
+    Boolean favoriteFLAG = false;
+
+    favoriteItem favoriteTemp;
+    int favortitePos = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,6 +89,22 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
 
         hitUpdate hitUpdate = new hitUpdate();
         hitUpdate.requestPost();
+
+        //즐겨찾기 플래그
+        for (int i = 0; i < MainActivity.favoriteArr.size(); i++) {
+            favoriteTemp = MainActivity.favoriteArr.get(i);
+            Log.d("heu", "리스트네임 : " + listname + ", 템프 : " + favoriteTemp.getListname());
+            Log.d("heu", "인덱스 : " + idx + ", 템프 : " + favoriteTemp.getPostidx());
+            if(favoriteTemp.getListname().equals(listname) && favoriteTemp.getPostidx().equals(idx)){
+                favoriteFLAG = true;
+                favorite.setImageResource(R.drawable.yellowstar);
+                favortitePos = Integer.parseInt(favoriteTemp.getIdx());
+                break;
+            } else {
+                favoriteFLAG = false;
+                favorite.setImageResource(R.drawable.blackstar);
+            }
+        }
 
         favorite.setOnClickListener(this);
 
@@ -125,7 +147,18 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
                 }
                 break;
             case (R.id.favorite):
-                favorite.setImageResource(R.drawable.yellowstar);
+                if(favoriteFLAG){
+                    favorite.setImageResource(R.drawable.blackstar);
+                    favoriteDelete delete = new favoriteDelete();
+                    delete.requestPost(String.valueOf(favortitePos));
+                } else {
+                    favorite.setImageResource(R.drawable.yellowstar);
+                    favoriteInsert insert = new favoriteInsert();
+                    insert.requestPost(listname, idx);
+                }
+                favoriteFLAG = !favoriteFLAG;
+                MainActivity.getFavorite fav = new MainActivity.getFavorite();
+                fav.requestPost(MainActivity.mUsername);
                 break;
         }
     }
@@ -187,6 +220,60 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
                     add("idx", idx).
                     build();
             String url = "http://spotz.co.kr/var/www/html/hitupdate.php";
+
+            Request request = new Request.Builder().url(url).post(requestBody).build();
+            client.newCall(request).enqueue(new Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
+                    Log.d("heu", "Connect Server Error is " + e.toString());
+                }
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+                    Log.d("heu", "hitupdate res : " + response.body().string());
+                }
+            });
+        }
+    }
+
+    class favoriteInsert {
+        //Client 생성
+        OkHttpClient client = new OkHttpClient();
+
+        public void requestPost(String listname, String postidx) {
+
+            //Request Body에 서버에 보낼 데이터 작성
+            RequestBody requestBody = new FormBody.Builder().
+                    add("username", MainActivity.mUsername).
+                    add("listname", listname).
+                    add("postidx", postidx).
+                    build();
+            String url = "http://spotz.co.kr/var/www/html/favoriteinsert.php";
+
+            Request request = new Request.Builder().url(url).post(requestBody).build();
+            client.newCall(request).enqueue(new Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
+                    Log.d("heu", "Connect Server Error is " + e.toString());
+                }
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+                    Log.d("heu", "favorite res : " + response.body().string());
+                }
+            });
+        }
+    }
+
+    class favoriteDelete {
+        //Client 생성
+        OkHttpClient client = new OkHttpClient();
+
+        public void requestPost(String idx) {
+
+            //Request Body에 서버에 보낼 데이터 작성
+            RequestBody requestBody = new FormBody.Builder().
+                    add("idx", idx).
+                    build();
+            String url = "http://spotz.co.kr/var/www/html/favoritedelete.php";
 
             Request request = new Request.Builder().url(url).post(requestBody).build();
             client.newCall(request).enqueue(new Callback() {

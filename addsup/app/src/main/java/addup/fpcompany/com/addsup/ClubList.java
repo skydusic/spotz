@@ -148,7 +148,7 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
                         intent.putExtra("contents", listItems.get(position).getContents());
                         intent.putExtra("created", listItems.get(position).getCreated());
 
-                        /** 해야할 일 이미지를 스플릿으로 저장 & 불러오기 */
+                        /** 해야할 일 이미지 -> 리사이클러뷰 */
                         String image = listItems.get(position).getImage();
                         String[] temp = image.split(",");
                         intent.putExtra("image", temp[0]);

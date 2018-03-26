@@ -32,6 +32,7 @@ import okhttp3.Response;
 
 public class ActionDetailActivity extends AppCompatActivity {
 
+    /** 마이페이지 목록 -> 각 메뉴별 아이템 보여주기 */
     TextView detailTv;
     RecyclerView recyclerView;
     MainListAdater adapter;

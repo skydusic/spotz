@@ -24,6 +24,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.iid.FirebaseInstanceId;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -32,8 +33,12 @@ import java.util.ArrayList;
 
 import addup.fpcompany.com.addsup.adapter.PagerAdapter;
 import addup.fpcompany.com.addsup.frag.adfrag;
+import addup.fpcompany.com.addsup.java.favoriteItem;
+import okhttp3.Call;
+import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class MainActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener, View.OnClickListener,
@@ -48,6 +53,7 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
     private static final String TAG = "MainActivity";
     private AdView mAdView;
 
+    static ArrayList<favoriteItem> favoriteArr = new ArrayList<>();
 
     private final long FINISH_INTERVAL_TIME = 2000;
     private long backPressedTime = 0;
@@ -128,6 +134,10 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
         getSpinner getSpinner = new getSpinner();
         getSpinner.execute();
 
+        //favorite 가져오기
+
+        getFavorite fav = new getFavorite();
+        fav.requestPost(mUsername);
     }
 
     private void ADset() {
@@ -257,6 +267,49 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
                 e.printStackTrace();
                 Log.d("heu", "adapter Exception : " + e);
             }
+
+        }
+    }
+
+    static class getFavorite {
+        String result;
+        OkHttpClient client = new OkHttpClient();
+        Request request;
+
+        public void requestPost(String username) {
+
+            String url = "http://spotz.co.kr/var/www/html/favoriteselect.php";
+
+            RequestBody requestBody = new FormBody.Builder().
+                    add("username", username).
+                    build();
+
+            request = new Request.Builder().url(url).post(requestBody).build();
+            client.newCall(request).enqueue(new okhttp3.Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
+                    Log.d(TAG, "Connect Server Error is " + e.toString());
+
+                }
+
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+                    result = response.body().string();
+                    favoriteArr.clear();
+                    try {
+                        JSONObject jsonObj = new JSONObject(result);
+                        JSONArray post = jsonObj.getJSONArray("results");
+                        for (int i = 0; i < post.length(); i++) {
+                            JSONObject c = post.getJSONObject(i);
+                            favoriteArr.add(new favoriteItem(c.getString("idx"), c.getString("listname"), c.getString("postidx")));
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+
+                }
+            });
 
         }
     }

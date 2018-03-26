@@ -26,8 +26,5 @@ else{
    echo "SQL문 처리중 에러 발생 : ";
    echo mysqli_error($link);
 }
-
-
-
 mysqli_close($link);
 ?>

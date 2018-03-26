@@ -63,7 +63,6 @@ public class myPageActivity extends AppCompatActivity implements View.OnClickLis
 //        getUserData();
         getActionList();
 
-
         actionList.addOnItemTouchListener(new RecyclerItemClickListener(this, actionList, new RecyclerItemClickListener.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
@@ -71,7 +70,6 @@ public class myPageActivity extends AppCompatActivity implements View.OnClickLis
                 intent.putExtra("actionName", actionArr.get(position).toString());
                 startActivity(intent);
             }
-
             @Override
             public void onLongItemClick(View view, int position) {
 
@@ -94,7 +92,6 @@ public class myPageActivity extends AppCompatActivity implements View.OnClickLis
 
     }
 
-
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -102,25 +99,20 @@ public class myPageActivity extends AppCompatActivity implements View.OnClickLis
                 FirebaseAuth.getInstance().signOut();
                 Toast.makeText(this, "로그아웃 되었습니다", Toast.LENGTH_SHORT).show();
                 finish();
-
                 break;
             case (R.id.bottomHome):
                 Intent intent = new Intent(myPageActivity.this, MainActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
-
                 break;
-
             case (R.id.bottomNotice):
                 intent = new Intent(myPageActivity.this, Notice_Activity.class);
                 startActivity(intent);
                 break;
-
             case (R.id.bottomInfo):
                 intent = new Intent(myPageActivity.this, infoActivity.class);
                 startActivity(intent);
                 break;
-
             case (R.id.bottomMember):
                 /*Intent intent1 = new Intent(myPageActivity.this, myPageActivity.class);
                 startActivity(intent1);*/
