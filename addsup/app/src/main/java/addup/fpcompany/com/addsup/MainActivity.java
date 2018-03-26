@@ -274,6 +274,7 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
     static class getFavorite {
         String result;
         OkHttpClient client = new OkHttpClient();
+        Request request;
 
         public void requestPost(String username) {
 
@@ -283,7 +284,7 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
                     add("username", username).
                     build();
 
-            Request request = new Request.Builder().url(url).post(requestBody).build();
+            request = new Request.Builder().url(url).post(requestBody).build();
             client.newCall(request).enqueue(new okhttp3.Callback() {
                 @Override
                 public void onFailure(Call call, IOException e) {
@@ -294,6 +295,7 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
                     result = response.body().string();
+                    favoriteArr.clear();
                     try {
                         JSONObject jsonObj = new JSONObject(result);
                         JSONArray post = jsonObj.getJSONArray("results");

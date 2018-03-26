@@ -1,6 +1,5 @@
 package addup.fpcompany.com.addsup;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -50,8 +49,11 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
     String listname = "";
 
     String url = MainActivity.serverUrl + "userImageFolder/";
+
     Boolean favoriteFLAG = false;
-    int favoritePos = 0;
+
+    favoriteItem favoriteTemp;
+    int favortitePos = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,7 +68,7 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
         contentsTv = findViewById(R.id.contents);
         viewPager = findViewById(R.id.viewPager);
         favorite = findViewById(R.id.favorite);
-        favorite.setImageResource(R.drawable.blackstar);
+
 
         // 인텐트로 정보 가져옴
         intent = getIntent();
@@ -77,47 +79,35 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
         listname = intent.getStringExtra("listname");
         detailNameTv.setText(idx + " : " + title);
         contentsTv.setText(contents);
+
         image = intent.getStringExtra("image");
 
         // 이미지 세팅
         setRecyclerView();
         // 이미지 페이지 넘기는 핸들러
         handler.sendEmptyMessageDelayed(0, 2000);
+
         hitUpdate hitUpdate = new hitUpdate();
         hitUpdate.requestPost();
 
         //즐겨찾기 플래그
-        favImageSet();
-
-        favorite.setOnClickListener(this);
-    }
-
-    private void favImageSet() {
-
         for (int i = 0; i < MainActivity.favoriteArr.size(); i++) {
-            favoriteItem favoriteTemp = MainActivity.favoriteArr.get(i);
-
-            Log.d("heu", favoriteTemp.getListname() + " : " + listname);
-            Log.d("heu", favoriteTemp.getPostidx() + " : " + idx);
-
-            if (favoriteTemp.getListname().equals(listname) && favoriteTemp.getPostidx().equals(idx)) {
-                favorite.setImageResource(R.drawable.yellowstar);
-                favoritePos = Integer.parseInt(favoriteTemp.getIdx());
+            favoriteTemp = MainActivity.favoriteArr.get(i);
+            Log.d("heu", "리스트네임 : " + listname + ", 템프 : " + favoriteTemp.getListname());
+            Log.d("heu", "인덱스 : " + idx + ", 템프 : " + favoriteTemp.getPostidx());
+            if(favoriteTemp.getListname().equals(listname) && favoriteTemp.getPostidx().equals(idx)){
                 favoriteFLAG = true;
+                favorite.setImageResource(R.drawable.yellowstar);
+                favortitePos = Integer.parseInt(favoriteTemp.getIdx());
                 break;
             } else {
-                favorite.setImageResource(R.drawable.blackstar);
                 favoriteFLAG = false;
+                favorite.setImageResource(R.drawable.blackstar);
             }
         }
-    }
 
-    private void favoriteSet() {
-        MainActivity.getFavorite fav = new MainActivity.getFavorite();
-        MainActivity.favoriteArr.clear();
-        fav.requestPost(MainActivity.mUsername);
-        handler2.sendEmptyMessage(1000);
-        favImageSet();
+        favorite.setOnClickListener(this);
+
     }
 
     private void setRecyclerView() {
@@ -157,23 +147,24 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
                 }
                 break;
             case (R.id.favorite):
-
-                /** 즐겨찾기 오류 마무리 */
-                if (favoriteFLAG) {
-                    Log.d("heu", "딜리트");
+                if(favoriteFLAG){
+                    favorite.setImageResource(R.drawable.blackstar);
                     favoriteDelete delete = new favoriteDelete();
-                    delete.requestPost(String.valueOf(favoritePos));
+                    delete.requestPost(String.valueOf(favortitePos));
                 } else {
-                    Log.d("heu", "인서트 ");
+                    favorite.setImageResource(R.drawable.yellowstar);
                     favoriteInsert insert = new favoriteInsert();
                     insert.requestPost(listname, idx);
                 }
+                favoriteFLAG = !favoriteFLAG;
+                MainActivity.getFavorite fav = new MainActivity.getFavorite();
+                fav.requestPost(MainActivity.mUsername);
                 break;
         }
     }
 
-    int pagerPos = 0;
 
+    int pagerPos = 0;
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
@@ -188,17 +179,19 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
     @Override
     public void onPageScrollStateChanged(int state) {
         if (state == ViewPager.SCROLL_STATE_IDLE) {
+//            Log.d("heu", "State IDLE");
             handler.sendEmptyMessageDelayed(0, 2000);
 
         } else if (state == ViewPager.SCROLL_STATE_DRAGGING) {
+//            Log.d("heu", "State Draging");
             handler.removeMessages(0);
 
         } else if (state == ViewPager.SCROLL_STATE_SETTLING) {
 
+//            Log.d("heu", "State Settling");
         }
     }
 
-    @SuppressLint("HandlerLeak")
     Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -215,21 +208,8 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
         }
     };
 
-    @SuppressLint("HandlerLeak")
-    Handler handler2 = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            if (MainActivity.favoriteArr != null) {
-                favoriteSet();
-            } else {
-                handler2.sendEmptyMessageDelayed(1000, 200);
-            }
-
-        }
-    };
-
     class hitUpdate {
+        //Client 생성
         OkHttpClient client = new OkHttpClient();
 
         public void requestPost() {
@@ -247,7 +227,6 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
                 public void onFailure(Call call, IOException e) {
                     Log.d("heu", "Connect Server Error is " + e.toString());
                 }
-
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
                     Log.d("heu", "hitupdate res : " + response.body().string());
@@ -257,6 +236,7 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
     }
 
     class favoriteInsert {
+        //Client 생성
         OkHttpClient client = new OkHttpClient();
 
         public void requestPost(String listname, String postidx) {
@@ -275,21 +255,21 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
                 public void onFailure(Call call, IOException e) {
                     Log.d("heu", "Connect Server Error is " + e.toString());
                 }
-
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
                     Log.d("heu", "favorite res : " + response.body().string());
-                    favImageSet();
                 }
             });
         }
     }
 
     class favoriteDelete {
+        //Client 생성
         OkHttpClient client = new OkHttpClient();
 
         public void requestPost(String idx) {
 
+            //Request Body에 서버에 보낼 데이터 작성
             RequestBody requestBody = new FormBody.Builder().
                     add("idx", idx).
                     build();
@@ -301,61 +281,6 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
                 public void onFailure(Call call, IOException e) {
                     Log.d("heu", "Connect Server Error is " + e.toString());
                 }
-
-                @Override
-                public void onResponse(Call call, Response response) throws IOException {
-                    Log.d("heu", "hitupdate res : " + response.body().string());
-                    favImageSet();
-                }
-            });
-        }
-    }
-
-    class historyInsert {
-        OkHttpClient client = new OkHttpClient();
-
-        public void requestPost(String listname, String postidx) {
-
-            //Request Body에 서버에 보낼 데이터 작성
-            RequestBody requestBody = new FormBody.Builder().
-                    add("username", MainActivity.mUsername).
-                    add("listname", listname).
-                    add("postidx", postidx).
-                    build();
-            String url = "http://spotz.co.kr/var/www/html/historyinsert.php";
-
-            Request request = new Request.Builder().url(url).post(requestBody).build();
-            client.newCall(request).enqueue(new Callback() {
-                @Override
-                public void onFailure(Call call, IOException e) {
-                    Log.d("heu", "Connect Server Error is " + e.toString());
-                }
-
-                @Override
-                public void onResponse(Call call, Response response) throws IOException {
-                    Log.d("heu", "favorite res : " + response.body().string());
-                }
-            });
-        }
-    }
-
-    class historyDelete {
-        OkHttpClient client = new OkHttpClient();
-
-        public void requestPost(String idx) {
-
-            RequestBody requestBody = new FormBody.Builder().
-                    add("idx", idx).
-                    build();
-            String url = "http://spotz.co.kr/var/www/html/historydelete.php";
-
-            Request request = new Request.Builder().url(url).post(requestBody).build();
-            client.newCall(request).enqueue(new Callback() {
-                @Override
-                public void onFailure(Call call, IOException e) {
-                    Log.d("heu", "Connect Server Error is " + e.toString());
-                }
-
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
                     Log.d("heu", "hitupdate res : " + response.body().string());
@@ -363,4 +288,5 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
             });
         }
     }
+
 }

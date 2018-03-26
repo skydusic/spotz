@@ -116,6 +116,9 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 getPost.requestPost(boardUrl, MainActivity.spinList1.get(position), "", listName);
+
+                Log.d("heu", "스피너1 : " + MainActivity.spinList1.get(position));
+
                 spinner2.setVisibility(View.INVISIBLE);
                 spinnerAdapter2 = new ArrayAdapter<>(ClubList.this, R.layout.support_simple_spinner_dropdown_item, MainActivity.spinList2.get(position));
                 spinner2.setAdapter(spinnerAdapter2);
@@ -288,6 +291,8 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
         Request request;
 
         public void requestPost(String url, String spindata1, String spindata2, String listname) {
+
+
             RequestBody requestBody = new FormBody.Builder().
                     add("spindata1", spindata1).
                     add("spindata2", spindata2).
@@ -386,6 +391,7 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
         if (position != 0) {
             getPost.requestPost(boardUrl, "", MainActivity.spinList2.get(spinner1Num).get(position), listName);
         }
+
     }
 
     @Override
