@@ -66,7 +66,6 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
         contentsTv = findViewById(R.id.contents);
         viewPager = findViewById(R.id.viewPager);
         favorite = findViewById(R.id.favorite);
-        favorite.setImageResource(R.drawable.blackstar);
 
         // 인텐트로 정보 가져옴
         intent = getIntent();
@@ -87,22 +86,20 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
         hitUpdate.requestPost();
 
         //즐겨찾기 플래그
-        favImageSet();
+        favoriteSet();
 
         favorite.setOnClickListener(this);
     }
 
     private void favImageSet() {
-
         for (int i = 0; i < MainActivity.favoriteArr.size(); i++) {
             favoriteItem favoriteTemp = MainActivity.favoriteArr.get(i);
-
-            Log.d("heu", favoriteTemp.getListname() + " : " + listname);
-            Log.d("heu", favoriteTemp.getPostidx() + " : " + idx);
-
+            Log.d("heu", "플래그 : " + favoriteFLAG);
             if (favoriteTemp.getListname().equals(listname) && favoriteTemp.getPostidx().equals(idx)) {
-                favorite.setImageResource(R.drawable.yellowstar);
+
                 favoritePos = Integer.parseInt(favoriteTemp.getIdx());
+
+                favorite.setImageResource(R.drawable.yellowstar);
                 favoriteFLAG = true;
                 break;
             } else {
@@ -110,14 +107,16 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
                 favoriteFLAG = false;
             }
         }
+
+        Log.d("heu", "포스 : " + favoritePos);
+
     }
 
     private void favoriteSet() {
         MainActivity.getFavorite fav = new MainActivity.getFavorite();
         MainActivity.favoriteArr.clear();
         fav.requestPost(MainActivity.mUsername);
-        handler2.sendEmptyMessage(1000);
-        favImageSet();
+        handler2.sendEmptyMessageDelayed(1000, 100);
     }
 
     private void setRecyclerView() {
@@ -158,16 +157,18 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
                 break;
             case (R.id.favorite):
 
-                /** 즐겨찾기 오류 마무리 */
-                if (favoriteFLAG) {
+                if(favoriteFLAG) {
                     Log.d("heu", "딜리트");
                     favoriteDelete delete = new favoriteDelete();
                     delete.requestPost(String.valueOf(favoritePos));
+
                 } else {
                     Log.d("heu", "인서트 ");
                     favoriteInsert insert = new favoriteInsert();
                     insert.requestPost(listname, idx);
                 }
+                favoriteSet();
+
                 break;
         }
     }
@@ -221,7 +222,8 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             if (MainActivity.favoriteArr != null) {
-                favoriteSet();
+                favImageSet();
+                removeMessages(1000);
             } else {
                 handler2.sendEmptyMessageDelayed(1000, 200);
             }
@@ -279,7 +281,7 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
                     Log.d("heu", "favorite res : " + response.body().string());
-                    favImageSet();
+                    favoriteSet();
                 }
             });
         }
@@ -305,7 +307,7 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
                     Log.d("heu", "hitupdate res : " + response.body().string());
-                    favImageSet();
+                    favoriteSet();
                 }
             });
         }
@@ -362,5 +364,12 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
                 }
             });
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        handler.removeMessages(0);
+        handler2.removeMessages(1000);
     }
 }

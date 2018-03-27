@@ -304,11 +304,8 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-
-
                 }
             });
-
         }
     }
 
