@@ -69,9 +69,12 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
         viewPager = findViewById(R.id.viewPager);
         favorite = findViewById(R.id.favorite);
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
 >>>>>>> 즐겨찾기 수정 완료
+=======
+>>>>>>> ec8f8a39db91f6af040a18f75ae3b48326d28fb8
 
         // 인텐트로 정보 가져옴
         intent = getIntent();
@@ -95,12 +98,15 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
 
         //즐겨찾기 플래그
 <<<<<<< HEAD
+<<<<<<< HEAD
         for (int i = 0; i < MainActivity.favoriteArr.size(); i++) {
             favoriteTemp = MainActivity.favoriteArr.get(i);
             Log.d("heu", "리스트네임 : " + listname + ", 템프 : " + favoriteTemp.getListname());
             Log.d("heu", "인덱스 : " + idx + ", 템프 : " + favoriteTemp.getPostidx());
             if(favoriteTemp.getListname().equals(listname) && favoriteTemp.getPostidx().equals(idx)){
 =======
+=======
+>>>>>>> ec8f8a39db91f6af040a18f75ae3b48326d28fb8
         favoriteSet();
 
         //히스토리 기록
@@ -118,7 +124,10 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
                 favoritePos = Integer.parseInt(favoriteTemp.getIdx());
 
                 favorite.setImageResource(R.drawable.yellowstar);
+<<<<<<< HEAD
 >>>>>>> 즐겨찾기 수정 완료
+=======
+>>>>>>> ec8f8a39db91f6af040a18f75ae3b48326d28fb8
                 favoriteFLAG = true;
                 favorite.setImageResource(R.drawable.yellowstar);
                 favortitePos = Integer.parseInt(favoriteTemp.getIdx());
@@ -146,7 +155,10 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
         MainActivity.favoriteArr.clear();
         fav.requestPost(MainActivity.mUsername);
         handler2.sendEmptyMessageDelayed(1000, 100);
+<<<<<<< HEAD
 >>>>>>> 즐겨찾기 수정 완료
+=======
+>>>>>>> ec8f8a39db91f6af040a18f75ae3b48326d28fb8
     }
 
     private void setRecyclerView() {
@@ -197,6 +209,7 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
                     favoriteDelete delete = new favoriteDelete();
                     delete.requestPost(String.valueOf(favoritePos));
 
+<<<<<<< HEAD
 >>>>>>> 즐겨찾기 수정 완료
                 } else {
 <<<<<<< HEAD
@@ -214,6 +227,14 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
                 favoriteSet();
 
 >>>>>>> 즐겨찾기 수정 완료
+=======
+                } else {
+                    favoriteInsert insert = new favoriteInsert();
+                    insert.requestPost(listname, idx);
+                }
+                favoriteSet();
+
+>>>>>>> ec8f8a39db91f6af040a18f75ae3b48326d28fb8
                 break;
         }
     }
@@ -332,9 +353,13 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
                 public void onResponse(Call call, Response response) throws IOException {
                     Log.d("heu", "favorite res : " + response.body().string());
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
                     favoriteSet();
 >>>>>>> 즐겨찾기 수정 완료
+=======
+                    favoriteSet();
+>>>>>>> ec8f8a39db91f6af040a18f75ae3b48326d28fb8
                 }
             });
         }
@@ -362,9 +387,13 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
                 public void onResponse(Call call, Response response) throws IOException {
                     Log.d("heu", "hitupdate res : " + response.body().string());
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
                     favoriteSet();
 >>>>>>> 즐겨찾기 수정 완료
+=======
+                    favoriteSet();
+>>>>>>> ec8f8a39db91f6af040a18f75ae3b48326d28fb8
                 }
             });
         }
@@ -433,5 +462,9 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
         handler.removeMessages(0);
         handler2.removeMessages(1000);
     }
+<<<<<<< HEAD
 }
 >>>>>>> 즐겨찾기 수정 완료
+=======
+}
+>>>>>>> ec8f8a39db91f6af040a18f75ae3b48326d28fb8
