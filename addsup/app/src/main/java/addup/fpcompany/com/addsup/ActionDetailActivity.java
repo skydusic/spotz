@@ -37,12 +37,13 @@ public class ActionDetailActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     MainListAdater adapter;
     Intent intent;
-    String url;
+    String url = "";
     String Json = "";
     JSONArray post;
     ArrayList<listItem> listArr = new ArrayList<>();
 
     String pageName;
+    String username;
     listItem item;
 
     private static final String TAG_RESULTS = "results";
@@ -63,18 +64,20 @@ public class ActionDetailActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerView);
         intent = getIntent();
         pageName = intent.getStringExtra("actionName");
+        username = MainActivity.mUsername;
         detailTv.setText(pageName);
 
         if (pageName.equals("내 글 보기")) {
             url = "http://spotz.co.kr/var/www/html/getPostOfName.php";
         } else if (pageName.equals("즐겨찾기")) {
-            url = "";
+            url = "http://spotz.co.kr/var/www/html/favoriteselect.php";
         } else if (pageName.equals("최근 본 글")) {
-            url = "";
+            url = "http://spotz.co.kr/var/www/html/historyselect.php";
         }
 
-        getData();
-
+        getPostedList getPostedList = new getPostedList();
+        getPostedList.requestPost(url, username);
+        handler.sendEmptyMessage(50);
 
     }
 
@@ -111,6 +114,11 @@ public class ActionDetailActivity extends AppCompatActivity {
                             item = listArr.get(position);
                             Intent intent = new Intent(ActionDetailActivity.this, myPageOption.class);
                             startActivity(intent);
+                        } else {
+                            item = listArr.get(position);
+
+
+                            startActivity(intent);
                         }
 
                     }
@@ -123,33 +131,22 @@ public class ActionDetailActivity extends AppCompatActivity {
         );
     }
 
-    private void getData() {
-
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                getPostedList getPostedList = new getPostedList();
-                getPostedList.requestPost(url, MainActivity.mUsername);
-                handler1.sendEmptyMessage(100);
-            }
-        }).start();
-    }
-
     @SuppressLint("HandlerLeak")
-    Handler handler1 = new Handler() {
+    Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
+
+            Log.d("heu", "핸들러");
             if (!Json.equals("")) {
                 showList(Json);
-                removeMessages(100);
                 Json = "";
+                handler.removeMessages(50);
             } else {
-                handler1.sendEmptyMessageDelayed(100, 200);
+                handler.sendEmptyMessageDelayed(50, 200);
             }
         }
     };
-
 
     // 올린 글을 찾아온다
     class getPostedList {
@@ -161,7 +158,7 @@ public class ActionDetailActivity extends AppCompatActivity {
             //Request Body에 서버에 보낼 데이터 작성
             RequestBody requestBody = new FormBody.Builder().add("username", username).build();
 
-            final Request request = new Request.Builder().url(url).post(requestBody).build();
+            Request request = new Request.Builder().url(url).post(requestBody).build();
             client.newCall(request).enqueue(new Callback() {
                 @Override
                 public void onFailure(Call call, IOException e) {
@@ -177,4 +174,9 @@ public class ActionDetailActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        handler.removeMessages(50);
+    }
 }

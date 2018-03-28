@@ -17,14 +17,14 @@
     $result = mysqli_query($connect,$sql);
     $total_record = mysqli_num_rows($result);
 
+    mysqli_data_seek($result, $i);
+    $row = mysqli_fetch_array($result);
     echo "{\"status\":\"OK\",\"num_results\":\"$total_record\",\"results\":[";
 
     for ($i=0; $i < $total_record; $i++)
     {
-      mysqli_data_seek($result, $i);
-      $row = mysqli_fetch_array($result);
-      echo "{\"idx\":$row[idx],\"postidx\":\"$row[postidx]\",\"listname\":\"$row[listname]\",\"created\":\"$row[created]\"}";
-
+        
+        echo "{\"idx\":$row[idx],\"title\":\"$row[title]\",\"contents\":\"$row[contents]\",\"username\":\"$row[username]\",\"created\":\"$row[created]\",\"image\":\"$row[image]\"}";
     if($i<$total_record-1){
       echo ",";
     }
