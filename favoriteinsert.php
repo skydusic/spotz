@@ -9,7 +9,7 @@
        echo "MySQL 접속 에러 : ";
        echo mysqli_connect_error();
        exit();
-    }  
+    }
     
     mysqli_set_charset($link,"utf8");  
 

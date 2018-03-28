@@ -117,7 +117,6 @@ public class Notice_Activity extends AppCompatActivity implements View.OnClickLi
     protected void showList() {
         noticeArr.clear();
         try {
-            Log.d("heu", "마이 제이슨 : " + myJSON);
             JSONObject jsonObj = new JSONObject(myJSON);
             topic = jsonObj.getJSONArray(TAG_RESULTS);
 

@@ -80,7 +80,7 @@ public class myPageActivity extends AppCompatActivity implements View.OnClickLis
 
     private void getActionList() {
 
-        actionArr.add("내글 보기");
+        actionArr.add("내 글 보기");
         actionArr.add("즐겨찾기");
         actionArr.add("최근 본 글");
 

@@ -103,13 +103,16 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
 =======
         favoriteSet();
 
+        //히스토리 기록
+        historyInsert insert = new historyInsert();
+        insert.requestPost(listname, idx);
+
         favorite.setOnClickListener(this);
     }
 
     private void favImageSet() {
         for (int i = 0; i < MainActivity.favoriteArr.size(); i++) {
             favoriteItem favoriteTemp = MainActivity.favoriteArr.get(i);
-            Log.d("heu", "플래그 : " + favoriteFLAG);
             if (favoriteTemp.getListname().equals(listname) && favoriteTemp.getPostidx().equals(idx)) {
 
                 favoritePos = Integer.parseInt(favoriteTemp.getIdx());
@@ -126,6 +129,7 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
             }
         }
 <<<<<<< HEAD
+<<<<<<< HEAD
 
         favorite.setOnClickListener(this);
 
@@ -133,6 +137,8 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
 
         Log.d("heu", "포스 : " + favoritePos);
 
+=======
+>>>>>>> 즐겨찾기, 내 글 보기, 히스토리 부분 완성  , 주메뉴 테이블 추가했음
     }
 
     private void favoriteSet() {
@@ -188,13 +194,15 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
 =======
 
                 if(favoriteFLAG) {
-                    Log.d("heu", "딜리트");
                     favoriteDelete delete = new favoriteDelete();
                     delete.requestPost(String.valueOf(favoritePos));
 
 >>>>>>> 즐겨찾기 수정 완료
                 } else {
+<<<<<<< HEAD
                     favorite.setImageResource(R.drawable.yellowstar);
+=======
+>>>>>>> 즐겨찾기, 내 글 보기, 히스토리 부분 완성  , 주메뉴 테이블 추가했음
                     favoriteInsert insert = new favoriteInsert();
                     insert.requestPost(listname, idx);
                 }
@@ -396,10 +404,11 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
     class historyDelete {
         OkHttpClient client = new OkHttpClient();
 
-        public void requestPost(String idx) {
+        public void requestPost(String listname) {
 
             RequestBody requestBody = new FormBody.Builder().
-                    add("idx", idx).
+                    add("username", MainActivity.mUsername).
+                    add("listname", listname).
                     build();
             String url = "http://spotz.co.kr/var/www/html/historydelete.php";
 
