@@ -98,10 +98,16 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
         //넘어온 경로에 따라 다른리스트를 받는다
         if (listName.equals("clubtable")) {
             listTopName.setText("스포츠 클럽");
-
-
         } else if (listName.equals("freelancer")) {
             listTopName.setText("스포츠 프리랜서");
+        } else if (listName.equals("competition")) {
+            listTopName.setText("스포츠 대회");
+        } else if (listName.equals("dongho")) {
+            listTopName.setText("스포츠 동호회");
+        } else if (listName.equals("review")) {
+            listTopName.setText("스포츠 제품 리뷰");
+        } else if (listName.equals("employment")) {
+            listTopName.setText("스포츠 취업정보");
         }
 
         //권한 체크 순서
@@ -116,9 +122,6 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 getPost.requestPost(boardUrl, MainActivity.spinList1.get(position), "", listName);
-
-                Log.d("heu", "스피너1 : " + MainActivity.spinList1.get(position));
-
                 spinner2.setVisibility(View.INVISIBLE);
                 spinnerAdapter2 = new ArrayAdapter<>(ClubList.this, R.layout.support_simple_spinner_dropdown_item, MainActivity.spinList2.get(position));
                 spinner2.setAdapter(spinnerAdapter2);
@@ -291,8 +294,6 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
         Request request;
 
         public void requestPost(String url, String spindata1, String spindata2, String listname) {
-
-
             RequestBody requestBody = new FormBody.Builder().
                     add("spindata1", spindata1).
                     add("spindata2", spindata2).
@@ -391,7 +392,6 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
         if (position != 0) {
             getPost.requestPost(boardUrl, "", MainActivity.spinList2.get(spinner1Num).get(position), listName);
         }
-
     }
 
     @Override

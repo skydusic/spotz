@@ -66,7 +66,7 @@
             android:padding="5dp">
 
             <ImageView
-                android:id="@+id/sportsClub"
+                android:id="@+id/dongho"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
@@ -82,7 +82,7 @@
                 android:src="@drawable/cate5" />
 
             <ImageView
-                android:id="@+id/careers"
+                android:id="@+id/employment"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"

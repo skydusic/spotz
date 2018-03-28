@@ -48,6 +48,10 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
     int pagerPos = 0;
     ImageView clubBtn;
     ImageView freeBtn;
+    ImageView Competition;
+    ImageView dongho;
+    ImageView review;
+    ImageView employment;
 
     Intent intent;
     private static final String TAG = "MainActivity";
@@ -79,6 +83,10 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
         mainTopPager = findViewById(R.id.mainTopPager);
         clubBtn = findViewById(R.id.clubBtn);
         freeBtn = findViewById(R.id.freeBtn);
+        Competition = findViewById(R.id.Competition);
+        dongho = findViewById(R.id.dongho);
+        review = findViewById(R.id.review);
+        employment = findViewById(R.id.employment);
 
 
 //        메뉴 로그인
@@ -101,10 +109,6 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
 
         // 광고 이미지 주소 받아오기, 프래그먼트 설정
         ADset();
-
-        clubBtn.setOnClickListener(this);
-        freeBtn.setOnClickListener(this);
-
 
         handler.sendEmptyMessageDelayed(0, 2000);
         // 파이어베이스 구글로그인
@@ -135,9 +139,16 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
         getSpinner.execute();
 
         //favorite 가져오기
-
         getFavorite fav = new getFavorite();
         fav.requestPost(mUsername);
+
+//        클릭 리스너
+        clubBtn.setOnClickListener(this);
+        freeBtn.setOnClickListener(this);
+        Competition.setOnClickListener(this);
+        dongho.setOnClickListener(this);
+        review.setOnClickListener(this);
+        employment.setOnClickListener(this);
     }
 
     private void ADset() {
@@ -274,7 +285,6 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
     static class getFavorite {
         String result;
         OkHttpClient client = new OkHttpClient();
-        Request request;
 
         public void requestPost(String username) {
 
@@ -284,7 +294,7 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
                     add("username", username).
                     build();
 
-            request = new Request.Builder().url(url).post(requestBody).build();
+            Request request = new Request.Builder().url(url).post(requestBody).build();
             client.newCall(request).enqueue(new okhttp3.Callback() {
                 @Override
                 public void onFailure(Call call, IOException e) {
@@ -295,7 +305,6 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
                     result = response.body().string();
-                    favoriteArr.clear();
                     try {
                         JSONObject jsonObj = new JSONObject(result);
                         JSONArray post = jsonObj.getJSONArray("results");
@@ -306,11 +315,8 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-
-
                 }
             });
-
         }
     }
 
@@ -326,6 +332,30 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
             case (R.id.freeBtn):
                 intent = new Intent(MainActivity.this, ClubList.class);
                 intent.putExtra("listName", "freelancer");
+                startActivity(intent);
+                break;
+
+            case (R.id.Competition):
+                intent = new Intent(MainActivity.this, ClubList.class);
+                intent.putExtra("listName", "Competition");
+                startActivity(intent);
+                break;
+
+            case (R.id.dongho):
+                intent = new Intent(MainActivity.this, ClubList.class);
+                intent.putExtra("listName", "dongho");
+                startActivity(intent);
+                break;
+
+            case (R.id.review):
+                intent = new Intent(MainActivity.this, ClubList.class);
+                intent.putExtra("listName", "review");
+                startActivity(intent);
+                break;
+
+            case (R.id.employment):
+                intent = new Intent(MainActivity.this, ClubList.class);
+                intent.putExtra("listName", "employment");
                 startActivity(intent);
                 break;
 

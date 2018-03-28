@@ -68,7 +68,10 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
         contentsTv = findViewById(R.id.contents);
         viewPager = findViewById(R.id.viewPager);
         favorite = findViewById(R.id.favorite);
+<<<<<<< HEAD
 
+=======
+>>>>>>> 즐겨찾기 수정 완료
 
         // 인텐트로 정보 가져옴
         intent = getIntent();
@@ -91,11 +94,28 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
         hitUpdate.requestPost();
 
         //즐겨찾기 플래그
+<<<<<<< HEAD
         for (int i = 0; i < MainActivity.favoriteArr.size(); i++) {
             favoriteTemp = MainActivity.favoriteArr.get(i);
             Log.d("heu", "리스트네임 : " + listname + ", 템프 : " + favoriteTemp.getListname());
             Log.d("heu", "인덱스 : " + idx + ", 템프 : " + favoriteTemp.getPostidx());
             if(favoriteTemp.getListname().equals(listname) && favoriteTemp.getPostidx().equals(idx)){
+=======
+        favoriteSet();
+
+        favorite.setOnClickListener(this);
+    }
+
+    private void favImageSet() {
+        for (int i = 0; i < MainActivity.favoriteArr.size(); i++) {
+            favoriteItem favoriteTemp = MainActivity.favoriteArr.get(i);
+            Log.d("heu", "플래그 : " + favoriteFLAG);
+            if (favoriteTemp.getListname().equals(listname) && favoriteTemp.getPostidx().equals(idx)) {
+
+                favoritePos = Integer.parseInt(favoriteTemp.getIdx());
+
+                favorite.setImageResource(R.drawable.yellowstar);
+>>>>>>> 즐겨찾기 수정 완료
                 favoriteFLAG = true;
                 favorite.setImageResource(R.drawable.yellowstar);
                 favortitePos = Integer.parseInt(favoriteTemp.getIdx());
@@ -105,9 +125,22 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
                 favorite.setImageResource(R.drawable.blackstar);
             }
         }
+<<<<<<< HEAD
 
         favorite.setOnClickListener(this);
 
+=======
+
+        Log.d("heu", "포스 : " + favoritePos);
+
+    }
+
+    private void favoriteSet() {
+        MainActivity.getFavorite fav = new MainActivity.getFavorite();
+        MainActivity.favoriteArr.clear();
+        fav.requestPost(MainActivity.mUsername);
+        handler2.sendEmptyMessageDelayed(1000, 100);
+>>>>>>> 즐겨찾기 수정 완료
     }
 
     private void setRecyclerView() {
@@ -147,18 +180,32 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
                 }
                 break;
             case (R.id.favorite):
+<<<<<<< HEAD
                 if(favoriteFLAG){
                     favorite.setImageResource(R.drawable.blackstar);
                     favoriteDelete delete = new favoriteDelete();
                     delete.requestPost(String.valueOf(favortitePos));
+=======
+
+                if(favoriteFLAG) {
+                    Log.d("heu", "딜리트");
+                    favoriteDelete delete = new favoriteDelete();
+                    delete.requestPost(String.valueOf(favoritePos));
+
+>>>>>>> 즐겨찾기 수정 완료
                 } else {
                     favorite.setImageResource(R.drawable.yellowstar);
                     favoriteInsert insert = new favoriteInsert();
                     insert.requestPost(listname, idx);
                 }
+<<<<<<< HEAD
                 favoriteFLAG = !favoriteFLAG;
                 MainActivity.getFavorite fav = new MainActivity.getFavorite();
                 fav.requestPost(MainActivity.mUsername);
+=======
+                favoriteSet();
+
+>>>>>>> 즐겨찾기 수정 완료
                 break;
         }
     }
@@ -208,6 +255,24 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
         }
     };
 
+<<<<<<< HEAD
+=======
+    @SuppressLint("HandlerLeak")
+    Handler handler2 = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            if (MainActivity.favoriteArr != null) {
+                favImageSet();
+                removeMessages(1000);
+            } else {
+                handler2.sendEmptyMessageDelayed(1000, 200);
+            }
+
+        }
+    };
+
+>>>>>>> 즐겨찾기 수정 완료
     class hitUpdate {
         //Client 생성
         OkHttpClient client = new OkHttpClient();
@@ -258,6 +323,10 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
                     Log.d("heu", "favorite res : " + response.body().string());
+<<<<<<< HEAD
+=======
+                    favoriteSet();
+>>>>>>> 즐겨찾기 수정 완료
                 }
             });
         }
@@ -284,9 +353,76 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
                     Log.d("heu", "hitupdate res : " + response.body().string());
+<<<<<<< HEAD
+=======
+                    favoriteSet();
+>>>>>>> 즐겨찾기 수정 완료
                 }
             });
         }
     }
 
+<<<<<<< HEAD
 }
+=======
+    class historyInsert {
+        OkHttpClient client = new OkHttpClient();
+
+        public void requestPost(String listname, String postidx) {
+
+            //Request Body에 서버에 보낼 데이터 작성
+            RequestBody requestBody = new FormBody.Builder().
+                    add("username", MainActivity.mUsername).
+                    add("listname", listname).
+                    add("postidx", postidx).
+                    build();
+            String url = "http://spotz.co.kr/var/www/html/historyinsert.php";
+
+            Request request = new Request.Builder().url(url).post(requestBody).build();
+            client.newCall(request).enqueue(new Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
+                    Log.d("heu", "Connect Server Error is " + e.toString());
+                }
+
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+                    Log.d("heu", "favorite res : " + response.body().string());
+                }
+            });
+        }
+    }
+
+    class historyDelete {
+        OkHttpClient client = new OkHttpClient();
+
+        public void requestPost(String idx) {
+
+            RequestBody requestBody = new FormBody.Builder().
+                    add("idx", idx).
+                    build();
+            String url = "http://spotz.co.kr/var/www/html/historydelete.php";
+
+            Request request = new Request.Builder().url(url).post(requestBody).build();
+            client.newCall(request).enqueue(new Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
+                    Log.d("heu", "Connect Server Error is " + e.toString());
+                }
+
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+                    Log.d("heu", "hitupdate res : " + response.body().string());
+                }
+            });
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        handler.removeMessages(0);
+        handler2.removeMessages(1000);
+    }
+}
+>>>>>>> 즐겨찾기 수정 완료

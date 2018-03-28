@@ -33,6 +33,38 @@
         } else if ($spindata1 != "" || $spindata2 == ""){
             $sql = "select * from freelancer where spindata1 = '$spindata1' order by addedtime";
         }
+    } else if($listname == "competition"){
+        if($spindata1 == "전국"){
+            $sql ="select * from competition order by addedtime";
+        } else if($spindata2 != ""){
+            $sql = "select * from competition where spindata2 = '$spindata2' order by addedtime";
+        } else if ($spindata1 != "" || $spindata2 == ""){
+            $sql = "select * from competition where spindata1 = '$spindata1' order by addedtime";
+        }
+    } else if($listname == "dongho"){
+        if($spindata1 == "전국"){
+            $sql ="select * from dongho order by addedtime";
+        } else if($spindata2 != ""){
+            $sql = "select * from dongho where spindata2 = '$spindata2' order by addedtime";
+        } else if ($spindata1 != "" || $spindata2 == ""){
+            $sql = "select * from dongho where spindata1 = '$spindata1' order by addedtime";
+        }
+    } else if($listname == "review"){
+        if($spindata1 == "전국"){
+            $sql ="select * from review order by addedtime";
+        } else if($spindata2 != ""){
+            $sql = "select * from review where spindata2 = '$spindata2' order by addedtime";
+        } else if ($spindata1 != "" || $spindata2 == ""){
+            $sql = "select * from review where spindata1 = '$spindata1' order by addedtime";
+        }
+    } else if($listname == "employment"){
+        if($spindata1 == "전국"){
+            $sql ="select * from employment order by addedtime";
+        } else if($spindata2 != ""){
+            $sql = "select * from employment where spindata2 = '$spindata2' order by addedtime";
+        } else if ($spindata1 != "" || $spindata2 == ""){
+            $sql = "select * from employment where spindata1 = '$spindata1' order by addedtime";
+        }
     }
 
     $result = mysqli_query($connect,$sql);
