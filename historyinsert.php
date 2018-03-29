@@ -40,15 +40,22 @@
         }
     }
 
-    $sql ="insert into history (username,postidx,listname) values('$username','$postidx','$listname')";
-    $result3 = mysqli_query($link,$sql);
+    $sql = "select * from history where username = '$username' and postidx = '$postidx' order by idx desc";
+    $result = mysqli_query($link,$sql);
+    $row = mysqli_fetch_array($result);
 
-    if($result3){
-       echo "SQL문 insert 처리 성공";
-    }
-    else{
-       echo "SQL문 insert 처리중 에러 발생 : ";
-       echo mysqli_error($link);
+    $time = date(Y-m-d H:i:s,time()) - $row[created];
+
+    if($time > 60){
+        $sql ="insert into history (username,postidx,listname) values('$username','$postidx','$listname')";
+        $result3 = mysqli_query($link,$sql);
+        if($result3){
+           echo "SQL문 insert 처리 성공";
+        }
+        else{
+           echo "SQL문 insert 처리중 에러 발생 : ";
+           echo mysqli_error($link);
+        }
     }
     mysqli_close($link);
 ?>

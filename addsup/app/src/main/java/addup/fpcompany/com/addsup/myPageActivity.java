@@ -36,14 +36,8 @@ public class myPageActivity extends AppCompatActivity implements View.OnClickLis
     TextView logoutBtn;
     ProgressBar progressBar;
     RecyclerView actionList;
-
-    String listName;
-    String Json = "";
-
-
     ActionAdapter adapter;
     ArrayList<String> actionArr = new ArrayList<>();
-
     String listname = "";
     String idx = "";
 
@@ -60,7 +54,6 @@ public class myPageActivity extends AppCompatActivity implements View.OnClickLis
         handler.sendEmptyMessage(100);
         progressBar.setVisibility(View.VISIBLE);
 
-//        getUserData();
         getActionList();
 
         actionList.addOnItemTouchListener(new RecyclerItemClickListener(this, actionList, new RecyclerItemClickListener.OnItemClickListener() {
@@ -170,9 +163,7 @@ public class myPageActivity extends AppCompatActivity implements View.OnClickLis
 
     }
 
-    // 업 버튼을 누르면 작동
     class upUpdate {
-        //Client 생성
         OkHttpClient client = new OkHttpClient();
 
         public void requestPost() {

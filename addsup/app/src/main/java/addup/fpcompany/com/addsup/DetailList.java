@@ -77,7 +77,7 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
         contents = intent.getStringExtra("contents");
         created = intent.getStringExtra("created");
         listname = intent.getStringExtra("listname");
-        detailNameTv.setText(idx + " : " + title);
+        detailNameTv.setText(title);
         contentsTv.setText(contents);
 
         image = intent.getStringExtra("image");
@@ -94,15 +94,14 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
         for (int i = 0; i < MainActivity.favoriteArr.size(); i++) {
             favoriteTemp = MainActivity.favoriteArr.get(i);
             if (favoriteTemp.getListname().equals(listname) && favoriteTemp.getPostidx().equals(idx)) {
-                favoriteSet();
-
                 //히스토리 기록
                 historyInsert insert = new historyInsert();
                 insert.requestPost(listname, idx);
-
-                favorite.setOnClickListener(this);
+                favoriteSet();
             }
         }
+
+        favorite.setOnClickListener(this);
     }
 
     private void favImageSet() {

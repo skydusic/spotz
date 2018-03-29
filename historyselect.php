@@ -14,7 +14,7 @@
 
     $username=isset($_POST['username']) ? $_POST['username'] : '';
 
-    $sql = "select * from favorite where username = '$username' order by created";
+    $sql = "select * from history where username = '$username' order by created";
     $result = mysqli_query($connect,$sql);
     $total_record = mysqli_num_rows($result);
     
