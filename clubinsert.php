@@ -27,6 +27,14 @@ if ($title !="" and $contents !="" ){
         $sql="insert into clubtable(title,contents,username,image,spindata1,spindata2) values('$title','$contents','$username','$image','$spindata1','$spindata2')";
     } else if ($listname == "freelancer"){
         $sql="insert into freelancer(title,contents,username,image,spindata1,spindata2) values('$title','$contents','$username','$image','$spindata1','$spindata2')";
+    } else if ($listname == "competition"){
+        $sql="insert into competition(title,contents,username,image,spindata1,spindata2) values('$title','$contents','$username','$image','$spindata1','$spindata2')";
+    } else if ($listname == "dongho"){
+        $sql="insert into dongho(title,contents,username,image,spindata1,spindata2) values('$title','$contents','$username','$image','$spindata1','$spindata2')";
+    } else if ($listname == "review"){
+        $sql="insert into review(title,contents,username,image,spindata1,spindata2) values('$title','$contents','$username','$image','$spindata1','$spindata2')";
+    } else if ($listname == "employment"){
+        $sql="insert into employment(title,contents,username,image,spindata1,spindata2) values('$title','$contents','$username','$image','$spindata1','$spindata2')";
     }
     $result=mysqli_query($link,$sql);  
     if($result){

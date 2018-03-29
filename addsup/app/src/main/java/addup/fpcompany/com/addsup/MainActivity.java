@@ -337,7 +337,7 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
 
             case (R.id.Competition):
                 intent = new Intent(MainActivity.this, ClubList.class);
-                intent.putExtra("listName", "Competition");
+                intent.putExtra("listName", "competition");
                 startActivity(intent);
                 break;
 

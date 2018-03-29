@@ -110,6 +110,8 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
             listTopName.setText("스포츠 취업정보");
         }
 
+        /** 메뉴별 화면 만들기! */
+
         //권한 체크 순서
 //        showList() -> checkSelect() -> setRecyclerView();
 

@@ -13,6 +13,14 @@
         $sql = "select * from clubtable where idx='$idx'";
     } else if ($listname == 'freelancer'){
         $sql = "select * from freelancer where idx='$idx'";
+    } else if ($listname == 'competition'){
+        $sql = "select * from competition where idx='$idx'";
+    } else if ($listname == 'dongho'){
+        $sql = "select * from dongho where idx='$idx'";
+    } else if ($listname == 'review'){
+        $sql = "select * from review where idx='$idx'";
+    } else if ($listname == 'employment'){
+        $sql = "select * from employment where idx='$idx'";
     }
 
 
@@ -28,6 +36,14 @@
         $sql = "update clubtable set hit = '$hit' where idx='$idx'";
     } else if ($listname == 'freelancer'){
         $sql = "update freelancer set hit = '$hit' where idx='$idx'";
+    } else if ($listname == 'competition'){
+        $sql = "update competition set hit = '$hit' where idx='$idx'";
+    } else if ($listname == 'dongho'){
+        $sql = "update dongho set hit = '$hit' where idx='$idx'";
+    } else if ($listname == 'review'){
+        $sql = "update review set hit = '$hit' where idx='$idx'";
+    } else if ($listname == 'employment'){
+        $sql = "update employment set hit = '$hit' where idx='$idx'";
     }
     $result2 = mysqli_query($connect,$sql);
 

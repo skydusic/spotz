@@ -27,6 +27,14 @@ if ($title !="" and $contents !="" ){
         $sql="update clubtable set title = '$title', contents = '$contents', image ='$image', spindata1 = '$spindata1', spindata2 = '$spindata2' WHERE username = '$username'"; 
     } else if ($listname == 'freelancer'){
         $sql="update freelancer set title = '$title', contents = '$contents', image ='$image', spindata1 = '$spindata1', spindata2 = '$spindata2' WHERE username = '$username'"; 
+    } else if ($listname == 'competition'){
+        $sql="update competition set title = '$title', contents = '$contents', image ='$image', spindata1 = '$spindata1', spindata2 = '$spindata2' WHERE username = '$username'"; 
+    } else if ($listname == 'dongho'){
+        $sql="update dongho set title = '$title', contents = '$contents', image ='$image', spindata1 = '$spindata1', spindata2 = '$spindata2' WHERE username = '$username'"; 
+    } else if ($listname == 'review'){
+        $sql="update review set title = '$title', contents = '$contents', image ='$image', spindata1 = '$spindata1', spindata2 = '$spindata2' WHERE username = '$username'"; 
+    } else if ($listname == 'employment'){
+        $sql="update employment set title = '$title', contents = '$contents', image ='$image', spindata1 = '$spindata1', spindata2 = '$spindata2' WHERE username = '$username'"; 
     }
     $result=mysqli_query($link,$sql);  
     if($result){

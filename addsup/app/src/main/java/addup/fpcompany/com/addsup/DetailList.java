@@ -1,5 +1,6 @@
 package addup.fpcompany.com.addsup;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -53,7 +54,7 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
     Boolean favoriteFLAG = false;
 
     favoriteItem favoriteTemp;
-    int favortitePos = 0;
+    int favoritePos = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,13 +69,6 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
         contentsTv = findViewById(R.id.contents);
         viewPager = findViewById(R.id.viewPager);
         favorite = findViewById(R.id.favorite);
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-=======
->>>>>>> 즐겨찾기 수정 완료
-=======
->>>>>>> ec8f8a39db91f6af040a18f75ae3b48326d28fb8
 
         // 인텐트로 정보 가져옴
         intent = getIntent();
@@ -97,23 +91,18 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
         hitUpdate.requestPost();
 
         //즐겨찾기 플래그
-<<<<<<< HEAD
-<<<<<<< HEAD
         for (int i = 0; i < MainActivity.favoriteArr.size(); i++) {
             favoriteTemp = MainActivity.favoriteArr.get(i);
-            Log.d("heu", "리스트네임 : " + listname + ", 템프 : " + favoriteTemp.getListname());
-            Log.d("heu", "인덱스 : " + idx + ", 템프 : " + favoriteTemp.getPostidx());
-            if(favoriteTemp.getListname().equals(listname) && favoriteTemp.getPostidx().equals(idx)){
-=======
-=======
->>>>>>> ec8f8a39db91f6af040a18f75ae3b48326d28fb8
-        favoriteSet();
+            if (favoriteTemp.getListname().equals(listname) && favoriteTemp.getPostidx().equals(idx)) {
+                favoriteSet();
 
-        //히스토리 기록
-        historyInsert insert = new historyInsert();
-        insert.requestPost(listname, idx);
+                //히스토리 기록
+                historyInsert insert = new historyInsert();
+                insert.requestPost(listname, idx);
 
-        favorite.setOnClickListener(this);
+                favorite.setOnClickListener(this);
+            }
+        }
     }
 
     private void favImageSet() {
@@ -124,30 +113,21 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
                 favoritePos = Integer.parseInt(favoriteTemp.getIdx());
 
                 favorite.setImageResource(R.drawable.yellowstar);
-<<<<<<< HEAD
->>>>>>> 즐겨찾기 수정 완료
-=======
->>>>>>> ec8f8a39db91f6af040a18f75ae3b48326d28fb8
                 favoriteFLAG = true;
                 favorite.setImageResource(R.drawable.yellowstar);
-                favortitePos = Integer.parseInt(favoriteTemp.getIdx());
+                favoritePos = Integer.parseInt(favoriteTemp.getIdx());
                 break;
             } else {
                 favoriteFLAG = false;
                 favorite.setImageResource(R.drawable.blackstar);
             }
         }
-<<<<<<< HEAD
-<<<<<<< HEAD
 
         favorite.setOnClickListener(this);
 
-=======
 
         Log.d("heu", "포스 : " + favoritePos);
 
-=======
->>>>>>> 즐겨찾기, 내 글 보기, 히스토리 부분 완성  , 주메뉴 테이블 추가했음
     }
 
     private void favoriteSet() {
@@ -155,10 +135,6 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
         MainActivity.favoriteArr.clear();
         fav.requestPost(MainActivity.mUsername);
         handler2.sendEmptyMessageDelayed(1000, 100);
-<<<<<<< HEAD
->>>>>>> 즐겨찾기 수정 완료
-=======
->>>>>>> ec8f8a39db91f6af040a18f75ae3b48326d28fb8
     }
 
     private void setRecyclerView() {
@@ -198,49 +174,30 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
                 }
                 break;
             case (R.id.favorite):
-<<<<<<< HEAD
-                if(favoriteFLAG){
+                if (favoriteFLAG) {
                     favorite.setImageResource(R.drawable.blackstar);
-                    favoriteDelete delete = new favoriteDelete();
-                    delete.requestPost(String.valueOf(favortitePos));
-=======
-
-                if(favoriteFLAG) {
                     favoriteDelete delete = new favoriteDelete();
                     delete.requestPost(String.valueOf(favoritePos));
 
-<<<<<<< HEAD
->>>>>>> 즐겨찾기 수정 완료
+                    favoriteFLAG = !favoriteFLAG;
+                    MainActivity.getFavorite fav = new MainActivity.getFavorite();
+                    fav.requestPost(MainActivity.mUsername);
+                    favoriteSet();
+
                 } else {
-<<<<<<< HEAD
                     favorite.setImageResource(R.drawable.yellowstar);
-=======
->>>>>>> 즐겨찾기, 내 글 보기, 히스토리 부분 완성  , 주메뉴 테이블 추가했음
-                    favoriteInsert insert = new favoriteInsert();
-                    insert.requestPost(listname, idx);
-                }
-<<<<<<< HEAD
-                favoriteFLAG = !favoriteFLAG;
-                MainActivity.getFavorite fav = new MainActivity.getFavorite();
-                fav.requestPost(MainActivity.mUsername);
-=======
-                favoriteSet();
-
->>>>>>> 즐겨찾기 수정 완료
-=======
-                } else {
                     favoriteInsert insert = new favoriteInsert();
                     insert.requestPost(listname, idx);
                 }
                 favoriteSet();
 
->>>>>>> ec8f8a39db91f6af040a18f75ae3b48326d28fb8
                 break;
         }
     }
 
 
     int pagerPos = 0;
+
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
@@ -284,8 +241,6 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
         }
     };
 
-<<<<<<< HEAD
-=======
     @SuppressLint("HandlerLeak")
     Handler handler2 = new Handler() {
         @Override
@@ -301,7 +256,6 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
         }
     };
 
->>>>>>> 즐겨찾기 수정 완료
     class hitUpdate {
         //Client 생성
         OkHttpClient client = new OkHttpClient();
@@ -321,6 +275,7 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
                 public void onFailure(Call call, IOException e) {
                     Log.d("heu", "Connect Server Error is " + e.toString());
                 }
+
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
                     Log.d("heu", "hitupdate res : " + response.body().string());
@@ -349,17 +304,11 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
                 public void onFailure(Call call, IOException e) {
                     Log.d("heu", "Connect Server Error is " + e.toString());
                 }
+
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
                     Log.d("heu", "favorite res : " + response.body().string());
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
                     favoriteSet();
->>>>>>> 즐겨찾기 수정 완료
-=======
-                    favoriteSet();
->>>>>>> ec8f8a39db91f6af040a18f75ae3b48326d28fb8
                 }
             });
         }
@@ -383,25 +332,16 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
                 public void onFailure(Call call, IOException e) {
                     Log.d("heu", "Connect Server Error is " + e.toString());
                 }
+
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
                     Log.d("heu", "hitupdate res : " + response.body().string());
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
                     favoriteSet();
->>>>>>> 즐겨찾기 수정 완료
-=======
-                    favoriteSet();
->>>>>>> ec8f8a39db91f6af040a18f75ae3b48326d28fb8
                 }
             });
         }
     }
 
-<<<<<<< HEAD
-}
-=======
     class historyInsert {
         OkHttpClient client = new OkHttpClient();
 
@@ -430,41 +370,10 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
         }
     }
 
-    class historyDelete {
-        OkHttpClient client = new OkHttpClient();
-
-        public void requestPost(String listname) {
-
-            RequestBody requestBody = new FormBody.Builder().
-                    add("username", MainActivity.mUsername).
-                    add("listname", listname).
-                    build();
-            String url = "http://spotz.co.kr/var/www/html/historydelete.php";
-
-            Request request = new Request.Builder().url(url).post(requestBody).build();
-            client.newCall(request).enqueue(new Callback() {
-                @Override
-                public void onFailure(Call call, IOException e) {
-                    Log.d("heu", "Connect Server Error is " + e.toString());
-                }
-
-                @Override
-                public void onResponse(Call call, Response response) throws IOException {
-                    Log.d("heu", "hitupdate res : " + response.body().string());
-                }
-            });
-        }
-    }
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
         handler.removeMessages(0);
         handler2.removeMessages(1000);
     }
-<<<<<<< HEAD
 }
->>>>>>> 즐겨찾기 수정 완료
-=======
-}
->>>>>>> ec8f8a39db91f6af040a18f75ae3b48326d28fb8
