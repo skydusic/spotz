@@ -59,6 +59,7 @@ public class myPageActivity extends BaseActivity implements View.OnClickListener
         actionList.addOnItemTouchListener(new RecyclerItemClickListener(this, actionList, new RecyclerItemClickListener.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
+
                 Intent intent = new Intent(myPageActivity.this, ActionDetailActivity.class);
                 intent.putExtra("actionName", actionArr.get(position).toString());
                 startActivity(intent);
@@ -76,6 +77,7 @@ public class myPageActivity extends BaseActivity implements View.OnClickListener
         actionArr.add("내 글 보기");
         actionArr.add("즐겨찾기");
         actionArr.add("최근 본 글");
+//        actionArr.add("");
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
