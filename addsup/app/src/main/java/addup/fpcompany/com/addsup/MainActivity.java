@@ -9,7 +9,6 @@ import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -33,6 +32,7 @@ import java.util.ArrayList;
 
 import addup.fpcompany.com.addsup.adapter.PagerAdapter;
 import addup.fpcompany.com.addsup.frag.adfrag;
+import addup.fpcompany.com.addsup.java.BaseActivity;
 import addup.fpcompany.com.addsup.java.favoriteItem;
 import okhttp3.Call;
 import okhttp3.FormBody;
@@ -41,7 +41,7 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public class MainActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener, View.OnClickListener,
+public class MainActivity extends BaseActivity implements ViewPager.OnPageChangeListener, View.OnClickListener,
         GoogleApiClient.OnConnectionFailedListener {
 
     ViewPager mainTopPager;
@@ -434,14 +434,15 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
     }
 
     @Override
-    protected void onPause() {
+    public void onPause() {
         super.onPause();
         handler.removeMessages(0);
         handler.removeMessages(1);
     }
 
+
     @Override
-    protected void onResume() {
+    public void onResume() {
         super.onResume();
         handler.sendEmptyMessage(0);
         handler.sendEmptyMessage(1);

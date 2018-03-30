@@ -175,10 +175,8 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
             public void onClick(View view) {
                 String title = titleET.getText().toString().trim();
                 String contents = contentsET.getText().toString().trim();
-
                 if (contents.length() > 300) {
-                    Toast.makeText( insertActivity.this, "글자 제한을 초과했습니다. (" + String.valueOf(contents.length()) + " / 300자)", Toast.LENGTH_LONG).show();
-
+                    Toast.makeText(insertActivity.this, "글자 제한을 초과했습니다. (" + String.valueOf(contents.length()) + " / 300자)", Toast.LENGTH_LONG).show();
                 } else {
                     if (!title.equals("") && !contents.equals("")) {
                         InsertData task = new InsertData();
@@ -221,6 +219,8 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
 
             }
         });
+
+
         spinner2.setOnItemSelectedListener(this);
 
         imgFind.setOnClickListener(new View.OnClickListener() {
@@ -300,11 +300,6 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
                     break;
             }
         }
-    }
-
-    private void setImage() {
-
-
     }
 
     private Bitmap resize(Bitmap bm) {

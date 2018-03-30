@@ -1,4 +1,4 @@
-package addup.fpcompany.com.addsup;
+package addup.fpcompany.com.addsup.java;
 
 /**
  * Created by song02 on 2018-03-04.

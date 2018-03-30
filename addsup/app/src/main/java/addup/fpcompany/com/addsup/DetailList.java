@@ -18,6 +18,7 @@ import java.util.ArrayList;
 
 import addup.fpcompany.com.addsup.adapter.PagerAdapter;
 import addup.fpcompany.com.addsup.frag.DetailFrag;
+import addup.fpcompany.com.addsup.java.BaseActivity;
 import addup.fpcompany.com.addsup.java.favoriteItem;
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -27,7 +28,7 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public class DetailList extends AppCompatActivity implements View.OnClickListener, ViewPager.OnPageChangeListener {
+public class DetailList extends BaseActivity implements View.OnClickListener, ViewPager.OnPageChangeListener {
 
     Intent intent;
 

@@ -21,7 +21,6 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/adView"
         android:layout_below="@+id/mainTopPager"
-        android:background="#44999999"
         android:orientation="vertical"
         android:padding="20dp">
 

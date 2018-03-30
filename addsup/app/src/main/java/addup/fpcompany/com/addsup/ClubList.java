@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -27,6 +26,7 @@ import java.util.HashMap;
 
 import addup.fpcompany.com.addsup.adapter.MainListAdater;
 import addup.fpcompany.com.addsup.adapter.RecyclerItemClickListener;
+import addup.fpcompany.com.addsup.java.BaseActivity;
 import addup.fpcompany.com.addsup.java.listItem;
 import okhttp3.Call;
 import okhttp3.FormBody;
@@ -35,7 +35,7 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public class ClubList extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
+public class ClubList extends BaseActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
 
     String TAG = "ClubList";
     RecyclerView recyclerView;
@@ -327,11 +327,12 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
                 intent.putExtra("postNum", postNum);
                 intent.putExtra("listname", listName);
                 intent.putExtra("username", username);
-                if (postNum == 1) {
+                /**
+                 * if (postNum == 1) {
                     intent.putExtra("title", postHashmap.get(TAG_TITLE));
                     intent.putExtra("contents", postHashmap.get(TAG_CONTENTS));
                     intent.putExtra("image", postHashmap.get(TAG_IMAGE));
-                }
+                }*/
                 startActivityForResult(intent, 2400);
                 break;
 
