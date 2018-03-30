@@ -2,13 +2,17 @@ package addup.fpcompany.com.addsup;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
@@ -72,6 +76,7 @@ public class ClubList extends BaseActivity implements View.OnClickListener, Adap
     int spinner1Num = 0;
 
     getPost getPost = new getPost();
+    private static Typeface mTypeface;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,7 +89,17 @@ public class ClubList extends BaseActivity implements View.OnClickListener, Adap
         spinner1 = findViewById(R.id.spinner1);
         spinner2 = findViewById(R.id.spinner2);
 
-        spinnerAdapter1 = new ArrayAdapter<>(this, R.layout.support_simple_spinner_dropdown_item, MainActivity.spinList1);
+        spinnerAdapter1 = new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item, MainActivity.spinList1) {
+            @NonNull
+            @Override
+            public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+
+                mTypeface = Typeface.createFromAsset(getApplicationContext().getAssets(), "fonts/SDSwaggerTTF.ttf");
+                setGlobalFont(parent);
+
+                return super.getView(position, convertView, parent);
+            }
+        };
 
         //경로 받는다!
         Intent intent = getIntent();
@@ -167,6 +182,24 @@ public class ClubList extends BaseActivity implements View.OnClickListener, Adap
                 })
         );
 
+    }
+
+    void setGlobalFont(ViewGroup root) {
+        for (int i = 0; i < root.getChildCount(); i++) {
+            View child = root.getChildAt(i);
+            if (child instanceof TextView) {
+                // 폰트 세팅
+                ((TextView) child).setTypeface(mTypeface);
+
+                // 자간 조절
+                ((TextView) child).setLineSpacing(10, 1);
+
+                // 크기 조절
+                ((TextView) child).setTextSize(16);
+
+            } else if (child instanceof ViewGroup)
+                setGlobalFont((ViewGroup) child);
+        }
     }
 
     private void setRecyclerView() {
@@ -264,7 +297,7 @@ public class ClubList extends BaseActivity implements View.OnClickListener, Adap
         checkSelect();
     }
 
-//    쓴날짜가 오늘일 때 써진시간으로 보여주는 메소드
+    //    쓴날짜가 오늘일 때 써진시간으로 보여주는 메소드
     static public String settingTimes(String created) {
         String time;
         ArrayList<String> result = new ArrayList<>();
@@ -329,10 +362,10 @@ public class ClubList extends BaseActivity implements View.OnClickListener, Adap
                 intent.putExtra("username", username);
                 /**
                  * if (postNum == 1) {
-                    intent.putExtra("title", postHashmap.get(TAG_TITLE));
-                    intent.putExtra("contents", postHashmap.get(TAG_CONTENTS));
-                    intent.putExtra("image", postHashmap.get(TAG_IMAGE));
-                }*/
+                 intent.putExtra("title", postHashmap.get(TAG_TITLE));
+                 intent.putExtra("contents", postHashmap.get(TAG_CONTENTS));
+                 intent.putExtra("image", postHashmap.get(TAG_IMAGE));
+                 }*/
                 startActivityForResult(intent, 2400);
                 break;
 

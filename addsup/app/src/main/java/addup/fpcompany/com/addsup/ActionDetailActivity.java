@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -21,6 +20,7 @@ import java.util.ArrayList;
 
 import addup.fpcompany.com.addsup.adapter.MainListAdater;
 import addup.fpcompany.com.addsup.adapter.RecyclerItemClickListener;
+import addup.fpcompany.com.addsup.java.BaseActivity;
 import addup.fpcompany.com.addsup.java.listItem;
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -30,7 +30,7 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public class ActionDetailActivity extends AppCompatActivity {
+public class ActionDetailActivity extends BaseActivity {
 
     /** 마이페이지 목록 -> 각 메뉴별 아이템 보여주기 */
     TextView detailTv;

@@ -1,12 +1,13 @@
 package addup.fpcompany.com.addsup;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
-public class myPageOption extends Activity implements View.OnClickListener {
+import addup.fpcompany.com.addsup.java.BaseActivity;
+
+public class myPageOption extends BaseActivity implements View.OnClickListener {
 
     TextView upBtn;
     TextView superUpBtn;

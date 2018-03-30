@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.TextView;
 
@@ -12,8 +11,9 @@ import java.util.ArrayList;
 
 import addup.fpcompany.com.addsup.adapter.PagerAdapter;
 import addup.fpcompany.com.addsup.frag.DetailFrag;
+import addup.fpcompany.com.addsup.java.BaseActivity;
 
-public class Notice_Detail extends AppCompatActivity implements View.OnClickListener {
+public class Notice_Detail extends BaseActivity implements View.OnClickListener {
 
     ViewPager viewPager;
     TextView idxTv;

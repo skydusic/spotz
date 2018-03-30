@@ -1,6 +1,7 @@
 package addup.fpcompany.com.addsup.adapter;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +20,7 @@ public class ActionAdapter extends RecyclerView.Adapter<ActionAdapter.ViewHolder
 
     Context context;
     ArrayList<String> itemArr = new ArrayList<>();
+    private static Typeface mTypeface;
 
     public ActionAdapter(Context context, ArrayList<String> itemArr) {
         this.context = context;
@@ -28,6 +30,9 @@ public class ActionAdapter extends RecyclerView.Adapter<ActionAdapter.ViewHolder
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.mypage_actionlist, parent, false);
+        if (ActionAdapter.mTypeface == null) {
+            ActionAdapter.mTypeface = Typeface.createFromAsset(context.getResources().getAssets(), "fonts/SDSwaggerTTF.ttf");
+        }
         return new ViewHolder(view);
     }
 

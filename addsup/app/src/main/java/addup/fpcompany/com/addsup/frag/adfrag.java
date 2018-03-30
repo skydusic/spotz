@@ -11,13 +11,14 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 
 import addup.fpcompany.com.addsup.R;
+import addup.fpcompany.com.addsup.java.BaseFragment;
 
 /**
  * Created by song02 on 2018-03-12.
  */
 
 @SuppressLint("ValidFragment")
-public class adfrag extends android.support.v4.app.Fragment {
+public class adfrag extends BaseFragment {
 
     String imgsrc;
     ImageView imgView;

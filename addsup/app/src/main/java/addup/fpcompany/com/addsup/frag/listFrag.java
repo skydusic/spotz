@@ -1,7 +1,6 @@
 package addup.fpcompany.com.addsup.frag;
 
 import android.annotation.SuppressLint;
-import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,13 +14,14 @@ import java.util.ArrayList;
 
 import addup.fpcompany.com.addsup.R;
 import addup.fpcompany.com.addsup.adapter.MainListAdater;
+import addup.fpcompany.com.addsup.java.BaseFragment;
 import addup.fpcompany.com.addsup.java.listItem;
 
 /**
  * Created by song02 on 2018-03-23.
  */
 
-public class listFrag extends Fragment {
+public class listFrag extends BaseFragment {
 
     ArrayList<listItem> listItems = new ArrayList<>();
     MainListAdater adapter = new MainListAdater(getActivity(), listItems);

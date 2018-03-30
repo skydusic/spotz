@@ -1,6 +1,7 @@
 package addup.fpcompany.com.addsup.adapter;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,6 +27,7 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.ViewHolder
     ArrayList<noticeItem> itemArr;
     noticeItem listItem;
     String url = MainActivity.serverUrl + "notice/";
+    private static Typeface mTypeface;
 
     public NoticeAdapter(Context context, ArrayList<noticeItem> itemArr) {
         this.context = context;
@@ -35,6 +37,9 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.ViewHolder
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.list_item, parent, false);
+        if (NoticeAdapter.mTypeface == null) {
+            NoticeAdapter.mTypeface = Typeface.createFromAsset(context.getResources().getAssets(), "fonts/SDSwaggerTTF.ttf");
+        }
         return new ViewHolder(view);
     }
 

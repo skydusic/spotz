@@ -2,6 +2,7 @@ package addup.fpcompany.com.addsup.adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,13 +28,13 @@ public class MyPageOptionAdapter extends ArrayAdapter {
     ArrayList<listItem> itemArr;
     Context context;
     String url = MainActivity.serverUrl + "userImageFolder/";
+    private static Typeface mTypeface;
 
     public MyPageOptionAdapter(Activity context, ArrayList<listItem> itemArr) {
         super(context, R.layout.list_item, itemArr);
         this.itemArr = itemArr;
         this.context = context;
-        lnf = (LayoutInflater) context
-                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        lnf = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
     @Override
