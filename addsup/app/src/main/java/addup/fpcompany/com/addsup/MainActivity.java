@@ -308,6 +308,10 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
                     try {
                         JSONObject jsonObj = new JSONObject(result);
                         JSONArray post = jsonObj.getJSONArray("results");
+
+                        Log.d("heu", "즐겨찾기 : " + result);
+                        Log.d("heu", "post : " + post.length());
+
                         for (int i = 0; i < post.length(); i++) {
                             JSONObject c = post.getJSONObject(i);
                             favoriteArr.add(new favoriteItem(c.getString("idx"), c.getString("listname"), c.getString("postidx")));

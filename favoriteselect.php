@@ -25,6 +25,7 @@
     {
         mysqli_data_seek($result, $i);
         $row = mysqli_fetch_array($result);
+        
         if($row[listname] == "clubtable"){
             $sql1 = "select * from clubtable where idx = $row[postidx]";
             echo "{\"listname\":\"clubtable\",";

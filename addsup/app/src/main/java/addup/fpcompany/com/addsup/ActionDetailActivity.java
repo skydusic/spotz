@@ -136,8 +136,6 @@ public class ActionDetailActivity extends AppCompatActivity {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-
-            Log.d("heu", "핸들러");
             if (!Json.equals("")) {
                 showList(Json);
                 Json = "";

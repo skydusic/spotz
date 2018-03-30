@@ -43,19 +43,31 @@
     $sql = "select * from history where username = '$username' and postidx = '$postidx' order by idx desc";
     $result = mysqli_query($link,$sql);
     $row = mysqli_fetch_array($result);
+    $posttime = strtotime($row[created]);
+    $time = date('Y-m-d H:i:s',time());
+    $time = strtotime($time);
+    $temp = $time - $posttime;
 
-    $time = date(Y-m-d H:i:s,time()) - $row[created];
-
-    if($time > 60){
-        $sql ="insert into history (username,postidx,listname) values('$username','$postidx','$listname')";
-        $result3 = mysqli_query($link,$sql);
-        if($result3){
-           echo "SQL문 insert 처리 성공";
+    if($temp < 1800){
+        $sql = "delete from history where idx = $row[idx]";
+        $result = mysqli_query($link,$sql);
+        if($result){
+           echo "60초 이하 del 처리 성공";
         }
         else{
-           echo "SQL문 insert 처리중 에러 발생 : ";
+           echo "60초 이하 del 처리중 에러 발생 : ";
            echo mysqli_error($link);
         }
+    }
+
+    $sql ="insert into history (username,postidx,listname) values('$username','$postidx','$listname')";
+    $result3 = mysqli_query($link,$sql);
+    if($result3){
+       echo "SQL문 insert 처리 성공";
+    }
+    else{
+       echo "SQL문 insert 처리중 에러 발생 : ";
+       echo mysqli_error($link);
     }
     mysqli_close($link);
 ?>

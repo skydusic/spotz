@@ -38,6 +38,5 @@
     }
 
     echo "]}";
-
-
+    mysqli_close($connect);
 ?>

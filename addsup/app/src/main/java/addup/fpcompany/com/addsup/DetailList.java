@@ -90,28 +90,37 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
         hitUpdate hitUpdate = new hitUpdate();
         hitUpdate.requestPost();
 
+        //히스토리 기록
+        historyInsert insert = new historyInsert();
+        insert.requestPost(listname, idx);
+
         //즐겨찾기 플래그
+
         for (int i = 0; i < MainActivity.favoriteArr.size(); i++) {
             favoriteTemp = MainActivity.favoriteArr.get(i);
+            Log.d("heu", "리스트네임 : " + listname + ", 템프 : " + favoriteTemp.getListname());
+            Log.d("heu", "인덱스 : " + idx + ", 템프 : " + favoriteTemp.getPostidx());
             if (favoriteTemp.getListname().equals(listname) && favoriteTemp.getPostidx().equals(idx)) {
-                //히스토리 기록
-                historyInsert insert = new historyInsert();
-                insert.requestPost(listname, idx);
-                favoriteSet();
+                favoriteFLAG = true;
+                favorite.setImageResource(R.drawable.yellowstar);
+                favoritePos = Integer.parseInt(favoriteTemp.getIdx());
+            } else {
+                favorite.setImageResource(R.drawable.blackstar);
+
             }
         }
 
         favorite.setOnClickListener(this);
+
+        MainActivity.getFavorite favorite = new MainActivity.getFavorite();
+        favorite.requestPost(MainActivity.mUsername);
+
     }
 
     private void favImageSet() {
         for (int i = 0; i < MainActivity.favoriteArr.size(); i++) {
             favoriteItem favoriteTemp = MainActivity.favoriteArr.get(i);
             if (favoriteTemp.getListname().equals(listname) && favoriteTemp.getPostidx().equals(idx)) {
-
-                favoritePos = Integer.parseInt(favoriteTemp.getIdx());
-
-                favorite.setImageResource(R.drawable.yellowstar);
                 favoriteFLAG = true;
                 favorite.setImageResource(R.drawable.yellowstar);
                 favoritePos = Integer.parseInt(favoriteTemp.getIdx());
@@ -123,10 +132,6 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
         }
 
         favorite.setOnClickListener(this);
-
-
-        Log.d("heu", "포스 : " + favoritePos);
-
     }
 
     private void favoriteSet() {
@@ -181,7 +186,6 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
                     favoriteFLAG = !favoriteFLAG;
                     MainActivity.getFavorite fav = new MainActivity.getFavorite();
                     fav.requestPost(MainActivity.mUsername);
-                    favoriteSet();
 
                 } else {
                     favorite.setImageResource(R.drawable.yellowstar);
@@ -189,7 +193,6 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
                     insert.requestPost(listname, idx);
                 }
                 favoriteSet();
-
                 break;
         }
     }
@@ -224,6 +227,7 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
         }
     }
 
+    @SuppressLint("HandlerLeak")
     Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -277,7 +281,7 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
 
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
-                    Log.d("heu", "hitupdate res : " + response.body().string());
+//                    Log.d("heu", "hitupdate res : " + response.body().string());
                 }
             });
         }
@@ -306,7 +310,7 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
 
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
-                    Log.d("heu", "favorite res : " + response.body().string());
+//                    Log.d("heu", "favorite res : " + response.body().string());
                     favoriteSet();
                 }
             });
@@ -334,7 +338,7 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
 
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
-                    Log.d("heu", "hitupdate res : " + response.body().string());
+//                    Log.d("heu", "hitupdate res : " + response.body().string());
                     favoriteSet();
                 }
             });
@@ -363,7 +367,7 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
 
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
-                    Log.d("heu", "favorite res : " + response.body().string());
+//                    Log.d("heu", "history res : " + response.body().string());
                 }
             });
         }
