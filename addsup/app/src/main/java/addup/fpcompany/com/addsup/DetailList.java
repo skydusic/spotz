@@ -96,6 +96,7 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
 
         //즐겨찾기 플래그
 
+        Log.d("heu", "ARR size : " + MainActivity.favoriteArr.size());
         for (int i = 0; i < MainActivity.favoriteArr.size(); i++) {
             favoriteTemp = MainActivity.favoriteArr.get(i);
             Log.d("heu", "리스트네임 : " + listname + ", 템프 : " + favoriteTemp.getListname());
@@ -112,8 +113,8 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
 
         favorite.setOnClickListener(this);
 
-        MainActivity.getFavorite favorite = new MainActivity.getFavorite();
-        favorite.requestPost(MainActivity.mUsername);
+        /*MainActivity.getFavorite favorite = new MainActivity.getFavorite();
+        favorite.requestPost(MainActivity.mUsername);*/
 
     }
 
@@ -192,7 +193,6 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
                     favoriteInsert insert = new favoriteInsert();
                     insert.requestPost(listname, idx);
                 }
-                favoriteSet();
                 break;
         }
     }

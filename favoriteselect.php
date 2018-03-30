@@ -47,7 +47,7 @@
         }
         $result1 = mysqli_query($connect,$sql1);
         $row1 = mysqli_fetch_array($result1);
-        echo "\"idx\":$row1[idx],\"title\":\"$row1[title]\",\"contents\":\"$row1[contents]\",\"username\":\"$row1[username]\",\"created\":\"$row1[created]\",\"image\":\"$row1[image]\"}";
+        echo "\"idx\":$row1[idx],\"postidx\":$row[postidx],\"title\":\"$row1[title]\",\"contents\":\"$row1[contents]\",\"username\":\"$row1[username]\",\"created\":\"$row1[created]\",\"image\":\"$row1[image]\"}";
         
     if($i<$total_record-1){
       echo ",";

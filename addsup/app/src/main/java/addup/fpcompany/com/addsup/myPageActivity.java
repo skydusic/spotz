@@ -120,11 +120,9 @@ public class myPageActivity extends AppCompatActivity implements View.OnClickLis
         if (currentUser == null) {
 
         } else {
-
             if (currentUser.getPhotoUrl() != null) {
                 MainActivity.mPhotoUrl = currentUser.getPhotoUrl().toString();
             }
-
             userId.setText(MainActivity.mUsername);
             handler.removeMessages(100);
             progressBar.setVisibility(View.GONE);

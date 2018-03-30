@@ -10,13 +10,16 @@
         android:layout_width="match_parent"
         android:layout_height="120dp"
         android:orientation="vertical"
-        android:paddingLeft="20dp"
-        android:paddingRight="20dp">
+        >
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_weight="1">
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:background="#666"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:layout_marginTop="15dp">
 
             <TextView
                 android:id="@+id/listTopName"
@@ -25,7 +28,8 @@
                 android:layout_weight="1"
                 android:gravity="center_vertical"
                 android:text="제목"
-                android:textSize="20sp" />
+                android:textSize="16sp"
+                android:textColor="#fff"/>
 
             <TextView
                 android:id="@+id/insertBtn"
@@ -33,12 +37,14 @@
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:text="글쓰기"
-                android:layout_alignParentRight="true"/>
+                android:layout_alignParentRight="true"
+                android:textColor="#fff"/>
         </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="60dp">
+            android:layout_height="wrap_content"
+            android:padding="10dp">
 
             <Spinner
                 android:id="@+id/spinner1"
@@ -64,13 +70,15 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/bottombar"
-        android:layout_below="@+id/detailTopLay" />
+        android:layout_below="@+id/detailTopLay"
+        />
 
     <include
         android:id="@+id/bottombar"
         layout="@layout/bottombar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true" />
+        android:layout_alignParentBottom="true"
+        />
 
 </RelativeLayout>

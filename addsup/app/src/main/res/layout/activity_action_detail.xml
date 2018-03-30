@@ -5,13 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="addup.fpcompany.com.addsup.ActionDetailActivity"
-    android:padding="20dp">
+    >
 
     <TextView
         android:id="@+id/detailTv"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:textSize="18dp"/>
+        android:textSize="18dp"
+        android:padding="15dp"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerView"
