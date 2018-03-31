@@ -39,8 +39,8 @@ public class MainListAdater extends RecyclerView.Adapter<MainListAdater.ViewHold
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.list_item, parent, false);
-        if (MainListAdater.mTypeface == null) {
-            MainListAdater.mTypeface = Typeface.createFromAsset(context.getResources().getAssets(), "fonts/SDSwaggerTTF.ttf");
+        if (mTypeface == null) {
+            mTypeface = Typeface.createFromAsset(context.getResources().getAssets(), "fonts/swaggerttf.ttf");
         }
         return new ViewHolder(view);
     }
@@ -78,6 +78,8 @@ public class MainListAdater extends RecyclerView.Adapter<MainListAdater.ViewHold
             timeHolder = itemView.findViewById(R.id.created);
             imageViewHolder = itemView.findViewById(R.id.imageView);
 
+            titleHolder.setTypeface(mTypeface);
+            timeHolder.setTypeface(mTypeface);
         }
     }
 }

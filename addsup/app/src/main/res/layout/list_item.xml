@@ -27,7 +27,9 @@
         android:textSize="18sp"
         android:layout_marginRight="10dp"
         android:layout_toRightOf="@id/imageView"
-        android:gravity="center_vertical"/>
+        android:gravity="center_vertical"
+        android:fontFamily="@font/swaggerttf"
+        />
 
     <TextView
         android:id="@+id/created"
@@ -39,6 +41,7 @@
         android:layout_marginLeft="50dp"
         android:layout_alignParentRight="true"
         android:gravity="center_vertical"
+        android:fontFamily="@font/swaggerttf"
         />
 
     </RelativeLayout>

@@ -37,8 +37,8 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.ViewHolder
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.list_item, parent, false);
-        if (NoticeAdapter.mTypeface == null) {
-            NoticeAdapter.mTypeface = Typeface.createFromAsset(context.getResources().getAssets(), "fonts/SDSwaggerTTF.ttf");
+        if (mTypeface == null) {
+            mTypeface = Typeface.createFromAsset(context.getResources().getAssets(), "fonts/swaggerttf.ttf");
         }
         return new ViewHolder(view);
     }
@@ -68,6 +68,9 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.ViewHolder
             titleHolder = itemView.findViewById(R.id.title);
             timeHolder = itemView.findViewById(R.id.created);
             imageViewHolder = itemView.findViewById(R.id.imageView);
+
+            titleHolder.setTypeface(mTypeface);
+            timeHolder.setTypeface(mTypeface);
 
         }
     }

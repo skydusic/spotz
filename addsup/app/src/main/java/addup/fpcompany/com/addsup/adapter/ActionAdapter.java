@@ -25,14 +25,11 @@ public class ActionAdapter extends RecyclerView.Adapter<ActionAdapter.ViewHolder
     public ActionAdapter(Context context, ArrayList<String> itemArr) {
         this.context = context;
         this.itemArr = itemArr;
-        if (this.mTypeface == null)
-            this.mTypeface = Typeface.createFromAsset(context.getAssets(), "fonts/SDSwaggerTTF.ttf");
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.mypage_actionlist, parent, false);
-        setGlobalFont(parent);
         return new ViewHolder(view);
     }
 
@@ -53,25 +50,8 @@ public class ActionAdapter extends RecyclerView.Adapter<ActionAdapter.ViewHolder
         public ViewHolder(View itemView) {
             super(itemView);
             titleHolder = itemView.findViewById(R.id.titleTv);
+            titleHolder.setTypeface(mTypeface);
 
-        }
-    }
-
-    void setGlobalFont(ViewGroup root) {
-        for (int i = 0; i <= root.getChildCount(); i++) {
-            View child = root.getChildAt(i);
-            if (child instanceof TextView) {
-                // 폰트 세팅
-                ((TextView) child).setTypeface(mTypeface);
-
-                // 자간 조절
-                ((TextView) child).setLineSpacing(10, 1);
-
-                // 크기 조절
-                ((TextView) child).setTextSize(16);
-
-            } else if (child instanceof ViewGroup)
-                setGlobalFont((ViewGroup) child);
         }
     }
 }
