@@ -6,24 +6,9 @@
         <item name="colorPrimary">@color/colorAccent</item>
         <item name="colorPrimaryDark">@color/colorAccent</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:textViewStyle">@style/SwaggerStyle</item>
-        <item name="android:buttonStyle">@style/SwaggerStyle</item>
-        <item name="android:editTextStyle">@style/SwaggerStyle</item>
-        <item name="android:radioButtonStyle">@style/SwaggerStyle</item>
-        <item name="android:checkboxStyle">@style/SwaggerStyle</item>
-    </style>
-
-    <style name="AppTheme.NoActionBar" parent="Base.Theme.AppCompat.Light">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:textViewStyle">@style/SwaggerStyle</item>
-        <item name="android:buttonStyle">@style/SwaggerStyle</item>
-        <item name="android:editTextStyle">@style/SwaggerStyle</item>
-        <item name="android:radioButtonStyle">@style/SwaggerStyle</item>
-        <item name="android:checkboxStyle">@style/SwaggerStyle</item>
+        <item name="android:fontFamily">@font/swagger</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowIsTranslucent">true</item>
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="Base.ThemeOverlay.AppCompat.Dark.ActionBar" />
@@ -34,33 +19,15 @@
         <item name="android:navigationBarColor">@android:color/transparent</item>
         <item name="android:windowTranslucentNavigation">true</item>
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
-        <item name="android:textViewStyle">@style/SwaggerStyle</item>
-        <item name="android:buttonStyle">@style/SwaggerStyle</item>
-        <item name="android:editTextStyle">@style/SwaggerStyle</item>
-        <item name="android:radioButtonStyle">@style/SwaggerStyle</item>
-        <item name="android:checkboxStyle">@style/SwaggerStyle</item>
+        <item name="android:fontFamily">@font/swagger</item>
     </style>
 
-    <style name="SplashTheme" parent="AppTheme">
+    <style name="SplashTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
         <item name="android:windowBackground">@drawable/splash</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowIsTranslucent">true</item>
     </style>
 
-    <style name="SwaggerStyle" parent="@android:style/Widget.DeviceDefault.TextView">
-        <item name="android:fontFamily">@font/swagger</item>
-    </style>
-
-    <style name="NotoSansButtonStyle" parent="@android:style/Widget.DeviceDefault.Button.Borderless">
-        <item name="android:fontFamily">@font/swagger</item>
-    </style>
-    <style name="NotoSansEditTextStyle" parent="@android:style/Widget.DeviceDefault.EditText">
-        <item name="android:fontFamily">@font/swagger</item>
-    </style>
-    <style name="NotoSansRadioButtonStyle" parent="@android:style/Widget.DeviceDefault.CompoundButton.RadioButton">
-        <item name="android:fontFamily">@font/swagger</item>
-    </style>
-    <style name="NotoSansCheckboxStyle" parent="@android:style/Widget.DeviceDefault.CompoundButton.CheckBox">
-        <item name="android:fontFamily">@font/swagger</item>
-    </style>
 </resources>

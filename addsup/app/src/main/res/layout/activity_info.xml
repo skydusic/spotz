@@ -59,6 +59,7 @@
             android:background="@drawable/edittext"
             android:minHeight="200dp"
             android:padding="15dp"
+
             android:hint="불편한 사항, 개선안 건의 등 문의할 내용을 적어주시면 빠른 시간 안에 메일로 답변을 드리겠습니다."/>
     </LinearLayout>
 

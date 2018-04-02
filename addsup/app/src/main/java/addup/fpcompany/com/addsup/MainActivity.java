@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
     int pagerPos = 0;
     ImageView clubBtn;
     ImageView freeBtn;
-    ImageView Competition;
+    ImageView competition;
     ImageView dongho;
     ImageView review;
     ImageView employment;
@@ -83,7 +83,7 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
         mainTopPager = findViewById(R.id.mainTopPager);
         clubBtn = findViewById(R.id.clubBtn);
         freeBtn = findViewById(R.id.freeBtn);
-        Competition = findViewById(R.id.Competition);
+        competition = findViewById(R.id.competition);
         dongho = findViewById(R.id.dongho);
         review = findViewById(R.id.review);
         employment = findViewById(R.id.employment);
@@ -145,7 +145,7 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
 //        클릭 리스너
         clubBtn.setOnClickListener(this);
         freeBtn.setOnClickListener(this);
-        Competition.setOnClickListener(this);
+        competition.setOnClickListener(this);
         dongho.setOnClickListener(this);
         review.setOnClickListener(this);
         employment.setOnClickListener(this);
@@ -337,7 +337,7 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
                 startActivity(intent);
                 break;
 
-            case (R.id.Competition):
+            case (R.id.competition):
                 intent = new Intent(MainActivity.this, ClubList.class);
                 intent.putExtra("listName", "competition");
                 startActivity(intent);
@@ -361,11 +361,11 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
                 startActivity(intent);
                 break;
 
-            case (R.id.bottomHome):
+            /*case (R.id.bottomHome):
                 intent = new Intent(MainActivity.this, MainActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
-                break;
+                break;*/
 
             case (R.id.bottomNotice):
                 intent = new Intent(MainActivity.this, Notice_Activity.class);

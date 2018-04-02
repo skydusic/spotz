@@ -3,6 +3,7 @@ package addup.fpcompany.com.addsup;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
@@ -32,13 +33,15 @@ public class SplashActivity extends AppCompatActivity {
     String device_version = "";
     static int makeMsg = 0;
 
+    Intent intent;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        setTheme(R.style.AppTheme);
+//        setTheme(R.style.SplashTheme);
         super.onCreate(savedInstanceState);
 //        setContentView(R.layout.splash_act);
 
-        Intent intent = new Intent(this, addup.fpcompany.com.addsup.MainActivity.class);
+        intent = new Intent(this, MainActivity.class);
 
 
         //푸시키 받기, 저장된 값이 있는가
@@ -69,10 +72,19 @@ public class SplashActivity extends AppCompatActivity {
         Log.d("heu", "마켓 버전 : " + store_version);
         Log.d("heu", "디바이스 버전 : " + device_version);
 
+        startMain();
 
-        startActivity(intent);
+    }
 
-        finish();
+    private void startMain() {
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                startActivity(intent);
+                finish();
+            }
+        }, 450);
     }
 
 }

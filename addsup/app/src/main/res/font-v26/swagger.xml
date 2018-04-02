@@ -4,8 +4,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <font
         android:fontStyle="normal"
-        android:font="@font/swagger"
+        android:font="@font/swaggerttf"
         app:fontStyle="normal"
-        app:font="@font/swagger"
+        app:font="@font/swaggerttf"
         tools:ignore="ResourceCycle" />
 </font-family>

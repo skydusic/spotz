@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:ads="http://schemas.android.com/apk/res-auto"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/myCoordinator"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="addup.fpcompany.com.addsup.MainActivity">
+    tools:context="addup.fpcompany.com.addsup.MainActivity"
+    android:background="#ffffff">
 
     <android.support.v4.view.ViewPager
         android:id="@+id/mainTopPager"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="150dp"
         android:layout_marginBottom="5dp"
         android:layout_marginTop="5dp" />
 
@@ -21,14 +21,12 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/adView"
         android:layout_below="@+id/mainTopPager"
-        android:orientation="vertical"
-        android:padding="20dp">
+        android:orientation="vertical">
 
-        <LinearLayout
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:orientation="horizontal"
             android:padding="5dp">
 
             <ImageView
@@ -36,59 +34,114 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
-                android:layout_weight="1"
-                android:src="@drawable/cate1" />
+                android:layout_toStartOf="@+id/ver1"
+                android:src="@drawable/mainmenu2" />
+
+            <View
+                android:id="@+id/ver1"
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:background="#acacac" />
 
             <ImageView
                 android:id="@+id/clubBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
-                android:layout_weight="1"
-                android:src="@drawable/cate2" />
+                android:layout_toEndOf="@+id/ver1"
+                android:src="@drawable/mainmenu1" />
 
-            <ImageView
-                android:id="@+id/Competition"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:layout_weight="1"
-                android:src="@drawable/cate3" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_alignParentBottom="true"
+                android:background="#acacac" />
 
-        </LinearLayout>
+        </RelativeLayout>
 
-        <LinearLayout
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:orientation="horizontal"
             android:padding="5dp">
 
             <ImageView
+                android:id="@+id/competition"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_toStartOf="@+id/ver2"
+                android:src="@drawable/mainmenu3" />
+
+            <View
+                android:id="@+id/ver2"
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:background="#acacac" />
+
+            <ImageView
                 android:id="@+id/dongho"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
-                android:layout_weight="1"
-                android:src="@drawable/cate4" />
+                android:layout_toEndOf="@+id/ver2"
+                android:src="@drawable/mainmenu4" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_alignParentBottom="true"
+                android:background="#acacac" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:padding="5dp">
 
             <ImageView
                 android:id="@+id/review"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
-                android:layout_weight="1"
-                android:src="@drawable/cate5" />
+                android:layout_toStartOf="@+id/ver3"
+                android:src="@drawable/mainmenu5"
+                tools:ignore="ContentDescription" />
+
+            <View
+                android:id="@+id/ver3"
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:background="#acacac" />
 
             <ImageView
                 android:id="@+id/employment"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
-                android:layout_weight="1"
-                android:src="@drawable/cate6" />
+                android:layout_toEndOf="@+id/ver3"
+                android:src="@drawable/mainmenu6" />
 
-        </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_alignParentBottom="true"
+                android:background="#acacac" />
+
+        </RelativeLayout>
     </LinearLayout>
 
     <com.google.android.gms.ads.AdView
