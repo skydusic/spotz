@@ -3,7 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="17dp"
     tools:context="addup.fpcompany.com.addsup.insertActivity">
 
     <LinearLayout
@@ -14,28 +13,38 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:background="#666"
+            android:gravity="center_vertical"
             android:padding="0dp">
 
             <TextView
                 android:layout_width="200dp"
                 android:layout_height="40dp"
                 android:layout_margin="0dp"
+                android:gravity="center_vertical"
+                android:paddingLeft="20dp"
                 android:text="스포츠 클럽"
+                android:textColor="#fff"
                 android:textSize="16sp" />
 
-            <Button
+            <TextView
                 android:id="@+id/button_main_insert"
-                android:layout_width="80dp"
-                android:layout_height="wrap_content"
+                android:layout_width="60dp"
+                android:layout_height="55dp"
                 android:layout_alignParentRight="true"
-                android:text="글쓰기" />
+                android:gravity="center_vertical"
+                android:paddingStart="15dp"
+                android:text="글쓰기"
+                android:textColor="#fff" />
 
         </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp">
+            android:layout_height="40dp"
+            android:paddingLeft="13dp"
+            android:paddingRight="10dp">
 
             <TextView
                 android:id="@+id/insertImg"
@@ -45,12 +54,15 @@
                 android:layout_centerVertical="true"
                 android:text="매장 이미지 넣기" />
 
-            <Button
+            <TextView
                 android:id="@+id/imgFind"
                 android:layout_width="80dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="7dp"
+                android:gravity="center"
                 android:text="찾기" />
         </RelativeLayout>
 
@@ -58,89 +70,102 @@
             android:id="@+id/horScrollView"
             android:layout_width="match_parent"
             android:layout_height="120dp"
+            android:padding="13dp"
             android:visibility="gone">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
+
                 <ImageView
                     android:id="@+id/imView1"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     android:layout_gravity="center"
-                    android:visibility="gone"/>
+                    android:visibility="gone" />
+
                 <ImageView
                     android:id="@+id/imView2"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     android:layout_gravity="center"
-                    android:visibility="gone"/>
+                    android:visibility="gone" />
+
                 <ImageView
                     android:id="@+id/imView3"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     android:layout_gravity="center"
-                    android:visibility="gone"/>
+                    android:visibility="gone" />
+
                 <ImageView
                     android:id="@+id/imView4"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     android:layout_gravity="center"
-                    android:visibility="gone"/>
+                    android:visibility="gone" />
+
                 <ImageView
                     android:id="@+id/imView5"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     android:layout_gravity="center"
-                    android:visibility="gone"/>
+                    android:visibility="gone" />
+
                 <ImageView
                     android:id="@+id/imView6"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     android:layout_gravity="center"
-                    android:visibility="gone"/>
+                    android:visibility="gone" />
+
                 <ImageView
                     android:id="@+id/imView7"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     android:layout_gravity="center"
-                    android:visibility="gone"/>
+                    android:visibility="gone" />
             </LinearLayout>
         </HorizontalScrollView>
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="60dp">
+            android:layout_height="35dp"
+            android:gravity="center_vertical"
+            android:paddingLeft="13dp"
+            android:paddingRight="13dp">
 
             <TextView
                 android:id="@+id/spinTv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="지역설정"/>
+                android:gravity="center_vertical"
+                android:text="지역설정" />
+
             <Spinner
                 android:id="@+id/spinner1"
                 android:layout_width="130dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_toRightOf="@+id/spinTv"
-                >
-            </Spinner>
+                android:layout_marginStart="10dp"
+                android:layout_toRightOf="@+id/spinTv" />
+
             <Spinner
                 android:id="@+id/spinner2"
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
-                android:layout_toRightOf="@+id/spinner1"
-                android:visibility="gone">
-            </Spinner>
+                android:layout_marginLeft="10dp"
+                android:layout_toEndOf="@+id/spinner1"
+                android:visibility="gone" />
 
         </RelativeLayout>
-
 
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:padding="13dp">
 
             <!--<RadioGroup
                 android:layout_width="match_parent"
@@ -150,57 +175,172 @@
                     android:layout_height="wrap_content"
                     android:text=""/>
             </RadioGroup>-->
-            <LinearLayout
+
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
                 android:gravity="center_vertical">
+
                 <TextView
+                    android:id="@+id/ownTv"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="상세주소 :"
-                    android:layout_marginRight="6dp"/>
+                    android:layout_height="25dp"
+                    android:layout_marginBottom="10dp"
+                    android:gravity="center_vertical"
+                    android:layout_marginEnd="6dp"
+                    android:layout_toStartOf="@+id/owner"
+
+                    android:text="업체명 / 대표명  :" />
 
                 <EditText
+                    android:id="@+id/owner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="25dp"
+                    android:layout_alignParentRight="true"
+                    android:background="@drawable/edittext"
+                    android:minWidth="250dp"
+                    android:paddingStart="10dp" />
+
+                <TextView
+                    android:id="@+id/timetableTv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/selectedittext"
+                    android:layout_below="@+id/ownTv"
+                    android:layout_marginEnd="6dp"
+                    android:layout_toStartOf="@+id/owner"                    android:layout_marginBottom="10dp"
+                    android:gravity="center_vertical"
+                    android:minHeight="25dp"
+                    android:text="시간 / 종목  :" />
+
+                <EditText
+                    android:id="@+id/timetable"
+                    android:layout_width="wrap_content"
+                    android:layout_height="25dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@+id/ownTv"
+                    android:background="@drawable/edittext"
                     android:minWidth="250dp"
-                    android:paddingLeft="15dp"
-                    />
-            </LinearLayout>
+                    android:paddingStart="10dp" />
+
+                <TextView
+                    android:id="@+id/locTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="25dp"
+                    android:layout_below="@+id/timetableTv"
+                    android:layout_marginEnd="6dp"
+                    android:layout_toStartOf="@+id/owner"                    android:layout_marginBottom="10dp"
+                    android:gravity="center_vertical"
+                    android:text="상세주소  :" />
+
+                <EditText
+                    android:id="@+id/location"
+                    android:layout_width="wrap_content"
+                    android:layout_height="25dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@+id/timetableTv"
+                    android:background="@drawable/edittext"
+                    android:minWidth="250dp"
+                    android:paddingStart="10dp" />
+
+                <TextView
+                android:id="@+id/trafficTv"
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:layout_below="@+id/locTv"
+                    android:layout_marginEnd="6dp"
+                    android:layout_toStartOf="@+id/owner"                android:layout_marginBottom="10dp"
+                android:gravity="center_vertical"
+                android:text="셔틀 / 교통  :" />
+
+                <EditText
+                    android:id="@+id/traffic"
+                    android:layout_width="wrap_content"
+                    android:layout_height="25dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@+id/locTv"
+                    android:background="@drawable/edittext"
+                    android:minWidth="250dp"
+                    android:paddingStart="10dp" />
+
+                <TextView
+                    android:id="@+id/feeTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="25dp"
+                    android:layout_below="@+id/trafficTv"
+                    android:layout_marginEnd="6dp"
+                    android:layout_toStartOf="@+id/owner"                    android:layout_marginBottom="10dp"
+                    android:gravity="center_vertical"
+                    android:text="레슨비  :" />
+
+                <EditText
+                    android:id="@+id/fee"
+                    android:layout_width="wrap_content"
+                    android:layout_height="25dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@+id/trafficTv"
+                    android:background="@drawable/edittext"
+                    android:minWidth="250dp"
+                    android:paddingStart="10dp" />
+
+                <TextView
+                    android:id="@+id/phoneTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="25dp"
+                    android:layout_below="@+id/feeTv"
+                    android:layout_marginEnd="6dp"
+                    android:layout_toStartOf="@+id/owner"                    android:layout_marginBottom="10dp"
+                    android:gravity="center_vertical"
+                    android:text="연락처  :" />
+
+                <EditText
+                    android:id="@+id/phone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="25dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@+id/feeTv"
+                    android:background="@drawable/edittext"
+                    android:minWidth="250dp"
+                    android:paddingStart="10dp" />
 
 
+            </RelativeLayout>
 
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/titleTv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingLeft="5dp"
-            android:text="제목" />
-
-        <EditText
-            android:id="@+id/titleET"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="@drawable/edittext" />
-
-        <TextView
-            android:id="@+id/contentsTv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingLeft="5dp"
-            android:text="내용" />
-
-        <EditText
-            android:id="@+id/contentsET"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/edittext"
-            android:minHeight="200dp"
-            android:padding="5dp" />
+            android:orientation="vertical"
+            android:padding="13dp">
+
+            <TextView
+                android:id="@+id/titleTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="5dp"
+                android:text="제목" />
+
+            <EditText
+                android:id="@+id/titleET"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/edittext" />
+
+            <TextView
+                android:id="@+id/contentsTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="5dp"
+                android:text="내용" />
+
+            <EditText
+                android:id="@+id/contentsET"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/edittext"
+                android:minHeight="200dp"
+                android:padding="5dp" />
+        </LinearLayout>
 
 
     </LinearLayout>

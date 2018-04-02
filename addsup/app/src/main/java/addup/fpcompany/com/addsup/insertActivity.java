@@ -22,7 +22,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
@@ -58,8 +57,14 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
 
     EditText titleET;
     EditText contentsET;
+    EditText owner;
+    EditText timetable;
+    EditText location;
+    EditText traffic;
+    EditText fee;
+    EditText phone;
     TextView insertImg;
-    Button imgFind;
+    TextView imgFind;
     ImageView imView1;
     ImageView imView2;
     ImageView imView3;
@@ -70,7 +75,7 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
     HorizontalScrollView horScrollView;
     Spinner spinner1;
     Spinner spinner2;
-    Button buttonInsert;
+    TextView buttonInsert;
     ArrayAdapter<String> spinnerAdapter1;
     ArrayAdapter<String> spinnerAdapter2;
     int spinnerNumber1 = -1;
@@ -112,6 +117,13 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
         spinner1 = findViewById(R.id.spinner1);
         spinner2 = findViewById(R.id.spinner2);
         buttonInsert = findViewById(R.id.button_main_insert);
+
+        owner = findViewById(R.id.owner);
+        timetable = findViewById(R.id.timetable);
+        location = findViewById(R.id.location);
+        traffic = findViewById(R.id.traffic);
+        fee = findViewById(R.id.fee);
+        phone = findViewById(R.id.phone);
 
         Intent clubInt = getIntent();
         postNum = clubInt.getIntExtra("postNum", -1);
@@ -175,6 +187,12 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
             public void onClick(View view) {
                 String title = titleET.getText().toString().trim();
                 String contents = contentsET.getText().toString().trim();
+                String own = owner.getText().toString();
+                String tim = timetable.getText().toString();
+                String loc = location.getText().toString();
+                String tra = traffic.getText().toString();
+                String fe = fee.getText().toString();
+                String pho = phone.getText().toString();
                 if (contents.length() > 300) {
                     Toast.makeText(insertActivity.this, "글자 제한을 초과했습니다. (" + String.valueOf(contents.length()) + " / 300자)", Toast.LENGTH_LONG).show();
                 } else {
@@ -190,7 +208,9 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
                                 imageAddress1 += ",";
                             }
                         }
-                        task.request(title, contents, serverUri, MainActivity.mUsername, imageAddress1, listName, MainActivity.spinList1.get(spinnerNumber1), MainActivity.spinList2.get(spinnerNumber1).get(spinnerNumber2));
+                        task.request(title, contents, serverUri, MainActivity.mUsername, imageAddress1,
+                                listName, MainActivity.spinList1.get(spinnerNumber1), MainActivity.spinList2.get(spinnerNumber1).get(spinnerNumber2),
+                                own, tim, loc, tra, fe, pho);
                         setResult(2400);
                         finish();
                     } else {
@@ -353,7 +373,6 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
         ExifInterface exif = null;
         try {
             exif = new ExifInterface(imagePath);
-//            Log.d(TAG, "exif : " + exif);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -368,8 +387,6 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
             OutputStream outputStream = new FileOutputStream(souceFile);
             resize(rotate(bitmap, exifDegree)).compress(Bitmap.CompressFormat.PNG, 100, outputStream);
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
             e.printStackTrace();
         }
 
@@ -489,7 +506,9 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
         ProgressDialog progressDialog;
         OkHttpClient client = new OkHttpClient();
 
-        protected void request(String title, String contents, String serverURL, String username, String image, String listname, String spindata1, String spindata2) {
+        protected void request(String title, String contents, String serverURL, String username,
+                               String image, String listname, String spindata1, String spindata2,
+                               String own, String tim, String loc, String tra, String fe, String pho) {
 
             Log.d("heu", "이미지 : " + checkImg(image));
 
@@ -501,6 +520,12 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
                     add("listname", listname).
                     add("spindata1", spindata1).
                     add("spindata2", spindata2).
+                    add("owner", own).
+                    add("timetable", tim).
+                    add("location", loc).
+                    add("traffic", tra).
+                    add("fee", fe).
+                    add("phone", pho).
                     build();
 
             Request request = new Request.Builder().url(serverURL).post(requestBody).build();
