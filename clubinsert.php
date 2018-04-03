@@ -21,10 +21,17 @@ $image=isset($_POST['image']) ? $_POST['image'] : '';
 $listname=isset($_POST['listname']) ? $_POST['listname'] : '';
 $spindata1=isset($_POST['spindata1']) ? $_POST['spindata1'] : '';
 $spindata2=isset($_POST['spindata2']) ? $_POST['spindata2'] : '';
+$owner=isset($_POST['owner']) ? $_POST['owner'] : '';
+$timetable=isset($_POST['timetable']) ? $_POST['timetable'] : '';
+$location=isset($_POST['location']) ? $_POST['location'] : '';
+$traffic=isset($_POST['traffic']) ? $_POST['traffic'] : '';
+$fee=isset($_POST['fee']) ? $_POST['fee'] : '';
+$phone=isset($_POST['phone']) ? $_POST['phone'] : '';
 
 if ($title !="" and $contents !="" ){
     if($listname == "clubtable"){
         $sql="insert into clubtable(title,contents,username,image,spindata1,spindata2) values('$title','$contents','$username','$image','$spindata1','$spindata2')";
+        $sql2="insert into clubextension (owner, timetable, location, traffic, fee, phone) values ('$owner','$timetable','$location','$traffic','$fee','$phone')";
     } else if ($listname == "freelancer"){
         $sql="insert into freelancer(title,contents,username,image,spindata1,spindata2) values('$title','$contents','$username','$image','$spindata1','$spindata2')";
     } else if ($listname == "competition"){
@@ -36,12 +43,22 @@ if ($title !="" and $contents !="" ){
     } else if ($listname == "employment"){
         $sql="insert into employment(title,contents,username,image,spindata1,spindata2) values('$title','$contents','$username','$image','$spindata1','$spindata2')";
     }
+    
     $result=mysqli_query($link,$sql);  
     if($result){
        echo "SQL문 처리 성공";
     }
     else{
        echo "SQL문 처리중 에러 발생 : ";
+       echo mysqli_error($link);
+    }
+    
+    $result2=mysqli_query($link,$sql2);  
+    if($result2){
+       echo "SQLex문 처리 성공";
+    }
+    else{
+       echo "SQLex문 처리중 에러 발생 : ";
        echo mysqli_error($link);
     }
 

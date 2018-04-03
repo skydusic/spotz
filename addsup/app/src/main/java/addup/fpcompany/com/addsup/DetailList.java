@@ -2,6 +2,7 @@ package addup.fpcompany.com.addsup;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -11,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.io.IOException;
@@ -34,13 +36,21 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
     TextView detailNameTv;
     TextView midDetailTv1;
     TextView midDetailTv2;
-    TextView midDetailTv3;
-    TextView midDetailTv4;
     TextView contentsTv;
     ViewPager viewPager;
     ImageView favorite;
     ArrayList<String> arr = new ArrayList<>();
     ArrayList<Fragment> fragArr = new ArrayList<>();
+
+    RelativeLayout detailLayout1;
+    RelativeLayout detailLayout2;
+
+    TextView ownerTv;
+    TextView timetableTv;
+    TextView locationTv;
+    TextView trafficTv;
+    TextView feeTv;
+    TextView phoneTv;
 
     String idx = "";
     String title = "";
@@ -48,6 +58,12 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
     String created = "";
     String image = "";
     String listname = "";
+    String owner = "";
+    String timetable = "";
+    String location = "";
+    String traffic = "";
+    String fee = "";
+    String phone = "";
 
     String url = MainActivity.serverUrl + "userImageFolder/";
 
@@ -64,11 +80,19 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
         detailNameTv = findViewById(R.id.detailNameTv);
         midDetailTv1 = findViewById(R.id.midDetailTv1);
         midDetailTv2 = findViewById(R.id.midDetailTv2);
-        midDetailTv3 = findViewById(R.id.midDetailTv3);
-        midDetailTv4 = findViewById(R.id.midDetailTv4);
         contentsTv = findViewById(R.id.contents);
         viewPager = findViewById(R.id.viewPager);
         favorite = findViewById(R.id.favorite);
+
+        detailLayout1 = findViewById(R.id.detailLayout1);
+        detailLayout2 = findViewById(R.id.detailLayout2);
+
+        ownerTv = findViewById(R.id.ownerTv);
+        timetableTv = findViewById(R.id.timetableTv);
+        locationTv = findViewById(R.id.locationTv);
+        trafficTv = findViewById(R.id.trafficTv);
+        feeTv = findViewById(R.id.feeTv);
+        phoneTv = findViewById(R.id.phoneTv);
 
         // 인텐트로 정보 가져옴
         intent = getIntent();
@@ -77,8 +101,21 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
         contents = intent.getStringExtra("contents");
         created = intent.getStringExtra("created");
         listname = intent.getStringExtra("listname");
+        owner = intent.getStringExtra("owner");
+        timetable = intent.getStringExtra("timetable");
+        location = intent.getStringExtra("location");
+        traffic = intent.getStringExtra("traffic");
+        fee = intent.getStringExtra("fee");
+        phone = intent.getStringExtra("phone");
+
         detailNameTv.setText(title);
         contentsTv.setText(contents);
+        ownerTv.setText(owner);
+        timetableTv.setText(timetable);
+        locationTv.setText(location);
+        trafficTv.setText(traffic);
+        feeTv.setText(fee);
+        phoneTv.setText(phone);
 
         image = intent.getStringExtra("image");
 
@@ -112,6 +149,8 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
         }
 
         favorite.setOnClickListener(this);
+        midDetailTv1.setOnClickListener(this);
+        midDetailTv2.setOnClickListener(this);
 
         /*MainActivity.getFavorite favorite = new MainActivity.getFavorite();
         favorite.requestPost(MainActivity.mUsername);*/
@@ -193,6 +232,19 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
                     favoriteInsert insert = new favoriteInsert();
                     insert.requestPost(listname, idx);
                 }
+                break;
+            case (R.id.midDetailTv1):
+                detailLayout1.setVisibility(View.VISIBLE);
+                detailLayout2.setVisibility(View.INVISIBLE);
+                midDetailTv1.setBackgroundColor(Color.parseColor("#e0e0e0"));
+                midDetailTv2.setBackgroundColor(Color.parseColor("#ffffff"));
+                break;
+
+            case (R.id.midDetailTv2):
+                detailLayout2.setVisibility(View.VISIBLE);
+                detailLayout1.setVisibility(View.INVISIBLE);
+                midDetailTv1.setBackgroundColor(Color.parseColor("#ffffff"));
+                midDetailTv2.setBackgroundColor(Color.parseColor("#e0e0e0"));
                 break;
         }
     }

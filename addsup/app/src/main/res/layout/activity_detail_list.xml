@@ -9,24 +9,24 @@
         android:id="@+id/detailNameTv"
         android:layout_width="match_parent"
         android:layout_height="40dp"
+        android:gravity="center"
         android:text="제목"
-        android:textSize="18dp"
-        android:gravity="center"/>
+        android:textSize="18dp" />
 
     <ImageView
         android:id="@+id/favorite"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:src="@drawable/blackstar"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="20dp"
-        android:layout_marginTop="15dp"/>
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="15dp"
+        android:src="@drawable/blackstar" />
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/detailNameTv"
-        android:layout_above="@+id/bottombar">
+        android:layout_above="@+id/bottombar"
+        android:layout_below="@+id/detailNameTv">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -37,68 +37,204 @@
                 android:layout_width="match_parent"
                 android:layout_height="180dp"
                 android:layout_marginBottom="5dp"
-                android:layout_marginTop="5dp"/>
+                android:layout_marginTop="5dp" />
 
             <LinearLayout
                 android:id="@+id/midMenuLay"
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
                 android:layout_below="@+id/viewPager"
-                android:orientation="horizontal"
-                android:visibility="invisible">
+                android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/midDetailTv1"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:textSize="16dp"
-                    android:text="기본정보1"
-                    android:gravity="center"
                     android:layout_weight="1"
-                    />
+                    android:gravity="center"
+                    android:text="업체정보"
+                    android:textSize="16dp"
+                    android:background="#e0e0e0"/>
 
                 <TextView
                     android:id="@+id/midDetailTv2"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:textSize="16dp"
-                    android:text="기본정보2"
-                    android:gravity="center"
                     android:layout_weight="1"
-                    />
-
-                <TextView
-                    android:id="@+id/midDetailTv3"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:textSize="16dp"
-                    android:text="기본정보3"
                     android:gravity="center"
-                    android:layout_weight="1"
-                    />
-
-                <TextView
-                    android:id="@+id/midDetailTv4"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:textSize="16dp"
-                    android:text="기본정보4"
-                    android:gravity="center"
-                    android:layout_weight="1"
-                    />
+                    android:text="강사정보"
+                    android:textSize="16dp" />
 
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/contents"
+            <RelativeLayout
+                android:id="@+id/detailLayout1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/midMenuLay"
-                android:padding="25dp"
-                android:textSize="16sp"
-                android:minHeight="280dp"
-                android:background="#88aaaaaa"
-                />
+                android:layout_below="@+id/midMenuLay">
+
+                <LinearLayout
+                    android:id="@+id/menulay"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    >
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#333"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp"
+                        android:text="업체명 / 대표명"
+                        android:gravity="center"/>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#333"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp"
+                        android:text="시간 / 종목"
+                        android:gravity="center"/>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#333"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp"
+                        android:text="위치"
+                        android:gravity="center"/>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#333"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp"
+                        android:text="교통편 안내"
+                        android:gravity="center"/>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#333"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp"
+                        android:text="레슨비"
+                        android:gravity="center"/>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#333"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp"
+                        android:text="연락처"
+                        android:gravity="center"/>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#333"/>
+                </LinearLayout>
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="187dp"
+                    android:background="#333"
+                    android:layout_toEndOf="@+id/menulay"/>
+
+                <TextView
+                    android:id="@+id/contents"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/menulay"
+                    android:background="#88aaaaaa"
+                    android:minHeight="280dp"
+                    android:padding="25dp"
+                    android:textSize="16sp" />
+
+                <LinearLayout
+                    android:id="@+id/menulay2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@+id/menulay"
+                    android:orientation="vertical"
+                    >
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#333"/>
+                    <TextView
+                        android:id="@+id/ownerTv"
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp"
+                        android:text=""
+                        android:gravity="center"/>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#333"/>
+                    <TextView
+                        android:id="@+id/timetableTv"
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp"
+                        android:gravity="center"/>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#333"/>
+                    <TextView
+                        android:id="@+id/locationTv"
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp"
+                        android:gravity="center"/>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#333"/>
+                    <TextView
+                        android:id="@+id/trafficTv"
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp"
+                        android:gravity="center"/>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#333"/>
+                    <TextView
+                        android:id="@+id/feeTv"
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp"
+                        android:gravity="center"/>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#333"/>
+                    <TextView
+                        android:id="@+id/phoneTv"
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp"
+                        android:gravity="center"/>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#333"/>
+                </LinearLayout>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/detailLayout2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/midMenuLay">
+
+
+
+            </RelativeLayout>
+
         </RelativeLayout>
 
 
@@ -106,11 +242,10 @@
 
     <include
         android:id="@+id/bottombar"
+        layout="@layout/bottombar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        layout="@layout/bottombar"
-        />
+        android:layout_alignParentBottom="true" />
 
 
 </RelativeLayout>

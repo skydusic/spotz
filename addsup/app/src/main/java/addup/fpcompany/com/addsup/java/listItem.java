@@ -13,8 +13,16 @@ public class listItem {
     String image;
     String created;
     String listname;
+    String owner;
+    String timetable;
+    String location;
+    String traffic;
+    String fee;
+    String phone;
 
-    public listItem(String idx, String username, String title, String contents, String image, String created, String listname) {
+    public listItem(String idx, String username, String title, String contents, String image,
+                    String created, String listname, String owner, String timetable, String location,
+                    String traffic, String fee, String phone) {
         this.idx = idx;
         this.username = username;
         this.title = title;
@@ -22,6 +30,12 @@ public class listItem {
         this.image = image;
         this.created = created;
         this.listname = listname;
+        this.owner = owner;
+        this.timetable = timetable;
+        this.location = location;
+        this.traffic = traffic;
+        this.fee = fee;
+        this.phone = phone;
     }
 
     public String getListname() {
@@ -50,5 +64,29 @@ public class listItem {
 
     public String getImage() {
         return image;
+    }
+
+    public String getOwner() {
+        return owner;
+    }
+
+    public String getTimetable() {
+        return timetable;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public String getTraffic() {
+        return traffic;
+    }
+
+    public String getFee() {
+        return fee;
+    }
+
+    public String getPhone() {
+        return phone;
     }
 }

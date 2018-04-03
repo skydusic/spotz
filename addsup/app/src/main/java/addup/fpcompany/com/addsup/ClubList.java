@@ -167,6 +167,12 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
                         intent.putExtra("title", listItems.get(position).getTitle());
                         intent.putExtra("contents", listItems.get(position).getContents());
                         intent.putExtra("created", listItems.get(position).getCreated());
+                        intent.putExtra("owner", listItems.get(position).getOwner());
+                        intent.putExtra("timetable", listItems.get(position).getTimetable());
+                        intent.putExtra("location", listItems.get(position).getLocation());
+                        intent.putExtra("traffic", listItems.get(position).getTraffic());
+                        intent.putExtra("fee", listItems.get(position).getFee());
+                        intent.putExtra("phone", listItems.get(position).getPhone());
 
                         /** 해야할 일 이미지 -> 리사이클러뷰 */
                         String image = listItems.get(position).getImage();
@@ -286,7 +292,9 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
 //                시간 설정
 
                 listItems.add(new listItem(String.valueOf(c.getInt(TAG_ID)), c.getString(TAG_USERNAME), c.getString(TAG_TITLE),
-                        c.getString(TAG_CONTENTS), c.getString(TAG_IMAGE), settingTimes(c.getString(TAG_CREATED)), listName));
+                        c.getString(TAG_CONTENTS), c.getString(TAG_IMAGE), settingTimes(c.getString(TAG_CREATED)), listName,
+                        c.getString("owner"), c.getString("timetable"), c.getString("location"), c.getString("traffic"),
+                        c.getString("fee"), c.getString("phone")));
 
             }
         } catch (JSONException e) {
@@ -294,7 +302,8 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
             Log.d("heu", "adapter Exception : " + e);
         }
 
-        checkSelect();
+        // 수정
+//        checkSelect();
     }
 
     //    쓴날짜가 오늘일 때 써진시간으로 보여주는 메소드
