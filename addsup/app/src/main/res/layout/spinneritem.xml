@@ -6,4 +6,5 @@
     android:textSize="12sp"
     android:gravity="center_horizontal"
     android:fontFamily="@font/swagger"
+    android:background="#ffffff"
     />
