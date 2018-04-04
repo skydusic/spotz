@@ -27,11 +27,16 @@ $location=isset($_POST['location']) ? $_POST['location'] : '';
 $traffic=isset($_POST['traffic']) ? $_POST['traffic'] : '';
 $fee=isset($_POST['fee']) ? $_POST['fee'] : '';
 $phone=isset($_POST['phone']) ? $_POST['phone'] : '';
+$tname = isset($_POST['tname']) ? $_POST['tname'] : '';
+$tcareer = isset($_POST['tcareer']) ? $_POST['tcareer'] : '';
+$tetc = isset($_POST['tetc']) ? $_POST['tetc'] : '';
+
 
 if ($title !="" and $contents !="" ){
     if($listname == "clubtable"){
         $sql="insert into clubtable(title,contents,username,image,spindata1,spindata2) values('$title','$contents','$username','$image','$spindata1','$spindata2')";
         $sql2="insert into clubextension (owner, timetable, location, traffic, fee, phone) values ('$owner','$timetable','$location','$traffic','$fee','$phone')";
+        $sql3="insert into clubemployee (name, career, etc) values ('$tname','$tcareer','$tetc')"
     } else if ($listname == "freelancer"){
         $sql="insert into freelancer(title,contents,username,image,spindata1,spindata2) values('$title','$contents','$username','$image','$spindata1','$spindata2')";
     } else if ($listname == "competition"){
@@ -59,6 +64,15 @@ if ($title !="" and $contents !="" ){
     }
     else{
        echo "SQLex문 처리중 에러 발생 : ";
+       echo mysqli_error($link);
+    }
+    
+    $result3=mysqli_query($link,$sql3);  
+    if($result3){
+       echo "SQLemployee문 처리 성공";
+    }
+    else{
+       echo "SQLemployee문 처리중 에러 발생 : ";
        echo mysqli_error($link);
     }
 

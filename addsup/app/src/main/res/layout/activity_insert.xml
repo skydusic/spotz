@@ -8,7 +8,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <RelativeLayout
@@ -24,8 +24,7 @@
                 android:layout_height="40dp"
                 android:layout_margin="0dp"
                 android:gravity="center_vertical"
-                android:paddingLeft="20dp"
-                android:text="스포츠 클럽"
+                android:paddingStart="20dp"
                 android:textColor="#fff"
                 android:textSize="16sp" />
 
@@ -33,10 +32,10 @@
                 android:id="@+id/button_main_insert"
                 android:layout_width="60dp"
                 android:layout_height="55dp"
-                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
                 android:gravity="center_vertical"
                 android:paddingStart="15dp"
-                android:text="글쓰기"
+                android:text="@string/write"
                 android:textColor="#fff" />
 
         </RelativeLayout>
@@ -46,45 +45,46 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="10dp">
+
             <TextView
                 android:id="@+id/titleTv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingLeft="5dp"
-                android:text="제목" />
+                android:paddingStart="5dp"
+                android:text="@string/title" />
 
             <EditText
                 android:id="@+id/titleET"
-                android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
+                android:layout_marginTop="10dp"
                 android:background="@drawable/edittext" />
         </LinearLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:paddingLeft="13dp"
-            android:paddingRight="10dp">
+            android:paddingEnd="10dp"
+            android:paddingStart="13dp">
 
             <TextView
                 android:id="@+id/insertImg"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
-                android:text="매장 이미지 넣기" />
+                android:text="@string/imageInsert" />
 
             <TextView
                 android:id="@+id/imgFind"
                 android:layout_width="80dp"
                 android:layout_height="match_parent"
-                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:layout_marginBottom="5dp"
                 android:layout_marginTop="7dp"
                 android:gravity="center"
-                android:text="찾기" />
+                android:text="@string/find" />
         </RelativeLayout>
 
         <HorizontalScrollView
@@ -95,7 +95,7 @@
             android:visibility="gone">
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
 
@@ -162,20 +162,20 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
-                android:text="지역설정" />
+                android:text="@string/spinner" />
 
             <Spinner
                 android:id="@+id/spinner1"
                 android:layout_width="130dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
-                android:layout_toRightOf="@+id/spinTv" />
+                android:layout_toEndOf="@+id/spinTv" />
 
             <Spinner
                 android:id="@+id/spinner2"
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
                 android:layout_toEndOf="@+id/spinner1"
                 android:visibility="gone" />
 
@@ -207,17 +207,17 @@
                     android:layout_width="wrap_content"
                     android:layout_height="25dp"
                     android:layout_marginBottom="10dp"
-                    android:gravity="center_vertical"
                     android:layout_marginEnd="6dp"
                     android:layout_toStartOf="@+id/owner"
+                    android:gravity="center_vertical"
 
-                    android:text="업체명 / 대표명  :" />
+                    android:text="@string/detailmenu1" />
 
                 <EditText
                     android:id="@+id/owner"
                     android:layout_width="wrap_content"
                     android:layout_height="25dp"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:background="@drawable/edittext"
                     android:minWidth="250dp"
                     android:paddingStart="10dp" />
@@ -227,17 +227,18 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/ownTv"
+                    android:layout_marginBottom="10dp"
                     android:layout_marginEnd="6dp"
-                    android:layout_toStartOf="@+id/owner"                    android:layout_marginBottom="10dp"
+                    android:layout_toStartOf="@+id/owner"
                     android:gravity="center_vertical"
                     android:minHeight="25dp"
-                    android:text="시간 / 종목  :" />
+                    android:text="@string/detailmenu2" />
 
                 <EditText
                     android:id="@+id/timetable"
                     android:layout_width="wrap_content"
                     android:layout_height="25dp"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:layout_below="@+id/ownTv"
                     android:background="@drawable/edittext"
                     android:minWidth="250dp"
@@ -248,36 +249,38 @@
                     android:layout_width="wrap_content"
                     android:layout_height="25dp"
                     android:layout_below="@+id/timetableTv"
+                    android:layout_marginBottom="10dp"
                     android:layout_marginEnd="6dp"
-                    android:layout_toStartOf="@+id/owner"                    android:layout_marginBottom="10dp"
+                    android:layout_toStartOf="@+id/owner"
                     android:gravity="center_vertical"
-                    android:text="상세주소  :" />
+                    android:text="@string/detailmenu3" />
 
                 <EditText
                     android:id="@+id/location"
                     android:layout_width="wrap_content"
                     android:layout_height="25dp"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:layout_below="@+id/timetableTv"
                     android:background="@drawable/edittext"
                     android:minWidth="250dp"
                     android:paddingStart="10dp" />
 
                 <TextView
-                android:id="@+id/trafficTv"
-                android:layout_width="wrap_content"
-                android:layout_height="25dp"
-                android:layout_below="@+id/locTv"
+                    android:id="@+id/trafficTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="25dp"
+                    android:layout_below="@+id/locTv"
+                    android:layout_marginBottom="10dp"
                     android:layout_marginEnd="6dp"
-                    android:layout_toStartOf="@+id/owner"                android:layout_marginBottom="10dp"
-                android:gravity="center_vertical"
-                android:text="셔틀 / 교통  :" />
+                    android:layout_toStartOf="@+id/owner"
+                    android:gravity="center_vertical"
+                    android:text="@string/detailmenu4" />
 
                 <EditText
                     android:id="@+id/traffic"
                     android:layout_width="wrap_content"
                     android:layout_height="25dp"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:layout_below="@+id/locTv"
                     android:background="@drawable/edittext"
                     android:minWidth="250dp"
@@ -288,16 +291,17 @@
                     android:layout_width="wrap_content"
                     android:layout_height="25dp"
                     android:layout_below="@+id/trafficTv"
+                    android:layout_marginBottom="10dp"
                     android:layout_marginEnd="6dp"
-                    android:layout_toStartOf="@+id/owner"                    android:layout_marginBottom="10dp"
+                    android:layout_toStartOf="@+id/owner"
                     android:gravity="center_vertical"
-                    android:text="레슨비  :" />
+                    android:text="@string/detailmenu5" />
 
                 <EditText
                     android:id="@+id/fee"
                     android:layout_width="wrap_content"
                     android:layout_height="25dp"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:layout_below="@+id/trafficTv"
                     android:background="@drawable/edittext"
                     android:minWidth="250dp"
@@ -308,17 +312,89 @@
                     android:layout_width="wrap_content"
                     android:layout_height="25dp"
                     android:layout_below="@+id/feeTv"
+                    android:layout_marginBottom="10dp"
                     android:layout_marginEnd="6dp"
-                    android:layout_toStartOf="@+id/owner"                    android:layout_marginBottom="10dp"
+                    android:layout_toStartOf="@+id/owner"
                     android:gravity="center_vertical"
-                    android:text="연락처  :" />
+                    android:text="@string/detailmenu6" />
 
                 <EditText
                     android:id="@+id/phone"
                     android:layout_width="wrap_content"
                     android:layout_height="25dp"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:layout_below="@+id/feeTv"
+                    android:background="@drawable/edittext"
+                    android:minWidth="250dp"
+                    android:paddingStart="10dp" />
+
+                <TextView
+                    android:id="@+id/teacherinfoTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="25dp"
+                    android:layout_below="@+id/phoneTv"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginEnd="6dp"
+                    android:layout_toStartOf="@+id/owner"
+                    android:gravity="center_vertical"
+                    android:text="@string/techerInfo" />
+
+                <TextView
+                android:id="@+id/teachernameTv"
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:layout_below="@+id/teacherinfoTv"
+                android:layout_marginEnd="6dp"
+                android:layout_toStartOf="@+id/owner"                    android:layout_marginBottom="10dp"
+                android:gravity="center_vertical"
+                android:text="@string/detailmenu7" />
+
+                <EditText
+                    android:id="@+id/teachername"
+                    android:layout_width="wrap_content"
+                    android:layout_height="25dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_below="@+id/teacherinfoTv"
+                    android:background="@drawable/edittext"
+                    android:minWidth="250dp"
+                    android:paddingStart="10dp" />
+
+                <TextView
+                    android:id="@+id/teachercareerTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="25dp"
+                    android:layout_below="@+id/teachernameTv"
+                    android:layout_marginEnd="6dp"
+                    android:layout_toStartOf="@+id/owner"                    android:layout_marginBottom="10dp"
+                    android:gravity="center_vertical"
+                    android:text="@string/detailmenu8" />
+
+                <EditText
+                    android:id="@+id/teachercareer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="25dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_below="@+id/teachernameTv"
+                    android:background="@drawable/edittext"
+                    android:minWidth="250dp"
+                    android:paddingStart="10dp" />
+
+                <TextView
+                    android:id="@+id/teacheretcTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="25dp"
+                    android:layout_below="@+id/teachercareerTv"
+                    android:layout_marginEnd="6dp"
+                    android:layout_toStartOf="@+id/owner"                    android:layout_marginBottom="10dp"
+                    android:gravity="center_vertical"
+                    android:text="@string/detailmenu9" />
+
+                <EditText
+                    android:id="@+id/teacheretc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="25dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_below="@+id/teachercareerTv"
                     android:background="@drawable/edittext"
                     android:minWidth="250dp"
                     android:paddingStart="10dp" />
@@ -338,14 +414,15 @@
                 android:id="@+id/contentsTv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingLeft="5dp"
-                android:text="내용" />
+                android:paddingStart="5dp"
+                android:text="@string/contents" />
 
             <EditText
                 android:id="@+id/contentsET"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/edittext"
+                android:inputType="text"
                 android:minHeight="200dp"
                 android:padding="5dp" />
         </LinearLayout>

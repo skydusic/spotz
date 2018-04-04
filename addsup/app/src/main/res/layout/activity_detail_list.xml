@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#fff"
     tools:context="addup.fpcompany.com.addsup.DetailList">
 
     <TextView
@@ -10,8 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:gravity="center"
-        android:text="제목"
-        android:textSize="18dp" />
+        android:textSize="18sp" />
 
     <ImageView
         android:id="@+id/favorite"
@@ -20,7 +20,8 @@
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="20dp"
         android:layout_marginTop="15dp"
-        android:src="@drawable/blackstar" />
+        android:src="@drawable/blackstar"
+        />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -52,8 +53,8 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="업체정보"
-                    android:textSize="16dp"
+                    android:text="@string/middetail1"
+                    android:textSize="16sp"
                     android:background="#e0e0e0"/>
 
                 <TextView
@@ -62,8 +63,8 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="강사정보"
-                    android:textSize="16dp" />
+                    android:text="@string/middetail2"
+                    android:textSize="16sp" />
 
             </LinearLayout>
 
@@ -86,7 +87,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="30dp"
-                        android:text="업체명 / 대표명"
+                        android:text="@string/detailmenu1"
                         android:gravity="center"/>
                     <View
                         android:layout_width="match_parent"
@@ -95,7 +96,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="30dp"
-                        android:text="시간 / 종목"
+                        android:text="@string/detailmenu2"
                         android:gravity="center"/>
                     <View
                         android:layout_width="match_parent"
@@ -104,7 +105,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="30dp"
-                        android:text="위치"
+                        android:text="@string/detailmenu3"
                         android:gravity="center"/>
                     <View
                         android:layout_width="match_parent"
@@ -113,7 +114,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="30dp"
-                        android:text="교통편 안내"
+                        android:text="@string/detailmenu4"
                         android:gravity="center"/>
                     <View
                         android:layout_width="match_parent"
@@ -122,7 +123,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="30dp"
-                        android:text="레슨비"
+                        android:text="@string/detailmenu5"
                         android:gravity="center"/>
                     <View
                         android:layout_width="match_parent"
@@ -131,7 +132,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="30dp"
-                        android:text="연락처"
+                        android:text="@string/detailmenu6"
                         android:gravity="center"/>
                     <View
                         android:layout_width="match_parent"

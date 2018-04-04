@@ -133,11 +133,8 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
 
         //즐겨찾기 플래그
 
-        Log.d("heu", "ARR size : " + MainActivity.favoriteArr.size());
         for (int i = 0; i < MainActivity.favoriteArr.size(); i++) {
             favoriteTemp = MainActivity.favoriteArr.get(i);
-            Log.d("heu", "리스트네임 : " + listname + ", 템프 : " + favoriteTemp.getListname());
-            Log.d("heu", "인덱스 : " + idx + ", 템프 : " + favoriteTemp.getPostidx());
             if (favoriteTemp.getListname().equals(listname) && favoriteTemp.getPostidx().equals(idx)) {
                 favoriteFLAG = true;
                 favorite.setImageResource(R.drawable.yellowstar);
@@ -152,8 +149,6 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
         midDetailTv1.setOnClickListener(this);
         midDetailTv2.setOnClickListener(this);
 
-        /*MainActivity.getFavorite favorite = new MainActivity.getFavorite();
-        favorite.requestPost(MainActivity.mUsername);*/
 
     }
 

@@ -70,52 +70,12 @@
             android:padding="5dp">
 
             <ImageView
-                android:id="@+id/competition"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:layout_toStartOf="@+id/ver2"
-                android:src="@drawable/mainmenu3" />
-
-            <View
-                android:id="@+id/ver2"
-                android:layout_width="1dp"
-                android:layout_height="match_parent"
-                android:layout_centerHorizontal="true"
-                android:layout_marginBottom="10dp"
-                android:layout_marginTop="10dp"
-                android:background="#acacac" />
-
-            <ImageView
-                android:id="@+id/dongho"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:layout_toEndOf="@+id/ver2"
-                android:src="@drawable/mainmenu4" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_alignParentBottom="true"
-                android:background="#acacac" />
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="horizontal"
-            android:padding="5dp">
-
-            <ImageView
                 android:id="@+id/review"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:layout_toStartOf="@+id/ver3"
-                android:src="@drawable/mainmenu5"
+                android:src="@drawable/mainmenu3"
                 tools:ignore="ContentDescription" />
 
             <View
@@ -133,6 +93,47 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:layout_toEndOf="@+id/ver3"
+                android:src="@drawable/mainmenu4"
+                tools:ignore="ContentDescription" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_alignParentBottom="true"
+                android:background="#acacac" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:padding="5dp">
+
+            <ImageView
+                android:id="@+id/competition"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_toStartOf="@+id/ver2"
+                android:src="@drawable/mainmenu5" />
+
+            <View
+                android:id="@+id/ver2"
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:background="#acacac" />
+
+            <ImageView
+                android:id="@+id/dongho"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_toEndOf="@+id/ver2"
                 android:src="@drawable/mainmenu6" />
 
             <View

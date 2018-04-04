@@ -75,15 +75,19 @@
 
     for ($i=0; $i < $total_record; $i++)
     {
+        mysqli_data_seek($result, $i);
+        $row = mysqli_fetch_array($result);
+        
         if($listname == "clubtable"){
-            $sql2 = "select * from clubextension where idx = '$idx'";
+            $sql2 = "select * from clubextension where idx = '$row[idx]'";
             $result2 = mysqli_query($connect,$sql2);
             mysqli_data_seek($result2, 0);
             $row2 = mysqli_fetch_array($result2);
+            $sql3 = "select *from clubemployee where idx = '$row[idx]'";
+            $result3 = mysqli_query($connect,$sql3);
+            mysqli_data_seek($result3, 0);
         }
-        mysqli_data_seek($result, $i);
-        $row = mysqli_fetch_array($result);
-        echo "{\"idx\":$row[idx],\"title\":\"$row[title]\",\"contents\":\"$row[contents]\",\"username\":\"$row[username]\",\"created\":\"$row[created]\",\"image\":\"$row[image]\",\"owner\":\"$row[owner]\",\"timetable\":\"$row[timetable]\",\"location\":\"$row[location]\",\"traffic\":\"$row[traffic]\",\"fee\":\"$row[fee]\",\"phone\":\"$row[phone]\"}";
+        echo "{\"idx\":$row[idx],\"title\":\"$row[title]\",\"contents\":\"$row[contents]\",\"username\":\"$row[username]\",\"created\":\"$row[created]\",\"hit\":\"$row[hit]\",\"image\":\"$row[image]\",\"owner\":\"$row2[owner]\",\"timetable\":\"$row2[timetable]\",\"location\":\"$row2[location]\",\"traffic\":\"$row2[traffic]\",\"fee\":\"$row2[fee]\",\"phone\":\"$row2[phone]\",\"tname\":\"$row2[name]\",\"tcareer\":\"$row2[career]\",\"etc\":\"$row2[etc]\"}";
 
         if($i<$total_record-1){
           echo ",";

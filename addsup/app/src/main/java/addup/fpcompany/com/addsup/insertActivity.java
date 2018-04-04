@@ -63,6 +63,9 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
     EditText traffic;
     EditText fee;
     EditText phone;
+    EditText teachername;
+    EditText teachercareer;
+    EditText teacheretc;
     TextView insertImg;
     TextView imgFind;
     ImageView imView1;
@@ -124,6 +127,10 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
         traffic = findViewById(R.id.traffic);
         fee = findViewById(R.id.fee);
         phone = findViewById(R.id.phone);
+        teachername = findViewById(R.id.teachername);
+        teachercareer = findViewById(R.id.teachercareer);
+        teacheretc = findViewById(R.id.teacheretc);
+
 
         Intent clubInt = getIntent();
         postNum = clubInt.getIntExtra("postNum", -1);
@@ -193,6 +200,10 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
                 String tra = traffic.getText().toString();
                 String fe = fee.getText().toString();
                 String pho = phone.getText().toString();
+                String tname = teachername.getText().toString();
+                String tcareer = teachercareer.getText().toString();
+                String tetc = teacheretc.getText().toString();
+
                 if (contents.length() > 300) {
                     Toast.makeText(insertActivity.this, "글자 제한을 초과했습니다. (" + String.valueOf(contents.length()) + " / 300자)", Toast.LENGTH_LONG).show();
                 } else {
@@ -210,7 +221,7 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
                         }
                         task.request(title, contents, serverUri, MainActivity.mUsername, imageAddress1,
                                 listName, MainActivity.spinList1.get(spinnerNumber1), MainActivity.spinList2.get(spinnerNumber1).get(spinnerNumber2),
-                                own, tim, loc, tra, fe, pho);
+                                own, tim, loc, tra, fe, pho, tname, tcareer, tetc);
                         setResult(2400);
                         finish();
                     } else {
@@ -508,7 +519,8 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
 
         protected void request(String title, String contents, String serverURL, String username,
                                String image, String listname, String spindata1, String spindata2,
-                               String own, String tim, String loc, String tra, String fe, String pho) {
+                               String own, String tim, String loc, String tra, String fe, String pho,
+                               String tname, String tcareer, String tetc) {
 
             Log.d("heu", "이미지 : " + checkImg(image));
 
@@ -526,6 +538,9 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
                     add("traffic", tra).
                     add("fee", fe).
                     add("phone", pho).
+                    add("tname", tname).
+                    add("tcareer", tcareer).
+                    add("tetc", tetc).
                     build();
 
             Request request = new Request.Builder().url(serverURL).post(requestBody).build();

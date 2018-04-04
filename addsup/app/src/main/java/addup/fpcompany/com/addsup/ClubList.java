@@ -154,6 +154,7 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
 
             }
         });
+
         spinner2.setOnItemSelectedListener(this);
 
         recyclerView.addOnItemTouchListener(
@@ -179,6 +180,7 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
                         String[] temp = image.split(",");
                         intent.putExtra("image", temp[0]);
                         v.getContext().startActivity(intent);
+
                     }
 
                     @Override
@@ -294,7 +296,7 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
                 listItems.add(new listItem(String.valueOf(c.getInt(TAG_ID)), c.getString(TAG_USERNAME), c.getString(TAG_TITLE),
                         c.getString(TAG_CONTENTS), c.getString(TAG_IMAGE), settingTimes(c.getString(TAG_CREATED)), listName,
                         c.getString("owner"), c.getString("timetable"), c.getString("location"), c.getString("traffic"),
-                        c.getString("fee"), c.getString("phone")));
+                        c.getString("fee"), c.getString("phone"), c.getString("hit")));
 
             }
         } catch (JSONException e) {

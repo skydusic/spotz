@@ -4,66 +4,68 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="addup.fpcompany.com.addsup.infoActivity"
     android:background="#ffffff"
-    >
+    tools:context="addup.fpcompany.com.addsup.infoActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="15dp">
-    <TextView
-        android:id="@+id/mainTv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="문의하기"
-        android:textSize="20sp"/>
-
-    <Button
-        android:id="@+id/insertBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="확인"
-        android:layout_alignParentRight="true"/>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/mainTv"
-        android:orientation="vertical"
-        android:layout_marginTop="40dp">
-        <TextView
-            android:id="@+id/titleTv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingLeft="5dp"
-            android:text="제목" />
-
-        <EditText
-            android:id="@+id/titleET"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="@drawable/edittext" />
 
         <TextView
-            android:id="@+id/contentsTv"
+            android:id="@+id/mainTv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingLeft="5dp"
-            android:text="내용"
-            android:layout_marginTop="20dp"/>
+            android:text="문의하기"
+            android:textSize="20sp" />
 
-        <EditText
-            android:id="@+id/contentsET"
-            android:layout_width="match_parent"
+        <Button
+            android:id="@+id/insertBtn"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/edittext"
-            android:minHeight="200dp"
-            android:padding="15dp"
+            android:layout_alignParentRight="true"
+            android:text="확인" />
 
-            android:hint="불편한 사항, 개선안 건의 등 문의할 내용을 적어주시면 빠른 시간 안에 메일로 답변을 드리겠습니다."/>
-    </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/mainTv"
+            android:layout_marginTop="40dp"
+            android:orientation="vertical">
 
+            <TextView
+                android:id="@+id/titleTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="5dp"
+                android:text="제목" />
+
+            <EditText
+                android:id="@+id/titleET"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/edittext" />
+
+            <TextView
+                android:id="@+id/contentsTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:paddingLeft="5dp"
+                android:text="내용" />
+
+            <EditText
+                android:id="@+id/contentsET"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/edittext"
+                android:hint="불편한 사항, 개선안 건의 등 문의할 내용을 적어주시면 빠른 시간 안에 메일로 답변을 드리겠습니다."
+                android:minHeight="200dp"
+
+                android:padding="15dp" />
+        </LinearLayout>
+
+    </RelativeLayout>
 
     <include
         android:id="@+id/bottombar"
@@ -71,6 +73,5 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true" />
-    </RelativeLayout>
 
 </RelativeLayout>

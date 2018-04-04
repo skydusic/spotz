@@ -50,6 +50,9 @@ public class MainListAdater extends RecyclerView.Adapter<MainListAdater.ViewHold
         listItem = itemArr.get(position);
         holder.titleHolder.setText(listItem.getTitle());
         holder.timeHolder.setText(listItem.getCreated());
+        holder.location.setText("주소: "+listItem.getLocation());
+        holder.phone.setText("연락처: "+listItem.getPhone());
+        holder.hit.setText("조회수: "+listItem.getHit());
 
         if (!listItem.getImage().equals("")) {
             String[] temp = listItem.getImage().split(",");
@@ -69,7 +72,7 @@ public class MainListAdater extends RecyclerView.Adapter<MainListAdater.ViewHold
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
-        TextView titleHolder, timeHolder;
+        TextView titleHolder, timeHolder, location, phone, hit;
         ImageView imageViewHolder;
 
         public ViewHolder(View itemView) {
@@ -77,9 +80,15 @@ public class MainListAdater extends RecyclerView.Adapter<MainListAdater.ViewHold
             titleHolder = itemView.findViewById(R.id.title);
             timeHolder = itemView.findViewById(R.id.created);
             imageViewHolder = itemView.findViewById(R.id.imageView);
+            location = itemView.findViewById(R.id.location);
+            phone = itemView.findViewById(R.id.phone);
+            hit = itemView.findViewById(R.id.hit);
 
             titleHolder.setTypeface(mTypeface);
             timeHolder.setTypeface(mTypeface);
+            location.setTypeface(mTypeface);
+            phone.setTypeface(mTypeface);
+            hit.setTypeface(mTypeface);
         }
     }
 }
