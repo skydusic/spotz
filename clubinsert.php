@@ -36,7 +36,6 @@ if ($title !="" and $contents !="" ){
     if($listname == "clubtable"){
         $sql="insert into clubtable(title,contents,username,image,spindata1,spindata2) values('$title','$contents','$username','$image','$spindata1','$spindata2')";
         $sql2="insert into clubextension (owner, timetable, location, traffic, fee, phone) values ('$owner','$timetable','$location','$traffic','$fee','$phone')";
-        $sql3="insert into clubemployee (name, career, etc) values ('$tname','$tcareer','$tetc')"
     } else if ($listname == "freelancer"){
         $sql="insert into freelancer(title,contents,username,image,spindata1,spindata2) values('$title','$contents','$username','$image','$spindata1','$spindata2')";
     } else if ($listname == "competition"){
@@ -66,6 +65,18 @@ if ($title !="" and $contents !="" ){
        echo "SQLex문 처리중 에러 발생 : ";
        echo mysqli_error($link);
     }
+    
+    if($listname == 'clubtable'){
+        $sqlsel = "select * from clubtable where username = '$username' order by created desc";
+        
+        $resultsel = mysqli_query($link,$sqlsel);
+        mysqli_data_seek($resultsel, 0);
+        $row = mysqli_fetch_array($resultsel);
+        
+        $sql3="insert into clubemployee (postidx, name, career, etc) values ('$row[idx]','$tname','$tcareer','$tetc')";
+        
+    }
+    
     
     $result3=mysqli_query($link,$sql3);  
     if($result3){
