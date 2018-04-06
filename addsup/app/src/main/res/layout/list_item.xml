@@ -5,28 +5,31 @@
     android:layout_height="120dp"
     android:background="#ffffff">
 
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="140dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="10dp"
+        android:scaleType="center"
+        app:srcCompat="@mipmap/ic_launcher"
+
+        />
+
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="10dp">
-
-
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="150dp"
-            android:layout_height="100dp"
-            android:layout_marginEnd="10dp"
-            android:scaleType="center"
-            app:srcCompat="@mipmap/ic_launcher" />
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/imageView"
+        android:padding="10dp"
+        android:layout_toStartOf="@+id/createdLay">
 
         <TextView
             android:id="@+id/corperTv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"
-            android:layout_toEndOf="@id/imageView"
             android:fontFamily="@font/dohyeonttf"
             android:gravity="center_vertical"
+            android:layout_marginTop="10dp"
             android:textSize="18sp" />
 
         <TextView
@@ -35,7 +38,6 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/corperTv"
             android:layout_marginBottom="5dp"
-            android:layout_toEndOf="@id/imageView"
             android:fontFamily="@font/dohyeonttf"
             android:gravity="center_vertical"
             android:textSize="16sp" />
@@ -46,7 +48,6 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/location"
             android:layout_marginBottom="5dp"
-            android:layout_toEndOf="@id/imageView"
             android:fontFamily="@font/dohyeonttf"
             android:gravity="center_vertical"
             android:textSize="16sp" />
@@ -56,21 +57,27 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/phone"
-            android:layout_toEndOf="@id/imageView"
             android:fontFamily="@font/dohyeonttf"
             android:gravity="center_vertical"
             android:textSize="16sp" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/createdLay"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:layout_alignParentEnd="true">
 
         <TextView
             android:id="@+id/created"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_marginEnd="10dp"
-            android:layout_marginStart="50dp"
+            android:layout_marginEnd="15dp"
             android:fontFamily="@font/dohyeonttf"
             android:gravity="center_vertical"
-            android:padding="20dp"
+            android:text="asdasd"
             android:textSize="14sp" />
 
         <TextView
@@ -78,12 +85,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignEnd="@id/created"
-            android:layout_below="@+id/phone"
             android:layout_marginBottom="5dp"
+            android:layout_below="@+id/created"
             android:fontFamily="@font/dohyeonttf"
             android:gravity="center_vertical"
-            android:layout_margin="20dp"
-            android:textSize="14sp" />
+            android:layout_marginTop="8dp"
+            android:text="asdasd"
+            android:textSize="12sp" />
 
     </RelativeLayout>
 

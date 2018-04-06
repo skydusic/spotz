@@ -52,7 +52,8 @@ public class MainListAdater extends RecyclerView.Adapter<MainListAdater.ViewHold
         holder.timeHolder.setText(listItem.getCreated());
         holder.location.setText("주소: "+listItem.getLocation());
         holder.phone.setText("연락처: "+listItem.getPhone());
-        holder.hit.setText("조회수: "+listItem.getHit());
+        holder.hit.setText(listItem.getHit());
+        holder.etc.setText("세부사항: "+listItem.getEtc());
 
         if (!listItem.getImage().equals("")) {
             String[] temp = listItem.getImage().split(",");
