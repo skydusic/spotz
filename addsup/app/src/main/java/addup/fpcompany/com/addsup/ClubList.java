@@ -168,10 +168,10 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
                         intent.putExtra("contents", listItems.get(position).getContents());
                         intent.putExtra("created", listItems.get(position).getCreated());
                         intent.putExtra("corperation", listItems.get(position).getcorperation());
-                        intent.putExtra("timetable", listItems.get(position).getTimetable());
+                        intent.putExtra("sports", listItems.get(position).getSports());
                         intent.putExtra("location", listItems.get(position).getLocation());
-                        intent.putExtra("traffic", listItems.get(position).getTraffic());
-                        intent.putExtra("fee", listItems.get(position).getFee());
+                        intent.putExtra("phone", listItems.get(position).getPhone());
+                        intent.putExtra("etc", listItems.get(position).getEtc());
                         intent.putExtra("phone", listItems.get(position).getPhone());
 
                         /** 해야할 일 이미지 -> 리사이클러뷰 */
@@ -292,10 +292,10 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
                 JSONObject c = topic.getJSONObject(i);
 //                시간 설정
 
-                listItems.add(new listItem(String.valueOf(c.getInt(TAG_ID)), c.getString(TAG_USERNAME),
-                        c.getString(TAG_CONTENTS), c.getString(TAG_IMAGE), settingTimes(c.getString(TAG_CREATED)), listName,
-                        c.getString("corperation"), c.getString("timetable"), c.getString("location"), c.getString("traffic"),
-                        c.getString("fee"), c.getString("phone"), c.getString("hit")));
+                listItems.add(new listItem(String.valueOf(c.getInt(TAG_ID)), c.getString(TAG_USERNAME), c.getString(TAG_CONTENTS),
+                        c.getString(TAG_IMAGE), ClubList.settingTimes(c.getString(TAG_CREATED)), c.getString("listname"),
+                        c.getString("corperation"), c.getString("sports"), c.getString("location"), c.getString("phone"),
+                        c.getString("etc"), c.getString("hit")));
 
             }
         } catch (JSONException e) {

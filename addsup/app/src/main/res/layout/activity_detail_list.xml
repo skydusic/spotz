@@ -6,14 +6,6 @@
     android:background="#fff"
     tools:context="addup.fpcompany.com.addsup.DetailList">
 
-    <TextView
-        android:id="@+id/detailNameTv"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:gravity="center"
-        android:textSize="18sp"
-        android:layout_marginTop="5dp"/>
-
     <ImageView
         android:id="@+id/favorite"
         android:layout_width="30dp"
@@ -28,7 +20,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/bottombar"
-        android:layout_below="@+id/detailNameTv">
+        >
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -103,20 +95,11 @@
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:background="#333"/>
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="30dp"
-                        android:text="@string/detailmenu6"
-                        android:gravity="center"/>
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="#333"/>
                 </LinearLayout>
 
                 <View
                     android:layout_width="1dp"
-                    android:layout_height="187dp"
+                    android:layout_height="157dp"
                     android:background="#333"
                     android:layout_toEndOf="@+id/menulay"/>
 
@@ -152,7 +135,7 @@
                         android:layout_height="1dp"
                         android:background="#333"/>
                     <TextView
-                        android:id="@+id/timetableTv"
+                        android:id="@+id/sportsTv"
                         android:layout_width="match_parent"
                         android:layout_height="30dp"
                         android:gravity="center"/>
@@ -170,25 +153,16 @@
                         android:layout_height="1dp"
                         android:background="#333"/>
                     <TextView
-                        android:id="@+id/trafficTv"
-                        android:layout_width="match_parent"
-                        android:layout_height="30dp"
-                        android:gravity="center"/>
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="#333"/>
-                    <TextView
-                        android:id="@+id/feeTv"
-                        android:layout_width="match_parent"
-                        android:layout_height="30dp"
-                        android:gravity="center"/>
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="#333"/>
-                    <TextView
                         android:id="@+id/phoneTv"
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp"
+                        android:gravity="center"/>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#333"/>
+                    <TextView
+                        android:id="@+id/etcTv"
                         android:layout_width="match_parent"
                         android:layout_height="30dp"
                         android:gravity="center"/>

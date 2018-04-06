@@ -52,7 +52,7 @@
         }
         $result1 = mysqli_query($connect,$sql1);
         $row1 = mysqli_fetch_array($result1);
-        echo "{\"idx\":$row[idx],\"contents\":\"$row[contents]\",\"username\":\"$row[username]\",\"created\":\"$row[created]\",\"hit\":\"$row[hit]\",\"image\":\"$row[image]\",\"corperation\":\"$row2[corperation]\",\"timetable\":\"$row2[timetable]\",\"location\":\"$row2[location]\",\"traffic\":\"$row2[traffic]\",\"fee\":\"$row2[fee]\",\"phone\":\"$row2[phone]\",\"tname\":\"$row2[name]\",\"tcareer\":\"$row2[career]\",\"etc\":\"$row2[etc]\"}";
+        echo "\"idx\":\"$row1[idx]\",\"postidx\":\"$row[postidx]\",\"contents\":\"$row1[contents]\",\"username\":\"$row1[username]\",\"created\":\"$row1[created]\",\"image\":\"$row1[image]\",\"corperation\":\"$row2[corperation]\",\"timetable\":\"$row2[timetable]\",\"location\":\"$row2[location]\",\"traffic\":\"$row2[traffic]\",\"fee\":\"$row2[fee]\",\"phone\":\"$row2[phone]\",\"tname\":\"$row2[name]\",\"tcareer\":\"$row2[career]\",\"etc\":\"$row2[etc]\"}";
         
     if($i<$total_record-1){
       echo ",";

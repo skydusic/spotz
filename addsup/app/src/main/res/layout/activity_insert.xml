@@ -37,24 +37,19 @@
             android:paddingEnd="10dp"
             android:paddingStart="13dp">
 
-            <TextView
-                android:id="@+id/insertImg"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_centerVertical="true"
-                android:text="@string/imageInsert" />
 
-            <TextView
+            <ImageView
                 android:id="@+id/imgFind"
-                android:layout_width="80dp"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:layout_marginBottom="5dp"
                 android:layout_marginTop="7dp"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
                 android:gravity="center"
-                android:text="@string/find" />
+                android:src="@drawable/imagefind"/>
         </RelativeLayout>
 
         <HorizontalScrollView
@@ -191,7 +186,7 @@
                     android:paddingStart="10dp" />
 
                 <TextView
-                    android:id="@+id/timetableTv"
+                    android:id="@+id/sportsTv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/corperationTv"
@@ -202,7 +197,7 @@
                     android:text="@string/detailmenu2" />
 
                 <EditText
-                    android:id="@+id/timetable"
+                    android:id="@+id/sports"
                     android:layout_width="wrap_content"
                     android:layout_height="25dp"
                     android:layout_alignParentEnd="true"
@@ -215,7 +210,7 @@
                     android:id="@+id/locTv"
                     android:layout_width="wrap_content"
                     android:layout_height="25dp"
-                    android:layout_below="@+id/timetableTv"
+                    android:layout_below="@+id/sportsTv"
                     android:layout_marginBottom="10dp"
                     android:layout_marginEnd="6dp"
                     android:gravity="center_vertical"
@@ -226,13 +221,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="25dp"
                     android:layout_alignParentEnd="true"
-                    android:layout_below="@+id/timetableTv"
+                    android:layout_below="@+id/sportsTv"
                     android:background="@drawable/edittext"
                     android:minWidth="250dp"
                     android:paddingStart="10dp" />
 
                 <TextView
-                    android:id="@+id/trafficTv"
+                    android:id="@+id/phoneTv"
                     android:layout_width="wrap_content"
                     android:layout_height="25dp"
                     android:layout_below="@+id/locTv"
@@ -242,7 +237,7 @@
                     android:text="@string/detailmenu4" />
 
                 <EditText
-                    android:id="@+id/traffic"
+                    android:id="@+id/phone"
                     android:layout_width="wrap_content"
                     android:layout_height="25dp"
                     android:layout_alignParentEnd="true"
@@ -252,41 +247,21 @@
                     android:paddingStart="10dp" />
 
                 <TextView
-                    android:id="@+id/feeTv"
+                    android:id="@+id/etcTv"
                     android:layout_width="wrap_content"
                     android:layout_height="25dp"
-                    android:layout_below="@+id/trafficTv"
+                    android:layout_below="@+id/phoneTv"
                     android:layout_marginBottom="10dp"
                     android:layout_marginEnd="6dp"
                     android:gravity="center_vertical"
                     android:text="@string/detailmenu5" />
 
                 <EditText
-                    android:id="@+id/fee"
+                    android:id="@+id/etc"
                     android:layout_width="wrap_content"
                     android:layout_height="25dp"
                     android:layout_alignParentEnd="true"
-                    android:layout_below="@+id/trafficTv"
-                    android:background="@drawable/edittext"
-                    android:minWidth="250dp"
-                    android:paddingStart="10dp" />
-
-                <TextView
-                    android:id="@+id/phoneTv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="25dp"
-                    android:layout_below="@+id/feeTv"
-                    android:layout_marginBottom="10dp"
-                    android:layout_marginEnd="6dp"
-                    android:gravity="center_vertical"
-                    android:text="@string/detailmenu6" />
-
-                <EditText
-                    android:id="@+id/phone"
-                    android:layout_width="wrap_content"
-                    android:layout_height="25dp"
-                    android:layout_alignParentEnd="true"
-                    android:layout_below="@+id/feeTv"
+                    android:layout_below="@+id/phoneTv"
                     android:background="@drawable/edittext"
                     android:minWidth="250dp"
                     android:paddingStart="10dp" />

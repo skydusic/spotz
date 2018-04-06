@@ -90,8 +90,8 @@ public class ActionDetailActivity extends AppCompatActivity {
                 JSONObject c = post.getJSONObject(i);
                     listArr.add(new listItem(String.valueOf(c.getInt(TAG_ID)), c.getString(TAG_USERNAME), c.getString(TAG_CONTENTS),
                             c.getString(TAG_IMAGE), ClubList.settingTimes(c.getString(TAG_CREATED)), c.getString("listname"),
-                            c.getString("corperation"), c.getString("timetable"), c.getString("location"), c.getString("traffic"),
-                            c.getString("fee"), c.getString("phone"), c.getString("hit")));
+                            c.getString("corperation"), c.getString("sports"), c.getString("location"), c.getString("phone"),
+                            c.getString("etc"), c.getString("hit")));
             }
         } catch (JSONException e) {
             e.printStackTrace();

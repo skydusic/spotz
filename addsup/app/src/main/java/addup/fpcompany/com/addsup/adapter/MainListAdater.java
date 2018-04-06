@@ -72,7 +72,7 @@ public class MainListAdater extends RecyclerView.Adapter<MainListAdater.ViewHold
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
-        TextView corperation,timeHolder, location, phone, hit;
+        TextView corperation,timeHolder, location, phone, etc, hit;
         ImageView imageViewHolder;
 
         public ViewHolder(View itemView) {
@@ -83,12 +83,14 @@ public class MainListAdater extends RecyclerView.Adapter<MainListAdater.ViewHold
             location = itemView.findViewById(R.id.location);
             phone = itemView.findViewById(R.id.phone);
             hit = itemView.findViewById(R.id.hit);
+            etc = itemView.findViewById(R.id.etc);
 
             corperation.setTypeface(mTypeface);
             timeHolder.setTypeface(mTypeface);
             location.setTypeface(mTypeface);
             phone.setTypeface(mTypeface);
             hit.setTypeface(mTypeface);
+            etc.setTypeface(mTypeface);
         }
     }
 }

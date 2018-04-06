@@ -28,7 +28,7 @@
     {
       mysqli_data_seek($result, $i);
       $row = mysqli_fetch_array($result);
-      echo "{\"listname\":\"clubtable\",\"idx\":$row[idx],\"contents\":\"$row[contents]\",\"username\":\"$row[username]\",\"created\":\"$row[created]\",\"image\":\"$row[image]\",\"up\":\"$row[up]\",\"addedtime\":\"$row[addedtime]\",\"hit\":\"$row[hit]\",\"corperation\":\"$row2[corperation]\",\"timetable\":\"$row2[timetable]\",\"location\":\"$row2[location]\",\"traffic\":\"$row2[traffic]\",\"fee\":\"$row2[fee]\",\"phone\":\"$row2[phone]\",\"tname\":\"$row2[name]\",\"tcareer\":\"$row2[career]\",\"etc\":\"$row2[etc]\"}";
+      echo "{\"listname\":\"clubtable\",\"idx\":$row[idx],\"contents\":\"$row[contents]\",\"username\":\"$row[username]\",\"created\":\"$row[created]\",\"hit\":\"$row[hit]\",\"image\":\"$row[image]\",\"corperation\":\"$row2[corperation]\",\"sports\":\"$row2[sports]\",\"location\":\"$row2[location]\",\"phone\":\"$row2[phone]\",\"etc\":\"$row2[etc]\"";
     }
 
     if($total_record2){

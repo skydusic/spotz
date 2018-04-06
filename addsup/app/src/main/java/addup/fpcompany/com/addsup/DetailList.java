@@ -11,7 +11,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.io.IOException;
@@ -32,34 +31,29 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
 
     Intent intent;
 
-    TextView detailNameTv;
     TextView contentsTv;
     ViewPager viewPager;
     ImageView favorite;
     ArrayList<String> arr = new ArrayList<>();
     ArrayList<Fragment> fragArr = new ArrayList<>();
 
-    RelativeLayout detailLayout1;
-
     TextView corperationTv;
-    TextView timetableTv;
+    TextView sportsTv;
     TextView locationTv;
-    TextView trafficTv;
-    TextView feeTv;
     TextView phoneTv;
+    TextView etcTv;
 
+    String listname = "";
     String idx = "";
-    String title = "";
     String contents = "";
     String created = "";
     String image = "";
-    String listname = "";
+
     String corperation = "";
-    String timetable = "";
+    String sports = "";
     String location = "";
-    String traffic = "";
-    String fee = "";
     String phone = "";
+    String etc = "";
 
     String url = MainActivity.serverUrl + "userImageFolder/";
 
@@ -73,41 +67,36 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_list);
 
-        detailNameTv = findViewById(R.id.detailNameTv);
         contentsTv = findViewById(R.id.contents);
         viewPager = findViewById(R.id.viewPager);
         favorite = findViewById(R.id.favorite);
-        detailLayout1 = findViewById(R.id.detailLayout1);
 
         corperationTv = findViewById(R.id.corperationTv);
-        timetableTv = findViewById(R.id.timetableTv);
+        sportsTv = findViewById(R.id.sportsTv);
         locationTv = findViewById(R.id.locationTv);
-        trafficTv = findViewById(R.id.trafficTv);
-        feeTv = findViewById(R.id.feeTv);
         phoneTv = findViewById(R.id.phoneTv);
+        etcTv = findViewById(R.id.etcTv);
 
         // 인텐트로 정보 가져옴
         intent = getIntent();
+        listname = intent.getStringExtra("listname");
         idx = intent.getStringExtra("idx");
-        title = intent.getStringExtra("title");
         contents = intent.getStringExtra("contents");
         created = intent.getStringExtra("created");
-        listname = intent.getStringExtra("listname");
-        corperation = intent.getStringExtra("corperation");
-        timetable = intent.getStringExtra("timetable");
-        location = intent.getStringExtra("location");
-        traffic = intent.getStringExtra("traffic");
-        fee = intent.getStringExtra("fee");
-        phone = intent.getStringExtra("phone");
 
-        detailNameTv.setText(title);
-        contentsTv.setText(contents);
+        corperation = intent.getStringExtra("corperation");
+        sports = intent.getStringExtra("sports");
+        location = intent.getStringExtra("location");
+        phone = intent.getStringExtra("phone");
+        etc = intent.getStringExtra("etc");
+
+
         corperationTv.setText(corperation);
-        timetableTv.setText(timetable);
+        sportsTv.setText(sports);
         locationTv.setText(location);
-        trafficTv.setText(traffic);
-        feeTv.setText(fee);
         phoneTv.setText(phone);
+        etcTv.setText(etc);
+        contentsTv.setText(contents);
 
         image = intent.getStringExtra("image");
 
@@ -154,7 +143,6 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
                 favorite.setImageResource(R.drawable.blackstar);
             }
         }
-
         favorite.setOnClickListener(this);
     }
 
@@ -168,8 +156,8 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
     private void setRecyclerView() {
         if (!image.equals("")) {
             String[] temp = image.split(",");
-            for (int i = 0; i < temp.length; i++) {
-                arr.add(url + temp[i]);
+            for (String aTemp : temp) {
+                arr.add(url + aTemp);
             }
         }
 

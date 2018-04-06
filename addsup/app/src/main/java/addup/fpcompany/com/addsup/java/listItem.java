@@ -13,17 +13,15 @@ public class listItem {
     String created;
     String listname;
     String corperation;
-    String timetable;
+    String sports;
     String location;
-    String traffic;
-    String fee;
     String phone;
+    String etc;
     String hit;
 
     public listItem(String idx, String username, String contents,
                     String image, String created, String listname, String corperation,
-                    String timetable, String location, String traffic, String fee,
-                    String phone, String hit) {
+                    String sports, String location, String phone, String etc, String hit) {
         this.idx = idx;
         this.username = username;
         this.contents = contents;
@@ -31,11 +29,10 @@ public class listItem {
         this.created = created;
         this.listname = listname;
         this.corperation = corperation;
-        this.timetable = timetable;
+        this.sports = sports;
         this.location = location;
-        this.traffic = traffic;
-        this.fee = fee;
         this.phone = phone;
+        this.etc = etc;
         this.hit = hit;
     }
 
@@ -71,20 +68,20 @@ public class listItem {
         return corperation;
     }
 
-    public String getTimetable() {
-        return timetable;
-    }
-
     public String getLocation() {
         return location;
     }
 
-    public String getTraffic() {
-        return traffic;
+    public String getCorperation() {
+        return corperation;
     }
 
-    public String getFee() {
-        return fee;
+    public String getSports() {
+        return sports;
+    }
+
+    public String getEtc() {
+        return etc;
     }
 
     public String getPhone() {

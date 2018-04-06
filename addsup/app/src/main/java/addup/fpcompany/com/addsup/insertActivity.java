@@ -57,13 +57,12 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
 
     EditText contentsET;
     EditText corperation;
-    EditText timetable;
+    EditText sports;
     EditText location;
-    EditText traffic;
-    EditText fee;
     EditText phone;
-    TextView insertImg;
-    TextView imgFind;
+    EditText etcEt;
+
+    ImageView imgFind;
     ImageView imView1;
     ImageView imView2;
     ImageView imView3;
@@ -108,7 +107,6 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
         imView5 = findViewById(R.id.imView5);
         imView6 = findViewById(R.id.imView6);
         imView7 = findViewById(R.id.imView7);
-        insertImg = findViewById(R.id.insertImg);
         imgFind = findViewById(R.id.imgFind);
         contentsET = findViewById(R.id.contentsET);
         spinner1 = findViewById(R.id.spinner1);
@@ -116,11 +114,10 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
         buttonInsert = findViewById(R.id.button_main_insert);
 
         corperation = findViewById(R.id.corperation);
-        timetable = findViewById(R.id.timetable);
+        sports = findViewById(R.id.sports);
         location = findViewById(R.id.location);
-        traffic = findViewById(R.id.traffic);
-        fee = findViewById(R.id.fee);
         phone = findViewById(R.id.phone);
+        etcEt = findViewById(R.id.etc);
 
         Intent clubInt = getIntent();
         postNum = clubInt.getIntExtra("postNum", -1);
@@ -184,11 +181,10 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
             public void onClick(View view) {
                 String contents = contentsET.getText().toString().trim();
                 String cor = corperation.getText().toString();
-                String tim = timetable.getText().toString();
+                String spo = sports.getText().toString();
                 String loc = location.getText().toString();
-                String tra = traffic.getText().toString();
-                String fe = fee.getText().toString();
                 String pho = phone.getText().toString();
+                String etc = etcEt.getText().toString();
 
                 if (contents.length() > 300) {
                     Toast.makeText(insertActivity.this, "글자 제한을 초과했습니다. (" + String.valueOf(contents.length()) + " / 300자)", Toast.LENGTH_LONG).show();
@@ -208,7 +204,7 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
                         }
                         task.request(contents, serverUri, MainActivity.mUsername, imageAddress1,
                                 listName, MainActivity.spinList1.get(spinnerNumber1), MainActivity.spinList2.get(spinnerNumber1).get(spinnerNumber2),
-                                cor, tim, loc, tra, fe, pho);
+                                cor, spo, loc, pho, etc);
                         setResult(2400);
                         finish();
                     } else {
@@ -506,7 +502,7 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
 
         protected void request(String contents, String serverURL, String username,
                                String image, String listname, String spindata1, String spindata2,
-                               String cor, String tim, String loc, String tra, String fe, String pho) {
+                               String cor, String spo, String loc, String pho, String etc) {
 
             Log.d("heu", "이미지 : " + checkImg(image));
 
@@ -518,11 +514,10 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
                     add("spindata1", spindata1).
                     add("spindata2", spindata2).
                     add("corperation", cor).
-                    add("timetable", tim).
+                    add("sports", spo).
                     add("location", loc).
-                    add("traffic", tra).
-                    add("fee", fe).
                     add("phone", pho).
+                    add("etc", etc).
                     build();
 
             Request request = new Request.Builder().url(serverURL).post(requestBody).build();

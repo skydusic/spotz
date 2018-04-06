@@ -20,15 +20,12 @@ $image=isset($_POST['image']) ? $_POST['image'] : '';
 $listname=isset($_POST['listname']) ? $_POST['listname'] : '';
 $spindata1=isset($_POST['spindata1']) ? $_POST['spindata1'] : '';
 $spindata2=isset($_POST['spindata2']) ? $_POST['spindata2'] : '';
+
 $corperation=isset($_POST['corperation']) ? $_POST['corperation'] : '';
-$timetable=isset($_POST['timetable']) ? $_POST['timetable'] : '';
+$sports=isset($_POST['sports']) ? $_POST['sports'] : '';
 $location=isset($_POST['location']) ? $_POST['location'] : '';
-$traffic=isset($_POST['traffic']) ? $_POST['traffic'] : '';
-$fee=isset($_POST['fee']) ? $_POST['fee'] : '';
 $phone=isset($_POST['phone']) ? $_POST['phone'] : '';
-$tname = isset($_POST['tname']) ? $_POST['tname'] : '';
-$tcareer = isset($_POST['tcareer']) ? $_POST['tcareer'] : '';
-$tetc = isset($_POST['tetc']) ? $_POST['tetc'] : '';
+$etc = isset($_POST['etc']) ? $_POST['etc'] : '';
 
 
 
@@ -61,7 +58,7 @@ $result = mysqli_query($link,$temp);
             $row = mysqli_fetch_array($result);
 
 
-$sql2="insert into clubextension (postidx, corperation, timetable, location, traffic, fee, phone) values ('$row[idx]','$corperation','$timetable','$location','$traffic','$fee','$phone')";
+$sql2="insert into clubextension (postidx, corperation, sports, location, phone, etc) values ('$row[idx]','$corperation','$sports','$location','$phone','$etc')";
 
 $result2=mysqli_query($link,$sql2);  
 if($result2){
