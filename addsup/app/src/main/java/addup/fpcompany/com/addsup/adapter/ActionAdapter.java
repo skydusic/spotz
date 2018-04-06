@@ -39,7 +39,7 @@ public class ActionAdapter extends RecyclerView.Adapter<ActionAdapter.ViewHolder
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         String temp = itemArr.get(position).toString();
-        holder.titleHolder.setText(temp);
+        holder.coperation.setText(temp);
     }
 
     @Override
@@ -48,12 +48,12 @@ public class ActionAdapter extends RecyclerView.Adapter<ActionAdapter.ViewHolder
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView titleHolder;
+        TextView coperation;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            titleHolder = itemView.findViewById(R.id.titleTv);
-            titleHolder.setTypeface(mTypeface);
+            coperation = itemView.findViewById(R.id.corperTv);
+            coperation.setTypeface(mTypeface);
         }
     }
 }

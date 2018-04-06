@@ -48,7 +48,7 @@ public class MainListAdater extends RecyclerView.Adapter<MainListAdater.ViewHold
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         listItem = itemArr.get(position);
-        holder.titleHolder.setText(listItem.getTitle());
+        holder.corperation.setText(listItem.getcorperation());
         holder.timeHolder.setText(listItem.getCreated());
         holder.location.setText("주소: "+listItem.getLocation());
         holder.phone.setText("연락처: "+listItem.getPhone());
@@ -72,19 +72,19 @@ public class MainListAdater extends RecyclerView.Adapter<MainListAdater.ViewHold
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
-        TextView titleHolder, timeHolder, location, phone, hit;
+        TextView corperation,timeHolder, location, phone, hit;
         ImageView imageViewHolder;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            titleHolder = itemView.findViewById(R.id.title);
+            corperation = itemView.findViewById(R.id.corperTv);
             timeHolder = itemView.findViewById(R.id.created);
             imageViewHolder = itemView.findViewById(R.id.imageView);
             location = itemView.findViewById(R.id.location);
             phone = itemView.findViewById(R.id.phone);
             hit = itemView.findViewById(R.id.hit);
 
-            titleHolder.setTypeface(mTypeface);
+            corperation.setTypeface(mTypeface);
             timeHolder.setTypeface(mTypeface);
             location.setTypeface(mTypeface);
             phone.setTypeface(mTypeface);

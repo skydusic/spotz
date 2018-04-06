@@ -55,17 +55,13 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
 
     private static String TAG = "heu";
 
-    EditText titleET;
     EditText contentsET;
-    EditText owner;
+    EditText corperation;
     EditText timetable;
     EditText location;
     EditText traffic;
     EditText fee;
     EditText phone;
-    EditText teachername;
-    EditText teachercareer;
-    EditText teacheretc;
     TextView insertImg;
     TextView imgFind;
     ImageView imView1;
@@ -90,7 +86,6 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
     String imagePath;
     String imageAddress1 = "";
     String listName;
-    String title;
     String contents;
     String image;
     public static final String url = MainActivity.serverUrl;
@@ -105,7 +100,6 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_insert);
 
-        titleET = findViewById(R.id.titleET);
         horScrollView = findViewById(R.id.horScrollView);
         imView1 = findViewById(R.id.imView1);
         imView2 = findViewById(R.id.imView2);
@@ -121,20 +115,15 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
         spinner2 = findViewById(R.id.spinner2);
         buttonInsert = findViewById(R.id.button_main_insert);
 
-        owner = findViewById(R.id.owner);
+        corperation = findViewById(R.id.corperation);
         timetable = findViewById(R.id.timetable);
         location = findViewById(R.id.location);
         traffic = findViewById(R.id.traffic);
         fee = findViewById(R.id.fee);
         phone = findViewById(R.id.phone);
-        teachername = findViewById(R.id.teachername);
-        teachercareer = findViewById(R.id.teachercareer);
-        teacheretc = findViewById(R.id.teacheretc);
-
 
         Intent clubInt = getIntent();
         postNum = clubInt.getIntExtra("postNum", -1);
-        title = clubInt.getStringExtra("title");
         contents = clubInt.getStringExtra("contents");
         listName = clubInt.getStringExtra("listname");
         image = clubInt.getStringExtra("image");
@@ -148,7 +137,8 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
             serverUri = "http://spotz.co.kr/var/www/html/clubupdate.php";
         }
 
-        if (title != null) {
+        /**  글 수정 */
+        /*if (title != null) {
             titleET.setText(title);
             contentsET.setText(contents);
 
@@ -187,27 +177,24 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
                         break;
                 }
             }
-        }
+        }*/
 
         buttonInsert.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String title = titleET.getText().toString().trim();
                 String contents = contentsET.getText().toString().trim();
-                String own = owner.getText().toString();
+                String cor = corperation.getText().toString();
                 String tim = timetable.getText().toString();
                 String loc = location.getText().toString();
                 String tra = traffic.getText().toString();
                 String fe = fee.getText().toString();
                 String pho = phone.getText().toString();
-                String tname = teachername.getText().toString();
-                String tcareer = teachercareer.getText().toString();
-                String tetc = teacheretc.getText().toString();
 
                 if (contents.length() > 300) {
                     Toast.makeText(insertActivity.this, "글자 제한을 초과했습니다. (" + String.valueOf(contents.length()) + " / 300자)", Toast.LENGTH_LONG).show();
                 } else {
-                    if (!title.equals("") && !contents.equals("")) {
+                    /** 해야할 일  */
+                    if (!contents.equals("")) {
                         InsertData task = new InsertData();
                         ConnectServer connectServer = new ConnectServer();
                         for (int i = 0; i < imagePathArr.size(); i++) {
@@ -219,9 +206,9 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
                                 imageAddress1 += ",";
                             }
                         }
-                        task.request(title, contents, serverUri, MainActivity.mUsername, imageAddress1,
+                        task.request(contents, serverUri, MainActivity.mUsername, imageAddress1,
                                 listName, MainActivity.spinList1.get(spinnerNumber1), MainActivity.spinList2.get(spinnerNumber1).get(spinnerNumber2),
-                                own, tim, loc, tra, fe, pho, tname, tcareer, tetc);
+                                cor, tim, loc, tra, fe, pho);
                         setResult(2400);
                         finish();
                     } else {
@@ -517,30 +504,25 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
         ProgressDialog progressDialog;
         OkHttpClient client = new OkHttpClient();
 
-        protected void request(String title, String contents, String serverURL, String username,
+        protected void request(String contents, String serverURL, String username,
                                String image, String listname, String spindata1, String spindata2,
-                               String own, String tim, String loc, String tra, String fe, String pho,
-                               String tname, String tcareer, String tetc) {
+                               String cor, String tim, String loc, String tra, String fe, String pho) {
 
             Log.d("heu", "이미지 : " + checkImg(image));
 
             RequestBody requestBody = new FormBody.Builder().
-                    add("title", title).
                     add("contents", contents).
                     add("username", username).
                     add("image", checkImg(image)).
                     add("listname", listname).
                     add("spindata1", spindata1).
                     add("spindata2", spindata2).
-                    add("owner", own).
+                    add("corperation", cor).
                     add("timetable", tim).
                     add("location", loc).
                     add("traffic", tra).
                     add("fee", fe).
                     add("phone", pho).
-                    add("tname", tname).
-                    add("tcareer", tcareer).
-                    add("tetc", tetc).
                     build();
 
             Request request = new Request.Builder().url(serverURL).post(requestBody).build();

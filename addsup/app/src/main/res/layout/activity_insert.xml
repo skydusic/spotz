@@ -15,18 +15,9 @@
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_marginTop="10dp"
-            android:background="#666"
+            android:background="@color/blueback"
             android:gravity="center_vertical"
             android:padding="0dp">
-
-            <TextView
-                android:layout_width="200dp"
-                android:layout_height="40dp"
-                android:layout_margin="0dp"
-                android:gravity="center_vertical"
-                android:paddingStart="20dp"
-                android:textColor="#fff"
-                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/button_main_insert"
@@ -39,27 +30,6 @@
                 android:textColor="#fff" />
 
         </RelativeLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="10dp">
-
-            <TextView
-                android:id="@+id/titleTv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingStart="5dp"
-                android:text="@string/title" />
-
-            <EditText
-                android:id="@+id/titleET"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/edittext" />
-        </LinearLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -203,18 +173,16 @@
                 android:gravity="center_vertical">
 
                 <TextView
-                    android:id="@+id/ownTv"
+                    android:id="@+id/corperationTv"
                     android:layout_width="wrap_content"
                     android:layout_height="25dp"
                     android:layout_marginBottom="10dp"
                     android:layout_marginEnd="6dp"
-                    android:layout_toStartOf="@+id/owner"
                     android:gravity="center_vertical"
-
                     android:text="@string/detailmenu1" />
 
                 <EditText
-                    android:id="@+id/owner"
+                    android:id="@+id/corperation"
                     android:layout_width="wrap_content"
                     android:layout_height="25dp"
                     android:layout_alignParentEnd="true"
@@ -226,10 +194,9 @@
                     android:id="@+id/timetableTv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/ownTv"
+                    android:layout_below="@+id/corperationTv"
                     android:layout_marginBottom="10dp"
                     android:layout_marginEnd="6dp"
-                    android:layout_toStartOf="@+id/owner"
                     android:gravity="center_vertical"
                     android:minHeight="25dp"
                     android:text="@string/detailmenu2" />
@@ -239,7 +206,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="25dp"
                     android:layout_alignParentEnd="true"
-                    android:layout_below="@+id/ownTv"
+                    android:layout_below="@+id/corperationTv"
                     android:background="@drawable/edittext"
                     android:minWidth="250dp"
                     android:paddingStart="10dp" />
@@ -251,7 +218,6 @@
                     android:layout_below="@+id/timetableTv"
                     android:layout_marginBottom="10dp"
                     android:layout_marginEnd="6dp"
-                    android:layout_toStartOf="@+id/owner"
                     android:gravity="center_vertical"
                     android:text="@string/detailmenu3" />
 
@@ -272,7 +238,6 @@
                     android:layout_below="@+id/locTv"
                     android:layout_marginBottom="10dp"
                     android:layout_marginEnd="6dp"
-                    android:layout_toStartOf="@+id/owner"
                     android:gravity="center_vertical"
                     android:text="@string/detailmenu4" />
 
@@ -293,7 +258,6 @@
                     android:layout_below="@+id/trafficTv"
                     android:layout_marginBottom="10dp"
                     android:layout_marginEnd="6dp"
-                    android:layout_toStartOf="@+id/owner"
                     android:gravity="center_vertical"
                     android:text="@string/detailmenu5" />
 
@@ -314,7 +278,6 @@
                     android:layout_below="@+id/feeTv"
                     android:layout_marginBottom="10dp"
                     android:layout_marginEnd="6dp"
-                    android:layout_toStartOf="@+id/owner"
                     android:gravity="center_vertical"
                     android:text="@string/detailmenu6" />
 
@@ -327,78 +290,6 @@
                     android:background="@drawable/edittext"
                     android:minWidth="250dp"
                     android:paddingStart="10dp" />
-
-                <TextView
-                    android:id="@+id/teacherinfoTv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="25dp"
-                    android:layout_below="@+id/phoneTv"
-                    android:layout_marginBottom="10dp"
-                    android:layout_marginEnd="6dp"
-                    android:layout_toStartOf="@+id/owner"
-                    android:gravity="center_vertical"
-                    android:text="@string/techerInfo" />
-
-                <TextView
-                android:id="@+id/teachernameTv"
-                android:layout_width="wrap_content"
-                android:layout_height="25dp"
-                android:layout_below="@+id/teacherinfoTv"
-                android:layout_marginEnd="6dp"
-                android:layout_toStartOf="@+id/owner"                    android:layout_marginBottom="10dp"
-                android:gravity="center_vertical"
-                android:text="@string/detailmenu7" />
-
-                <EditText
-                    android:id="@+id/teachername"
-                    android:layout_width="wrap_content"
-                    android:layout_height="25dp"
-                    android:layout_alignParentEnd="true"
-                    android:layout_below="@+id/teacherinfoTv"
-                    android:background="@drawable/edittext"
-                    android:minWidth="250dp"
-                    android:paddingStart="10dp" />
-
-                <TextView
-                    android:id="@+id/teachercareerTv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="25dp"
-                    android:layout_below="@+id/teachernameTv"
-                    android:layout_marginEnd="6dp"
-                    android:layout_toStartOf="@+id/owner"                    android:layout_marginBottom="10dp"
-                    android:gravity="center_vertical"
-                    android:text="@string/detailmenu8" />
-
-                <EditText
-                    android:id="@+id/teachercareer"
-                    android:layout_width="wrap_content"
-                    android:layout_height="25dp"
-                    android:layout_alignParentEnd="true"
-                    android:layout_below="@+id/teachernameTv"
-                    android:background="@drawable/edittext"
-                    android:minWidth="250dp"
-                    android:paddingStart="10dp" />
-
-                <TextView
-                    android:id="@+id/teacheretcTv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="25dp"
-                    android:layout_below="@+id/teachercareerTv"
-                    android:layout_marginEnd="6dp"
-                    android:layout_toStartOf="@+id/owner"                    android:layout_marginBottom="10dp"
-                    android:gravity="center_vertical"
-                    android:text="@string/detailmenu9" />
-
-                <EditText
-                    android:id="@+id/teacheretc"
-                    android:layout_width="wrap_content"
-                    android:layout_height="25dp"
-                    android:layout_alignParentEnd="true"
-                    android:layout_below="@+id/teachercareerTv"
-                    android:background="@drawable/edittext"
-                    android:minWidth="250dp"
-                    android:paddingStart="10dp" />
-
 
             </RelativeLayout>
 

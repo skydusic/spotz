@@ -2,7 +2,6 @@ package addup.fpcompany.com.addsup;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -34,8 +33,6 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
     Intent intent;
 
     TextView detailNameTv;
-    TextView midDetailTv1;
-    TextView midDetailTv2;
     TextView contentsTv;
     ViewPager viewPager;
     ImageView favorite;
@@ -43,9 +40,8 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
     ArrayList<Fragment> fragArr = new ArrayList<>();
 
     RelativeLayout detailLayout1;
-    RelativeLayout detailLayout2;
 
-    TextView ownerTv;
+    TextView corperationTv;
     TextView timetableTv;
     TextView locationTv;
     TextView trafficTv;
@@ -58,7 +54,7 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
     String created = "";
     String image = "";
     String listname = "";
-    String owner = "";
+    String corperation = "";
     String timetable = "";
     String location = "";
     String traffic = "";
@@ -78,16 +74,12 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
         setContentView(R.layout.activity_detail_list);
 
         detailNameTv = findViewById(R.id.detailNameTv);
-        midDetailTv1 = findViewById(R.id.midDetailTv1);
-        midDetailTv2 = findViewById(R.id.midDetailTv2);
         contentsTv = findViewById(R.id.contents);
         viewPager = findViewById(R.id.viewPager);
         favorite = findViewById(R.id.favorite);
-
         detailLayout1 = findViewById(R.id.detailLayout1);
-        detailLayout2 = findViewById(R.id.detailLayout2);
 
-        ownerTv = findViewById(R.id.ownerTv);
+        corperationTv = findViewById(R.id.corperationTv);
         timetableTv = findViewById(R.id.timetableTv);
         locationTv = findViewById(R.id.locationTv);
         trafficTv = findViewById(R.id.trafficTv);
@@ -101,7 +93,7 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
         contents = intent.getStringExtra("contents");
         created = intent.getStringExtra("created");
         listname = intent.getStringExtra("listname");
-        owner = intent.getStringExtra("owner");
+        corperation = intent.getStringExtra("corperation");
         timetable = intent.getStringExtra("timetable");
         location = intent.getStringExtra("location");
         traffic = intent.getStringExtra("traffic");
@@ -110,7 +102,7 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
 
         detailNameTv.setText(title);
         contentsTv.setText(contents);
-        ownerTv.setText(owner);
+        corperationTv.setText(corperation);
         timetableTv.setText(timetable);
         locationTv.setText(location);
         trafficTv.setText(traffic);
@@ -146,9 +138,6 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
         }
 
         favorite.setOnClickListener(this);
-        midDetailTv1.setOnClickListener(this);
-        midDetailTv2.setOnClickListener(this);
-
 
     }
 
@@ -227,19 +216,6 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
                     favoriteInsert insert = new favoriteInsert();
                     insert.requestPost(listname, idx);
                 }
-                break;
-            case (R.id.midDetailTv1):
-                detailLayout1.setVisibility(View.VISIBLE);
-                detailLayout2.setVisibility(View.INVISIBLE);
-                midDetailTv1.setBackgroundColor(Color.parseColor("#e0e0e0"));
-                midDetailTv2.setBackgroundColor(Color.parseColor("#ffffff"));
-                break;
-
-            case (R.id.midDetailTv2):
-                detailLayout2.setVisibility(View.VISIBLE);
-                detailLayout1.setVisibility(View.INVISIBLE);
-                midDetailTv1.setBackgroundColor(Color.parseColor("#ffffff"));
-                midDetailTv2.setBackgroundColor(Color.parseColor("#e0e0e0"));
                 break;
         }
     }

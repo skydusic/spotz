@@ -14,14 +14,13 @@ if (!$link)
 mysqli_set_charset($link,"utf8");  
 
 //POST 값을 읽어온다.
-$title=isset($_POST['title']) ? $_POST['title'] : '';
 $contents=isset($_POST['contents']) ? $_POST['contents'] : '';
 $username=isset($_POST['username']) ? $_POST['username'] : '';
 $image=isset($_POST['image']) ? $_POST['image'] : '';
 $listname=isset($_POST['listname']) ? $_POST['listname'] : '';
 $spindata1=isset($_POST['spindata1']) ? $_POST['spindata1'] : '';
 $spindata2=isset($_POST['spindata2']) ? $_POST['spindata2'] : '';
-$owner=isset($_POST['owner']) ? $_POST['owner'] : '';
+$corperation=isset($_POST['corperation']) ? $_POST['corperation'] : '';
 $timetable=isset($_POST['timetable']) ? $_POST['timetable'] : '';
 $location=isset($_POST['location']) ? $_POST['location'] : '';
 $traffic=isset($_POST['traffic']) ? $_POST['traffic'] : '';
@@ -32,63 +31,45 @@ $tcareer = isset($_POST['tcareer']) ? $_POST['tcareer'] : '';
 $tetc = isset($_POST['tetc']) ? $_POST['tetc'] : '';
 
 
-if ($title !="" and $contents !="" ){
-    if($listname == "clubtable"){
-        $sql="insert into clubtable(title,contents,username,image,spindata1,spindata2) values('$title','$contents','$username','$image','$spindata1','$spindata2')";
-        $sql2="insert into clubextension (owner, timetable, location, traffic, fee, phone) values ('$owner','$timetable','$location','$traffic','$fee','$phone')";
-    } else if ($listname == "freelancer"){
-        $sql="insert into freelancer(title,contents,username,image,spindata1,spindata2) values('$title','$contents','$username','$image','$spindata1','$spindata2')";
-    } else if ($listname == "competition"){
-        $sql="insert into competition(title,contents,username,image,spindata1,spindata2) values('$title','$contents','$username','$image','$spindata1','$spindata2')";
-    } else if ($listname == "dongho"){
-        $sql="insert into dongho(title,contents,username,image,spindata1,spindata2) values('$title','$contents','$username','$image','$spindata1','$spindata2')";
-    } else if ($listname == "review"){
-        $sql="insert into review(title,contents,username,image,spindata1,spindata2) values('$title','$contents','$username','$image','$spindata1','$spindata2')";
-    } else if ($listname == "employment"){
-        $sql="insert into employment(title,contents,username,image,spindata1,spindata2) values('$title','$contents','$username','$image','$spindata1','$spindata2')";
-    }
-    
-    $result=mysqli_query($link,$sql);  
-    if($result){
-       echo "SQL문 처리 성공";
-    }
-    else{
-       echo "SQL문 처리중 에러 발생 : ";
-       echo mysqli_error($link);
-    }
-    
-    $result2=mysqli_query($link,$sql2);  
-    if($result2){
-       echo "SQLex문 처리 성공";
-    }
-    else{
-       echo "SQLex문 처리중 에러 발생 : ";
-       echo mysqli_error($link);
-    }
-    
-    if($listname == 'clubtable'){
-        $sqlsel = "select * from clubtable where username = '$username' order by created desc";
-        
-        $resultsel = mysqli_query($link,$sqlsel);
-        mysqli_data_seek($resultsel, 0);
-        $row = mysqli_fetch_array($resultsel);
-        
-        $sql3="insert into clubemployee (postidx, name, career, etc) values ('$row[idx]','$tname','$tcareer','$tetc')";
-        
-    }
-    
-    
-    $result3=mysqli_query($link,$sql3);  
-    if($result3){
-       echo "SQLemployee문 처리 성공";
-    }
-    else{
-       echo "SQLemployee문 처리중 에러 발생 : ";
-       echo mysqli_error($link);
-    }
 
-} else {
-    echo "데이터를 입력하세요 ";
+if($listname == "clubtable"){
+    $sql="insert into clubtable(contents,username,image,spindata1,spindata2) values('$contents','$username','$image','$spindata1','$spindata2')";
+} else if ($listname == "freelancer"){
+    $sql="insert into freelancer(contents,username,image,spindata1,spindata2) values('$contents','$username','$image','$spindata1','$spindata2')";
+} else if ($listname == "competition"){
+    $sql="insert into competition(contents,username,image,spindata1,spindata2) values('$contents','$username','$image','$spindata1','$spindata2')";
+} else if ($listname == "dongho"){
+    $sql="insert into dongho(contents,username,image,spindata1,spindata2) values('$contents','$username','$image','$spindata1','$spindata2')";
+} else if ($listname == "review"){
+    $sql="insert into review(contents,username,image,spindata1,spindata2) values('$contents','$username','$image','$spindata1','$spindata2')";
+} else if ($listname == "employment"){
+    $sql="insert into employment(contents,username,image,spindata1,spindata2) values('$contents','$username','$image','$spindata1','$spindata2')";
+}
+
+$result=mysqli_query($link,$sql);  
+if($result){
+   echo "SQL문 처리 성공";
+}
+else{
+   echo "SQL문 처리중 에러 발생 : ";
+   echo mysqli_error($link);
+}
+
+$temp = "select * from clubtable where username = '$username' order by created desc";
+$result = mysqli_query($link,$temp);
+            mysqli_data_seek($result, 0);
+            $row = mysqli_fetch_array($result);
+
+
+$sql2="insert into clubextension (postidx, corperation, timetable, location, traffic, fee, phone) values ('$row[idx]','$corperation','$timetable','$location','$traffic','$fee','$phone')";
+
+$result2=mysqli_query($link,$sql2);  
+if($result2){
+   echo "SQLex문 처리 성공";
+}
+else{
+   echo "SQLex문 처리중 에러 발생 : ";
+   echo mysqli_error($link);
 }
 
 mysqli_close($link);

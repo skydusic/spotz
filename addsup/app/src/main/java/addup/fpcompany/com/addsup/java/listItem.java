@@ -8,12 +8,11 @@ public class listItem {
 
     String idx;
     String username;
-    String title;
     String contents;
     String image;
     String created;
     String listname;
-    String owner;
+    String corperation;
     String timetable;
     String location;
     String traffic;
@@ -21,18 +20,17 @@ public class listItem {
     String phone;
     String hit;
 
-    public listItem(String idx, String username, String title, String contents,
-                    String image, String created, String listname, String owner,
+    public listItem(String idx, String username, String contents,
+                    String image, String created, String listname, String corperation,
                     String timetable, String location, String traffic, String fee,
                     String phone, String hit) {
         this.idx = idx;
         this.username = username;
-        this.title = title;
         this.contents = contents;
         this.image = image;
         this.created = created;
         this.listname = listname;
-        this.owner = owner;
+        this.corperation = corperation;
         this.timetable = timetable;
         this.location = location;
         this.traffic = traffic;
@@ -61,10 +59,6 @@ public class listItem {
         return username;
     }
 
-    public String getTitle() {
-        return title;
-    }
-
     public String getContents() {
         return contents;
     }
@@ -73,8 +67,8 @@ public class listItem {
         return image;
     }
 
-    public String getOwner() {
-        return owner;
+    public String getcorperation() {
+        return corperation;
     }
 
     public String getTimetable() {

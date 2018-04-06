@@ -165,10 +165,9 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
                         Intent intent = new Intent(v.getContext(), DetailList.class);
                         intent.putExtra("listname", listName);
                         intent.putExtra("idx", listItems.get(position).getIdx());
-                        intent.putExtra("title", listItems.get(position).getTitle());
                         intent.putExtra("contents", listItems.get(position).getContents());
                         intent.putExtra("created", listItems.get(position).getCreated());
-                        intent.putExtra("owner", listItems.get(position).getOwner());
+                        intent.putExtra("corperation", listItems.get(position).getcorperation());
                         intent.putExtra("timetable", listItems.get(position).getTimetable());
                         intent.putExtra("location", listItems.get(position).getLocation());
                         intent.putExtra("traffic", listItems.get(position).getTraffic());
@@ -293,9 +292,9 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
                 JSONObject c = topic.getJSONObject(i);
 //                시간 설정
 
-                listItems.add(new listItem(String.valueOf(c.getInt(TAG_ID)), c.getString(TAG_USERNAME), c.getString(TAG_TITLE),
+                listItems.add(new listItem(String.valueOf(c.getInt(TAG_ID)), c.getString(TAG_USERNAME),
                         c.getString(TAG_CONTENTS), c.getString(TAG_IMAGE), settingTimes(c.getString(TAG_CREATED)), listName,
-                        c.getString("owner"), c.getString("timetable"), c.getString("location"), c.getString("traffic"),
+                        c.getString("corperation"), c.getString("timetable"), c.getString("location"), c.getString("traffic"),
                         c.getString("fee"), c.getString("phone"), c.getString("hit")));
 
             }
