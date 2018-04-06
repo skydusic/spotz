@@ -61,7 +61,7 @@ public class myPageActivity extends AppCompatActivity implements View.OnClickLis
             public void onItemClick(View view, int position) {
 
                 Intent intent = new Intent(myPageActivity.this, ActionDetailActivity.class);
-                intent.putExtra("actionName", actionArr.get(position).toString());
+                intent.putExtra("actionName", actionArr.get(position));
                 startActivity(intent);
             }
             @Override
@@ -184,7 +184,7 @@ public class myPageActivity extends AppCompatActivity implements View.OnClickLis
 
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
-
+                    Log.d("heu", "upupdate res : " + response.body().string());
                 }
             });
         }

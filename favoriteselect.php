@@ -28,6 +28,11 @@
         
         if($row[listname] == "clubtable"){
             $sql1 = "select * from clubtable where idx = $row[postidx]";
+            $sql2 = "select * from clubextension where postidx = '$row[idx]'";
+            $result2 = mysqli_query($connect,$sql2);
+            mysqli_data_seek($result2, 0);
+            $row2 = mysqli_fetch_array($result2);
+        }
             echo "{\"listname\":\"clubtable\",";
         } else if($row[listname] == "freelancer"){
             $sql1 = "select * from freelancer where idx = $row[postidx]";
@@ -47,7 +52,7 @@
         }
         $result1 = mysqli_query($connect,$sql1);
         $row1 = mysqli_fetch_array($result1);
-        echo "\"idx\":$row1[idx],\"postidx\":$row[postidx],\"title\":\"$row1[title]\",\"contents\":\"$row1[contents]\",\"username\":\"$row1[username]\",\"created\":\"$row1[created]\",\"image\":\"$row1[image]\"}";
+        echo "{\"idx\":$row[idx],\"contents\":\"$row[contents]\",\"username\":\"$row[username]\",\"created\":\"$row[created]\",\"hit\":\"$row[hit]\",\"image\":\"$row[image]\",\"corperation\":\"$row2[corperation]\",\"timetable\":\"$row2[timetable]\",\"location\":\"$row2[location]\",\"traffic\":\"$row2[traffic]\",\"fee\":\"$row2[fee]\",\"phone\":\"$row2[phone]\",\"tname\":\"$row2[name]\",\"tcareer\":\"$row2[career]\",\"etc\":\"$row2[etc]\"}";
         
     if($i<$total_record-1){
       echo ",";

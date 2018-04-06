@@ -18,8 +18,8 @@ import addup.fpcompany.com.addsup.R;
 
 public class ActionAdapter extends RecyclerView.Adapter<ActionAdapter.ViewHolder> {
 
-    Context context;
-    ArrayList<String> itemArr = new ArrayList<>();
+    private Context context;
+    private ArrayList<String> itemArr;
     private static Typeface mTypeface;
 
     public ActionAdapter(Context context, ArrayList<String> itemArr) {
@@ -30,13 +30,14 @@ public class ActionAdapter extends RecyclerView.Adapter<ActionAdapter.ViewHolder
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.mypage_actionlist, parent, false);
-        mTypeface = Typeface.createFromAsset(context.getResources().getAssets(), "fonts/dohyeonttf.ttf");
+        if(mTypeface == null)
+            mTypeface = Typeface.createFromAsset(context.getResources().getAssets(), "fonts/dohyeonttf.ttf");
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        String temp = itemArr.get(position).toString();
+        String temp = itemArr.get(position);
         holder.coperation.setText(temp);
     }
 
@@ -50,6 +51,7 @@ public class ActionAdapter extends RecyclerView.Adapter<ActionAdapter.ViewHolder
 
         public ViewHolder(View itemView) {
             super(itemView);
+
             coperation = itemView.findViewById(R.id.corperTv);
             coperation.setTypeface(mTypeface);
         }
