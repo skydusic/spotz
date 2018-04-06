@@ -94,7 +94,7 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
             @Override
             public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
 
-                mTypeface = Typeface.createFromAsset(getApplicationContext().getAssets(), "fonts/swaggerttf.ttf");
+                mTypeface = Typeface.createFromAsset(getApplicationContext().getAssets(), "fonts/dohyeonttf.ttf");
                 setGlobalFont(parent);
 
                 return super.getView(position, convertView, parent);

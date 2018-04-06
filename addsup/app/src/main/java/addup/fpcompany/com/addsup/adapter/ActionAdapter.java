@@ -30,9 +30,7 @@ public class ActionAdapter extends RecyclerView.Adapter<ActionAdapter.ViewHolder
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.mypage_actionlist, parent, false);
-        if (mTypeface == null) {
-            mTypeface = Typeface.createFromAsset(context.getResources().getAssets(), "fonts/swaggerttf.ttf");
-        }
+        mTypeface = Typeface.createFromAsset(context.getResources().getAssets(), "fonts/dohyeonttf.ttf");
         return new ViewHolder(view);
     }
 

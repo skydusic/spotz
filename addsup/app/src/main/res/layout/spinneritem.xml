@@ -5,6 +5,6 @@
     android:layout_height="wrap_content"
     android:textSize="12sp"
     android:gravity="center_horizontal"
-    android:fontFamily="@font/swagger"
+    android:fontFamily="@font/dohyeon"
     android:background="#ffffff"
     />
