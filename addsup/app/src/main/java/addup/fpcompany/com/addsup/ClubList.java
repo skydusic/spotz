@@ -167,12 +167,11 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
                         intent.putExtra("idx", listItems.get(position).getIdx());
                         intent.putExtra("contents", listItems.get(position).getContents());
                         intent.putExtra("created", listItems.get(position).getCreated());
-                        intent.putExtra("corperation", listItems.get(position).getcorperation());
-                        intent.putExtra("sports", listItems.get(position).getSports());
-                        intent.putExtra("location", listItems.get(position).getLocation());
-                        intent.putExtra("phone", listItems.get(position).getPhone());
-                        intent.putExtra("etc", listItems.get(position).getEtc());
-                        intent.putExtra("phone", listItems.get(position).getPhone());
+                        intent.putExtra("text1", listItems.get(position).getText1());
+                        intent.putExtra("text2", listItems.get(position).getText2());
+                        intent.putExtra("text3", listItems.get(position).getText3());
+                        intent.putExtra("text4", listItems.get(position).getText4());
+                        intent.putExtra("text5", listItems.get(position).getText5());
 
                         /** 해야할 일 이미지 -> 리사이클러뷰 */
                         String image = listItems.get(position).getImage();
@@ -294,8 +293,8 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
 
                 listItems.add(new listItem(String.valueOf(c.getInt(TAG_ID)), c.getString(TAG_USERNAME), c.getString(TAG_CONTENTS),
                         c.getString(TAG_IMAGE), ClubList.settingTimes(c.getString(TAG_CREATED)), c.getString("listname"),
-                        c.getString("corperation"), c.getString("sports"), c.getString("location"), c.getString("phone"),
-                        c.getString("etc"), c.getString("hit")));
+                        c.getString("text1"), c.getString("text2"), c.getString("text3"), c.getString("text4"),
+                        c.getString("text5"), c.getString("hit")));
 
             }
         } catch (JSONException e) {

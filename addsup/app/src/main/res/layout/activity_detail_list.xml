@@ -125,7 +125,7 @@
                         android:layout_height="1dp"
                         android:background="#333"/>
                     <TextView
-                        android:id="@+id/corperationTv"
+                        android:id="@+id/text1Tv"
                         android:layout_width="match_parent"
                         android:layout_height="30dp"
                         android:text=""
@@ -135,7 +135,7 @@
                         android:layout_height="1dp"
                         android:background="#333"/>
                     <TextView
-                        android:id="@+id/sportsTv"
+                        android:id="@+id/text2Tv"
                         android:layout_width="match_parent"
                         android:layout_height="30dp"
                         android:gravity="center"/>
@@ -144,7 +144,7 @@
                         android:layout_height="1dp"
                         android:background="#333"/>
                     <TextView
-                        android:id="@+id/locationTv"
+                        android:id="@+id/text3Tv"
                         android:layout_width="match_parent"
                         android:layout_height="30dp"
                         android:gravity="center"/>
@@ -153,7 +153,7 @@
                         android:layout_height="1dp"
                         android:background="#333"/>
                     <TextView
-                        android:id="@+id/phoneTv"
+                        android:id="@+id/text4Tv"
                         android:layout_width="match_parent"
                         android:layout_height="30dp"
                         android:gravity="center"/>
@@ -162,7 +162,7 @@
                         android:layout_height="1dp"
                         android:background="#333"/>
                     <TextView
-                        android:id="@+id/etcTv"
+                        android:id="@+id/text5Tv"
                         android:layout_width="match_parent"
                         android:layout_height="30dp"
                         android:gravity="center"/>

@@ -12,27 +12,27 @@ public class listItem {
     String image;
     String created;
     String listname;
-    String corperation;
-    String sports;
-    String location;
-    String phone;
-    String etc;
+    String text1;
+    String text2;
+    String text3;
+    String text4;
+    String text5;
     String hit;
 
-    public listItem(String idx, String username, String contents,
-                    String image, String created, String listname, String corperation,
-                    String sports, String location, String phone, String etc, String hit) {
+    public listItem(String idx, String username, String contents, String image, String created,
+                    String listname, String text1, String text2, String text3, String text4,
+                    String text5, String hit) {
         this.idx = idx;
         this.username = username;
         this.contents = contents;
         this.image = image;
         this.created = created;
         this.listname = listname;
-        this.corperation = corperation;
-        this.sports = sports;
-        this.location = location;
-        this.phone = phone;
-        this.etc = etc;
+        this.text1 = text1;
+        this.text2 = text2;
+        this.text3 = text3;
+        this.text4 = text4;
+        this.text5 = text5;
         this.hit = hit;
     }
 
@@ -64,27 +64,23 @@ public class listItem {
         return image;
     }
 
-    public String getcorperation() {
-        return corperation;
+    public String getText1() {
+        return text1;
     }
 
-    public String getLocation() {
-        return location;
+    public String getText2() {
+        return text2;
     }
 
-    public String getCorperation() {
-        return corperation;
+    public String getText3() {
+        return text3;
     }
 
-    public String getSports() {
-        return sports;
+    public String getText4() {
+        return text4;
     }
 
-    public String getEtc() {
-        return etc;
-    }
-
-    public String getPhone() {
-        return phone;
+    public String getText5() {
+        return text5;
     }
 }

@@ -37,11 +37,11 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
     ArrayList<String> arr = new ArrayList<>();
     ArrayList<Fragment> fragArr = new ArrayList<>();
 
-    TextView corperationTv;
-    TextView sportsTv;
-    TextView locationTv;
-    TextView phoneTv;
-    TextView etcTv;
+    TextView text1Tv;
+    TextView text2Tv;
+    TextView text3Tv;
+    TextView text4Tv;
+    TextView text5Tv;
 
     String listname = "";
     String idx = "";
@@ -49,18 +49,17 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
     String created = "";
     String image = "";
 
-    String corperation = "";
-    String sports = "";
-    String location = "";
-    String phone = "";
-    String etc = "";
+    String text1 = "";
+    String text2 = "";
+    String text3 = "";
+    String text4 = "";
+    String text5 = "";
 
     String url = MainActivity.serverUrl + "userImageFolder/";
 
     Boolean favoriteFLAG = false;
 
     favoriteItem favoriteTemp;
-    int favoritePos = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,11 +70,11 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
         viewPager = findViewById(R.id.viewPager);
         favorite = findViewById(R.id.favorite);
 
-        corperationTv = findViewById(R.id.corperationTv);
-        sportsTv = findViewById(R.id.sportsTv);
-        locationTv = findViewById(R.id.locationTv);
-        phoneTv = findViewById(R.id.phoneTv);
-        etcTv = findViewById(R.id.etcTv);
+        text1Tv = findViewById(R.id.text1Tv);
+        text2Tv = findViewById(R.id.text2Tv);
+        text3Tv = findViewById(R.id.text3Tv);
+        text4Tv = findViewById(R.id.text4Tv);
+        text5Tv = findViewById(R.id.text5Tv);
 
         // 인텐트로 정보 가져옴
         intent = getIntent();
@@ -84,18 +83,18 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
         contents = intent.getStringExtra("contents");
         created = intent.getStringExtra("created");
 
-        corperation = intent.getStringExtra("corperation");
-        sports = intent.getStringExtra("sports");
-        location = intent.getStringExtra("location");
-        phone = intent.getStringExtra("phone");
-        etc = intent.getStringExtra("etc");
+        text1 = intent.getStringExtra("text1");
+        text2 = intent.getStringExtra("text2");
+        text3 = intent.getStringExtra("text3");
+        text4 = intent.getStringExtra("text4");
+        text5 = intent.getStringExtra("text5");
 
 
-        corperationTv.setText(corperation);
-        sportsTv.setText(sports);
-        locationTv.setText(location);
-        phoneTv.setText(phone);
-        etcTv.setText(etc);
+        text1Tv.setText(text1);
+        text2Tv.setText(text2);
+        text3Tv.setText(text3);
+        text4Tv.setText(text4);
+        text5Tv.setText(text5);
         contentsTv.setText(contents);
 
         image = intent.getStringExtra("image");
@@ -113,13 +112,11 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
         insert.requestPost(listname, idx);
 
         //즐겨찾기 플래그
-
         for (int i = 0; i < MainActivity.favoriteArr.size(); i++) {
             favoriteTemp = MainActivity.favoriteArr.get(i);
             if (favoriteTemp.getListname().equals(listname) && favoriteTemp.getPostidx().equals(idx)) {
                 favoriteFLAG = true;
                 favorite.setImageResource(R.drawable.yellowstar);
-                favoritePos = Integer.parseInt(favoriteTemp.getIdx());
             } else {
                 favorite.setImageResource(R.drawable.blackstar);
 
@@ -136,7 +133,6 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
             if (favoriteTemp.getListname().equals(listname) && favoriteTemp.getPostidx().equals(idx)) {
                 favoriteFLAG = true;
                 favorite.setImageResource(R.drawable.yellowstar);
-                favoritePos = Integer.parseInt(favoriteTemp.getIdx());
                 break;
             } else {
                 favoriteFLAG = false;
@@ -193,7 +189,7 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
                 if (favoriteFLAG) {
                     favorite.setImageResource(R.drawable.blackstar);
                     favoriteDelete delete = new favoriteDelete();
-                    delete.requestPost(String.valueOf(favoritePos));
+                    delete.requestPost(idx);
 
                     favoriteFLAG = !favoriteFLAG;
                     MainActivity.getFavorite fav = new MainActivity.getFavorite();
@@ -204,6 +200,7 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
                     favoriteInsert insert = new favoriteInsert();
                     insert.requestPost(listname, idx);
                 }
+                Log.d("heu", "플래그 : " + favoriteFLAG);
                 break;
         }
     }
@@ -336,7 +333,9 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
 
             //Request Body에 서버에 보낼 데이터 작성
             RequestBody requestBody = new FormBody.Builder().
-                    add("idx", idx).
+                    add("username", MainActivity.mUsername).
+                    add("listname", listname).
+                    add("postidx", idx).
                     build();
             String url = "http://spotz.co.kr/var/www/html/favoritedelete.php";
 

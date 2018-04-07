@@ -17,7 +17,6 @@
     $sql = "select * from favorite where username = '$username' order by created";
     $result = mysqli_query($connect,$sql);
     $total_record = mysqli_num_rows($result);
-    
 
     echo "{\"status\":\"OK\",\"num_results\":\"$total_record\",\"results\":[";
 
@@ -28,12 +27,12 @@
         
         if($row[listname] == "clubtable"){
             $sql1 = "select * from clubtable where idx = $row[postidx]";
-            $sql2 = "select * from clubextension where postidx = '$row[idx]'";
+            $result1 = mysqli_query($connect,$sql1);
+            $row1 = mysqli_fetch_array($result1);
+            $sql2 = "select * from clubextension where postidx = '$row1[idx]'";
             $result2 = mysqli_query($connect,$sql2);
-            mysqli_data_seek($result2, 0);
             $row2 = mysqli_fetch_array($result2);
-        }
-            echo "{\"listname\":\"clubtable\",";
+        echo "{\"listname\":\"clubtable\",\"idx\":\"$row1[idx]\",\"postidx\":\"$row[postidx]\",\"contents\":\"$row1[contents]\",\"username\":\"$row1[username]\",\"created\":\"$row1[created]\",\"image\":\"$row1[image]\",\"hit\":\"$row1[hit]\",\"postidx\":\"$row2[postidx]\",\"text1\":\"$row2[corperation]\",\"text2\":\"$row2[sports]\",\"text3\":\"$row2[location]\",\"text4\":\"$row2[phone]\",\"text5\":\"$row2[etc]\"}}";
         } else if($row[listname] == "freelancer"){
             $sql1 = "select * from freelancer where idx = $row[postidx]";
             echo "{\"listname\":\"freelancer\",";
@@ -50,13 +49,11 @@
             $sql1 = "select * from employment where idx = $row[postidx]";
             echo "{\"listname\":\"employment\",";
         }
-        $result1 = mysqli_query($connect,$sql1);
-        $row1 = mysqli_fetch_array($result1);
-        echo "\"idx\":\"$row1[idx]\",\"postidx\":\"$row[postidx]\",\"contents\":\"$row1[contents]\",\"username\":\"$row1[username]\",\"created\":\"$row1[created]\",\"image\":\"$row1[image]\",\"corperation\":\"$row2[corperation]\",\"timetable\":\"$row2[timetable]\",\"location\":\"$row2[location]\",\"traffic\":\"$row2[traffic]\",\"fee\":\"$row2[fee]\",\"phone\":\"$row2[phone]\",\"tname\":\"$row2[name]\",\"tcareer\":\"$row2[career]\",\"etc\":\"$row2[etc]\"}";
         
-    if($i<$total_record-1){
-      echo ",";
-    }
+        
+        if($i<$total_record-1){
+          echo ",";
+        }
     }
 
     echo "]}";

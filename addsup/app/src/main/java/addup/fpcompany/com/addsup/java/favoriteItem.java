@@ -27,4 +27,13 @@ public class favoriteItem {
     public String getListname() {
         return listname;
     }
+
+    @Override
+    public String toString() {
+        return "favoriteItem{" +
+                "idx='" + idx + '\'' +
+                ", listname='" + listname + '\'' +
+                ", postidx='" + postidx + '\'' +
+                '}';
+    }
 }

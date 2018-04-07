@@ -55,11 +55,9 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
 
     Intent intent;
     private static final String TAG = "MainActivity";
-    private AdView mAdView;
 
     static ArrayList<favoriteItem> favoriteArr = new ArrayList<>();
 
-    private final long FINISH_INTERVAL_TIME = 2000;
     private long backPressedTime = 0;
 
     //상단 광고
@@ -101,7 +99,7 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
         // 파이어베이스 admob
         MobileAds.initialize(this, "ca-app-pub-3940256099942544~3347511713");
 
-        mAdView = (AdView) findViewById(R.id.adView);
+        AdView mAdView = (AdView) findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
 
@@ -288,7 +286,7 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
 
         public void requestPost(String username) {
 
-            String url = "http://spotz.co.kr/var/www/html/favoriteselect.php";
+            String url = "http://spotz.co.kr/var/www/html/favoritelist.php";
 
             RequestBody requestBody = new FormBody.Builder().
                     add("username", username).
@@ -424,6 +422,7 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
         long intervalTime = tempTime - backPressedTime;
 
         // 메뉴가 열렸으면 닫기!
+        long FINISH_INTERVAL_TIME = 2000;
         if (0 <= intervalTime && FINISH_INTERVAL_TIME >= intervalTime) {
             super.onBackPressed();
         } else {

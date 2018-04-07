@@ -48,12 +48,13 @@ public class MainListAdater extends RecyclerView.Adapter<MainListAdater.ViewHold
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         listItem = itemArr.get(position);
-        holder.corperation.setText(listItem.getcorperation());
+        holder.text1.setText(listItem.getText1());
+        holder.text2.setText(listItem.getText2());
+        holder.text3.setText(listItem.getText3());
+        holder.text4.setText(listItem.getText4());
+        holder.text5.setText(listItem.getText5());
         holder.timeHolder.setText(listItem.getCreated());
-        holder.location.setText("주소: "+listItem.getLocation());
-        holder.phone.setText("연락처: "+listItem.getPhone());
         holder.hit.setText(listItem.getHit());
-        holder.etc.setText("세부사항: "+listItem.getEtc());
 
         if (!listItem.getImage().equals("")) {
             String[] temp = listItem.getImage().split(",");
@@ -73,25 +74,27 @@ public class MainListAdater extends RecyclerView.Adapter<MainListAdater.ViewHold
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
-        TextView corperation,timeHolder, location, phone, etc, hit;
+        TextView text1,text2,text3,text4,text5,timeHolder, hit;
         ImageView imageViewHolder;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            corperation = itemView.findViewById(R.id.corperTv);
             timeHolder = itemView.findViewById(R.id.created);
             imageViewHolder = itemView.findViewById(R.id.imageView);
-            location = itemView.findViewById(R.id.location);
-            phone = itemView.findViewById(R.id.phone);
             hit = itemView.findViewById(R.id.hit);
-            etc = itemView.findViewById(R.id.etc);
+            text1 = itemView.findViewById(R.id.text1);
+            text2 = itemView.findViewById(R.id.text2);
+            text3 = itemView.findViewById(R.id.text3);
+            text4 = itemView.findViewById(R.id.text4);
+            text5 = itemView.findViewById(R.id.text5);
 
-            corperation.setTypeface(mTypeface);
             timeHolder.setTypeface(mTypeface);
-            location.setTypeface(mTypeface);
-            phone.setTypeface(mTypeface);
             hit.setTypeface(mTypeface);
-            etc.setTypeface(mTypeface);
+            text1.setTypeface(mTypeface);
+            text2.setTypeface(mTypeface);
+            text3.setTypeface(mTypeface);
+            text4.setTypeface(mTypeface);
+            text5.setTypeface(mTypeface);
         }
     }
 }

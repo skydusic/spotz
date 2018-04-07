@@ -21,13 +21,11 @@ $listname=isset($_POST['listname']) ? $_POST['listname'] : '';
 $spindata1=isset($_POST['spindata1']) ? $_POST['spindata1'] : '';
 $spindata2=isset($_POST['spindata2']) ? $_POST['spindata2'] : '';
 
-$corperation=isset($_POST['corperation']) ? $_POST['corperation'] : '';
-$sports=isset($_POST['sports']) ? $_POST['sports'] : '';
-$location=isset($_POST['location']) ? $_POST['location'] : '';
-$phone=isset($_POST['phone']) ? $_POST['phone'] : '';
-$etc = isset($_POST['etc']) ? $_POST['etc'] : '';
-
-
+$text1=isset($_POST['text1']) ? $_POST['text1'] : '';
+$text2=isset($_POST['text2']) ? $_POST['text2'] : '';
+$text3=isset($_POST['text3']) ? $_POST['text3'] : '';
+$text4=isset($_POST['text4']) ? $_POST['text4'] : '';
+$text5=isset($_POST['text5']) ? $_POST['text5'] : '';
 
 if($listname == "clubtable"){
     $sql="insert into clubtable(contents,username,image,spindata1,spindata2) values('$contents','$username','$image','$spindata1','$spindata2')";
@@ -52,13 +50,24 @@ else{
    echo mysqli_error($link);
 }
 
-$temp = "select * from clubtable where username = '$username' order by created desc";
-$result = mysqli_query($link,$temp);
-            mysqli_data_seek($result, 0);
-            $row = mysqli_fetch_array($result);
+if($listname == "clubtable"){
+    $temp = "select * from clubtable where username = '$username' order by created desc";
+    $result = mysqli_query($link,$temp);
+    mysqli_data_seek($result, 0);
+    $row = mysqli_fetch_array($result);
 
+    $sql2="insert into clubextension (postidx, corperation, sports, location, phone, etc) values ('$row[idx]','$text1','$text2','$text3','$text4','$text5')";
+} else if ($listname == "freelancer"){
 
-$sql2="insert into clubextension (postidx, corperation, sports, location, phone, etc) values ('$row[idx]','$corperation','$sports','$location','$phone','$etc')";
+} else if ($listname == "competition"){
+
+} else if ($listname == "dongho"){
+
+} else if ($listname == "review"){
+
+} else if ($listname == "employment"){
+
+}
 
 $result2=mysqli_query($link,$sql2);  
 if($result2){

@@ -84,9 +84,20 @@
             mysqli_data_seek($result2, 0);
             $row2 = mysqli_fetch_array($result2);
             echo "{\"listname\":\"clubtable\"";
-        }
-        echo ",\"idx\":$row[idx],\"contents\":\"$row[contents]\",\"username\":\"$row[username]\",\"created\":\"$row[created]\",\"hit\":\"$row[hit]\",\"image\":\"$row[image]\",\"corperation\":\"$row2[corperation]\",\"sports\":\"$row2[sports]\",\"location\":\"$row2[location]\",\"phone\":\"$row2[phone]\",\"etc\":\"$row2[etc]\"}";
+        } else if ($listname == "freelancer"){
+            
+        } else if ($listname == "competition"){
 
+        } else if ($listname == "dongho"){
+
+        } else if ($listname == "review"){
+
+        } else if ($listname == "employment"){
+
+        }
+        
+        echo ",\"idx\":$row[idx],\"contents\":\"$row[contents]\",\"username\":\"$row[username]\",\"created\":\"$row[created]\",\"hit\":\"$row[hit]\",\"image\":\"$row[image]\",\"text1\":\"$row2[corperation]\",\"text2\":\"$row2[sports]\",\"text3\":\"$row2[location]\",\"text4\":\"$row2[phone]\",\"text5\":\"$row2[etc]\"}";
+        
         if($i<$total_record-1){
           echo ",";
         }

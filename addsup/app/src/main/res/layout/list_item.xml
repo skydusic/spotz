@@ -23,43 +23,52 @@
         android:layout_toStartOf="@+id/createdLay">
 
         <TextView
-            android:id="@+id/corperTv"
+            android:id="@+id/text1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"
             android:fontFamily="@font/dohyeonttf"
             android:gravity="center_vertical"
-            android:layout_marginTop="10dp"
-            android:textSize="18sp" />
+            android:layout_marginTop="5dp"
+            android:textSize="16sp" />
 
         <TextView
-            android:id="@+id/location"
+            android:id="@+id/text2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/corperTv"
+            android:layout_below="@+id/text1"
             android:layout_marginBottom="5dp"
             android:fontFamily="@font/dohyeonttf"
             android:gravity="center_vertical"
-            android:textSize="16sp" />
+            android:textSize="12sp" />
 
         <TextView
-            android:id="@+id/phone"
+            android:id="@+id/text3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/location"
+            android:layout_below="@+id/text2"
             android:layout_marginBottom="5dp"
             android:fontFamily="@font/dohyeonttf"
             android:gravity="center_vertical"
-            android:textSize="16sp" />
+            android:textSize="12sp" />
 
         <TextView
-            android:id="@+id/etc"
+            android:id="@+id/text4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/phone"
+            android:layout_below="@+id/text3"
             android:fontFamily="@font/dohyeonttf"
             android:gravity="center_vertical"
-            android:textSize="16sp" />
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/text5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/text4"
+            android:fontFamily="@font/dohyeonttf"
+            android:gravity="center_vertical"
+            android:textSize="12sp" />
 
     </RelativeLayout>
 
