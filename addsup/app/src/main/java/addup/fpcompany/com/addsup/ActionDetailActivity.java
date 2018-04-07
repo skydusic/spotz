@@ -48,7 +48,6 @@ public class ActionDetailActivity extends AppCompatActivity {
 
     private static final String TAG_RESULTS = "results";
     private static final String TAG_ID = "idx";
-    private static final String TAG_TITLE = "title";
     private static final String TAG_USERNAME = "username";
     private static final String TAG_CONTENTS = "contents";
     private static final String TAG_CREATED = "created";

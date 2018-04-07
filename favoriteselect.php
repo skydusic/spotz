@@ -1,12 +1,6 @@
 <?php
 
-    $connect=mysqli_connect( "localhost", "spotz", "tongood77");
-    if (!$connect) {
-        $error = mysqli_connect_error();
-        $errno = mysqli_connect_errno(); 
-        die("Connection failed : "."$errno : $error\n");
-        exit(); 
-    }
+    $connect=mysqli_connect( "localhost", "spotz", "tongood77") or die( "Unable to connect to SQL server");
 
     mysqli_set_charset($connect,"utf8");  
     mysqli_select_db($connect,"spotz") or die("Unable to select database");
@@ -32,7 +26,7 @@
             $sql2 = "select * from clubextension where postidx = '$row1[idx]'";
             $result2 = mysqli_query($connect,$sql2);
             $row2 = mysqli_fetch_array($result2);
-        echo "{\"listname\":\"clubtable\",\"idx\":\"$row1[idx]\",\"postidx\":\"$row[postidx]\",\"contents\":\"$row1[contents]\",\"username\":\"$row1[username]\",\"created\":\"$row1[created]\",\"image\":\"$row1[image]\",\"hit\":\"$row1[hit]\",\"postidx\":\"$row2[postidx]\",\"text1\":\"$row2[corperation]\",\"text2\":\"$row2[sports]\",\"text3\":\"$row2[location]\",\"text4\":\"$row2[phone]\",\"text5\":\"$row2[etc]\"}}";
+        echo "{\"listname\":\"clubtable\",\"idx\":\"$row1[idx]\",\"postidx\":\"$row[postidx]\",\"contents\":\"$row1[contents]\",\"username\":\"$row1[username]\",\"created\":\"$row1[created]\",\"image\":\"$row1[image]\",\"hit\":\"$row1[hit]\",\"postidx\":\"$row2[postidx]\",\"text1\":\"$row2[corperation]\",\"text2\":\"$row2[sports]\",\"text3\":\"$row2[location]\",\"text4\":\"$row2[phone]\",\"text5\":\"$row2[etc]\"}";
         } else if($row[listname] == "freelancer"){
             $sql1 = "select * from freelancer where idx = $row[postidx]";
             echo "{\"listname\":\"freelancer\",";
