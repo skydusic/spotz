@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">addsup</string>
+    <string name="app_name">Spotz</string>
     <string name="topbar1">공지사항1</string>
     <string name="topbar2">공지사항2</string>
     <string name="topbar3">공지사항3</string>
@@ -22,4 +22,6 @@
     <string name="find">찾기</string>
     <string name="imageInsert">매장 이미지 넣기</string>
     <string name="write">글쓰기</string>
+    <string name="login">로그인</string>
+    <string name="logout">로그아웃</string>
 </resources>

@@ -13,21 +13,21 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:text="idx" />
+        />
 
     <TextView
         android:id="@+id/noticeTv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:layout_toRightOf="@id/idxTv"
+        android:layout_toEndOf="@id/idxTv"
         android:text="공지사항" />
 
     <TextView
         android:id="@+id/createdTv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
         android:layout_margin="10dp"
         android:text="created" />
 
@@ -36,6 +36,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/idxTv"
+        android:paddingTop="15dp"
         android:visibility="gone"/>
 
     <TextView
@@ -44,8 +45,8 @@
         android:layout_height="match_parent"
         android:padding="10dp"
         android:layout_below="@id/idxTv"
-        android:text="공지사항"
-        android:textSize="18dp"
+        android:paddingTop="15dp"
+        android:textSize="16sp"
         android:visibility="gone"/>
 
 

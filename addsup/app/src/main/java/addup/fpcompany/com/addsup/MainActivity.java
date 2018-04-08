@@ -309,7 +309,6 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
 
                         for (int i = 0; i < post.length(); i++) {
                             JSONObject c = post.getJSONObject(i);
-                            Log.d("heu", "favorite Item : " + c.getString("idx") + ", " + c.getString("listname") + ", " + c.getString("postidx"));
                             favoriteArr.add(new favoriteItem(c.getString("idx"), c.getString("listname"), c.getString("postidx")));
                         }
                     } catch (JSONException e) {

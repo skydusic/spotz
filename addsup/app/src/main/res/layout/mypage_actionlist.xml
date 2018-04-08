@@ -13,5 +13,10 @@
         android:text="목록"
         android:textColor="#444"
         android:textSize="20sp" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_alignParentBottom="true"
+        android:background="#acacac" />
 
 </RelativeLayout>

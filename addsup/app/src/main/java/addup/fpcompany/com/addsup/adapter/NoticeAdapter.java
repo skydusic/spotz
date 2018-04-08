@@ -36,7 +36,7 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.ViewHolder
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.list_item, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.activity_notice_detail, parent, false);
         if (mTypeface == null) {
             mTypeface = Typeface.createFromAsset(context.getResources().getAssets(), "fonts/dohyeonttf.ttf");
         }
@@ -46,8 +46,8 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.ViewHolder
     @Override
     public void onBindViewHolder(NoticeAdapter.ViewHolder holder, int position) {
         listItem = itemArr.get(position);
+        holder.idxTv.setText(listItem.getIdx());
         holder.titleHolder.setText(listItem.getTitle());
-        holder.timeHolder.setText(listItem.getCreated());
         if (!listItem.getImage().equals("")) {
             String[] temp = listItem.getImage().split(",");
             Glide.with(context).load(url + listItem.getIdx() + "/" + temp[0]).into(holder.imageViewHolder);
@@ -60,18 +60,15 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.ViewHolder
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
-        TextView titleHolder, timeHolder;
+        TextView titleHolder, idxTv;
         ImageView imageViewHolder;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            titleHolder = itemView.findViewById(R.id.corperTv);
-            timeHolder = itemView.findViewById(R.id.created);
+            idxTv = itemView.findViewById(R.id.idxTv);
+            titleHolder = itemView.findViewById(R.id.noticeTv);
             imageViewHolder = itemView.findViewById(R.id.imageView);
-
             titleHolder.setTypeface(mTypeface);
-            timeHolder.setTypeface(mTypeface);
-
         }
     }
 }
