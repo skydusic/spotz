@@ -33,9 +33,205 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:gravity="center_vertical"
+            android:paddingLeft="13dp"
+            android:paddingRight="13dp">
+
+            <TextView
+                android:id="@+id/spinTv"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:text="@string/spinner" />
+
+            <Spinner
+                android:id="@+id/spinner1"
+                android:layout_width="130dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="10dp"
+                android:layout_toEndOf="@+id/spinTv" />
+
+            <Spinner
+                android:id="@+id/spinner2"
+                android:layout_width="200dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="10dp"
+                android:layout_toEndOf="@+id/spinner1"
+                android:visibility="gone" />
+
+        </RelativeLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingEnd="13dp"
+            android:paddingStart="13dp"
+            android:paddingTop="13dp">
+
+            <!--<RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <RadioButton
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text=""/>
+            </RadioGroup>-->
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:id="@+id/text1Tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="25dp"
+                    android:layout_marginEnd="6dp"
+                    android:gravity="center_vertical"
+                    android:text="@string/detailmenu1" />
+
+                <EditText
+                    android:id="@+id/text1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/edittext"
+                    android:minHeight="25dp"
+                    android:minWidth="250dp"
+                    android:paddingEnd="3dp"
+                    android:paddingStart="10dp" />
+
+                <TextView
+                    android:id="@+id/text2Tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="25dp"
+                    android:layout_below="@+id/text1"
+                    android:layout_marginEnd="6dp"
+                    android:gravity="center_vertical"
+                    android:minHeight="25dp"
+                    android:text="@string/detailmenu2" />
+
+                <EditText
+                    android:id="@+id/text2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_below="@+id/text1"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/edittext"
+                    android:minHeight="25dp"
+                    android:minWidth="250dp"
+                    android:paddingEnd="3dp"
+                    android:paddingStart="10dp" />
+
+                <TextView
+                    android:id="@+id/text3Tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="25dp"
+                    android:layout_below="@+id/text2"
+                    android:layout_marginEnd="6dp"
+                    android:gravity="center_vertical"
+                    android:text="@string/detailmenu3" />
+
+                <EditText
+                    android:id="@+id/text3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_below="@+id/text2"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/edittext"
+                    android:minHeight="25dp"
+                    android:minWidth="250dp"
+                    android:paddingEnd="3dp"
+                    android:paddingStart="10dp" />
+
+                <TextView
+                    android:id="@+id/text4Tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="25dp"
+                    android:layout_below="@+id/text3"
+                    android:layout_marginEnd="6dp"
+                    android:gravity="center_vertical"
+                    android:text="@string/detailmenu4" />
+
+                <EditText
+                    android:id="@+id/text4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_below="@+id/text3"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/edittext"
+                    android:minHeight="25dp"
+                    android:minWidth="250dp"
+                    android:paddingEnd="3dp"
+                    android:paddingStart="10dp" />
+
+                <TextView
+                    android:id="@+id/text5Tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="25dp"
+                    android:layout_below="@+id/text4"
+                    android:layout_marginEnd="6dp"
+                    android:gravity="center_vertical"
+                    android:text="@string/detailmenu5" />
+
+                <EditText
+                    android:id="@+id/text5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_below="@+id/text4"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/edittext"
+                    android:minHeight="25dp"
+                    android:minWidth="250dp"
+                    android:paddingEnd="3dp"
+                    android:paddingStart="10dp" />
+
+                <TextView
+                    android:id="@+id/text6Tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="25dp"
+                    android:layout_below="@+id/text5"
+                    android:layout_marginEnd="6dp"
+                    android:gravity="center_vertical"
+                    android:text="@string/detailmenu5" />
+
+                <EditText
+                    android:id="@+id/text6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_below="@+id/text5"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/edittext"
+                    android:minHeight="25dp"
+                    android:minWidth="250dp"
+                    android:paddingEnd="3dp"
+                    android:paddingStart="10dp" />
+
+            </RelativeLayout>
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="40dp"
             android:paddingEnd="10dp"
             android:paddingStart="13dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_toStartOf="@+id/imgFind"
+                android:gravity="center_vertical"
+                android:text="@string/insertimage"
+                android:textSize="14sp" />
 
 
             <ImageView
@@ -46,10 +242,10 @@
                 android:layout_centerVertical="true"
                 android:layout_marginBottom="5dp"
                 android:layout_marginTop="7dp"
-                android:paddingStart="10dp"
-                android:paddingEnd="10dp"
                 android:gravity="center"
-                android:src="@drawable/imagefind"/>
+                android:paddingEnd="10dp"
+                android:paddingStart="10dp"
+                android:src="@drawable/imagefind" />
         </RelativeLayout>
 
         <HorizontalScrollView
@@ -115,161 +311,6 @@
             </LinearLayout>
         </HorizontalScrollView>
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="35dp"
-            android:gravity="center_vertical"
-            android:paddingLeft="13dp"
-            android:paddingRight="13dp">
-
-            <TextView
-                android:id="@+id/spinTv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:text="@string/spinner" />
-
-            <Spinner
-                android:id="@+id/spinner1"
-                android:layout_width="130dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_toEndOf="@+id/spinTv" />
-
-            <Spinner
-                android:id="@+id/spinner2"
-                android:layout_width="200dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_toEndOf="@+id/spinner1"
-                android:visibility="gone" />
-
-        </RelativeLayout>
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="13dp">
-
-            <!--<RadioGroup
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <RadioButton
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text=""/>
-            </RadioGroup>-->
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical">
-
-                <TextView
-                    android:id="@+id/text1Tv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="25dp"
-                    android:layout_marginBottom="10dp"
-                    android:layout_marginEnd="6dp"
-                    android:gravity="center_vertical"
-                    android:text="@string/detailmenu1"/>
-
-                <EditText
-                    android:id="@+id/text1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="25dp"
-                    android:layout_alignParentEnd="true"
-                    android:background="@drawable/edittext"
-                    android:minWidth="250dp"
-                    android:paddingStart="10dp"/>
-
-                <TextView
-                    android:id="@+id/text2Tv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/text1Tv"
-                    android:layout_marginBottom="10dp"
-                    android:layout_marginEnd="6dp"
-                    android:gravity="center_vertical"
-                    android:minHeight="25dp"
-                    android:text="@string/detailmenu2"/>
-
-                <EditText
-                    android:id="@+id/text2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="25dp"
-                    android:layout_alignParentEnd="true"
-                    android:layout_below="@+id/text1Tv"
-                    android:background="@drawable/edittext"
-                    android:minWidth="250dp"
-                    android:paddingStart="10dp"/>
-
-                <TextView
-                    android:id="@+id/text3Tv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="25dp"
-                    android:layout_below="@+id/text2Tv"
-                    android:layout_marginBottom="10dp"
-                    android:layout_marginEnd="6dp"
-                    android:gravity="center_vertical"
-                    android:text="@string/detailmenu3"/>
-
-                <EditText
-                    android:id="@+id/text3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="25dp"
-                    android:layout_alignParentEnd="true"
-                    android:layout_below="@+id/text2Tv"
-                    android:background="@drawable/edittext"
-                    android:minWidth="250dp"
-                    android:paddingStart="10dp"/>
-
-                <TextView
-                    android:id="@+id/text4Tv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="25dp"
-                    android:layout_below="@+id/text3Tv"
-                    android:layout_marginBottom="10dp"
-                    android:layout_marginEnd="6dp"
-                    android:gravity="center_vertical"
-                    android:text="@string/detailmenu4"/>
-
-                <EditText
-                    android:id="@+id/text4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="25dp"
-                    android:layout_alignParentEnd="true"
-                    android:layout_below="@+id/text3Tv"
-                    android:background="@drawable/edittext"
-                    android:minWidth="250dp"
-                    android:paddingStart="10dp"/>
-
-                <TextView
-                    android:id="@+id/text5Tv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="25dp"
-                    android:layout_below="@+id/text4Tv"
-                    android:layout_marginBottom="10dp"
-                    android:layout_marginEnd="6dp"
-                    android:gravity="center_vertical"
-                    android:text="@string/detailmenu5"/>
-
-                <EditText
-                    android:id="@+id/text5"
-                    android:layout_width="wrap_content"
-                    android:layout_height="25dp"
-                    android:layout_alignParentEnd="true"
-                    android:layout_below="@+id/text4Tv"
-                    android:background="@drawable/edittext"
-                    android:minWidth="250dp"
-                    android:paddingStart="10dp"/>
-
-            </RelativeLayout>
-
-        </LinearLayout>
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -280,6 +321,7 @@
                 android:id="@+id/contentsTv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:paddingEnd="1dp"
                 android:paddingStart="5dp"
                 android:text="@string/contents" />
 

@@ -55,18 +55,37 @@ if($listname == "clubtable"){
     $result = mysqli_query($link,$temp);
     mysqli_data_seek($result, 0);
     $row = mysqli_fetch_array($result);
-
     $sql2="insert into clubextension (postidx, corperation, sports, location, phone, etc) values ('$row[idx]','$text1','$text2','$text3','$text4','$text5')";
 } else if ($listname == "freelancer"){
-
+    $temp = "select * from freelancer where username = '$username' order by created desc";
+    $result = mysqli_query($link,$temp);
+    mysqli_data_seek($result, 0);
+    $row = mysqli_fetch_array($result);
+    $sql2="insert into freeextension (postidx, name, sports, location, phone, etc) values ('$row[idx]','$text1','$text2','$text3','$text4','$text5')";
 } else if ($listname == "competition"){
-
+    $temp = "select * from competition where username = '$username' order by created desc";
+    $result = mysqli_query($link,$temp);
+    mysqli_data_seek($result, 0);
+    $row = mysqli_fetch_array($result);
+    $sql2="insert into competitionextension (postidx, name, sports, location, phone, etc) values ('$row[idx]','$text1','$text2','$text3','$text4','$text5')";
 } else if ($listname == "dongho"){
-
+    $temp = "select * from dongho where username = '$username' order by created desc";
+    $result = mysqli_query($link,$temp);
+    mysqli_data_seek($result, 0);
+    $row = mysqli_fetch_array($result);
+    $sql2="insert into donghoextension (postidx, name, sports, location, time, phone, etc) values ('$row[idx]','$text1','$text2','$text3','$text4','$text5','$text6')";
 } else if ($listname == "review"){
-
+    $temp = "select * from review where username = '$username' order by created desc";
+    $result = mysqli_query($link,$temp);
+    mysqli_data_seek($result, 0);
+    $row = mysqli_fetch_array($result);
+    $sql2="insert into reviewextension (postidx, product, wheretobuy, price, grade, etc) values ('$row[idx]','$text1','$text2','$text3','$text4','$text5')";
 } else if ($listname == "employment"){
-
+    $temp = "select * from employment where username = '$username' order by created desc";
+    $result = mysqli_query($link,$temp);
+    mysqli_data_seek($result, 0);
+    $row = mysqli_fetch_array($result);
+    $sql2="insert into employmentextension (postidx, company, location, salary, personnel, calendar, etc) values ('$row[idx]','$text1','$text2','$text3','$text4','$text5','$text6')";
 }
 
 $result2=mysqli_query($link,$sql2);  

@@ -6,11 +6,13 @@
     <string name="banner_ad_unit_id">ca-app-pub-2853131389378363/5335626355</string>
     <string name="middetail1">업체정보</string>
     <string name="middetail2">강사정보</string>
-    <string name="detailmenu1">업체명</string>
-    <string name="detailmenu2">종목</string>
-    <string name="detailmenu3">위치</string>
-    <string name="detailmenu4">연락처</string>
-    <string name="detailmenu5">세부 안내사항</string>
+    <string name="detailmenu1">text1</string>
+    <string name="detailmenu2">text2</string>
+    <string name="detailmenu3">text3</string>
+    <string name="detailmenu4">text4</string>
+    <string name="detailmenu5">text5</string>
+    <string name="detailmenu6">text6</string>
+    <string name="insertimage">이미지 넣기</string>
     <string name="techerInfo">강사 정보</string>
     <string name="bottombar1">홈</string>
     <string name="bottombar2">공지</string>
@@ -20,7 +22,6 @@
     <string name="contents">내용</string>
     <string name="spinner">지역설정</string>
     <string name="find">찾기</string>
-    <string name="imageInsert">매장 이미지 넣기</string>
     <string name="write">글쓰기</string>
     <string name="login">로그인</string>
     <string name="logout">로그아웃</string>
