@@ -24,7 +24,7 @@
         {
             mysqli_data_seek($result, $i);
             $row = mysqli_fetch_array($result);
-            echo "{\"listname\":\"freelancer\",\"idx\":$row[idx],\"title\":\"$row[title]\",\"contents\":\"$row[contents]\",\"username\":\"$row[username]\",\"created\":\"$row[created]\",\"image\":\"$row[image]\",\"up\":\"$row[up]\",\"addedtime\":\"$row[addedtime]\",\"hit\":\"$row[hit]\"}";
+            echo "{\"listname\":\"freelancer\",\"idx\":$row[idx],\"title\":\"$row[title]\",\"contents\":\"$row[contents]\",\"username\":\"$row[username]\",\"created\":\"$row[created]\",\"image\":\"$row[image]\",\"up\":\"$row[up]\",\"addedtime\":\"$row[addedtime]\",\"hit\":\"$row[hit]\",\"postidx\":\"\",\"text1\":\"\",\"text2\":\"\",\"text3\":\"\",\"text4\":\"\",\"text5\":\"\"}";
 
             if($i<$total_record){
                 echo ",";

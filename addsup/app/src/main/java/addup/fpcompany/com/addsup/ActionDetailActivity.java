@@ -89,6 +89,7 @@ public class ActionDetailActivity extends AppCompatActivity {
 
             for (int i = 0; i < post.length(); i++) {
                 JSONObject c = post.getJSONObject(i);
+                Log.d("heu", "텍스트1 : " + c.getString("text1"));
                     listArr.add(new listItem(String.valueOf(c.getInt(TAG_ID)), c.getString(TAG_USERNAME), c.getString(TAG_CONTENTS),
                             c.getString(TAG_IMAGE), ClubList.settingTimes(c.getString(TAG_CREATED)), c.getString("listname"),
                             c.getString("text1"), c.getString("text2"), c.getString("text3"), c.getString("text4"),

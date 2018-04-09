@@ -64,7 +64,7 @@ public class MainListAdater extends RecyclerView.Adapter<MainListAdater.ViewHold
 
             }
         } else {
-            Glide.with(context).load(url + "basic_image.png").into(holder.imageViewHolder);
+            Glide.with(context).load(R.drawable.emptyimg).into(holder.imageViewHolder);
         }
     }
 
