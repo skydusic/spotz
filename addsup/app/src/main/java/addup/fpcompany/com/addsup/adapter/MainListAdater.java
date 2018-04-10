@@ -39,9 +39,8 @@ public class MainListAdater extends RecyclerView.Adapter<MainListAdater.ViewHold
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.list_item, parent, false);
-        if (mTypeface == null) {
+        if (mTypeface == null)
             mTypeface = Typeface.createFromAsset(context.getResources().getAssets(), "fonts/dohyeonttf.ttf");
-        }
         return new ViewHolder(view);
     }
 

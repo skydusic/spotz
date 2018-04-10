@@ -29,6 +29,7 @@ public class RecyclerItemClickListener implements RecyclerView.OnItemTouchListen
         if (RecyclerItemClickListener.mTypeface == null) {
             this.mTypeface = Typeface.createFromAsset(context.getAssets(), "fonts/dohyeonttf.ttf");
         }
+        
         mGestureDetector = new GestureDetector(context, new GestureDetector.SimpleOnGestureListener() {
             @Override
             public boolean onSingleTapUp(MotionEvent e) {
