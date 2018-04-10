@@ -86,6 +86,18 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
         text4Tv = findViewById(R.id.text4Tv);
         text5Tv = findViewById(R.id.text5Tv);
 
+        // 인텐트로 정보 가져옴
+        intent = getIntent();
+        listname = intent.getStringExtra("listname");
+        idx = intent.getStringExtra("idx");
+        contents = intent.getStringExtra("contents");
+        created = intent.getStringExtra("created");
+        text1 = intent.getStringExtra("text1");
+        text2 = intent.getStringExtra("text2");
+        text3 = intent.getStringExtra("text3");
+        text4 = intent.getStringExtra("text4");
+        text5 = intent.getStringExtra("text5");
+
         //메뉴 텍스트 삽입
         if (listname.equals("clubtable")) {
             text1menu.setText("업체명");
@@ -125,17 +137,6 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
             text5menu.setText("세부 안내사항");
         }
 
-        // 인텐트로 정보 가져옴
-        intent = getIntent();
-        listname = intent.getStringExtra("listname");
-        idx = intent.getStringExtra("idx");
-        contents = intent.getStringExtra("contents");
-        created = intent.getStringExtra("created");
-        text1 = intent.getStringExtra("text1");
-        text2 = intent.getStringExtra("text2");
-        text3 = intent.getStringExtra("text3");
-        text4 = intent.getStringExtra("text4");
-        text5 = intent.getStringExtra("text5");
         text1Tv.setText(text1);
         text2Tv.setText(text2);
         text3Tv.setText(text3);

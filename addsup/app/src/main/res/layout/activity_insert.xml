@@ -69,16 +69,8 @@
             android:orientation="vertical"
             android:paddingEnd="13dp"
             android:paddingStart="13dp"
-            android:paddingTop="13dp">
-
-            <!--<RadioGroup
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <RadioButton
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text=""/>
-            </RadioGroup>-->
+            android:paddingTop="13dp"
+            android:layout_marginTop="5dp">
 
             <RelativeLayout
                 android:layout_width="match_parent"
