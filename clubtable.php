@@ -101,7 +101,7 @@
             $result2 = mysqli_query($connect,$sql2);
             mysqli_data_seek($result2, 0);
             $row2 = mysqli_fetch_array($result2);
-            echo "{\"listname\":\"dongho\",\"idx\":$row[idx],\"contents\":\"$row[contents]\",\"username\":\"$row[username]\",\"created\":\"$row[created]\",\"hit\":\"$row[hit]\",\"image\":\"$row[image]\",\"text1\":\"$row2[name]\",\"text2\":\"$row2[sports]\",\"text3\":\"$row2[location]\",\"text4\":\"$row2[time]\",\"text5\":\"$row2[phone]\",\"text6\":\"$row2[etc]\"}";
+            echo "{\"listname\":\"dongho\",\"idx\":$row[idx],\"contents\":\"$row[contents]\",\"username\":\"$row[username]\",\"created\":\"$row[created]\",\"hit\":\"$row[hit]\",\"image\":\"$row[image]\",\"text1\":\"$row2[name]\",\"text2\":\"$row2[sports]\",\"text3\":\"$row2[location]\",\"text4\":\"$row2[time]\",\"text5\":\"$row2[phone]\"}";
         } else if ($listname == "review"){
             $sql2 = "select * from reviewextension where postidx = '$row[idx]'";
             $result2 = mysqli_query($connect,$sql2);
@@ -113,7 +113,7 @@
             $result2 = mysqli_query($connect,$sql2);
             mysqli_data_seek($result2, 0);
             $row2 = mysqli_fetch_array($result2);
-            echo "{\"listname\":\"employment\",\"idx\":$row[idx],\"contents\":\"$row[contents]\",\"username\":\"$row[username]\",\"created\":\"$row[created]\",\"hit\":\"$row[hit]\",\"image\":\"$row[image]\",\"text1\":\"$row2[company]\",\"text2\":\"$row2[location]\",\"text3\":\"$row2[salary]\",\"text4\":\"$row2[personnel]\",\"text5\":\"$row2[calendar]\",\"text6\":\"$row2[etc]\"}";
+            echo "{\"listname\":\"employment\",\"idx\":$row[idx],\"contents\":\"$row[contents]\",\"username\":\"$row[username]\",\"created\":\"$row[created]\",\"hit\":\"$row[hit]\",\"image\":\"$row[image]\",\"text1\":\"$row2[company]\",\"text2\":\"$row2[location]\",\"text3\":\"$row2[salary]\",\"text4\":\"$row2[calendar]\",\"text5\":\"$row2[etc]\"}";
         }
         
         if($i<$total_record-1){

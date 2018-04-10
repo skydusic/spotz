@@ -73,7 +73,7 @@ if($listname == "clubtable"){
     $result = mysqli_query($link,$temp);
     mysqli_data_seek($result, 0);
     $row = mysqli_fetch_array($result);
-    $sql2="insert into donghoextension (postidx, name, sports, location, time, phone, etc) values ('$row[idx]','$text1','$text2','$text3','$text4','$text5','$text6')";
+    $sql2="insert into donghoextension (postidx, name, sports, location, time, phone) values ('$row[idx]','$text1','$text2','$text3','$text4','$text5')";
 } else if ($listname == "review"){
     $temp = "select * from review where username = '$username' order by created desc";
     $result = mysqli_query($link,$temp);
@@ -85,7 +85,7 @@ if($listname == "clubtable"){
     $result = mysqli_query($link,$temp);
     mysqli_data_seek($result, 0);
     $row = mysqli_fetch_array($result);
-    $sql2="insert into employmentextension (postidx, company, location, salary, personnel, calendar, etc) values ('$row[idx]','$text1','$text2','$text3','$text4','$text5','$text6')";
+    $sql2="insert into employmentextension (postidx, company, location, salary, calendar, etc) values ('$row[idx]','$text1','$text2','$text3','$text4','$text5')";
 }
 
 $result2=mysqli_query($link,$sql2);  

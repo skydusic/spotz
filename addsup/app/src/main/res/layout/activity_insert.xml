@@ -102,8 +102,10 @@
                     android:background="@drawable/edittext"
                     android:minHeight="25dp"
                     android:minWidth="250dp"
+                    android:paddingBottom="2dp"
                     android:paddingEnd="3dp"
-                    android:paddingStart="10dp" />
+                    android:paddingStart="10dp"
+                    android:paddingTop="2dp" />
 
                 <TextView
                     android:id="@+id/text2Tv"
@@ -125,8 +127,10 @@
                     android:background="@drawable/edittext"
                     android:minHeight="25dp"
                     android:minWidth="250dp"
+                    android:paddingBottom="2dp"
                     android:paddingEnd="3dp"
-                    android:paddingStart="10dp" />
+                    android:paddingStart="10dp"
+                    android:paddingTop="2dp" />
 
                 <TextView
                     android:id="@+id/text3Tv"
@@ -147,8 +151,10 @@
                     android:background="@drawable/edittext"
                     android:minHeight="25dp"
                     android:minWidth="250dp"
+                    android:paddingBottom="2dp"
                     android:paddingEnd="3dp"
-                    android:paddingStart="10dp" />
+                    android:paddingStart="10dp"
+                    android:paddingTop="2dp" />
 
                 <TextView
                     android:id="@+id/text4Tv"
@@ -169,8 +175,10 @@
                     android:background="@drawable/edittext"
                     android:minHeight="25dp"
                     android:minWidth="250dp"
+                    android:paddingBottom="2dp"
                     android:paddingEnd="3dp"
-                    android:paddingStart="10dp" />
+                    android:paddingStart="10dp"
+                    android:paddingTop="2dp" />
 
                 <TextView
                     android:id="@+id/text5Tv"
@@ -191,30 +199,10 @@
                     android:background="@drawable/edittext"
                     android:minHeight="25dp"
                     android:minWidth="250dp"
+                    android:paddingBottom="2dp"
                     android:paddingEnd="3dp"
-                    android:paddingStart="10dp" />
-
-                <TextView
-                    android:id="@+id/text6Tv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="25dp"
-                    android:layout_below="@+id/text5"
-                    android:layout_marginEnd="6dp"
-                    android:gravity="center_vertical"
-                    android:text="@string/detailmenu5" />
-
-                <EditText
-                    android:id="@+id/text6"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_below="@+id/text5"
-                    android:layout_marginBottom="10dp"
-                    android:background="@drawable/edittext"
-                    android:minHeight="25dp"
-                    android:minWidth="250dp"
-                    android:paddingEnd="3dp"
-                    android:paddingStart="10dp" />
+                    android:paddingStart="10dp"
+                    android:paddingTop="2dp" />
 
             </RelativeLayout>
         </LinearLayout>

@@ -37,6 +37,11 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
     ArrayList<String> arr = new ArrayList<>();
     ArrayList<Fragment> fragArr = new ArrayList<>();
 
+    TextView text1menu;
+    TextView text2menu;
+    TextView text3menu;
+    TextView text4menu;
+    TextView text5menu;
     TextView text1Tv;
     TextView text2Tv;
     TextView text3Tv;
@@ -70,11 +75,55 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
         viewPager = findViewById(R.id.viewPager);
         favorite = findViewById(R.id.favorite);
 
+        text1menu = findViewById(R.id.text1menu);
+        text2menu = findViewById(R.id.text2menu);
+        text3menu = findViewById(R.id.text3menu);
+        text4menu = findViewById(R.id.text4menu);
+        text5menu = findViewById(R.id.text5menu);
         text1Tv = findViewById(R.id.text1Tv);
         text2Tv = findViewById(R.id.text2Tv);
         text3Tv = findViewById(R.id.text3Tv);
         text4Tv = findViewById(R.id.text4Tv);
         text5Tv = findViewById(R.id.text5Tv);
+
+        //메뉴 텍스트 삽입
+        if (listname.equals("clubtable")) {
+            text1menu.setText("업체명");
+            text2menu.setText("종목");
+            text3menu.setText("위치");
+            text4menu.setText("연락처");
+            text5menu.setText("세부 안내사항");
+        } else if (listname.equals("freelancer")) {
+            text1menu.setText("대표명");
+            text2menu.setText("종목");
+            text3menu.setText("레슨장소");
+            text4menu.setText("연락처");
+            text5menu.setText("세부 안내사항");
+        } else if (listname.equals("competition")) {
+            text1menu.setText("대회명");
+            text2menu.setText("종목");
+            text3menu.setText("위치");
+            text4menu.setText("연락처");
+            text5menu.setText("세부 안내사항");
+        } else if (listname.equals("dongho")) {
+            text1menu.setText("동호회명");
+            text2menu.setText("종목");
+            text3menu.setText("위치");
+            text4menu.setText("시간");
+            text5menu.setText("연락처");
+        } else if (listname.equals("review")) {
+            text1menu.setText("제품명");
+            text2menu.setText("구입처");
+            text3menu.setText("가격");
+            text4menu.setText("평점");
+            text5menu.setText("세부 안내사항");
+        } else if (listname.equals("employment")) {
+            text1menu.setText("회사명");
+            text2menu.setText("회사위치");
+            text3menu.setText("연봉 / 시급");
+            text4menu.setText("면접일정");
+            text5menu.setText("세부 안내사항");
+        }
 
         // 인텐트로 정보 가져옴
         intent = getIntent();
@@ -82,21 +131,18 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
         idx = intent.getStringExtra("idx");
         contents = intent.getStringExtra("contents");
         created = intent.getStringExtra("created");
-
         text1 = intent.getStringExtra("text1");
         text2 = intent.getStringExtra("text2");
         text3 = intent.getStringExtra("text3");
         text4 = intent.getStringExtra("text4");
         text5 = intent.getStringExtra("text5");
-
-
         text1Tv.setText(text1);
         text2Tv.setText(text2);
         text3Tv.setText(text3);
         text4Tv.setText(text4);
         text5Tv.setText(text5);
-        contentsTv.setText(contents);
 
+        contentsTv.setText(contents);
         image = intent.getStringExtra("image");
 
         // 이미지 세팅
