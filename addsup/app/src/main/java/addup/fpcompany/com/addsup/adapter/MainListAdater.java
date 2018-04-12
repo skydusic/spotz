@@ -3,6 +3,7 @@ package addup.fpcompany.com.addsup.adapter;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,7 +29,6 @@ public class MainListAdater extends RecyclerView.Adapter<MainListAdater.ViewHold
     Context context;
     ArrayList<listItem> itemArr;
     listItem listItem;
-    String url = MainActivity.serverUrl + "userImageFolder/";
     private static Typeface mTypeface;
 
     public MainListAdater(Context context, ArrayList<listItem> itemArr) {
@@ -46,6 +46,7 @@ public class MainListAdater extends RecyclerView.Adapter<MainListAdater.ViewHold
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
+
         listItem = itemArr.get(position);
         holder.text1.setText(listItem.getText1());
         holder.text2.setText(listItem.getText2());
@@ -54,13 +55,15 @@ public class MainListAdater extends RecyclerView.Adapter<MainListAdater.ViewHold
         holder.text5.setText(listItem.getText5());
         holder.timeHolder.setText(listItem.getCreated());
         holder.hit.setText(listItem.getHit());
+        String url = MainActivity.serverUrl + "userImageFolder/" + listItem.getListname() + "/" + listItem.getUsername() + "/";
 
         if (!listItem.getImage().equals("")) {
             String[] temp = listItem.getImage().split(",");
             if (!temp.equals("")) {
+                Log.d("heu", "이미지 패스 : " + url + temp[0]);
                 Glide.with(context).load(url + temp[0]).into(holder.imageViewHolder);
             } else {
-
+                Glide.with(context).load(R.drawable.emptyimg).into(holder.imageViewHolder);
             }
         } else {
             Glide.with(context).load(R.drawable.emptyimg).into(holder.imageViewHolder);

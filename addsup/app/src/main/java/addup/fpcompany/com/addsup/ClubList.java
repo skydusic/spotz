@@ -165,6 +165,7 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
                         Intent intent = new Intent(v.getContext(), DetailList.class);
                         intent.putExtra("listname", listName);
                         intent.putExtra("idx", listItems.get(position).getIdx());
+                        intent.putExtra("username", listItems.get(position).getUsername());
                         intent.putExtra("contents", listItems.get(position).getContents());
                         intent.putExtra("created", listItems.get(position).getCreated());
                         intent.putExtra("text1", listItems.get(position).getText1());
@@ -176,7 +177,7 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
                         /** 해야할 일 이미지 -> 리사이클러뷰 */
                         String image = listItems.get(position).getImage();
                         String[] temp = image.split(",");
-                        intent.putExtra("image", temp[0]);
+                        intent.putExtra("image", image);
                         v.getContext().startActivity(intent);
 
                     }

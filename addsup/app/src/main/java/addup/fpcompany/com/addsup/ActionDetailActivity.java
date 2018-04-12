@@ -32,7 +32,9 @@ import okhttp3.Response;
 
 public class ActionDetailActivity extends AppCompatActivity {
 
-    /** 마이페이지 목록 -> 각 메뉴별 아이템 보여주기 */
+    /**
+     * 마이페이지 목록 -> 각 메뉴별 아이템 보여주기
+     */
     TextView detailTv;
     RecyclerView recyclerView;
     MainListAdater adapter;
@@ -90,10 +92,10 @@ public class ActionDetailActivity extends AppCompatActivity {
             for (int i = 0; i < post.length(); i++) {
                 JSONObject c = post.getJSONObject(i);
                 Log.d("heu", "텍스트1 : " + c.getString("text1"));
-                    listArr.add(new listItem(String.valueOf(c.getInt(TAG_ID)), c.getString(TAG_USERNAME), c.getString(TAG_CONTENTS),
-                            c.getString(TAG_IMAGE), ClubList.settingTimes(c.getString(TAG_CREATED)), c.getString("listname"),
-                            c.getString("text1"), c.getString("text2"), c.getString("text3"), c.getString("text4"),
-                            c.getString("text5"), c.getString("hit")));
+                listArr.add(new listItem(String.valueOf(c.getInt(TAG_ID)), c.getString(TAG_USERNAME), c.getString(TAG_CONTENTS),
+                        c.getString(TAG_IMAGE), ClubList.settingTimes(c.getString(TAG_CREATED)), c.getString("listname"),
+                        c.getString("text1"), c.getString("text2"), c.getString("text3"), c.getString("text4"),
+                        c.getString("text5"), c.getString("hit")));
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -118,13 +120,22 @@ public class ActionDetailActivity extends AppCompatActivity {
                             item = listArr.get(position);
                             Intent intent = new Intent(ActionDetailActivity.this, myPageOption.class);
                             startActivity(intent);
-                        } else {
+                        } else if (pageName.equals("즐겨찾기") || pageName.equals("최근 본 글")) {
                             item = listArr.get(position);
-
-
+                            intent = new Intent(ActionDetailActivity.this, DetailList.class);
+                            intent.putExtra("listname", listArr.get(position).getListname());
+                            intent.putExtra("idx", listArr.get(position).getIdx());
+                            intent.putExtra("username", listArr.get(position).getUsername());
+                            intent.putExtra("image", listArr.get(position).getImage());
+                            intent.putExtra("contents", listArr.get(position).getContents());
+                            intent.putExtra("created", listArr.get(position).getCreated());
+                            intent.putExtra("text1", listArr.get(position).getText1());
+                            intent.putExtra("text2", listArr.get(position).getText2());
+                            intent.putExtra("text3", listArr.get(position).getText3());
+                            intent.putExtra("text4", listArr.get(position).getText4());
+                            intent.putExtra("text5", listArr.get(position).getText5());
                             startActivity(intent);
                         }
-
                     }
 
                     @Override

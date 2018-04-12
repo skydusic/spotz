@@ -245,7 +245,7 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
                         }
                         for (int i = 0; i < filenameList.size(); i++) {
                             imageAddress1 += filenameList.get(i).toString();
-                            if (filenameList.size() > i) {
+                            if (filenameList.size()-1 > i) {
                                 imageAddress1 += ",";
                             }
                         }
@@ -551,12 +551,12 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
                                String image, String listname, String spindata1, String spindata2,
                                String text1, String text2, String text3, String text4, String text5) {
 
-            Log.d("heu", "이미지 : " + checkImg(image));
+            Log.d("heu", "이미지 : " + image);
 
             RequestBody requestBody = new FormBody.Builder().
                     add("contents", contents).
                     add("username", username).
-                    add("image", checkImg(image)).
+                    add("image", image).
                     add("listname", listname).
                     add("spindata1", spindata1).
                     add("spindata2", spindata2).

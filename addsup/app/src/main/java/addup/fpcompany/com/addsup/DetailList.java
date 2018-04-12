@@ -51,6 +51,7 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
     String listname = "";
     String idx = "";
     String contents = "";
+    String username = "";
     String created = "";
     String image = "";
 
@@ -60,7 +61,7 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
     String text4 = "";
     String text5 = "";
 
-    String url = MainActivity.serverUrl + "userImageFolder/";
+    String imageurl;
 
     Boolean favoriteFLAG = false;
 
@@ -91,6 +92,7 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
         listname = intent.getStringExtra("listname");
         idx = intent.getStringExtra("idx");
         contents = intent.getStringExtra("contents");
+        username = intent.getStringExtra("username");
         created = intent.getStringExtra("created");
         text1 = intent.getStringExtra("text1");
         text2 = intent.getStringExtra("text2");
@@ -145,6 +147,7 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
 
         contentsTv.setText(contents);
         image = intent.getStringExtra("image");
+        imageurl = MainActivity.serverUrl + "userImageFolder/" + listname + "/" + username + "/";
 
         // 이미지 세팅
         setRecyclerView();
@@ -200,7 +203,7 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
         if (!image.equals("")) {
             String[] temp = image.split(",");
             for (String aTemp : temp) {
-                arr.add(url + aTemp);
+                arr.add(imageurl + aTemp);
             }
         }
 
