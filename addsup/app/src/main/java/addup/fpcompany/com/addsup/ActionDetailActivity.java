@@ -121,6 +121,7 @@ public class ActionDetailActivity extends AppCompatActivity {
                         } else if (pageName.equals("즐겨찾기") || pageName.equals("최근 본 글")) {
                             item = listArr.get(position);
                             intent = new Intent(ActionDetailActivity.this, DetailList.class);
+                            intent.putExtra("idx", item.getIdx());
                             intent.putExtra("listname", item.getListname());
                             intent.putExtra("idx", item.getIdx());
                             intent.putExtra("username", item.getUsername());
@@ -153,10 +154,10 @@ public class ActionDetailActivity extends AppCompatActivity {
         if (resultCode == 100) {
             //up
 
-        } else if (requestCode == 200) {
+        } else if (resultCode == 200) {
             //super up
 
-        } else if (requestCode == 300) {
+        } else if (resultCode == 300) {
             // 수정
             Intent intent = new Intent(ActionDetailActivity.this, insertActivity.class);
             // 0 -> 새글 1 -> 수정
@@ -174,9 +175,9 @@ public class ActionDetailActivity extends AppCompatActivity {
             intent.putExtra("text3", item.getText3());
             intent.putExtra("text4", item.getText4());
             intent.putExtra("text5", item.getText5());
-            startActivityForResult(intent, 2000);
+            startActivity(intent);
 
-        } else if (requestCode == 400) {
+        } else if (resultCode == 400) {
             // 삭제
 
         }
@@ -239,7 +240,6 @@ public class ActionDetailActivity extends AppCompatActivity {
                     add("listname", item.getListname()).
                     add("spindata1", item.getSpindata1()).
                     add("spindata2", item.getSpindata2()).
-                    add("username", item.getUsername()).
                     add("username", item.getUsername()).
                     build();
 

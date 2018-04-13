@@ -81,11 +81,12 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
     TextView buttonInsert;
     ArrayAdapter<String> spinnerAdapter1;
     ArrayAdapter<String> spinnerAdapter2;
-    int spinnerNumber1 = -1;
-    int spinnerNumber2 = -1;
+    int spinnerNumber1 = 0;
+    int spinnerNumber2 = 0;
 
     private final int GALLERY_CODE = 1112;
 
+    String idx;
     String serverUri;
     String imagePath;
     String imageAddress1 = "";
@@ -132,6 +133,7 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
         text5 = findViewById(R.id.text5);
 
         Intent clubInt = getIntent();
+        idx = clubInt.getStringExtra("idx");
         postNum = clubInt.getIntExtra("postNum", 0);
         contents = clubInt.getStringExtra("contents");
         listName = clubInt.getStringExtra("listname");
@@ -190,10 +192,10 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
             spindata1 = clubInt.getStringExtra("spindata1");
             spindata2 = clubInt.getStringExtra("spindata2");
             text1.setText(clubInt.getStringExtra("text1"));
-            text1.setText(clubInt.getStringExtra("text2"));
-            text1.setText(clubInt.getStringExtra("text3"));
-            text1.setText(clubInt.getStringExtra("text4"));
-            text1.setText(clubInt.getStringExtra("text5"));
+            text2.setText(clubInt.getStringExtra("text2"));
+            text3.setText(clubInt.getStringExtra("text3"));
+            text4.setText(clubInt.getStringExtra("text4"));
+            text5.setText(clubInt.getStringExtra("text5"));
         }
 
         /**  글 수정 */
@@ -567,6 +569,7 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
                                String text1, String text2, String text3, String text4, String text5) {
 
             RequestBody requestBody = new FormBody.Builder().
+                    add("idx", idx).
                     add("contents", contents).
                     add("username", username).
                     add("image", image).

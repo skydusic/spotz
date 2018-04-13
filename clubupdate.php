@@ -21,7 +21,6 @@ $image=isset($_POST['image']) ? $_POST['image'] : '';
 $listname=isset($_POST['listname']) ? $_POST['listname'] : '';
 $spindata1=isset($_POST['spindata1']) ? $_POST['spindata1'] : '';
 $spindata2=isset($_POST['spindata2']) ? $_POST['spindata2'] : '';
-$created=isset($_POST['created']) ? $_POST['created'] : '';
 
 $text1=isset($_POST['text1']) ? $_POST['text1'] : '';
 $text2=isset($_POST['text2']) ? $_POST['text2'] : '';
