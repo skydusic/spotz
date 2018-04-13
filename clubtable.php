@@ -83,37 +83,37 @@
             $result2 = mysqli_query($connect,$sql2);
             mysqli_data_seek($result2, 0);
             $row2 = mysqli_fetch_array($result2);
-            echo "{\"listname\":\"clubtable\",\"idx\":$row[idx],\"contents\":\"$row[contents]\",\"username\":\"$row[username]\",\"created\":\"$row[created]\",\"hit\":\"$row[hit]\",\"image\":\"$row[image]\",\"text1\":\"$row2[corperation]\",\"text2\":\"$row2[sports]\",\"text3\":\"$row2[location]\",\"text4\":\"$row2[phone]\",\"text5\":\"$row2[etc]\"}";
+            echo "{\"listname\":\"clubtable\",\"idx\":$row[idx],\"contents\":\"$row[contents]\",\"username\":\"$row[username]\",\"created\":\"$row[created]\",\"hit\":\"$row[hit]\",\"image\":\"$row[image]\",\"spindata1\":\"$row[spindata1]\",\"spindata2\":\"$row[spindata2]\",\"text1\":\"$row2[corperation]\",\"text2\":\"$row2[sports]\",\"text3\":\"$row2[location]\",\"text4\":\"$row2[phone]\",\"text5\":\"$row2[etc]\"}";
         } else if ($listname == "freelancer"){
             $sql2 = "select * from freeextension where postidx = '$row[idx]'";
             $result2 = mysqli_query($connect,$sql2);
             mysqli_data_seek($result2, 0);
             $row2 = mysqli_fetch_array($result2);
-            echo "{\"listname\":\"freelancer\",\"idx\":$row[idx],\"contents\":\"$row[contents]\",\"username\":\"$row[username]\",\"created\":\"$row[created]\",\"hit\":\"$row[hit]\",\"image\":\"$row[image]\",\"text1\":\"$row2[name]\",\"text2\":\"$row2[sports]\",\"text3\":\"$row2[location]\",\"text4\":\"$row2[phone]\",\"text5\":\"$row2[etc]\"}";
+            echo "{\"listname\":\"freelancer\",\"idx\":$row[idx],\"contents\":\"$row[contents]\",\"username\":\"$row[username]\",\"created\":\"$row[created]\",\"hit\":\"$row[hit]\",\"image\":\"$row[image]\",\"spindata1\":\"$row[spindata1]\",\"spindata2\":\"$row[spindata2]\",\"text1\":\"$row2[name]\",\"text2\":\"$row2[sports]\",\"text3\":\"$row2[location]\",\"text4\":\"$row2[phone]\",\"text5\":\"$row2[etc]\"}";
         } else if ($listname == "competition"){
             $sql2 = "select * from competitionextension where postidx = '$row[idx]'";
             $result2 = mysqli_query($connect,$sql2);
             mysqli_data_seek($result2, 0);
             $row2 = mysqli_fetch_array($result2);
-            echo "{\"listname\":\"competition\",\"idx\":$row[idx],\"contents\":\"$row[contents]\",\"username\":\"$row[username]\",\"created\":\"$row[created]\",\"hit\":\"$row[hit]\",\"image\":\"$row[image]\",\"text1\":\"$row2[name]\",\"text2\":\"$row2[sports]\",\"text3\":\"$row2[location]\",\"text4\":\"$row2[phone]\",\"text5\":\"$row2[etc]\"}";
+            echo "{\"listname\":\"competition\",\"idx\":$row[idx],\"contents\":\"$row[contents]\",\"username\":\"$row[username]\",\"created\":\"$row[created]\",\"hit\":\"$row[hit]\",\"image\":\"$row[image]\",\"spindata1\":\"$row[spindata1]\",\"spindata2\":\"$row[spindata2]\",\"text1\":\"$row2[name]\",\"text2\":\"$row2[sports]\",\"text3\":\"$row2[location]\",\"text4\":\"$row2[phone]\",\"text5\":\"$row2[etc]\"}";
         } else if ($listname == "dongho"){
             $sql2 = "select * from donghoextension where postidx = '$row[idx]'";
             $result2 = mysqli_query($connect,$sql2);
             mysqli_data_seek($result2, 0);
             $row2 = mysqli_fetch_array($result2);
-            echo "{\"listname\":\"dongho\",\"idx\":$row[idx],\"contents\":\"$row[contents]\",\"username\":\"$row[username]\",\"created\":\"$row[created]\",\"hit\":\"$row[hit]\",\"image\":\"$row[image]\",\"text1\":\"$row2[name]\",\"text2\":\"$row2[sports]\",\"text3\":\"$row2[location]\",\"text4\":\"$row2[time]\",\"text5\":\"$row2[phone]\"}";
+            echo "{\"listname\":\"dongho\",\"idx\":$row[idx],\"contents\":\"$row[contents]\",\"username\":\"$row[username]\",\"created\":\"$row[created]\",\"hit\":\"$row[hit]\",\"image\":\"$row[image]\",\"spindata1\":\"$row[spindata1]\",\"spindata2\":\"$row[spindata2]\",\"text1\":\"$row2[name]\",\"text2\":\"$row2[sports]\",\"text3\":\"$row2[location]\",\"text4\":\"$row2[time]\",\"text5\":\"$row2[phone]\"}";
         } else if ($listname == "review"){
             $sql2 = "select * from reviewextension where postidx = '$row[idx]'";
             $result2 = mysqli_query($connect,$sql2);
             mysqli_data_seek($result2, 0);
             $row2 = mysqli_fetch_array($result2);
-            echo "{\"listname\":\"review\",\"idx\":$row[idx],\"contents\":\"$row[contents]\",\"username\":\"$row[username]\",\"created\":\"$row[created]\",\"hit\":\"$row[hit]\",\"image\":\"$row[image]\",\"text1\":\"$row2[product]\",\"text2\":\"$row2[wheretobuy]\",\"text3\":\"$row2[price]\",\"text4\":\"$row2[greade]\",\"text5\":\"$row2[etc]\"}";
+            echo "{\"listname\":\"review\",\"idx\":$row[idx],\"contents\":\"$row[contents]\",\"username\":\"$row[username]\",\"created\":\"$row[created]\",\"hit\":\"$row[hit]\",\"image\":\"$row[image]\",\"spindata1\":\"$row[spindata1]\",\"spindata2\":\"$row[spindata2]\",\"text1\":\"$row2[product]\",\"text2\":\"$row2[wheretobuy]\",\"text3\":\"$row2[price]\",\"text4\":\"$row2[greade]\",\"text5\":\"$row2[etc]\"}";
         } else if ($listname == "employment"){
             $sql2 = "select * from employmentextension where postidx = '$row[idx]'";
             $result2 = mysqli_query($connect,$sql2);
             mysqli_data_seek($result2, 0);
             $row2 = mysqli_fetch_array($result2);
-            echo "{\"listname\":\"employment\",\"idx\":$row[idx],\"contents\":\"$row[contents]\",\"username\":\"$row[username]\",\"created\":\"$row[created]\",\"hit\":\"$row[hit]\",\"image\":\"$row[image]\",\"text1\":\"$row2[company]\",\"text2\":\"$row2[location]\",\"text3\":\"$row2[salary]\",\"text4\":\"$row2[calendar]\",\"text5\":\"$row2[etc]\"}";
+            echo "{\"listname\":\"employment\",\"idx\":$row[idx],\"contents\":\"$row[contents]\",\"username\":\"$row[username]\",\"created\":\"$row[created]\",\"hit\":\"$row[hit]\",\"image\":\"$row[image]\",\"spindata1\":\"$row[spindata1]\",\"spindata2\":\"$row[spindata2]\",\"text1\":\"$row2[company]\",\"text2\":\"$row2[location]\",\"text3\":\"$row2[salary]\",\"text4\":\"$row2[calendar]\",\"text5\":\"$row2[etc]\"}";
         }
         
         if($i<$total_record-1){

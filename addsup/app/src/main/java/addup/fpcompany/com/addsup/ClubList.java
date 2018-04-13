@@ -63,7 +63,6 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
     JSONArray topic = new JSONArray();
 
     int authNum = 0;
-    int postNum = 0;
     String boardUrl;
 
     HashMap<String, String> postHashmap = new HashMap<>();
@@ -235,35 +234,7 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
         } else if (authNum == 1) {
             insertBtn.setVisibility(View.VISIBLE);
         }
-        // 버튼 내용 수정
-        if (postNum == 1) {
-            insertBtn.setText("내 글 수정");
-        }
-
         return authNum;
-    }
-
-    public void checkSelect() {
-        // 수정
-        try {
-            if (username != null) {
-                for (int i = 0; i < topic.length(); i++) {
-                    JSONObject c = topic.getJSONObject(i);
-                    String usedName = c.getString(TAG_USERNAME);
-                    if (username.equals(usedName)) {
-                        postNum = 1;
-                        postHashmap.put(TAG_CONTENTS, c.getString(TAG_CONTENTS));
-                        postHashmap.put(TAG_TITLE, c.getString(TAG_TITLE));
-                        postHashmap.put(TAG_IMAGE, c.getString(TAG_IMAGE));
-                        break;
-                    } else {
-                        postNum = 0;
-                    }
-                }
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
     }
 
     @SuppressLint("HandlerLeak")
@@ -295,7 +266,7 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
                 listItems.add(new listItem(String.valueOf(c.getInt(TAG_ID)), c.getString(TAG_USERNAME), c.getString(TAG_CONTENTS),
                         c.getString(TAG_IMAGE), ClubList.settingTimes(c.getString(TAG_CREATED)), c.getString("listname"),
                         c.getString("text1"), c.getString("text2"), c.getString("text3"), c.getString("text4"),
-                        c.getString("text5"), c.getString("hit")));
+                        c.getString("text5"), c.getString("hit"), c.getString("spindata1"), c.getString("spindata2")));
 
             }
         } catch (JSONException e) {
@@ -367,7 +338,6 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
         switch (view.getId()) {
             case (R.id.insertBtn):
                 Intent intent = new Intent(this, addup.fpcompany.com.addsup.insertActivity.class);
-                intent.putExtra("postNum", postNum);
                 intent.putExtra("listname", listName);
                 intent.putExtra("username", username);
                 /**

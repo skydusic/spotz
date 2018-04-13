@@ -92,6 +92,8 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
     String listName;
     String contents;
     String image;
+    String spindata1;
+    String spindata2;
     public static final String url = MainActivity.serverUrl;
     int postNum;
 
@@ -130,7 +132,7 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
         text5 = findViewById(R.id.text5);
 
         Intent clubInt = getIntent();
-        postNum = clubInt.getIntExtra("postNum", -1);
+        postNum = clubInt.getIntExtra("postNum", 0);
         contents = clubInt.getStringExtra("contents");
         listName = clubInt.getStringExtra("listname");
         image = clubInt.getStringExtra("image");
@@ -179,6 +181,19 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
             serverUri = "http://spotz.co.kr/var/www/html/clubinsert.php";
         } else if (postNum == 1) {
             serverUri = "http://spotz.co.kr/var/www/html/clubupdate.php";
+
+            contentsET.setText(clubInt.getStringExtra("contents"));
+            listName = clubInt.getStringExtra("listname");
+            /** 이미지 테스트 해봐야 함 */
+            image = clubInt.getStringExtra("image");
+//            imageAddress1 = clubInt.getStringExtra("image");
+            spindata1 = clubInt.getStringExtra("spindata1");
+            spindata2 = clubInt.getStringExtra("spindata2");
+            text1.setText(clubInt.getStringExtra("text1"));
+            text1.setText(clubInt.getStringExtra("text2"));
+            text1.setText(clubInt.getStringExtra("text3"));
+            text1.setText(clubInt.getStringExtra("text4"));
+            text1.setText(clubInt.getStringExtra("text5"));
         }
 
         /**  글 수정 */
@@ -250,8 +265,7 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
                             }
                         }
                         task.request(contents, serverUri, MainActivity.mUsername, imageAddress1,
-                                listName, MainActivity.spinList1.get(spinnerNumber1), MainActivity.spinList2.get(spinnerNumber1).get(spinnerNumber2),
-                                tex1, tex2, tex3, tex4, tex5);
+                                listName, spindata1, spindata2, tex1, tex2, tex3, tex4, tex5);
                         setResult(2400);
                         finish();
                     } else {
@@ -266,7 +280,7 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
         spinner1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                spinnerNumber1 = position;
+                spindata1 = MainActivity.spinList1.get(position);
                 spinner2.setVisibility(View.INVISIBLE);
                 spinnerAdapter2 = new ArrayAdapter<>(insertActivity.this, R.layout.support_simple_spinner_dropdown_item, MainActivity.spinList2.get(position));
                 spinner2.setAdapter(spinnerAdapter2);
@@ -536,6 +550,7 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         spinnerNumber2 = position;
+        spindata2 = MainActivity.spinList2.get(spinnerNumber1).get(spinnerNumber2);
     }
 
     @Override

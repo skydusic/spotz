@@ -18,10 +18,12 @@ public class listItem {
     String text4;
     String text5;
     String hit;
+    String spindata1;
+    String spindata2;
 
     public listItem(String idx, String username, String contents, String image, String created,
                     String listname, String text1, String text2, String text3, String text4,
-                    String text5, String hit) {
+                    String text5, String hit, String spindata1, String spindata2) {
         this.idx = idx;
         this.username = username;
         this.contents = contents;
@@ -34,6 +36,8 @@ public class listItem {
         this.text4 = text4;
         this.text5 = text5;
         this.hit = hit;
+        this.spindata1 = spindata1;
+        this.spindata2 = spindata2;
     }
 
     public String getHit() {
@@ -82,5 +86,12 @@ public class listItem {
 
     public String getText5() {
         return text5;
+    }
+
+    public String getSpindata1(){
+        return spindata1;
+    }
+    public String getSpindata2(){
+        return spindata2;
     }
 }
