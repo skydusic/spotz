@@ -162,16 +162,7 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
         insert.requestPost(listname, idx);
 
         //즐겨찾기 플래그
-        for (int i = 0; i < MainActivity.favoriteArr.size(); i++) {
-            favoriteTemp = MainActivity.favoriteArr.get(i);
-            if (favoriteTemp.getListname().equals(listname) && favoriteTemp.getPostidx().equals(idx)) {
-                favoriteFLAG = true;
-                favorite.setImageResource(R.drawable.yellowstar);
-            } else {
-                favorite.setImageResource(R.drawable.blackstar);
-
-            }
-        }
+        favImageSet();
 
         favorite.setOnClickListener(this);
 
@@ -187,16 +178,17 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
             } else {
                 favoriteFLAG = false;
                 favorite.setImageResource(R.drawable.blackstar);
+
             }
+            Log.d("heu", "플래그 :" + favoriteFLAG);
         }
-        favorite.setOnClickListener(this);
+
     }
 
     private void favoriteSet() {
         MainActivity.getFavorite fav = new MainActivity.getFavorite();
         MainActivity.favoriteArr.clear();
         fav.requestPost(MainActivity.mUsername);
-        handler2.sendEmptyMessageDelayed(1000, 100);
     }
 
     private void setRecyclerView() {
@@ -240,17 +232,15 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
                     favorite.setImageResource(R.drawable.blackstar);
                     favoriteDelete delete = new favoriteDelete();
                     delete.requestPost(idx);
-
-                    favoriteFLAG = !favoriteFLAG;
-                    MainActivity.getFavorite fav = new MainActivity.getFavorite();
-                    fav.requestPost(MainActivity.mUsername);
-
+                    favoriteFLAG = false;
                 } else {
                     favorite.setImageResource(R.drawable.yellowstar);
                     favoriteInsert insert = new favoriteInsert();
                     insert.requestPost(listname, idx);
+                    favoriteFLAG = true;
                 }
-                Log.d("heu", "플래그 : " + favoriteFLAG);
+                MainActivity.getFavorite fav = new MainActivity.getFavorite();
+                fav.requestPost(MainActivity.mUsername);
                 break;
         }
     }
@@ -307,11 +297,11 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
+            removeMessages(1000);
             if (MainActivity.favoriteArr != null) {
                 favImageSet();
-                removeMessages(1000);
             } else {
-                handler2.sendEmptyMessageDelayed(1000, 200);
+                handler2.sendEmptyMessageDelayed(1000, 300);
             }
 
         }
@@ -349,7 +339,10 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
         //Client 생성
         OkHttpClient client = new OkHttpClient();
 
-        public void requestPost(String listname, String postidx) {
+        public void requestPost(final String listname, final String postidx) {
+
+//            배열에 아이템 추가
+            MainActivity.favoriteArr.add(new favoriteItem(username, listname, postidx));
 
             //Request Body에 서버에 보낼 데이터 작성
             RequestBody requestBody = new FormBody.Builder().
@@ -369,7 +362,7 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
 //                    Log.d("heu", "favorite res : " + response.body().string());
-                    favoriteSet();
+//                    favoriteSet();
                 }
             });
         }

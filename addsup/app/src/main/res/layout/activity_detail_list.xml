@@ -6,15 +6,6 @@
     android:background="#fff"
     tools:context="addup.fpcompany.com.addsup.DetailList">
 
-    <ImageView
-        android:id="@+id/favorite"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="15dp"
-        android:layout_marginTop="15dp"
-        android:padding="5dp"
-        android:src="@drawable/blackstar" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -25,12 +16,21 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
+            <ImageView
+                android:id="@+id/favorite"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="15dp"
+                android:padding="5dp"
+                android:src="@drawable/blackstar" />
+
             <android.support.v4.view.ViewPager
                 android:id="@+id/viewPager"
                 android:layout_width="match_parent"
                 android:layout_height="180dp"
-                android:layout_marginBottom="5dp"
-                android:layout_marginTop="5dp" />
+                android:layout_below="@+id/favorite"
+                android:layout_marginBottom="5dp"/>
 
 
             <RelativeLayout
@@ -131,8 +131,8 @@
                     android:layout_width="80dp"
                     android:layout_height="30dp"
                     android:layout_below="@+id/text3Line"
-                    android:gravity="center"
                     android:layout_marginTop="2dp"
+                    android:gravity="center"
                     android:text="@string/detailmenu4" />
 
                 <TextView

@@ -3,7 +3,6 @@ package addup.fpcompany.com.addsup.adapter;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -60,7 +59,6 @@ public class MainListAdater extends RecyclerView.Adapter<MainListAdater.ViewHold
         if (!listItem.getImage().equals("")) {
             String[] temp = listItem.getImage().split(",");
             if (!temp.equals("")) {
-                Log.d("heu", "이미지 패스 : " + url + temp[0]);
                 Glide.with(context).load(url + temp[0]).into(holder.imageViewHolder);
             } else {
                 Glide.with(context).load(R.drawable.emptyimg).into(holder.imageViewHolder);
