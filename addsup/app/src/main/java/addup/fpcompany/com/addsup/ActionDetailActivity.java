@@ -119,7 +119,7 @@ public class ActionDetailActivity extends AppCompatActivity {
                         if (pageName.equals("내 글 보기")) {
                             item = listArr.get(position);
                             Intent intent = new Intent(ActionDetailActivity.this, myPageOption.class);
-                            startActivity(intent);
+                            startActivityForResult(intent, 1000);
                         } else if (pageName.equals("즐겨찾기") || pageName.equals("최근 본 글")) {
                             item = listArr.get(position);
                             intent = new Intent(ActionDetailActivity.this, DetailList.class);
@@ -144,6 +144,26 @@ public class ActionDetailActivity extends AppCompatActivity {
                     }
                 })
         );
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == 100) {
+            //up
+
+        } else if (requestCode == 200) {
+            //super up
+
+        } else if (requestCode == 300) {
+            // 수정
+
+        } else if (requestCode == 400) {
+            // 삭제
+            
+        }
+
     }
 
     @SuppressLint("HandlerLeak")
