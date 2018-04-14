@@ -86,7 +86,6 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
 
     private final int GALLERY_CODE = 1112;
 
-    String idx;
     String serverUri;
     String imagePath;
     String imageAddress1 = "";
@@ -133,7 +132,6 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
         text5 = findViewById(R.id.text5);
 
         Intent clubInt = getIntent();
-        idx = clubInt.getStringExtra("idx");
         postNum = clubInt.getIntExtra("postNum", 0);
         contents = clubInt.getStringExtra("contents");
         listName = clubInt.getStringExtra("listname");
@@ -186,6 +184,7 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
 
             contentsET.setText(clubInt.getStringExtra("contents"));
             listName = clubInt.getStringExtra("listname");
+
             /** 이미지 테스트 해봐야 함 */
             image = clubInt.getStringExtra("image");
 //            imageAddress1 = clubInt.getStringExtra("image");
@@ -197,48 +196,6 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
             text4.setText(clubInt.getStringExtra("text4"));
             text5.setText(clubInt.getStringExtra("text5"));
         }
-
-        /**  글 수정 */
-        /*if (title != null) {
-            titleET.setText(title);
-            contentsET.setText(contents);
-
-            String tempUrl = url + "userImageFoler/";
-            String[] temp = image.split(",");
-
-            for (int i = 0; i < temp.length; i++) {
-                switch (i) {
-                    case 0:
-                        Glide.with(this).load(tempUrl + temp[0]).into(imView1);
-                        imView1.setVisibility(View.VISIBLE);
-                        break;
-                    case 1:
-                        Glide.with(this).load(tempUrl + temp[1]).into(imView2);
-                        imView2.setVisibility(View.VISIBLE);
-                        break;
-                    case 2:
-                        Glide.with(this).load(tempUrl + temp[2]).into(imView3);
-                        imView3.setVisibility(View.VISIBLE);
-                        break;
-                    case 3:
-                        Glide.with(this).load(tempUrl + temp[3]).into(imView4);
-                        imView4.setVisibility(View.VISIBLE);
-                        break;
-                    case 4:
-                        Glide.with(this).load(tempUrl + temp[4]).into(imView5);
-                        imView5.setVisibility(View.VISIBLE);
-                        break;
-                    case 5:
-                        Glide.with(this).load(tempUrl + temp[5]).into(imView6);
-                        imView6.setVisibility(View.VISIBLE);
-                        break;
-                    case 6:
-                        Glide.with(this).load(tempUrl + temp[6]).into(imView7);
-                        imView7.setVisibility(View.VISIBLE);
-                        break;
-                }
-            }
-        }*/
 
         buttonInsert.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -253,7 +210,6 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
                 if (contents.length() > 300) {
                     Toast.makeText(insertActivity.this, "글자 제한을 초과했습니다. (" + String.valueOf(contents.length()) + " / 300자)", Toast.LENGTH_LONG).show();
                 } else {
-                    /** 해야할 일  */
                     if (!contents.equals("")) {
                         InsertData task = new InsertData();
                         ConnectServer connectServer = new ConnectServer();
@@ -262,7 +218,7 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
                         }
                         for (int i = 0; i < filenameList.size(); i++) {
                             imageAddress1 += filenameList.get(i).toString();
-                            if (filenameList.size()-1 > i) {
+                            if (filenameList.size() - 1 > i) {
                                 imageAddress1 += ",";
                             }
                         }
@@ -402,7 +358,7 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
         File sourceFile = new File(getRealPathFromURI(imgUri));
 
         String strNewFolder = "CacheFolder" + File.separator;
-        String strFileName = sourceFile.getName().toString();
+        String strFileName = sourceFile.getName();
 
         String strCurPath = sourceFile.getPath().substring(0, sourceFile.getPath().lastIndexOf("/")) + File.separator;
         String strNewPath = Environment.getExternalStorageDirectory().getPath() + File.separator + strNewFolder;
@@ -569,7 +525,6 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
                                String text1, String text2, String text3, String text4, String text5) {
 
             RequestBody requestBody = new FormBody.Builder().
-                    add("idx", idx).
                     add("contents", contents).
                     add("username", username).
                     add("image", image).
@@ -598,21 +553,6 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
 
         }
 
-        private String checkImg(String image) {
-//            이미지 주소에 테이블 이름 붙이는 메소드
-            String add = "";
-            if (!image.equals("")) {
-                if (listName.equals("clubtable")) {
-                    add += "clubtable/";
-                } else if (listName.equals("freelancer")) {
-                    add += "freelancer/";
-                }
-                add += MainActivity.mUsername + '/';
-            } else {
-                return " ";
-            }
-            return add + image;
-        }
     }
 
     class ConnectServer {
@@ -651,7 +591,7 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
             url += "/imagesave.php";
 
             File file = new File(fileToBitmap(uri));
-            String filename = file.getName().toString();
+            String filename = file.getName();
 
             //Request Body에 서버에 보낼 데이터 작성
 //            RequestBody requestBody = new FormBody.Builder().add("userId", id).add("userPassword", password).build();

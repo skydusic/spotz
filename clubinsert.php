@@ -50,6 +50,16 @@ else{
    echo mysqli_error($link);
 }
 
+$postsql="insert into postlist(username,postidx,listname) values('$username','$row[idx]','$listname')";
+$postresult=mysqli_query($link,$postsql);
+if($postresult){
+   echo "SQL문 처리 성공";
+}
+else{
+   echo "SQL문 처리중 에러 발생 : ";
+   echo mysqli_error($link);
+}
+
 if($listname == "clubtable"){
     $temp = "select * from clubtable where username = '$username' order by created desc";
     $result = mysqli_query($link,$temp);
