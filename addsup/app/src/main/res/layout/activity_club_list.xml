@@ -26,9 +26,7 @@
                 android:id="@+id/listTopName"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
                 android:gravity="center_vertical"
-                android:text="제목"
                 android:textSize="16sp"
                 android:textColor="#fff"/>
 
@@ -38,7 +36,7 @@
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:text="글쓰기"
-                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
                 android:textColor="#fff"/>
         </RelativeLayout>
 

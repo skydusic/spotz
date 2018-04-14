@@ -8,7 +8,7 @@
 
     $username=isset($_POST['username']) ? $_POST['username'] : '';
 
-    $sql = "select * from postlist where username = '$username'";
+    $sql = "select * from postlist where username = '$username' ORDER BY created DESC";
     $result = mysqli_query($connect,$sql);
     $total_record = mysqli_num_rows($result);
 

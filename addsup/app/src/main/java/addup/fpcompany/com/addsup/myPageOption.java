@@ -21,16 +21,17 @@ public class myPageOption extends Activity implements View.OnClickListener {
         // 상단 바 없애는 코드임
 //        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_my_page_option);
-//        mTypeface = Typeface.createFromAsset(getApplicationContext().getAssets(), "fonts/dohyeonttf.ttf");
+        mTypeface = Typeface.createFromAsset(getApplicationContext().getAssets(), "fonts/dohyeonttf.ttf");
 
         upBtn = findViewById(R.id.upBtn);
         superUpBtn = findViewById(R.id.superUpBtn);
         editpost = findViewById(R.id.editpost);
         delpost = findViewById(R.id.delpost);
 
-
-
-
+        upBtn.setTypeface(mTypeface);
+        superUpBtn.setTypeface(mTypeface);
+        editpost.setTypeface(mTypeface);
+        delpost.setTypeface(mTypeface);
 
         upBtn.setOnClickListener(this);
         superUpBtn.setOnClickListener(this);

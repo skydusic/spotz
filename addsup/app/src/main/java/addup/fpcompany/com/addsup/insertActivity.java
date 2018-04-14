@@ -86,6 +86,7 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
 
     private final int GALLERY_CODE = 1112;
 
+    String idx = "";
     String serverUri;
     String imagePath;
     String imageAddress1 = "";
@@ -132,6 +133,7 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
         text5 = findViewById(R.id.text5);
 
         Intent clubInt = getIntent();
+        idx = clubInt.getStringExtra("idx");
         postNum = clubInt.getIntExtra("postNum", 0);
         contents = clubInt.getStringExtra("contents");
         listName = clubInt.getStringExtra("listname");
@@ -200,6 +202,7 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
         buttonInsert.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Intent returnIntent = new Intent();
                 String contents = contentsET.getText().toString().trim();
                 String tex1 = text1.getText().toString();
                 String tex2 = text2.getText().toString();
@@ -224,7 +227,7 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
                         }
                         task.request(contents, serverUri, MainActivity.mUsername, imageAddress1,
                                 listName, spindata1, spindata2, tex1, tex2, tex3, tex4, tex5);
-                        setResult(2400);
+                        setResult(2400, returnIntent);
                         finish();
                     } else {
                         Toast.makeText(insertActivity.this, "내용을 입력해주세요.", Toast.LENGTH_SHORT).show();
@@ -518,25 +521,44 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
 
     class InsertData {
         ProgressDialog progressDialog;
+        RequestBody requestBody;
         OkHttpClient client = new OkHttpClient();
 
         protected void request(String contents, String serverURL, String username,
                                String image, String listname, String spindata1, String spindata2,
                                String text1, String text2, String text3, String text4, String text5) {
 
-            RequestBody requestBody = new FormBody.Builder().
-                    add("contents", contents).
-                    add("username", username).
-                    add("image", image).
-                    add("listname", listname).
-                    add("spindata1", spindata1).
-                    add("spindata2", spindata2).
-                    add("text1", text1).
-                    add("text2", text2).
-                    add("text3", text3).
-                    add("text4", text4).
-                    add("text5", text5).
-                    build();
+            if(postNum == 1) {
+                // 수정일 경우 idx 첨부!
+                requestBody = new FormBody.Builder().
+                        add("idx", idx).
+                        add("contents", contents).
+                        add("username", username).
+                        add("image", image).
+                        add("listname", listname).
+                        add("spindata1", spindata1).
+                        add("spindata2", spindata2).
+                        add("text1", text1).
+                        add("text2", text2).
+                        add("text3", text3).
+                        add("text4", text4).
+                        add("text5", text5).
+                        build();
+            } else {
+                requestBody = new FormBody.Builder().
+                        add("contents", contents).
+                        add("username", username).
+                        add("image", image).
+                        add("listname", listname).
+                        add("spindata1", spindata1).
+                        add("spindata2", spindata2).
+                        add("text1", text1).
+                        add("text2", text2).
+                        add("text3", text3).
+                        add("text4", text4).
+                        add("text5", text5).
+                        build();
+            }
 
             Request request = new Request.Builder().url(serverURL).post(requestBody).build();
             client.newCall(request).enqueue(new Callback() {

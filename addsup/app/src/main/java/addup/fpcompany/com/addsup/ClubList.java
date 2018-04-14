@@ -346,7 +346,7 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
                  intent.putExtra("contents", postHashmap.get(TAG_CONTENTS));
                  intent.putExtra("image", postHashmap.get(TAG_IMAGE));
                  }*/
-                startActivityForResult(intent, 2400);
+                startActivityForResult(intent, 2000);
                 break;
 
             case (R.id.bottomHome):

@@ -50,16 +50,6 @@ else{
    echo mysqli_error($link);
 }
 
-$postsql="insert into postlist(username,postidx,listname) values('$username','$row[idx]','$listname')";
-$postresult=mysqli_query($link,$postsql);
-if($postresult){
-   echo "SQL문 처리 성공";
-}
-else{
-   echo "SQL문 처리중 에러 발생 : ";
-   echo mysqli_error($link);
-}
-
 if($listname == "clubtable"){
     $temp = "select * from clubtable where username = '$username' order by created desc";
     $result = mysqli_query($link,$temp);
@@ -96,6 +86,16 @@ if($listname == "clubtable"){
     mysqli_data_seek($result, 0);
     $row = mysqli_fetch_array($result);
     $sql2="insert into employmentextension (postidx, company, location, salary, calendar, etc) values ('$row[idx]','$text1','$text2','$text3','$text4','$text5')";
+}
+
+$postsql="insert into postlist(username,postidx,listname) values('$username','$row[idx]','$listname')";
+$postresult=mysqli_query($link,$postsql);
+if($postresult){
+   echo "SQL문 처리 성공";
+}
+else{
+   echo "SQL문 처리중 에러 발생 : ";
+   echo mysqli_error($link);
 }
 
 $result2=mysqli_query($link,$sql2);  

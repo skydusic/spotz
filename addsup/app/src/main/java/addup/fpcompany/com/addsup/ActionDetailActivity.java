@@ -55,7 +55,7 @@ public class ActionDetailActivity extends AppCompatActivity {
     private static final String TAG_CREATED = "created";
     private static final String TAG_IMAGE = "image";
 
-
+    getPostedList getPostedList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,15 +76,14 @@ public class ActionDetailActivity extends AppCompatActivity {
             url = "http://spotz.co.kr/var/www/html/historyselect.php";
         }
 
-        getPostedList getPostedList = new getPostedList();
+        getPostedList = new getPostedList();
         getPostedList.requestPost(url, username);
         handler.sendEmptyMessage(50);
 
     }
 
     protected void showList(String json) {
-
-        Log.d("heu", "제이슨 : " + json);
+        listArr.clear();
         try {
             JSONObject jsonObj = new JSONObject(json);
             post = jsonObj.getJSONArray(TAG_RESULTS);
@@ -93,8 +92,8 @@ public class ActionDetailActivity extends AppCompatActivity {
                 JSONObject c = post.getJSONObject(i);
                 listArr.add(new listItem(String.valueOf(c.getInt(TAG_ID)), c.getString(TAG_USERNAME), c.getString(TAG_CONTENTS),
                         c.getString(TAG_IMAGE), ClubList.settingTimes(c.getString(TAG_CREATED)), c.getString("listname"),
-                        c.optString("text1",""), c.optString("text2",""), c.optString("text3",""), c.optString("text4",""),
-                        c.optString("text5",""), c.getString("hit"), c.getString("spindata1"), c.getString("spindata2")));
+                        c.optString("text1", ""), c.optString("text2", ""), c.optString("text3", ""), c.optString("text4", ""),
+                        c.optString("text5", ""), c.getString("hit"), c.getString("spindata1"), c.getString("spindata2")));
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -121,7 +120,7 @@ public class ActionDetailActivity extends AppCompatActivity {
                             startActivityForResult(intent, 1000);
                         } else if (pageName.equals("즐겨찾기") || pageName.equals("최근 본 글")) {
                             item = listArr.get(position);
-                            intent = new Intent(ActionDetailActivity.this, DetailList.class);
+                            Intent intent = new Intent(ActionDetailActivity.this, DetailList.class);
                             intent.putExtra("idx", item.getIdx());
                             intent.putExtra("listname", item.getListname());
                             intent.putExtra("idx", item.getIdx());
@@ -136,7 +135,7 @@ public class ActionDetailActivity extends AppCompatActivity {
                             intent.putExtra("text3", item.getText3());
                             intent.putExtra("text4", item.getText4());
                             intent.putExtra("text5", item.getText5());
-                            startActivity(intent);
+                            startActivityForResult(intent, 2000);
                         }
                     }
 
@@ -176,12 +175,18 @@ public class ActionDetailActivity extends AppCompatActivity {
             intent.putExtra("text3", item.getText3());
             intent.putExtra("text4", item.getText4());
             intent.putExtra("text5", item.getText5());
-            startActivity(intent);
+            startActivityForResult(intent, 3000);
 
         } else if (resultCode == 400) {
             // 삭제
 
         }
+
+        if(resultCode == 2400) {
+            getPostedList.requestPost(url, username);
+            handler.sendEmptyMessage(50);
+        }
+
 
     }
 
