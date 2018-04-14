@@ -19,14 +19,14 @@
     $postidx=isset($_POST['postidx']) ? $_POST['postidx'] : '';
 
 //    $sql = "select * from history where username = '$username' order by idx";
-    $sql = "select * from history where username = '$username' and listname = '$listname' order by idx";
+    $sql = "select * from history where username = '$username' and listname = '$listname' ORDER BY idx";
 
     $result = mysqli_query($link,$sql);
     $total_record = mysqli_num_rows($result);
 
-    $rimit = 20;
-    if($total_record >= $rimit){
-        mysqli_data_seek($result, $rimit);
+    $limit = 20;
+    if($total_record >= $limit){
+        mysqli_data_seek($result, $limit);
         $row = mysqli_fetch_array($result);
         $sql = "delete from history where idx = '$row[idx]'";
         $result2 = mysqli_query($link,$sql);

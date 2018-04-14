@@ -82,8 +82,9 @@ public class ActionDetailActivity extends AppCompatActivity {
 
     }
 
-    protected void showList(String json) {
+    protected String showList(String json) {
         listArr.clear();
+        Log.d("heu", "제이슨 : " + json);
         try {
             JSONObject jsonObj = new JSONObject(json);
             post = jsonObj.getJSONArray(TAG_RESULTS);
@@ -114,12 +115,12 @@ public class ActionDetailActivity extends AppCompatActivity {
                     @Override
                     public void onItemClick(View view, int position) {
 
+                        item = listArr.get(position);
+
                         if (pageName.equals("내 글 보기")) {
-                            item = listArr.get(position);
                             Intent intent = new Intent(ActionDetailActivity.this, myPageOption.class);
                             startActivityForResult(intent, 1000);
                         } else if (pageName.equals("즐겨찾기") || pageName.equals("최근 본 글")) {
-                            item = listArr.get(position);
                             Intent intent = new Intent(ActionDetailActivity.this, DetailList.class);
                             intent.putExtra("idx", item.getIdx());
                             intent.putExtra("listname", item.getListname());
@@ -145,6 +146,8 @@ public class ActionDetailActivity extends AppCompatActivity {
                     }
                 })
         );
+
+        return "finish";
     }
 
     @Override
@@ -179,7 +182,17 @@ public class ActionDetailActivity extends AppCompatActivity {
 
         } else if (resultCode == 400) {
             // 삭제
-
+            postDelete delete = new postDelete();
+            delete.requestPost(item);
+            Json = "";
+            listArr.clear();
+            try {
+                Thread.sleep(200);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            getPostedList.requestPost(url, username);
+            handler.sendEmptyMessage(50);
         }
 
         if(resultCode == 2400) {
@@ -195,10 +208,10 @@ public class ActionDetailActivity extends AppCompatActivity {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
+            handler.removeMessages(50);
             if (!Json.equals("")) {
                 showList(Json);
                 Json = "";
-                handler.removeMessages(50);
             } else {
                 handler.sendEmptyMessageDelayed(50, 200);
             }
@@ -231,21 +244,17 @@ public class ActionDetailActivity extends AppCompatActivity {
         }
     }
 
-    class postUpdate {
+    class postDelete {
         //Client 생성
         OkHttpClient client = new OkHttpClient();
 
         public void requestPost(listItem item) {
 
+            String url = "http://spotz.co.kr/var/www/html/deletepost.php";
             //Request Body에 서버에 보낼 데이터 작성
             RequestBody requestBody = new FormBody.Builder().
                     add("idx", item.getIdx()).
-                    add("contents", item.getContents()).
-                    add("username", item.getUsername()).
-                    add("image", item.getImage()).
                     add("listname", item.getListname()).
-                    add("spindata1", item.getSpindata1()).
-                    add("spindata2", item.getSpindata2()).
                     add("username", item.getUsername()).
                     build();
 

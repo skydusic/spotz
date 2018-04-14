@@ -79,5 +79,6 @@
     }
 
     echo "]}";
+    mysqli_free_result($connect);
     mysqli_close($connect);
 ?>
