@@ -47,7 +47,7 @@ $result2 = mysqli_query($link,$sql2);
 $result3 = mysqli_query($link,$sql3);
 
 if($result1 AND $result2 AND $result3){
-    }
+}
 else{
    echo "SQL문 처리중 에러 발생 : ";
    echo mysqli_error($link);

@@ -9,8 +9,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.google.firebase.auth.FirebaseUser;
-
 import java.io.IOException;
 
 import okhttp3.Call;
@@ -29,9 +27,9 @@ public class infoActivity extends AppCompatActivity implements View.OnClickListe
     String TAG = "heu";
     String myJSON = "";
     String url = "http://spotz.co.kr/var/www/html/infoinsert.php";
+    String username = "익명";
 
     Intent intent;
-    FirebaseUser mUser = MainActivity.mUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +40,9 @@ public class infoActivity extends AppCompatActivity implements View.OnClickListe
         titleET = findViewById(R.id.titleET);
         contentsET = findViewById(R.id.contentsET);
         insertBtn.setOnClickListener(this);
+
+        if(MainActivity.mUsername != null)
+            username = MainActivity.mUsername;
     }
 
     @Override
@@ -55,7 +56,7 @@ public class infoActivity extends AppCompatActivity implements View.OnClickListe
                     Toast.makeText( infoActivity.this, "글자 제한을 초과했습니다. (" + String.valueOf(contents.length()) + " / 300자)", Toast.LENGTH_LONG).show();
                 } else {
                     writeInfo writeInfo = new writeInfo();
-                    writeInfo.requestPost(url, title, contents);
+                    writeInfo.requestPost(url, title, contents, username);
                     finish();
                 }
                 break;
@@ -91,14 +92,14 @@ public class infoActivity extends AppCompatActivity implements View.OnClickListe
     class writeInfo {
         OkHttpClient client = new OkHttpClient();
 
-        public void requestPost(String url, String title , String contents) {
+        public void requestPost(String url, String title , String contents, String username) {
 
 
 
             RequestBody requestBody = new FormBody.Builder().
                     add("title", title).
                     add("contents", contents).
-                    add("username", MainActivity.mUsername).
+                    add("username", username).
                     build();
 
             Request request = new Request.Builder().url(url).post(requestBody).build();

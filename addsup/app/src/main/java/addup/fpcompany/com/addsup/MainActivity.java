@@ -137,8 +137,10 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
         getSpinner.execute();
 
         //favorite 가져오기
-        getFavorite fav = new getFavorite();
-        fav.requestPost(mUsername);
+        if(mUsername != null) {
+            getFavorite fav = new getFavorite();
+            fav.requestPost(mUsername);
+        }
 
 //        클릭 리스너
         clubBtn.setOnClickListener(this);

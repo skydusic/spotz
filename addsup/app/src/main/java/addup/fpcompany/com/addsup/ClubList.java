@@ -41,7 +41,6 @@ import okhttp3.Response;
 
 public class ClubList extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
 
-    String TAG = "ClubList";
     RecyclerView recyclerView;
     MainListAdater adapter;
     TextView insertBtn;
@@ -54,7 +53,6 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
 
     private static final String TAG_RESULTS = "results";
     private static final String TAG_ID = "idx";
-    private static final String TAG_TITLE = "title";
     private static final String TAG_USERNAME = "username";
     private static final String TAG_CONTENTS = "contents";
     private static final String TAG_CREATED = "created";
@@ -320,7 +318,7 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
             client.newCall(request).enqueue(new okhttp3.Callback() {
                 @Override
                 public void onFailure(Call call, IOException e) {
-                    Log.d(TAG, "Connect Server Error is " + e.toString());
+                    Log.d("heu", "Connect Server Error is " + e.toString());
 
                 }
 

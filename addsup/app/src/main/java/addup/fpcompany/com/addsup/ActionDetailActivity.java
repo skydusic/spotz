@@ -84,7 +84,6 @@ public class ActionDetailActivity extends AppCompatActivity {
 
     protected String showList(String json) {
         listArr.clear();
-        Log.d("heu", "제이슨 : " + json);
         try {
             JSONObject jsonObj = new JSONObject(json);
             post = jsonObj.getJSONArray(TAG_RESULTS);

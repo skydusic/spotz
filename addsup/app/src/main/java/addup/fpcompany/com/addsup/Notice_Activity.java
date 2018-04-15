@@ -67,7 +67,7 @@ public class Notice_Activity extends AppCompatActivity implements View.OnClickLi
         getPost.requestPost(url);
         handler.sendEmptyMessage(100);
 
-        if (MainActivity.mUser.getEmail().equals("skydusic@gmail.com")) {
+        if (MainActivity.mUser != null && MainActivity.mUser.getEmail().equals("skydusic@gmail.com")) {
             noticeIns.setVisibility(View.VISIBLE);
             noticeIns.setOnClickListener(this);
         }
@@ -157,7 +157,7 @@ public class Notice_Activity extends AppCompatActivity implements View.OnClickLi
         OkHttpClient client = new OkHttpClient();
         Request request;
 
-        public void requestPost(String url) {
+        void requestPost(String url) {
 
             RequestBody requestBody = new FormBody.Builder().build();
 

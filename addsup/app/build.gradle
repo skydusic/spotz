@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'io.fabric'
 
 android {
     compileSdkVersion 27
@@ -22,23 +23,28 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation 'com.android.support:appcompat-v7:27.1.0'
-    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
-    implementation 'com.google.firebase:firebase-ads:12.0.1'
-    implementation 'com.google.firebase:firebase-core:12.0.1'
-    implementation 'com.google.firebase:firebase-messaging:12.0.1'
-    implementation 'com.google.firebase:firebase-auth:12.0.1'
-    implementation 'com.github.bumptech.glide:glide:4.4.0'
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.4.0'
+    //noinspection GradleCompatible
+    implementation 'com.android.support:appcompat-v7:27.1.1'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.0'
+    implementation 'com.google.firebase:firebase-ads:15.0.0'
+    implementation 'com.google.firebase:firebase-core:15.0.0'
+    implementation 'com.google.firebase:firebase-messaging:15.0.0'
+    implementation 'com.google.firebase:firebase-auth:15.0.0'
+    implementation 'com.github.bumptech.glide:glide:4.6.1'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.6.1'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
-    implementation 'com.google.firebase:firebase-auth:12.0.1'
-    implementation 'com.google.android.gms:play-services-auth:12.0.1'
-    implementation 'com.android.support:design:27.1.0'
+    implementation 'com.google.firebase:firebase-auth:15.0.0'
+    implementation 'com.google.android.gms:play-services-auth:15.0.0'
+    implementation 'com.android.support:design:27.1.1'
     implementation 'org.jsoup:jsoup:1.11.2'
     implementation 'com.squareup.okhttp3:okhttp:3.8.0'
     implementation 'com.google.code.gson:gson:2.8.2'
+
+    compile('com.crashlytics.sdk.android:crashlytics:2.9.1@aar') {
+        transitive = true
+    }
+    apply plugin: 'com.google.gms.google-services'
 }
 
-apply plugin: 'com.google.gms.google-services'
