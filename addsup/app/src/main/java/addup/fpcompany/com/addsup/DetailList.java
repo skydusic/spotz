@@ -10,6 +10,8 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -32,21 +34,13 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
     Intent intent;
 
     TextView contentsTv;
+    TextView commentCount;
+    EditText commentEt;
+    Button inputComment;
     ViewPager viewPager;
     ImageView favorite;
     ArrayList<String> arr = new ArrayList<>();
     ArrayList<Fragment> fragArr = new ArrayList<>();
-
-    TextView text1menu;
-    TextView text2menu;
-    TextView text3menu;
-    TextView text4menu;
-    TextView text5menu;
-    TextView text1Tv;
-    TextView text2Tv;
-    TextView text3Tv;
-    TextView text4Tv;
-    TextView text5Tv;
 
     String listname = "";
     String idx = "";
@@ -54,12 +48,6 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
     String username = "";
     String created = "";
     String image = "";
-
-    String text1 = "";
-    String text2 = "";
-    String text3 = "";
-    String text4 = "";
-    String text5 = "";
 
     String imageurl;
 
@@ -75,17 +63,11 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
         contentsTv = findViewById(R.id.contents);
         viewPager = findViewById(R.id.viewPager);
         favorite = findViewById(R.id.favorite);
+        commentCount = findViewById(R.id.commentCount);
+        commentEt = findViewById(R.id.commentEt);
 
-        text1menu = findViewById(R.id.text1menu);
-        text2menu = findViewById(R.id.text2menu);
-        text3menu = findViewById(R.id.text3menu);
-        text4menu = findViewById(R.id.text4menu);
-        text5menu = findViewById(R.id.text5menu);
-        text1Tv = findViewById(R.id.text1Tv);
-        text2Tv = findViewById(R.id.text2Tv);
-        text3Tv = findViewById(R.id.text3Tv);
-        text4Tv = findViewById(R.id.text4Tv);
-        text5Tv = findViewById(R.id.text5Tv);
+        //댓글버튼
+        inputComment = findViewById(R.id.inputComment);
 
         // 인텐트로 정보 가져옴
         intent = getIntent();
@@ -94,14 +76,9 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
         contents = intent.getStringExtra("contents");
         username = intent.getStringExtra("username");
         created = intent.getStringExtra("created");
-        text1 = intent.getStringExtra("text1");
-        text2 = intent.getStringExtra("text2");
-        text3 = intent.getStringExtra("text3");
-        text4 = intent.getStringExtra("text4");
-        text5 = intent.getStringExtra("text5");
 
         //메뉴 텍스트 삽입
-        if (listname.equals("clubtable")) {
+        /*if (listname.equals("clubtable")) {
             text1menu.setText("업체명");
             text2menu.setText("종목");
             text3menu.setText("위치");
@@ -143,7 +120,7 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
         text2Tv.setText(text2);
         text3Tv.setText(text3);
         text4Tv.setText(text4);
-        text5Tv.setText(text5);
+        text5Tv.setText(text5);*/
 
         contentsTv.setText(contents);
         image = intent.getStringExtra("image");
@@ -165,6 +142,7 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
         favImageSet();
 
         favorite.setOnClickListener(this);
+        inputComment.setOnClickListener(this);
 
     }
 
@@ -210,6 +188,10 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case (R.id.inputComment):
+                Intent inputComm = new Intent();
+                String url =
+                break;
             case (R.id.bottomHome):
                 Intent intent = new Intent(DetailList.this, MainActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

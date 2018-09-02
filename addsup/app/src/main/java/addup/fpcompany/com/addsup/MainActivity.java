@@ -71,7 +71,6 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
 
     public static String serverUrl = "";
     static ArrayList<String> spinList1 = new ArrayList<>();
-    static ArrayList<ArrayList<String>> spinList2 = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -132,7 +131,6 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
 
         //스피너정보 가져오기
         spinList1.clear();
-        spinList2.clear();
         getSpinner getSpinner = new getSpinner();
         getSpinner.execute();
 
@@ -263,17 +261,6 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
                     spinList1.add(temp[i]);
                 }
 
-                for (int i = 0; i < temp.length; i++) {
-                    String[] temp2 = jsonObj.getString("spindata" + String.valueOf(i)).split(",");
-
-                    ArrayList<String> tempArr = new ArrayList<>();
-                    for (int j = 0; j < temp2.length; j++) {
-                        tempArr.add(temp2[j]);
-                    }
-                    spinList2.add(tempArr);
-                }
-
-
             } catch (JSONException e) {
                 e.printStackTrace();
                 Log.d("heu", "adapter Exception : " + e);
@@ -326,7 +313,7 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
         switch (view.getId()) {
             case (R.id.clubBtn):
                 intent = new Intent(MainActivity.this, ClubList.class);
-                intent.putExtra("listName", "clubtable");
+                intent.putExtra("listName", "freeboard");
                 startActivity(intent);
                 break;
 

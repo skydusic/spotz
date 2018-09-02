@@ -19,7 +19,7 @@
     <string name="bottombar4">My스팟츠</string>
     <string name="title">제목</string>
     <string name="contents">내용</string>
-    <string name="spinner">지역설정</string>
+    <string name="spinner">분류</string>
     <string name="find">찾기</string>
     <string name="write">글쓰기</string>
     <string name="login">로그인</string>
@@ -30,5 +30,7 @@
     <string name="deletepost">삭제</string>
     <string name="info">문의</string>
     <string name="infocontents">불편한 사항, 개선안 건의 등 문의할 내용을 적어주시면 빠른 시간 안에 메일로 답변을 드리겠습니다. \n(로그인을 안하신 경우에는 답변을 받으시려면 이메일을 꼭 적어주세요)</string>
+    <string name="comment">댓글</string>
+    <string name="input">등록</string>
 
 </resources>

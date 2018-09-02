@@ -46,24 +46,16 @@
                 android:text="@string/spinner" />
 
             <Spinner
-                android:id="@+id/spinner1"
+                android:id="@+id/insspinner1"
                 android:layout_width="130dp"
                 android:layout_height="match_parent"
                 android:layout_marginStart="10dp"
                 android:layout_toEndOf="@+id/spinTv" />
 
-            <Spinner
-                android:id="@+id/spinner2"
-                android:layout_width="200dp"
-                android:layout_height="match_parent"
-                android:layout_marginStart="10dp"
-                android:layout_toEndOf="@+id/spinner1"
-                android:visibility="gone" />
-
         </RelativeLayout>
 
 
-        <LinearLayout
+        <!--<LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -197,7 +189,7 @@
                     android:paddingTop="2dp" />
 
             </RelativeLayout>
-        </LinearLayout>
+        </LinearLayout>-->
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -290,6 +282,29 @@
                     android:visibility="gone" />
             </LinearLayout>
         </HorizontalScrollView>
+
+        <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="13dp">
+
+        <TextView
+            android:id="@+id/titleTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingEnd="1dp"
+            android:paddingStart="5dp"
+            android:text="@string/title" />
+
+        <EditText
+            android:id="@+id/titleET"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/edittext"
+            android:inputType="text"
+            android:padding="5dp" />
+    </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"

@@ -10,7 +10,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/bottombar">
+        android:layout_marginTop="15dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -28,11 +28,12 @@
             <android.support.v4.view.ViewPager
                 android:id="@+id/viewPager"
                 android:layout_width="match_parent"
-                android:layout_height="180dp"
+                android:layout_height="wrap_content"
                 android:layout_below="@+id/favorite"
-                android:layout_marginBottom="5dp"/>
+                android:layout_marginBottom="5dp" />
 
 
+<!--
             <RelativeLayout
                 android:id="@+id/detailLayout1"
                 android:layout_width="match_parent"
@@ -192,22 +193,86 @@
                     android:background="#333" />
 
 
-                <TextView
-                    android:id="@+id/contents"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/text5Line"
-                    android:background="#88aaaaaa"
-                    android:minHeight="280dp"
-                    android:padding="25dp"
-                    android:textSize="16sp" />
+
 
 
             </RelativeLayout>
+-->
 
+            <TextView
+                android:id="@+id/contents"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/viewPager"
+                android:minHeight="150dp"
+                android:padding="25dp"
+                android:textSize="16sp" />
+
+            <View
+                android:id="@+id/horizontalView"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#a4a4a4"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_below="@+id/contents"/>
+
+            <!--댓글기능-->
+            <RelativeLayout
+                android:id="@+id/commentLay"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/horizontalView">
+
+                <TextView
+                    android:id="@+id/commentTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/comment"
+                    android:textSize="14sp"
+                    android:layout_margin="5dp"/>
+
+                <TextView
+                    android:id="@+id/commentCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="13sp"
+                    android:layout_alignTop="@+id/commentTv"
+                    android:layout_toEndOf="@id/commentTv"
+                    />
+
+                <android.support.v7.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/commentCount"
+                    android:layout_marginTop="15dp" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/commentLay">
+
+                <EditText
+                    android:id="@+id/commentEt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minHeight="50dp"
+                    android:textSize="15sp"/>
+
+                <Button
+                    android:id="@+id/inputComment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/input"
+                    android:textSize="12sp"
+                    android:layout_below="@+id/commentEt"
+                    android:layout_alignParentEnd="true"/>
+
+            </RelativeLayout>
 
         </RelativeLayout>
-
 
     </ScrollView>
 

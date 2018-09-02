@@ -49,6 +49,7 @@ public class ActionDetailActivity extends AppCompatActivity {
     listItem item;
 
     private static final String TAG_RESULTS = "results";
+    private static final String TAG_TITLE = "title";
     private static final String TAG_ID = "idx";
     private static final String TAG_USERNAME = "username";
     private static final String TAG_CONTENTS = "contents";
@@ -90,10 +91,9 @@ public class ActionDetailActivity extends AppCompatActivity {
 
             for (int i = 0; i < post.length(); i++) {
                 JSONObject c = post.getJSONObject(i);
-                listArr.add(new listItem(String.valueOf(c.getInt(TAG_ID)), c.getString(TAG_USERNAME), c.getString(TAG_CONTENTS),
+                listArr.add(new listItem(String.valueOf(c.getInt(TAG_ID)), c.getString(TAG_TITLE), c.getString(TAG_USERNAME), c.getString(TAG_CONTENTS),
                         c.getString(TAG_IMAGE), ClubList.settingTimes(c.getString(TAG_CREATED)), c.getString("listname"),
-                        c.optString("text1", ""), c.optString("text2", ""), c.optString("text3", ""), c.optString("text4", ""),
-                        c.optString("text5", ""), c.getString("hit"), c.getString("spindata1"), c.getString("spindata2")));
+                        c.getString("hit"), c.getString("spindata")));
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -127,14 +127,8 @@ public class ActionDetailActivity extends AppCompatActivity {
                             intent.putExtra("username", item.getUsername());
                             intent.putExtra("image", item.getImage());
                             intent.putExtra("contents", item.getContents());
-                            intent.putExtra("spindata1", item.getSpindata1());
-                            intent.putExtra("spindata2", item.getSpindata2());
+                            intent.putExtra("spindata", item.getSpindata());
                             intent.putExtra("created", item.getCreated());
-                            intent.putExtra("text1", item.getText1());
-                            intent.putExtra("text2", item.getText2());
-                            intent.putExtra("text3", item.getText3());
-                            intent.putExtra("text4", item.getText4());
-                            intent.putExtra("text5", item.getText5());
                             startActivityForResult(intent, 2000);
                         }
                     }
@@ -169,14 +163,8 @@ public class ActionDetailActivity extends AppCompatActivity {
             intent.putExtra("username", item.getUsername());
             intent.putExtra("image", item.getImage());
             intent.putExtra("listname", item.getListname());
-            intent.putExtra("spindata1", item.getSpindata1());
-            intent.putExtra("spindata2", item.getSpindata2());
+            intent.putExtra("spindata", item.getSpindata());
             intent.putExtra("created", item.getCreated());
-            intent.putExtra("text1", item.getText1());
-            intent.putExtra("text2", item.getText2());
-            intent.putExtra("text3", item.getText3());
-            intent.putExtra("text4", item.getText4());
-            intent.putExtra("text5", item.getText5());
             startActivityForResult(intent, 3000);
 
         } else if (resultCode == 400) {

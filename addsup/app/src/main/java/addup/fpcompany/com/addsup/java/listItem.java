@@ -6,38 +6,31 @@ package addup.fpcompany.com.addsup.java;
 
 public class listItem {
 
-    String idx;
-    String username;
-    String contents;
-    String image;
-    String created;
-    String listname;
-    String text1;
-    String text2;
-    String text3;
-    String text4;
-    String text5;
-    String hit;
-    String spindata1;
-    String spindata2;
+    private String idx;
+    private String title;
+    private String username;
+    private String contents;
+    private String image;
+    private String created;
+    private String listname;
+    private String hit;
+    private String spindata;
 
-    public listItem(String idx, String username, String contents, String image, String created,
-                    String listname, String text1, String text2, String text3, String text4,
-                    String text5, String hit, String spindata1, String spindata2) {
+    public listItem(String idx, String title, String username, String contents, String image, String created,
+                    String listname, String hit, String spindata) {
         this.idx = idx;
+        this.title = title;
         this.username = username;
         this.contents = contents;
         this.image = image;
         this.created = created;
         this.listname = listname;
-        this.text1 = text1;
-        this.text2 = text2;
-        this.text3 = text3;
-        this.text4 = text4;
-        this.text5 = text5;
         this.hit = hit;
-        this.spindata1 = spindata1;
-        this.spindata2 = spindata2;
+        this.spindata = spindata;
+    }
+
+    public String getTitle() {
+        return title;
     }
 
     public String getHit() {
@@ -68,30 +61,7 @@ public class listItem {
         return image;
     }
 
-    public String getText1() {
-        return text1;
-    }
-
-    public String getText2() {
-        return text2;
-    }
-
-    public String getText3() {
-        return text3;
-    }
-
-    public String getText4() {
-        return text4;
-    }
-
-    public String getText5() {
-        return text5;
-    }
-
-    public String getSpindata1(){
-        return spindata1;
-    }
-    public String getSpindata2(){
-        return spindata2;
+    public String getSpindata(){
+        return spindata;
     }
 }

@@ -9,11 +9,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-
 import java.util.ArrayList;
 
-import addup.fpcompany.com.addsup.MainActivity;
 import addup.fpcompany.com.addsup.R;
 import addup.fpcompany.com.addsup.java.listItem;
 
@@ -46,14 +43,12 @@ public class MainListAdater extends RecyclerView.Adapter<MainListAdater.ViewHold
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
 
-        listItem = itemArr.get(position);
-        holder.text1.setText(listItem.getText1());
-        holder.text2.setText(listItem.getText2());
-        holder.text3.setText(listItem.getText3());
-        holder.text4.setText(listItem.getText4());
-        holder.text5.setText(listItem.getText5());
+        holder.title.setText(listItem.getTitle());
         holder.timeHolder.setText(listItem.getCreated());
         holder.hit.setText(listItem.getHit());
+
+        /*listItem = itemArr.get(position);
+
         String url = MainActivity.serverUrl + "userImageFolder/" + listItem.getListname() + "/" + listItem.getUsername() + "/";
 
         if (!listItem.getImage().equals("")) {
@@ -65,7 +60,7 @@ public class MainListAdater extends RecyclerView.Adapter<MainListAdater.ViewHold
             }
         } else {
             Glide.with(context).load(R.drawable.emptyimg).into(holder.imageViewHolder);
-        }
+        }*/
     }
 
     @Override
@@ -74,27 +69,18 @@ public class MainListAdater extends RecyclerView.Adapter<MainListAdater.ViewHold
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
-        TextView text1,text2,text3,text4,text5,timeHolder, hit;
+        TextView title,timeHolder, hit;
         ImageView imageViewHolder;
 
         public ViewHolder(View itemView) {
             super(itemView);
+            title = itemView.findViewById(R.id.listTitle);
             timeHolder = itemView.findViewById(R.id.created);
-            imageViewHolder = itemView.findViewById(R.id.imageView);
             hit = itemView.findViewById(R.id.hit);
-            text1 = itemView.findViewById(R.id.text1);
-            text2 = itemView.findViewById(R.id.text2);
-            text3 = itemView.findViewById(R.id.text3);
-            text4 = itemView.findViewById(R.id.text4);
-            text5 = itemView.findViewById(R.id.text5);
 
+            title.setTypeface(mTypeface);
             timeHolder.setTypeface(mTypeface);
             hit.setTypeface(mTypeface);
-            text1.setTypeface(mTypeface);
-            text2.setTypeface(mTypeface);
-            text3.setTypeface(mTypeface);
-            text4.setTypeface(mTypeface);
-            text5.setTypeface(mTypeface);
         }
     }
 }

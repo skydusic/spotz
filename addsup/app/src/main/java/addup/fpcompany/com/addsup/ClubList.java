@@ -52,6 +52,7 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
     String myJSON = "";
 
     private static final String TAG_RESULTS = "results";
+    private static final String TAG_TITLE = "title";
     private static final String TAG_ID = "idx";
     private static final String TAG_USERNAME = "username";
     private static final String TAG_CONTENTS = "contents";
@@ -67,9 +68,7 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
     String username = MainActivity.mUsername;
 
     Spinner spinner1;
-    Spinner spinner2;
     ArrayAdapter<String> spinnerAdapter1;
-    ArrayAdapter<String> spinnerAdapter2;
     int spinner1Num = 0;
 
     getPost getPost = new getPost();
@@ -84,7 +83,6 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
         listTopName = findViewById(R.id.listTopName);
         insertBtn = findViewById(R.id.insertBtn);
         spinner1 = findViewById(R.id.spinner1);
-        spinner2 = findViewById(R.id.spinner2);
 
         spinnerAdapter1 = new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item, MainActivity.spinList1) {
             @NonNull
@@ -105,11 +103,11 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
         //Json 확인
         handler.sendEmptyMessage(100);
 
-        boardUrl = "http://spotz.co.kr/var/www/html/clubtable.php";
+        boardUrl = "http://spotz.co.kr/var/www/html/freeboard.php";
 
         //넘어온 경로에 따라 다른리스트를 받는다
-        if (listName.equals("clubtable")) {
-            listTopName.setText("스포츠 클럽");
+        if (listName.equals("freeboard")) {
+            listTopName.setText("자유게시판");
         } else if (listName.equals("freelancer")) {
             listTopName.setText("스포츠 프리랜서");
         } else if (listName.equals("competition")) {
@@ -121,6 +119,8 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
         } else if (listName.equals("employment")) {
             listTopName.setText("스포츠 취업정보");
         }
+
+        Log.d("heu", "리스트네임 : " + listName);
 
         /** 메뉴별 화면 만들기! */
 
@@ -135,13 +135,7 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
         spinner1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                getPost.requestPost(boardUrl, MainActivity.spinList1.get(position), "", listName);
-                spinner2.setVisibility(View.INVISIBLE);
-                spinnerAdapter2 = new ArrayAdapter<>(ClubList.this, R.layout.support_simple_spinner_dropdown_item, MainActivity.spinList2.get(position));
-                spinner2.setAdapter(spinnerAdapter2);
-                if (MainActivity.spinList2.get(position).size() > 1) {
-                    spinner2.setVisibility(View.VISIBLE);
-                }
+                getPost.requestPost(boardUrl, MainActivity.spinList1.get(position), listName);
                 spinner1Num = position;
                 handler.sendEmptyMessage(100);
             }
@@ -151,8 +145,6 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
 
             }
         });
-
-        spinner2.setOnItemSelectedListener(this);
 
         recyclerView.addOnItemTouchListener(
                 new RecyclerItemClickListener(this, recyclerView, new RecyclerItemClickListener.OnItemClickListener() {
@@ -165,11 +157,6 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
                         intent.putExtra("username", listItems.get(position).getUsername());
                         intent.putExtra("contents", listItems.get(position).getContents());
                         intent.putExtra("created", listItems.get(position).getCreated());
-                        intent.putExtra("text1", listItems.get(position).getText1());
-                        intent.putExtra("text2", listItems.get(position).getText2());
-                        intent.putExtra("text3", listItems.get(position).getText3());
-                        intent.putExtra("text4", listItems.get(position).getText4());
-                        intent.putExtra("text5", listItems.get(position).getText5());
 
                         /** 해야할 일 이미지 -> 리사이클러뷰 */
                         String image = listItems.get(position).getImage();
@@ -253,6 +240,7 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
 
     protected void showList() {
         listItems.clear();
+        Log.d("heu", "JSon : " + myJSON);
         try {
             JSONObject jsonObj = new JSONObject(myJSON);
             topic = jsonObj.getJSONArray(TAG_RESULTS);
@@ -260,11 +248,11 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
             for (int i = 0; i < topic.length(); i++) {
                 JSONObject c = topic.getJSONObject(i);
 //                시간 설정
+                Log.d("heu", "리스트 아이템 : idx" + String.valueOf(c.getInt(TAG_ID)));
 
-                listItems.add(new listItem(String.valueOf(c.getInt(TAG_ID)), c.getString(TAG_USERNAME), c.getString(TAG_CONTENTS),
+                listItems.add(new listItem(String.valueOf(c.getInt(TAG_ID)), c.getString(TAG_TITLE), c.getString(TAG_USERNAME), c.getString(TAG_CONTENTS),
                         c.getString(TAG_IMAGE), ClubList.settingTimes(c.getString(TAG_CREATED)), c.getString("listname"),
-                        c.getString("text1"), c.getString("text2"), c.getString("text3"), c.getString("text4"),
-                        c.getString("text5"), c.getString("hit"), c.getString("spindata1"), c.getString("spindata2")));
+                        c.getString("hit"), c.getString("spindata")));
 
             }
         } catch (JSONException e) {
@@ -293,8 +281,7 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
 
         //                yyyy-MM-dd HH:mm:ss
         String curtime = new SimpleDateFormat("dd").format(new Date(System.currentTimeMillis()));
-
-        if (result.get(2).equals(curtime)) {
+      if (result.get(2).equals(curtime)) {
             time = result.get(3) + " : " + result.get(4);
         } else {
             time = result.get(1) + "/" + result.get(2);
@@ -307,10 +294,9 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
         OkHttpClient client = new OkHttpClient();
         Request request;
 
-        public void requestPost(String url, String spindata1, String spindata2, String listname) {
+        public void requestPost(String url, String spindata, String listname) {
             RequestBody requestBody = new FormBody.Builder().
-                    add("spindata1", spindata1).
-                    add("spindata2", spindata2).
+                    add("spindata", spindata).
                     add("listname", listname).
                     build();
 
@@ -382,7 +368,7 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
         super.onActivityResult(requestCode, resultCode, data);
 
         if (resultCode == 2400) {
-            getPost.requestPost(boardUrl, "전국", "", listName);
+            getPost.requestPost(boardUrl, "전체", listName);
             handler.sendEmptyMessageDelayed(24, 300);
         }
     }
@@ -403,9 +389,7 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        if (position != 0) {
-            getPost.requestPost(boardUrl, "", MainActivity.spinList2.get(spinner1Num).get(position), listName);
-        }
+
     }
 
     @Override

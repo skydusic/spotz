@@ -60,7 +60,6 @@ public class MyPageOptionAdapter extends ArrayAdapter {
         if (convertView == null) {
             convertView = lnf.inflate(R.layout.list_item, parent, false);
             viewHolder = new RowDataViewHolder();
-            viewHolder.imageViewHolder = convertView.findViewById(R.id.imageView);
             viewHolder.timeHolder.setText(itemArr.get(position).getCreated());
             String[] temp = itemArr.get(position).getImage().split(",");
             Glide.with(context).load(url + temp[0]).into(viewHolder.imageViewHolder);
@@ -73,7 +72,6 @@ public class MyPageOptionAdapter extends ArrayAdapter {
     }
 
     public class RowDataViewHolder {
-        public TextView descHolder;
         public TextView timeHolder;
         public ImageView imageViewHolder;
     }

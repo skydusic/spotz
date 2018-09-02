@@ -55,17 +55,8 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
 
     private static String TAG = "heu";
 
+    EditText titleEt;
     EditText contentsET;
-    TextView text1Tv;
-    TextView text2Tv;
-    TextView text3Tv;
-    TextView text4Tv;
-    TextView text5Tv;
-    EditText text1;
-    EditText text2;
-    EditText text3;
-    EditText text4;
-    EditText text5;
 
     ImageView imgFind;
     ImageView imView1;
@@ -76,11 +67,9 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
     ImageView imView6;
     ImageView imView7;
     HorizontalScrollView horScrollView;
-    Spinner spinner1;
-    Spinner spinner2;
+    Spinner spinner;
     TextView buttonInsert;
     ArrayAdapter<String> spinnerAdapter1;
-    ArrayAdapter<String> spinnerAdapter2;
     int spinnerNumber1 = 0;
     int spinnerNumber2 = 0;
 
@@ -93,8 +82,7 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
     String listName;
     String contents;
     String image;
-    String spindata1;
-    String spindata2;
+    String spindata;
     public static final String url = MainActivity.serverUrl;
     int postNum;
 
@@ -108,11 +96,6 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
         setContentView(R.layout.activity_insert);
 
         horScrollView = findViewById(R.id.horScrollView);
-        text1Tv = findViewById(R.id.text1Tv);
-        text2Tv = findViewById(R.id.text2Tv);
-        text3Tv = findViewById(R.id.text3Tv);
-        text4Tv = findViewById(R.id.text4Tv);
-        text5Tv = findViewById(R.id.text5Tv);
         imView1 = findViewById(R.id.imView1);
         imView2 = findViewById(R.id.imView2);
         imView3 = findViewById(R.id.imView3);
@@ -121,16 +104,10 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
         imView6 = findViewById(R.id.imView6);
         imView7 = findViewById(R.id.imView7);
         imgFind = findViewById(R.id.imgFind);
+        titleEt = findViewById(R.id.titleET);
         contentsET = findViewById(R.id.contentsET);
-        spinner1 = findViewById(R.id.spinner1);
-        spinner2 = findViewById(R.id.spinner2);
+        spinner = findViewById(R.id.insspinner1);
         buttonInsert = findViewById(R.id.button_main_insert);
-
-        text1 = findViewById(R.id.text1);
-        text2 = findViewById(R.id.text2);
-        text3 = findViewById(R.id.text3);
-        text4 = findViewById(R.id.text4);
-        text5 = findViewById(R.id.text5);
 
         Intent clubInt = getIntent();
         idx = clubInt.getStringExtra("idx");
@@ -141,7 +118,7 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
 
         spinnerAdapter1 = new ArrayAdapter<>(this, R.layout.support_simple_spinner_dropdown_item, MainActivity.spinList1);
 
-        if (listName.equals("clubtable")) {
+        /*if (listName.equals("clubtable")) {
             text1Tv.setText("업체명");
             text2Tv.setText("종목");
             text3Tv.setText("위치");
@@ -177,38 +154,38 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
             text3Tv.setText("연봉 / 시급");
             text4Tv.setText("면접일정");
             text5Tv.setText("세부 안내사항");
-        }
+        }*/
 
         if (postNum == 0) {
-            serverUri = "http://spotz.co.kr/var/www/html/clubinsert.php";
+            serverUri = "http://spotz.co.kr/var/www/html/freeboardIns.php";
         } else if (postNum == 1) {
-            serverUri = "http://spotz.co.kr/var/www/html/clubupdate.php";
+            serverUri = "http://spotz.co.kr/var/www/html/freeboard.php";
 
             contentsET.setText(clubInt.getStringExtra("contents"));
-            listName = clubInt.getStringExtra("listname");
+            listName = clubInt.getStringExtra("class");
 
             /** 이미지 테스트 해봐야 함 */
             image = clubInt.getStringExtra("image");
 //            imageAddress1 = clubInt.getStringExtra("image");
-            spindata1 = clubInt.getStringExtra("spindata1");
-            spindata2 = clubInt.getStringExtra("spindata2");
-            text1.setText(clubInt.getStringExtra("text1"));
+            spindata = clubInt.getStringExtra("spindata");
+/*            text1.setText(clubInt.getStringExtra("text1"));
             text2.setText(clubInt.getStringExtra("text2"));
             text3.setText(clubInt.getStringExtra("text3"));
             text4.setText(clubInt.getStringExtra("text4"));
-            text5.setText(clubInt.getStringExtra("text5"));
+            text5.setText(clubInt.getStringExtra("text5"));*/
         }
 
         buttonInsert.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent returnIntent = new Intent();
+                String title = titleEt.getText().toString().trim();
                 String contents = contentsET.getText().toString().trim();
-                String tex1 = text1.getText().toString();
+                /*String tex1 = text1.getText().toString();
                 String tex2 = text2.getText().toString();
                 String tex3 = text3.getText().toString();
                 String tex4 = text4.getText().toString();
-                String tex5 = text5.getText().toString();
+                String tex5 = text5.getText().toString();*/
 
                 if (contents.length() > 300) {
                     Toast.makeText(insertActivity.this, "글자 제한을 초과했습니다. (" + String.valueOf(contents.length()) + " / 300자)", Toast.LENGTH_LONG).show();
@@ -225,8 +202,8 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
                                 imageAddress1 += ",";
                             }
                         }
-                        task.request(contents, serverUri, MainActivity.mUsername, imageAddress1,
-                                listName, spindata1, spindata2, tex1, tex2, tex3, tex4, tex5);
+                        task.request(title, contents, serverUri, MainActivity.mUsername, imageAddress1,
+                                listName, spindata);
                         setResult(2400, returnIntent);
                         finish();
                     } else {
@@ -237,17 +214,11 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
             }
         });
 
-        spinner1.setAdapter(spinnerAdapter1);
-        spinner1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        spinner.setAdapter(spinnerAdapter1);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                spindata1 = MainActivity.spinList1.get(position);
-                spinner2.setVisibility(View.INVISIBLE);
-                spinnerAdapter2 = new ArrayAdapter<>(insertActivity.this, R.layout.support_simple_spinner_dropdown_item, MainActivity.spinList2.get(position));
-                spinner2.setAdapter(spinnerAdapter2);
-                if (MainActivity.spinList2.get(position).size() > 1) {
-                    spinner2.setVisibility(View.VISIBLE);
-                }
+                spindata = MainActivity.spinList1.get(position);
             }
 
             @Override
@@ -255,9 +226,6 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
 
             }
         });
-
-
-        spinner2.setOnItemSelectedListener(this);
 
         imgFind.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -511,7 +479,7 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         spinnerNumber2 = position;
-        spindata2 = MainActivity.spinList2.get(spinnerNumber1).get(spinnerNumber2);
+        Log.d("heu", "spin Number : " + position);
     }
 
     @Override
@@ -524,39 +492,28 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
         RequestBody requestBody;
         OkHttpClient client = new OkHttpClient();
 
-        protected void request(String contents, String serverURL, String username,
-                               String image, String listname, String spindata1, String spindata2,
-                               String text1, String text2, String text3, String text4, String text5) {
+        protected void request(String title, String contents, String serverURL, String username,
+                               String image, String listname, String spindata) {
 
             if(postNum == 1) {
                 // 수정일 경우 idx 첨부!
                 requestBody = new FormBody.Builder().
                         add("idx", idx).
+                        add("title", title).
                         add("contents", contents).
                         add("username", username).
                         add("image", image).
                         add("listname", listname).
-                        add("spindata1", spindata1).
-                        add("spindata2", spindata2).
-                        add("text1", text1).
-                        add("text2", text2).
-                        add("text3", text3).
-                        add("text4", text4).
-                        add("text5", text5).
+                        add("spindata", spindata).
                         build();
             } else {
                 requestBody = new FormBody.Builder().
+                        add("title", title).
                         add("contents", contents).
                         add("username", username).
                         add("image", image).
                         add("listname", listname).
-                        add("spindata1", spindata1).
-                        add("spindata2", spindata2).
-                        add("text1", text1).
-                        add("text2", text2).
-                        add("text3", text3).
-                        add("text4", text4).
-                        add("text5", text5).
+                        add("spindata", spindata).
                         build();
             }
 
