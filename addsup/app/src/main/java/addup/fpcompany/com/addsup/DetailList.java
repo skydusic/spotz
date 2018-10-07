@@ -18,6 +18,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import org.json.JSONArray;
@@ -45,6 +46,7 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
     Intent intent;
 
     RelativeLayout mainLayout;
+    ScrollView detailScrollView;
     TextView titleTv;
     TextView contentsTv;
     TextView commentCount;
@@ -94,6 +96,7 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
         favorite = findViewById(R.id.favorite);
         commentCount = findViewById(R.id.commentCount);
         commentEt = findViewById(R.id.commentEt);
+        detailScrollView = findViewById(R.id.detailScrollView);
 
         recyclerView = findViewById(R.id.commentRecycle);
 
@@ -193,6 +196,8 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
 
     }
 
+
+
     private void favImageSet() {
         for (int i = 0; i < MainActivity.favoriteArr.size(); i++) {
             favoriteItem favoriteTemp = MainActivity.favoriteArr.get(i);
@@ -242,6 +247,12 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
         hideKeyboard();
         switch (v.getId()) {
             case (R.id.mainLayout):
+                break;
+            case (R.id.commentEt):
+                /** focus change를 찾을 것 */
+                Log.d("heu", "작동 중!");
+                int count = inputComment.getTop();
+                detailScrollView.smoothScrollTo(0, count);
                 break;
             case (R.id.inputComment):
                 commentJson = "";

@@ -113,7 +113,7 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
             //로그인 안한 상태
 
         } else {
-            mUsername = mUser.getEmail();
+            mUsername = mUser.getDisplayName();
             if (mUser.getPhotoUrl() != null) {
                 mPhotoUrl = mUser.getPhotoUrl().toString();
             }
