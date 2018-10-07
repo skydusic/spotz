@@ -83,7 +83,7 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
     String contents;
     String image;
     String spindata;
-    public static final String url = MainActivity.serverUrl;
+    String url = MainActivity.serverUrl;
     int postNum;
 
     ArrayList<String> filenameList = new ArrayList<>();
@@ -157,8 +157,10 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
         }*/
 
         if (postNum == 0) {
+            // 새로쓰기
             serverUri = "http://spotz.co.kr/var/www/html/freeboardIns.php";
         } else if (postNum == 1) {
+            // 수정
             serverUri = "http://spotz.co.kr/var/www/html/freeboard.php";
 
             contentsET.setText(clubInt.getStringExtra("contents"));

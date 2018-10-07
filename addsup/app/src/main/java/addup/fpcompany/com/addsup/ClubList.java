@@ -155,6 +155,7 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
                         intent.putExtra("listname", listName);
                         intent.putExtra("idx", listItems.get(position).getIdx());
                         intent.putExtra("username", listItems.get(position).getUsername());
+                        intent.putExtra("title", listItems.get(position).getTitle());
                         intent.putExtra("contents", listItems.get(position).getContents());
                         intent.putExtra("created", listItems.get(position).getCreated());
 
@@ -240,7 +241,6 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
 
     protected void showList() {
         listItems.clear();
-        Log.d("heu", "JSon : " + myJSON);
         try {
             JSONObject jsonObj = new JSONObject(myJSON);
             topic = jsonObj.getJSONArray(TAG_RESULTS);
@@ -248,7 +248,6 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
             for (int i = 0; i < topic.length(); i++) {
                 JSONObject c = topic.getJSONObject(i);
 //                시간 설정
-                Log.d("heu", "리스트 아이템 : idx" + String.valueOf(c.getInt(TAG_ID)));
 
                 listItems.add(new listItem(String.valueOf(c.getInt(TAG_ID)), c.getString(TAG_TITLE), c.getString(TAG_USERNAME), c.getString(TAG_CONTENTS),
                         c.getString(TAG_IMAGE), ClubList.settingTimes(c.getString(TAG_CREATED)), c.getString("listname"),

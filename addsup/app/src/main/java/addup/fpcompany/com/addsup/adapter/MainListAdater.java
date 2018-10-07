@@ -3,6 +3,7 @@ package addup.fpcompany.com.addsup.adapter;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,9 +44,16 @@ public class MainListAdater extends RecyclerView.Adapter<MainListAdater.ViewHold
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
 
+        listItem = itemArr.get(position);
+
         holder.title.setText(listItem.getTitle());
         holder.timeHolder.setText(listItem.getCreated());
         holder.hit.setText(listItem.getHit());
+
+
+        if(!listItem.getImage().equals("")){
+            holder.imageViewHolder.setVisibility(View.VISIBLE);
+        }
 
         /*listItem = itemArr.get(position);
 
@@ -77,6 +85,7 @@ public class MainListAdater extends RecyclerView.Adapter<MainListAdater.ViewHold
             title = itemView.findViewById(R.id.listTitle);
             timeHolder = itemView.findViewById(R.id.created);
             hit = itemView.findViewById(R.id.hit);
+            imageViewHolder = itemView.findViewById(R.id.areImage);
 
             title.setTypeface(mTypeface);
             timeHolder.setTypeface(mTypeface);

@@ -2,17 +2,27 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="30dp"
+    android:layout_height="50dp"
     android:background="#ffffff">
 
     <TextView
         android:id="@+id/listTitle"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="13dp"
-        android:text="제목입니다"
-        android:layout_marginLeft="15dp"
+        android:textSize="18sp"
+        android:text="@string/title"
+        android:layout_marginStart="15dp"
         android:layout_centerVertical="true"/>
+
+    <ImageView
+        android:id="@+id/areImage"
+        android:layout_width="40dp"
+        android:layout_height="wrap_content"
+        android:src="@drawable/emptyimg"
+        android:layout_centerVertical="true"
+        android:paddingTop="4dp"
+        android:layout_toEndOf="@+id/listTitle"
+        android:visibility="invisible"/>
 
     <RelativeLayout
         android:id="@+id/createdLay"
@@ -28,8 +38,9 @@
             android:layout_marginEnd="15dp"
             android:fontFamily="@font/dohyeonttf"
             android:layout_centerVertical="true"
-            android:layout_toLeftOf="@+id/hit"
-            android:textSize="13sp" />
+            android:layout_toStartOf="@+id/hit"
+            android:textSize="13sp"
+            android:textColor="#5a5a5a"/>
         <TextView
             android:id="@+id/hit"
             android:layout_width="wrap_content"
@@ -38,7 +49,8 @@
             android:fontFamily="@font/dohyeonttf"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:textSize="13sp" />
+            android:textSize="13sp"
+            android:textColor="#5a5a5a"/>
 
     </RelativeLayout>
 
