@@ -119,51 +119,6 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
 
         imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 
-        //메뉴 텍스트 삽입
-        /*if (listname.equals("clubtable")) {
-            text1menu.setText("업체명");
-            text2menu.setText("종목");
-            text3menu.setText("위치");
-            text4menu.setText("연락처");
-            text5menu.setText("세부 안내사항");
-        } else if (listname.equals("freelancer")) {
-            text1menu.setText("대표명");
-            text2menu.setText("종목");
-            text3menu.setText("레슨장소");
-            text4menu.setText("연락처");
-            text5menu.setText("세부 안내사항");
-        } else if (listname.equals("competition")) {
-            text1menu.setText("대회명");
-            text2menu.setText("종목");
-            text3menu.setText("위치");
-            text4menu.setText("연락처");
-            text5menu.setText("세부 안내사항");
-        } else if (listname.equals("dongho")) {
-            text1menu.setText("동호회명");
-            text2menu.setText("종목");
-            text3menu.setText("위치");
-            text4menu.setText("시간");
-            text5menu.setText("연락처");
-        } else if (listname.equals("review")) {
-            text1menu.setText("제품명");
-            text2menu.setText("구입처");
-            text3menu.setText("가격");
-            text4menu.setText("평점");
-            text5menu.setText("세부 안내사항");
-        } else if (listname.equals("employment")) {
-            text1menu.setText("회사명");
-            text2menu.setText("회사위치");
-            text3menu.setText("연봉 / 시급");
-            text4menu.setText("면접일정");
-            text5menu.setText("세부 안내사항");
-        }
-
-        text1Tv.setText(text1);
-        text2Tv.setText(text2);
-        text3Tv.setText(text3);
-        text4Tv.setText(text4);
-        text5Tv.setText(text5);*/
-
         titleTv.setText(title);
         contentsTv.setText(contents);
         image = intent.getStringExtra("image");
@@ -186,11 +141,7 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
 
 
         //코멘트 가져오기
-        getComment getComment = new getComment();
-        getComment.requestPost(idx, listname);
-
-        //코멘트 핸들러
-        commentHandler.sendEmptyMessage(500);
+        resetCommentList();
 
         favorite.setOnClickListener(this);
         inputComment.setOnClickListener(this);
@@ -198,6 +149,18 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
         commentEt.setOnFocusChangeListener(this);
     }
 
+    private void resetCommentList(){
+
+        if (!commentJson.equals("")){
+            commentJson = "";
+        }
+
+        getComment getComment = new getComment();
+        getComment.requestPost(idx, listname);
+
+        commentHandler.sendEmptyMessage(500);
+
+    }
 
 
     private void favImageSet() {
@@ -251,12 +214,14 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
             case (R.id.mainLayout):
                 break;
             case (R.id.inputComment):
-                commentJson = "";
-                commentInsert CI = new commentInsert();
-                CI.requestPost(listname, commentEt.getText().toString(), idx);
-                commentEt.setText("");
-                commentJson = "";
-                commentHandler.sendEmptyMessage(500);
+                String text = commentEt.getText().toString();
+                if(!text.equals("")) {
+                    recyclerView.removeAllViewsInLayout();
+                    commentInsert CI = new commentInsert();
+                    CI.requestPost(listname, commentEt.getText().toString(), idx);
+                    commentEt.setText("");
+                }
+                resetCommentList();
                 hideKeyboard();
                 break;
             case (R.id.bottomHome):

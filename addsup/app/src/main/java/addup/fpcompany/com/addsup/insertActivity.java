@@ -118,44 +118,6 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
 
         spinnerAdapter1 = new ArrayAdapter<>(this, R.layout.support_simple_spinner_dropdown_item, MainActivity.spinList1);
 
-        /*if (listName.equals("clubtable")) {
-            text1Tv.setText("업체명");
-            text2Tv.setText("종목");
-            text3Tv.setText("위치");
-            text4Tv.setText("연락처");
-            text5Tv.setText("세부 안내사항");
-        } else if (listName.equals("freelancer")) {
-            text1Tv.setText("대표명");
-            text2Tv.setText("종목");
-            text3Tv.setText("레슨장소");
-            text4Tv.setText("연락처");
-            text5Tv.setText("세부 안내사항");
-        } else if (listName.equals("competition")) {
-            text1Tv.setText("대회명");
-            text2Tv.setText("종목");
-            text3Tv.setText("위치");
-            text4Tv.setText("연락처");
-            text5Tv.setText("세부 안내사항");
-        } else if (listName.equals("dongho")) {
-            text1Tv.setText("동호회명");
-            text2Tv.setText("종목");
-            text3Tv.setText("위치");
-            text4Tv.setText("시간");
-            text5Tv.setText("연락처");
-        } else if (listName.equals("review")) {
-            text1Tv.setText("제품명");
-            text2Tv.setText("구입처");
-            text3Tv.setText("가격");
-            text4Tv.setText("평점");
-            text5Tv.setText("세부 안내사항");
-        } else if (listName.equals("employment")) {
-            text1Tv.setText("회사명");
-            text2Tv.setText("회사위치");
-            text3Tv.setText("연봉 / 시급");
-            text4Tv.setText("면접일정");
-            text5Tv.setText("세부 안내사항");
-        }*/
-
         if (postNum == 0) {
             // 새로쓰기
             serverUri = "http://spotz.co.kr/var/www/html/freeboardIns.php";
