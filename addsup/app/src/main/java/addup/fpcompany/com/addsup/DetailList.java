@@ -46,6 +46,7 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
     Intent intent;
 
     RelativeLayout mainLayout;
+    RelativeLayout commentLay;
     ScrollView detailScrollView;
     TextView titleTv;
     TextView contentsTv;
@@ -102,6 +103,7 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
 
         //레이아웃에 클릭 붙이기 -> 레이아웃 클릭하면 키보드 하이드
         mainLayout = findViewById(R.id.mainLayout);
+        commentLay = findViewById(R.id.commentLay);
 
         //댓글버튼
         inputComment = findViewById(R.id.inputComment);
@@ -379,10 +381,12 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
     public void onFocusChange(View v, boolean hasFocus) {
         switch (v.getId()) {
             case (R.id.commentEt):
-                int count = inputComment.getTop();
-                Log.d("heu", "작동 중!");
-                Log.d("heu", "count : " + count);
-                detailScrollView.smoothScrollTo(0, count);
+                detailScrollView.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        detailScrollView.smoothScrollTo(0, commentLay.getTop());
+                    }
+                }, 100);
                 break;
         }
     }
