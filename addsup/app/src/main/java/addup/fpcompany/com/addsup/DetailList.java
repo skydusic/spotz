@@ -41,7 +41,7 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public class DetailList extends AppCompatActivity implements View.OnClickListener, ViewPager.OnPageChangeListener {
+public class DetailList extends AppCompatActivity implements View.OnClickListener, ViewPager.OnPageChangeListener, View.OnFocusChangeListener {
 
     Intent intent;
 
@@ -193,7 +193,7 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
         favorite.setOnClickListener(this);
         inputComment.setOnClickListener(this);
         mainLayout.setOnClickListener(this);
-
+        commentEt.setOnFocusChangeListener(this);
     }
 
 
@@ -247,12 +247,6 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
         hideKeyboard();
         switch (v.getId()) {
             case (R.id.mainLayout):
-                break;
-            case (R.id.commentEt):
-                /** focus change를 찾을 것 */
-                Log.d("heu", "작동 중!");
-                int count = inputComment.getTop();
-                detailScrollView.smoothScrollTo(0, count);
                 break;
             case (R.id.inputComment):
                 commentJson = "";
@@ -380,6 +374,18 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
             }
         }
     };
+
+    @Override
+    public void onFocusChange(View v, boolean hasFocus) {
+        switch (v.getId()) {
+            case (R.id.commentEt):
+                int count = inputComment.getTop();
+                Log.d("heu", "작동 중!");
+                Log.d("heu", "count : " + count);
+                detailScrollView.smoothScrollTo(0, count);
+                break;
+        }
+    }
 
     class hitUpdate {
         //Client 생성
