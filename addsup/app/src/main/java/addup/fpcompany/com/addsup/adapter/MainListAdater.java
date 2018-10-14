@@ -3,7 +3,6 @@ package addup.fpcompany.com.addsup.adapter;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +11,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import addup.fpcompany.com.addsup.ClubList;
 import addup.fpcompany.com.addsup.R;
 import addup.fpcompany.com.addsup.java.listItem;
 
@@ -47,7 +47,7 @@ public class MainListAdater extends RecyclerView.Adapter<MainListAdater.ViewHold
         listItem = itemArr.get(position);
 
         holder.title.setText(listItem.getTitle());
-        holder.timeHolder.setText(listItem.getCreated());
+        holder.timeHolder.setText(ClubList.settingTimes(listItem.getCreated()));
         holder.hit.setText(listItem.getHit());
 
 

@@ -51,8 +51,11 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
     TextView titleTv;
     TextView contentsTv;
     TextView commentCount;
+    TextView timeTv;
     EditText commentEt;
     Button inputComment;
+    Button editpostBT;
+    Button delpostBT;
     ViewPager viewPager;
     ImageView favorite;
     ArrayList<String> arr = new ArrayList<>();
@@ -93,11 +96,14 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
 
         titleTv = findViewById(R.id.titleTv);
         contentsTv = findViewById(R.id.contents);
+        timeTv = findViewById(R.id.timeTv);
         viewPager = findViewById(R.id.viewPager);
         favorite = findViewById(R.id.favorite);
         commentCount = findViewById(R.id.commentCount);
         commentEt = findViewById(R.id.commentEt);
         detailScrollView = findViewById(R.id.detailScrollView);
+        editpostBT = findViewById(R.id.editpostBT);
+        delpostBT = findViewById(R.id.delpostBT);
 
         recyclerView = findViewById(R.id.commentRecycle);
 
@@ -121,6 +127,7 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
 
         titleTv.setText(title);
         contentsTv.setText(contents);
+        timeTv.setText(created);
         image = intent.getStringExtra("image");
         imageurl = MainActivity.serverUrl + "userImageFolder/" + listname + "/" + username + "/";
 
@@ -147,6 +154,8 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
         inputComment.setOnClickListener(this);
         mainLayout.setOnClickListener(this);
         commentEt.setOnFocusChangeListener(this);
+        editpostBT.setOnClickListener(this);
+        delpostBT.setOnClickListener(this);
     }
 
     private void resetCommentList(){
@@ -223,6 +232,38 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
                 }
                 resetCommentList();
                 hideKeyboard();
+                break;
+            case (R.id.editpostBT):
+
+                // 수정
+                Intent intent = new Intent(DetailList.this, insertActivity.class);
+                // 0 -> 새글 1 -> 수정
+                intent.putExtra("postNum", 1);
+                intent.putExtra("idx", item.getIdx());
+                intent.putExtra("contents", item.getContents());
+                intent.putExtra("username", item.getUsername());
+                intent.putExtra("image", item.getImage());
+                intent.putExtra("listname", item.getListname());
+                intent.putExtra("spindata", item.getSpindata());
+                intent.putExtra("created", item.getCreated());
+                startActivityForResult(intent, 3000);
+
+                break;
+            case (R.id.delpostBT):
+
+                // 삭제
+
+                delete.requestPost(item);
+                Json = "";
+                listArr.clear();
+                try {
+                    Thread.sleep(200);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                getPostedList.requestPost(url, username);
+                handler.sendEmptyMessage(50);
+
                 break;
             case (R.id.bottomHome):
                 Intent intent = new Intent(DetailList.this, MainActivity.class);

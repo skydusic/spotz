@@ -250,7 +250,7 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
 //                시간 설정
 
                 listItems.add(new listItem(String.valueOf(c.getInt(TAG_ID)), c.getString(TAG_TITLE), c.getString(TAG_USERNAME), c.getString(TAG_CONTENTS),
-                        c.getString(TAG_IMAGE), ClubList.settingTimes(c.getString(TAG_CREATED)), c.getString("listname"),
+                        c.getString(TAG_IMAGE), c.getString(TAG_CREATED), c.getString("listname"),
                         c.getString("hit"), c.getString("spindata")));
 
             }

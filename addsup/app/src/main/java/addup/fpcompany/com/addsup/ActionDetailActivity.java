@@ -197,6 +197,7 @@ public class ActionDetailActivity extends AppCompatActivity {
             super.handleMessage(msg);
             handler.removeMessages(50);
             if (!Json.equals("")) {
+                Log.d("heu","목록 JSON : " + Json);
                 showList(Json);
                 Json = "";
             } else {

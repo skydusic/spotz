@@ -202,6 +202,12 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
         checkDangerousPermissions();
     }
 
+    public boolean StringFinder(String text){
+
+
+        return false;
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -525,6 +531,35 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
                     Log.d(TAG, "Response Body is " + response.body().string());
                 }
             });
+        }
+
+        /** 욕설 필터링 기능
+         *  서버에서 욕목록을 받아옴
+         * */
+        String myJSON = "";
+        class getStringFinderText {
+            OkHttpClient client = new OkHttpClient();
+            Request request;
+
+            public void requestPost() {
+                RequestBody requestBody = new FormBody.Builder().
+                        build();
+
+                request = new Request.Builder().url(url+"getStringFinderText/").post(requestBody).build();
+                client.newCall(request).enqueue(new okhttp3.Callback() {
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+                        Log.d("heu", "Connect Server Error is " + e.toString());
+
+                    }
+
+                    @Override
+                    public void onResponse(Call call, Response response) throws IOException {
+                        myJSON = response.body().string();
+                    }
+                });
+
+            }
         }
 
         //POST 방식

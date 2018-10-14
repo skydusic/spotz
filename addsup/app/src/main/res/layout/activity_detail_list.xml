@@ -35,6 +35,17 @@
                 android:textColor="#fff"
                 android:background="@color/blueback"/>
 
+            <TextView
+                android:id="@+id/timeTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/titleTv"
+                android:layout_margin="5dp"
+                android:textSize="12sp"
+                android:textColor="#999"
+                android:layout_alignParentEnd="true"
+                />
+
             <ImageView
                 android:id="@+id/favorite"
                 android:layout_width="40dp"
@@ -228,6 +239,22 @@
                 android:padding="25dp"
                 android:textSize="16sp" />
 
+            <Button
+                android:id="@+id/editpostBT"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/contents"
+                android:layout_toStartOf="@+id/delpostBT"
+                android:text="@string/editpost"/>
+
+            <Button
+                android:id="@+id/delpostBT"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/contents"
+                android:layout_alignParentEnd="true"
+                android:text="@string/deletepost"/>
+
             <View
                 android:id="@+id/horizontalView"
                 android:layout_width="match_parent"
@@ -235,7 +262,7 @@
                 android:background="#a4a4a4"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
-                android:layout_below="@+id/contents"/>
+                android:layout_below="@+id/delpostBT"/>
 
             <!--댓글기능-->
             <RelativeLayout
