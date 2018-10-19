@@ -15,11 +15,22 @@ mysqli_set_charset($link,"utf8");
 $idx=isset($_POST['idx']) ? $_POST['idx'] : '';
 $listname=isset($_POST['listname']) ? $_POST['listname'] : '';
 $username=isset($_POST['username']) ? $_POST['username'] : '';
+$title=isset($_POST['title']) ? $_POST['title'] : '';
+$contents=isset($_POST['contents']) ? $_POST['contents'] : '';
+$created=isset($_POST['created']) ? $_POST['created'] : '';
 
-if($listname == "clubtable"){
+
+if($username == 'Duil Song'){
+    $removername = "admin";
+} else {
+    $removername = "customer";
+}
+
+if($listname == "freeboard"){
+    
     $sql1 = "delete from clubtable where idx = '$idx'";
-    $sql2 = "delete from clubextension where postidx = '$idx'";
-    $sql3 = "delete from postlist where postidx = '$idx' AND listname = '$listname' AND username = '$username'";
+    $sql2 = "delete from postlist where postidx = '$idx' AND listname = '$listname' AND username = '$username'";
+    
 } else if($listname == "freelancer"){
     $sql1 = "delete from freelancer where idx = '$idx'";
     $sql2 = "delete from freeextension where postidx = '$idx'";
@@ -42,9 +53,11 @@ if($listname == "clubtable"){
     $sql3 = "delete from postlist where postidx = '$idx' AND listname = '$listname' AND username = '$username'";
 }
 
-$result1 = mysqli_query($link,$sql1);
-$result2 = mysqli_query($link,$sql2);
-$result3 = mysqli_query($link,$sql3);
+$delboardIns="insert into DeleteTable(title,contents,username,created,listname,remover) values('$title','$contents','$username','$created','$listname','$removername')";
+
+$result1 = mysqli_query($link,$delboardIns);
+$result2 = mysqli_query($link,$sql1);
+$result3 = mysqli_query($link,$sql2);
 
 if($result1 AND $result2 AND $result3){
 }
