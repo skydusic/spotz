@@ -71,6 +71,7 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
     String username = "";
     String created = "";
     String image = "";
+    String spindata = "";
 
     String imageurl = "";
     String commentJson = "";
@@ -122,6 +123,7 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
         contents = intent.getStringExtra("contents");
         username = intent.getStringExtra("username");
         created = intent.getStringExtra("created");
+        spindata = intent.getStringExtra("spindata");
 
         imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 
@@ -156,6 +158,7 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
         commentEt.setOnFocusChangeListener(this);
         editpostBT.setOnClickListener(this);
         delpostBT.setOnClickListener(this);
+
     }
 
     private void resetCommentList(){
@@ -235,34 +238,29 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
                 break;
             case (R.id.editpostBT):
 
+                Log.d("heu", "디테일 리스트 네임: " + listname);
+
                 // 수정
-                Intent intent = new Intent(DetailList.this, insertActivity.class);
+                Intent editIntent = new Intent(DetailList.this, insertActivity.class);
                 // 0 -> 새글 1 -> 수정
-                intent.putExtra("postNum", 1);
-                intent.putExtra("idx", item.getIdx());
-                intent.putExtra("contents", item.getContents());
-                intent.putExtra("username", item.getUsername());
-                intent.putExtra("image", item.getImage());
-                intent.putExtra("listname", item.getListname());
-                intent.putExtra("spindata", item.getSpindata());
-                intent.putExtra("created", item.getCreated());
-                startActivityForResult(intent, 3000);
+                editIntent.putExtra("postNum", 1);
+                editIntent.putExtra("idx", idx);
+                editIntent.putExtra("title", title);
+                editIntent.putExtra("contents", contents);
+                editIntent.putExtra("username", username);
+                editIntent.putExtra("image", image);
+                editIntent.putExtra("listname", listname);
+//                intent.putExtra("spindata", );
+                editIntent.putExtra("created", created);
+                startActivityForResult(editIntent, 3000);
 
                 break;
             case (R.id.delpostBT):
 
                 // 삭제
+                postDelete postDelete = new postDelete();
+                postDelete.requestPost(idx, listname, username);
 
-                delete.requestPost(item);
-                Json = "";
-                listArr.clear();
-                try {
-                    Thread.sleep(200);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                getPostedList.requestPost(url, username);
-                handler.sendEmptyMessage(50);
 
                 break;
             case (R.id.bottomHome):
@@ -598,6 +596,37 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
 //                    Log.d("heu", "history res : " + response.body().string());
+                }
+            });
+        }
+    }
+
+    String Json;
+    class postDelete {
+        //Client 생성
+        OkHttpClient client = new OkHttpClient();
+
+        public void requestPost(String idx, String listname, String username) {
+
+            String url = "http://spotz.co.kr/var/www/html/deletepost.php";
+            //Request Body에 서버에 보낼 데이터 작성
+            RequestBody requestBody = new FormBody.Builder().
+                    add("idx", idx).
+                    add("listname", listname).
+                    add("username", username).
+                    build();
+
+            Request request = new Request.Builder().url(url).post(requestBody).build();
+            client.newCall(request).enqueue(new Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
+                    Log.d("heu", "Connect Server Error is " + e.toString());
+                }
+
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+                    Json = response.body().string();
+
                 }
             });
         }

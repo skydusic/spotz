@@ -11,6 +11,7 @@ if (!$link)
    exit();
 }  
 
+
 mysqli_set_charset($link,"utf8");  
 
 //POST 값을 읽어온다.

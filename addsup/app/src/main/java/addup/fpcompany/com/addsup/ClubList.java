@@ -120,7 +120,6 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
             listTopName.setText("스포츠 취업정보");
         }
 
-        Log.d("heu", "리스트네임 : " + listName);
 
         /** 메뉴별 화면 만들기! */
 
@@ -158,6 +157,7 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
                         intent.putExtra("title", listItems.get(position).getTitle());
                         intent.putExtra("contents", listItems.get(position).getContents());
                         intent.putExtra("created", listItems.get(position).getCreated());
+                        intent.putExtra("spindata", listItems.get(position).getSpindata());
 
                         /** 해야할 일 이미지 -> 리사이클러뷰 */
                         String image = listItems.get(position).getImage();

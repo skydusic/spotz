@@ -76,10 +76,11 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
     private final int GALLERY_CODE = 1112;
 
     String idx = "";
+    String title;
     String serverUri;
     String imagePath;
     String imageAddress1 = "";
-    String listName;
+    String listName = "";
     String contents;
     String image;
     String spindata;
@@ -111,6 +112,7 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
 
         Intent clubInt = getIntent();
         idx = clubInt.getStringExtra("idx");
+        title = clubInt.getStringExtra("title");
         postNum = clubInt.getIntExtra("postNum", 0);
         contents = clubInt.getStringExtra("contents");
         listName = clubInt.getStringExtra("listname");
@@ -123,15 +125,16 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
             serverUri = "http://spotz.co.kr/var/www/html/freeboardIns.php";
         } else if (postNum == 1) {
             // 수정
-            serverUri = "http://spotz.co.kr/var/www/html/freeboard.php";
+            serverUri = "http://spotz.co.kr/var/www/html/freeboardUpdate.php";
 
+            titleEt.setText(clubInt.getStringExtra("title"));
             contentsET.setText(clubInt.getStringExtra("contents"));
-            listName = clubInt.getStringExtra("class");
+            listName = clubInt.getStringExtra("listname");
+            spindata = clubInt.getStringExtra("spindata");
 
             /** 이미지 테스트 해봐야 함 */
             image = clubInt.getStringExtra("image");
 //            imageAddress1 = clubInt.getStringExtra("image");
-            spindata = clubInt.getStringExtra("spindata");
 /*            text1.setText(clubInt.getStringExtra("text1"));
             text2.setText(clubInt.getStringExtra("text2"));
             text3.setText(clubInt.getStringExtra("text3"));
@@ -145,11 +148,6 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
                 Intent returnIntent = new Intent();
                 String title = titleEt.getText().toString().trim();
                 String contents = contentsET.getText().toString().trim();
-                /*String tex1 = text1.getText().toString();
-                String tex2 = text2.getText().toString();
-                String tex3 = text3.getText().toString();
-                String tex4 = text4.getText().toString();
-                String tex5 = text5.getText().toString();*/
 
                 if (contents.length() > 300) {
                     Toast.makeText(insertActivity.this, "글자 제한을 초과했습니다. (" + String.valueOf(contents.length()) + " / 300자)", Toast.LENGTH_LONG).show();
@@ -194,6 +192,7 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
         imgFind.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Log.d("heu", "인서트액티비티 Listname : " + listName);
                 DelFolder delFolder = new DelFolder();
                 delFolder.requestPost(MainActivity.mUsername, listName);
                 show();
@@ -467,6 +466,9 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
 
             if(postNum == 1) {
                 // 수정일 경우 idx 첨부!
+
+                Log.d("heu", "인서트액티비티 Listname : " + listName);
+
                 requestBody = new FormBody.Builder().
                         add("idx", idx).
                         add("title", title).
@@ -533,35 +535,6 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
             });
         }
 
-        /** 욕설 필터링 기능
-         *  서버에서 욕목록을 받아옴
-         * */
-        String myJSON = "";
-        class getStringFinderText {
-            OkHttpClient client = new OkHttpClient();
-            Request request;
-
-            public void requestPost() {
-                RequestBody requestBody = new FormBody.Builder().
-                        build();
-
-                request = new Request.Builder().url(url+"getStringFinderText/").post(requestBody).build();
-                client.newCall(request).enqueue(new okhttp3.Callback() {
-                    @Override
-                    public void onFailure(Call call, IOException e) {
-                        Log.d("heu", "Connect Server Error is " + e.toString());
-
-                    }
-
-                    @Override
-                    public void onResponse(Call call, Response response) throws IOException {
-                        myJSON = response.body().string();
-                    }
-                });
-
-            }
-        }
-
         //POST 방식
         public void requestPost(String url, String username, String listname, Uri uri) {
             final MediaType MEDIA_TYPE_PNG = MediaType.parse("image/*");
@@ -592,6 +565,35 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
                     Log.d(TAG, "Response Body is " + response.body().string());
                 }
             });
+        }
+    }
+
+    /** 욕설 필터링 기능
+     *  서버에서 욕목록을 받아옴
+     * */
+    String myJSON = "";
+    class getStringFinderText {
+        OkHttpClient client = new OkHttpClient();
+        Request request;
+
+        public void requestPost() {
+            RequestBody requestBody = new FormBody.Builder().
+                    build();
+
+            request = new Request.Builder().url(url+"getStringFinderText/").post(requestBody).build();
+            client.newCall(request).enqueue(new okhttp3.Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
+                    Log.d("heu", "Connect Server Error is " + e.toString());
+
+                }
+
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+                    myJSON = response.body().string();
+                }
+            });
+
         }
     }
 

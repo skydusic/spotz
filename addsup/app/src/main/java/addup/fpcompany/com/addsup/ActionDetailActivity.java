@@ -48,6 +48,8 @@ public class ActionDetailActivity extends AppCompatActivity {
     String username;
     listItem item;
 
+    postDelete delete = new postDelete();
+
     private static final String TAG_RESULTS = "results";
     private static final String TAG_TITLE = "title";
     private static final String TAG_ID = "idx";
@@ -169,7 +171,7 @@ public class ActionDetailActivity extends AppCompatActivity {
 
         } else if (resultCode == 400) {
             // 삭제
-            postDelete delete = new postDelete();
+
             delete.requestPost(item);
             Json = "";
             listArr.clear();
