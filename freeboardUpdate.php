@@ -14,16 +14,16 @@ if (!$link)
 mysqli_set_charset($link,"utf8");  
 
 //POST 값을 읽어온다.
+$listname=isset($_POST['listname']) ? $_POST['listname'] : '';
 $idx=isset($_POST['idx']) ? $_POST['idx'] : '';
 $title=isset($_POST['title']) ? $_POST['title'] : '';
 $contents=isset($_POST['contents']) ? $_POST['contents'] : '';
 $username=isset($_POST['username']) ? $_POST['username'] : '';
 $image=isset($_POST['image']) ? $_POST['image'] : '';
-$listname=isset($_POST['listname']) ? $_POST['listname'] : '';
 $spindata=isset($_POST['spindata']) ? $_POST['spindata'] : '';
 
 if($listname == 'freeboard'){
-    $sql="update freeboard set title = '$title',contents = '$contents', image ='$image', spindata = '$spindata', listname = '$listname' WHERE idx = '$idx'";
+    $sql="update freeboard set title = '$title',contents = '$contents', image ='$image', spindata = '$spindata' WHERE idx = '$idx'";
 } else if ($listname == 'freelancer'){
     $sql="update freelancer set contents = '$contents', image ='$image', spindata1 = '$spindata1', spindata2 = '$spindata2' WHERE idx = '$idx'";
     $sql2="update freeextension set name = '$text1', sports = '$text2', location = '$text3', phone = '$text4', etc = '$text5' WHERE postidx = '$idx'";

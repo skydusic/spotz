@@ -192,7 +192,6 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
         imgFind.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d("heu", "인서트액티비티 Listname : " + listName);
                 DelFolder delFolder = new DelFolder();
                 delFolder.requestPost(MainActivity.mUsername, listName);
                 show();

@@ -245,6 +245,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/contents"
                 android:layout_toStartOf="@+id/delpostBT"
+                android:visibility="gone"
                 android:text="@string/editpost"/>
 
             <Button
@@ -253,6 +254,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/contents"
                 android:layout_alignParentEnd="true"
+                android:visibility="gone"
                 android:text="@string/deletepost"/>
 
             <View

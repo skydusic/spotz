@@ -142,8 +142,10 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
         hitUpdate.requestPost();
 
         //히스토리 기록
-        historyInsert insert = new historyInsert();
-        insert.requestPost(listname, idx);
+        if(MainActivity.mUsername != null) {
+            historyInsert insert = new historyInsert();
+            insert.requestPost(listname, idx);
+        }
 
         //즐겨찾기 플래그
         favImageSet();
@@ -151,6 +153,15 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
 
         //코멘트 가져오기
         resetCommentList();
+
+        //수정, 삭제 버튼 보여주기
+        if(MainActivity.mUsername != null)
+        if(username.equals(MainActivity.mUsername) || MainActivity.mUsername.equals("Duil Song")){
+            Log.d("heu", "mUser : " + MainActivity.mUsername);
+            Log.d("heu", "username : " + username);
+            editpostBT.setVisibility(View.VISIBLE);
+            delpostBT.setVisibility(View.VISIBLE);
+        }
 
         favorite.setOnClickListener(this);
         inputComment.setOnClickListener(this);
@@ -259,7 +270,7 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
 
                 // 삭제
                 postDelete postDelete = new postDelete();
-                postDelete.requestPost(idx, listname, username);
+                postDelete.requestPost(idx, listname, username,title,contents,created);
 
 
                 break;
@@ -606,7 +617,7 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
         //Client 생성
         OkHttpClient client = new OkHttpClient();
 
-        public void requestPost(String idx, String listname, String username) {
+        public void requestPost(String idx, String listname, String username, String title, String contents, String created) {
 
             String url = "http://spotz.co.kr/var/www/html/deletepost.php";
             //Request Body에 서버에 보낼 데이터 작성
@@ -614,6 +625,9 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
                     add("idx", idx).
                     add("listname", listname).
                     add("username", username).
+                    add("title", title).
+                    add("contents", contents).
+                    add("created", created).
                     build();
 
             Request request = new Request.Builder().url(url).post(requestBody).build();
