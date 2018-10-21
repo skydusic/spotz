@@ -66,6 +66,7 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
     static FirebaseAuth mAuth;
     static FirebaseUser mUser;
     static String mUsername;
+    static String mUsermail;
     static String mPhotoUrl;
     int makeMsg = 0;
 
@@ -114,6 +115,7 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
 
         } else {
             mUsername = mUser.getDisplayName();
+            mUsermail = mUser.getEmail();
             if (mUser.getPhotoUrl() != null) {
                 mPhotoUrl = mUser.getPhotoUrl().toString();
             }

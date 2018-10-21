@@ -14,8 +14,8 @@ if (!$link)
 mysqli_set_charset($link,"utf8");  
 
 //POST 값을 읽어온다.
-$listname=isset($_POST['listname']) ? $_POST['listname'] : '';
 $idx=isset($_POST['idx']) ? $_POST['idx'] : '';
+$listname=isset($_POST['listname']) ? $_POST['listname'] : '';
 $title=isset($_POST['title']) ? $_POST['title'] : '';
 $contents=isset($_POST['contents']) ? $_POST['contents'] : '';
 $username=isset($_POST['username']) ? $_POST['username'] : '';

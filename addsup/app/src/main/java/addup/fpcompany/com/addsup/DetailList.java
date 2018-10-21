@@ -33,6 +33,7 @@ import addup.fpcompany.com.addsup.adapter.PagerAdapter;
 import addup.fpcompany.com.addsup.frag.DetailFrag;
 import addup.fpcompany.com.addsup.java.commentItem;
 import addup.fpcompany.com.addsup.java.favoriteItem;
+import addup.fpcompany.com.addsup.java.listItem;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.FormBody;
@@ -156,9 +157,8 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
 
         //수정, 삭제 버튼 보여주기
         if(MainActivity.mUsername != null)
-        if(username.equals(MainActivity.mUsername) || MainActivity.mUsername.equals("Duil Song")){
-            Log.d("heu", "mUser : " + MainActivity.mUsername);
-            Log.d("heu", "username : " + username);
+        if(username.equals(MainActivity.mUsername) || MainActivity.mUsermail.equals("skydusic@gmail.com")){
+            Log.d("heu", "usermail : " + MainActivity.mUsermail);
             editpostBT.setVisibility(View.VISIBLE);
             delpostBT.setVisibility(View.VISIBLE);
         }
@@ -228,6 +228,46 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
     private void hideKeyboard()
     {
         imm.hideSoftInputFromWindow(commentEt.getWindowToken(), 0);
+    }
+
+    listItem postItem;
+    private void refresh(String Json) {
+
+        try {
+
+            JSONObject jsonObj = new JSONObject(Json);
+            JSONArray post = jsonObj.getJSONArray("results");
+
+            for (int i = 0; i < post.length(); i++) {
+                JSONObject c = post.getJSONObject(i);
+//                시간 설정
+                postItem = new listItem((String.valueOf(c.getInt(TAG_ID))), c.getString(TAG_TITLE), c.getString(TAG_USERNAME), c.getString(TAG_CONTENTS),
+                        c.getString(TAG_IMAGE), c.getString(TAG_CREATED), c.getString("listname"),
+                        c.getString("hit"), c.getString("spindata"));
+
+            }
+
+        } catch (JSONException e) {
+        e.printStackTrace();
+        Log.d("heu", "adapter Exception : " + e);
+    }
+
+
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+
+        if(requestCode == 3000){
+            // 게시글 초기화
+            refreshPost rPost = new refreshPost();
+            rPost.requestPost(idx);
+            refreshPostHandler.sendEmptyMessage(300);
+        }
+
     }
 
     @Override
@@ -389,6 +429,30 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
             } else {
                 commentHandler.sendEmptyMessageDelayed(500, 300);
             }
+        }
+    };
+
+    @SuppressLint("HandlerLeak")
+    Handler refreshPostHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+
+            Log.d("heu", "리프레시 핸들러!");
+
+            if(myJSON.equals("")) {
+                Log.d("heu", "이프");
+                refreshPostHandler.sendEmptyMessageDelayed(300, 200);
+
+            } else {
+                Log.d("heu", "엘즈");
+                Log.d("heu", "Json : " + myJSON);
+                refresh(myJSON);
+                titleTv.setText(postItem.getTitle());
+                contentsTv.setText(postItem.getContents());
+                removeMessages(300);
+            }
+
         }
     };
 
@@ -646,11 +710,43 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
         }
     }
 
+
+    String myJSON = "";
+    class refreshPost {
+        OkHttpClient client = new OkHttpClient();
+        Request request;
+
+        public void requestPost(String idx) {
+
+            String url = "http://spotz.co.kr/var/www/html/refreshPost.php";
+            RequestBody requestBody = new FormBody.Builder().
+                    add("idx", idx).
+                    add("listname", listname).
+                    build();
+
+            request = new Request.Builder().url(url).post(requestBody).build();
+            client.newCall(request).enqueue(new okhttp3.Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
+                    Log.d("heu", "Connect Server Error is " + e.toString());
+
+                }
+
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+                    myJSON = response.body().string();
+                }
+            });
+
+        }
+    }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
         handler.removeMessages(0);
         commentHandler.removeMessages(500);
         handler2.removeMessages(1000);
+        refreshPostHandler.removeMessages(300);
     }
 }
