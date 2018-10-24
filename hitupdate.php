@@ -9,8 +9,8 @@
     $listname=isset($_POST['listname']) ? $_POST['listname'] : '';
     $idx=isset($_POST['idx']) ? $_POST['idx'] : '';
 
-    if($listname == 'clubtable'){
-        $sql = "select * from clubtable where idx='$idx'";
+    if($listname == 'freeboard'){
+        $sql = "select * from freeboard where idx='$idx'";
     } else if ($listname == 'freelancer'){
         $sql = "select * from freelancer where idx='$idx'";
     } else if ($listname == 'competition'){
@@ -30,10 +30,10 @@
     $hit = $pre[hit] + 1;
     
 // strtotime() 함수 사용 -> 시간 조정
-    $time = date("Y-m-d H:i:s",strtotime('+5minutes'));
+    $time = date("Y-m-d H:i:s",strtotime('+5 minutes'));
 
-    if($listname == 'clubtable'){
-        $sql = "update clubtable set hit = '$hit' where idx='$idx'";
+    if($listname == 'freeboard'){
+        $sql = "update freeboard set hit = '$hit' where idx='$idx'";
     } else if ($listname == 'freelancer'){
         $sql = "update freelancer set hit = '$hit' where idx='$idx'";
     } else if ($listname == 'competition'){

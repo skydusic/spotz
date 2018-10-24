@@ -39,6 +39,16 @@ public class infoActivity extends AppCompatActivity implements View.OnClickListe
         insertBtn = findViewById(R.id.insertBtn);
         titleET = findViewById(R.id.titleET);
         contentsET = findViewById(R.id.contentsET);
+
+        Intent infoIntent = getIntent();
+        String flag = infoIntent.getStringExtra("flag");
+
+        if(flag.equals("info")){
+
+        } else if (flag.equals("report")){
+
+        }
+
         insertBtn.setOnClickListener(this);
 
         if(MainActivity.mUsername != null)

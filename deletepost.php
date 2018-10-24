@@ -28,7 +28,7 @@ if($username == 'Duil Song'){
 
 if($listname == "freeboard"){
     
-    $sql1 = "delete from clubtable where idx = '$idx'";
+    $sql1 = "delete from freeboard where idx = '$idx'";
     $sql2 = "delete from postlist where postidx = '$idx' AND listname = '$listname' AND username = '$username'";
     
 } else if($listname == "freelancer"){

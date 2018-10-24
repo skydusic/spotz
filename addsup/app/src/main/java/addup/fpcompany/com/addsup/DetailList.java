@@ -55,6 +55,7 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
     TextView timeTv;
     EditText commentEt;
     Button inputComment;
+    Button reportBt;
     Button editpostBT;
     Button delpostBT;
     ViewPager viewPager;
@@ -106,6 +107,7 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
         detailScrollView = findViewById(R.id.detailScrollView);
         editpostBT = findViewById(R.id.editpostBT);
         delpostBT = findViewById(R.id.delpostBT);
+        reportBt = findViewById(R.id.reportBt);
 
         recyclerView = findViewById(R.id.commentRecycle);
 
@@ -169,7 +171,7 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
         commentEt.setOnFocusChangeListener(this);
         editpostBT.setOnClickListener(this);
         delpostBT.setOnClickListener(this);
-
+        reportBt.setOnClickListener(this);
     }
 
     private void resetCommentList(){
@@ -311,7 +313,13 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
                 // 삭제
                 postDelete postDelete = new postDelete();
                 postDelete.requestPost(idx, listname, username,title,contents,created);
+                finish();
 
+                break;
+            case (R.id.reportBt):
+
+                Intent reportItent = new Intent(DetailList.this, infoActivity.class);
+                reportItent.putExtra("flag", "report");
 
                 break;
             case (R.id.bottomHome):
@@ -319,7 +327,6 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
                 break;
-
             case (R.id.bottomMember):
                 if (MainActivity.mUser == null) {
                     Intent intent1 = new Intent(DetailList.this, SignInActivity.class);
@@ -676,9 +683,10 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
         }
     }
 
-    String Json;
+
     class postDelete {
         //Client 생성
+        String Json;
         OkHttpClient client = new OkHttpClient();
 
         public void requestPost(String idx, String listname, String username, String title, String contents, String created) {
