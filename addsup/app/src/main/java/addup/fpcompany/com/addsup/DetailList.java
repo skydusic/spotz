@@ -320,6 +320,15 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
 
                 Intent reportItent = new Intent(DetailList.this, infoActivity.class);
                 reportItent.putExtra("flag", "report");
+                reportItent.putExtra("listname", listname);
+                reportItent.putExtra("idx", idx);
+                reportItent.putExtra("title", title);
+                reportItent.putExtra("contents", contents);
+                reportItent.putExtra("writer", username);
+                reportItent.putExtra("created", created);
+                reportItent.putExtra("image", image);
+                reportItent.putExtra("reporter", MainActivity.mUsername);
+                startActivity(reportItent);
 
                 break;
             case (R.id.bottomHome):

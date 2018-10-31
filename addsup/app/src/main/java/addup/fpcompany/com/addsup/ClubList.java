@@ -345,6 +345,7 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
 
             case (R.id.bottomInfo):
                 intent = new Intent(ClubList.this, infoActivity.class);
+                intent.putExtra("flag","info");
                 startActivity(intent);
                 break;
 

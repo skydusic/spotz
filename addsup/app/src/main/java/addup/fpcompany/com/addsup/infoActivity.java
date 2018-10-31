@@ -7,6 +7,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.IOException;
@@ -26,10 +28,28 @@ public class infoActivity extends AppCompatActivity implements View.OnClickListe
 
     String TAG = "heu";
     String myJSON = "";
-    String url = "http://spotz.co.kr/var/www/html/infoinsert.php";
+    String url = "";
     String username = "익명";
 
     Intent intent;
+
+    LinearLayout infoLay;
+    LinearLayout reportLay;
+
+    TextView reportTitleET;
+    TextView reportContentsET;
+    TextView reportET;
+
+    String listname = "";
+    String idx = "";
+    String title = "";
+    String contents = "";
+    String writer = "";
+    String repoter = "";
+    String created = "";
+    String image = "";
+    String flag = "";
+    String report = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,17 +59,37 @@ public class infoActivity extends AppCompatActivity implements View.OnClickListe
         insertBtn = findViewById(R.id.insertBtn);
         titleET = findViewById(R.id.titleET);
         contentsET = findViewById(R.id.contentsET);
+        infoLay = findViewById(R.id.infoLay);
+        reportLay = findViewById(R.id.reportLay);
+        reportTitleET = findViewById(R.id.reportTitleET);
+        reportContentsET = findViewById(R.id.reportContentsET);
+        reportET = findViewById(R.id.reportEt);
 
         Intent infoIntent = getIntent();
-        String flag = infoIntent.getStringExtra("flag");
+        flag = infoIntent.getStringExtra("flag");
+        listname = infoIntent.getStringExtra("listname");
+        idx = infoIntent.getStringExtra("idx");
+        title = infoIntent.getStringExtra("title");
+        contents = infoIntent.getStringExtra("contents");
+        writer = infoIntent.getStringExtra("writer");
+        repoter = infoIntent.getStringExtra("repoter");
+        created = infoIntent.getStringExtra("created");
+        image = infoIntent.getStringExtra("image");
 
-        if(flag.equals("info")){
-
-        } else if (flag.equals("report")){
-
+        // 인포액티비티 설정부
+        if (flag.equals("report")){
+            infoLay.setVisibility(View.INVISIBLE);
+            reportLay.setVisibility(View.VISIBLE);
+            reportTitleET.setText(title);
+            reportContentsET.setText(contents);
+            url = "http://spotz.co.kr/var/www/html/reportinsert.php";
+        } else if(flag.equals("info")){
+            infoLay.setVisibility(View.VISIBLE);
+            reportLay.setVisibility(View.INVISIBLE);
+            url = "http://spotz.co.kr/var/www/html/infoinsert.php";
         }
 
-        insertBtn.setOnClickListener(this);
+            insertBtn.setOnClickListener(this);
 
         if(MainActivity.mUsername != null)
             username = MainActivity.mUsername;
@@ -59,14 +99,24 @@ public class infoActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case (R.id.insertBtn):
-                String title = titleET.getText().toString().trim();
-                String contents = contentsET.getText().toString().trim();
+                if (flag.equals("report")){
+                    title = reportTitleET.getText().toString().trim();
+                    contents = reportContentsET.getText().toString().trim();
+                    report = reportET.getText().toString().trim();
+                } else if(flag.equals("info")){
+                    title = titleET.getText().toString().trim();
+                    contents = contentsET.getText().toString().trim();
+                }
+
+                Log.d("heu", "Title : " + title);
+                Log.d("heu", "contents : " + contents);
+                Log.d("heu", "report : " + report);
 
                 if(contents.length() > 300) {
                     Toast.makeText( infoActivity.this, "글자 제한을 초과했습니다. (" + String.valueOf(contents.length()) + " / 300자)", Toast.LENGTH_LONG).show();
                 } else {
                     writeInfo writeInfo = new writeInfo();
-                    writeInfo.requestPost(url, title, contents, username);
+                    writeInfo.requestPost(url, title, contents, username, report);
                     finish();
                 }
                 break;
@@ -102,14 +152,21 @@ public class infoActivity extends AppCompatActivity implements View.OnClickListe
     class writeInfo {
         OkHttpClient client = new OkHttpClient();
 
-        public void requestPost(String url, String title , String contents, String username) {
+        public void requestPost(String url, String title , String contents, String username, String report) {
 
 
+            Log.d("heu", "URL : " + url);
 
             RequestBody requestBody = new FormBody.Builder().
+                    add("idx", idx).
+                    add("listname", listname).
                     add("title", title).
                     add("contents", contents).
                     add("username", username).
+                    add("report", report).
+                    add("writer", writer).
+                    add("created", created).
+                    add("image", image).
                     build();
 
             Request request = new Request.Builder().url(url).post(requestBody).build();
