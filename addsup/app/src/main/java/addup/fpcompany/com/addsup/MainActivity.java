@@ -2,6 +2,7 @@ package addup.fpcompany.com.addsup;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -11,6 +12,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -30,6 +32,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import addup.fpcompany.com.addsup.adapter.PagerAdapter;
 import addup.fpcompany.com.addsup.frag.adfrag;
@@ -42,7 +45,7 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class MainActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener, View.OnClickListener,
-        GoogleApiClient.OnConnectionFailedListener {
+        GoogleApiClient.OnConnectionFailedListener, View.OnTouchListener{
 
     ViewPager mainTopPager;
     int pagerPos = 0;
@@ -62,6 +65,7 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
 
     //상단 광고
     ArrayList<Fragment> adList = new ArrayList<>();
+    ArrayList<String> adUrl = new ArrayList<>();
 
     static FirebaseAuth mAuth;
     static FirebaseUser mUser;
@@ -73,6 +77,7 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
     public static String serverUrl = "";
     static ArrayList<String> spinList1 = new ArrayList<>();
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -137,7 +142,7 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
         getSpinner.execute();
 
         //favorite 가져오기
-        if(mUsername != null) {
+        if (mUsername != null) {
             getFavorite fav = new getFavorite();
             fav.requestPost(mUsername);
         }
@@ -149,6 +154,7 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
         btnFour.setOnClickListener(this);
         btnFive.setOnClickListener(this);
         btnSix.setOnClickListener(this);
+        mainTopPager.setOnTouchListener(this);
     }
 
     private void ADset() {
@@ -174,6 +180,16 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
             }
         }
     };
+
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+        if (event.getAction() == 0xff) {
+            Intent urlintent = new Intent(Intent.ACTION_VIEW, Uri.parse(adUrl.get(pagerPos)));
+            startActivity(urlintent);
+        }
+
+        return false;
+    }
 
     @SuppressLint("StaticFieldLeak")
     class ConnectServer extends AsyncTask<String, Void, String> {
@@ -223,10 +239,32 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             /** 슬라이드에 적용 */
-            String[] temp = s.split(",");
-            for (int i = 0; i < temp.length; i++) {
-                adList.add(new adfrag(temp[i]));
+            JSONObject jsonObj = null;
+            try {
+
+                Log.d("heu", "JSON : " + s);
+                jsonObj = new JSONObject(s);
+
+                String[] temp = jsonObj.getString("image").split(",");
+
+                for (int i = 0; i < temp.length; i++) {
+                    adList.add(new adfrag(temp[i]));
+                }
+
+                String[] temp2 = jsonObj.getString("url").split(",");
+
+                adUrl.addAll(Arrays.asList(temp2));
+
+                /*
+                for (int i = 0; i < temp2.length; i++) {
+                    adUrl.add(temp2[i]);
+                }
+                */
+
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
+
             final PagerAdapter adapter = new PagerAdapter(getSupportFragmentManager(), adList);
             mainTopPager.setAdapter(adapter);
             mainTopPager.addOnPageChangeListener(MainActivity.this);
@@ -348,6 +386,10 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
                 intent = new Intent(MainActivity.this, ClubList.class);
                 intent.putExtra("listName", "compet");
                 startActivity(intent);
+                break;
+
+            case (R.id.mainTopPager):
+
                 break;
 
             /*case (R.id.bottomHome):
