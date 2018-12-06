@@ -25,16 +25,16 @@ $spindata=isset($_POST['spindata']) ? $_POST['spindata'] : '';
 if($listname == "freeboard"){
     $sql="insert into freeboard(title,contents,username,image,spindata) values('$title','$contents','$username','$image','$spindata')";
     
-} else if ($listname == "freelancer"){
-    $sql="insert into freelancer(contents,username,image,spindata1,spindata2) values('$contents','$username','$image','$spindata1','$spindata2')";
-} else if ($listname == "competition"){
-    $sql="insert into competition(contents,username,image,spindata1,spindata2) values('$contents','$username','$image','$spindata1','$spindata2')";
-} else if ($listname == "dongho"){
-    $sql="insert into dongho(contents,username,image,spindata1,spindata2) values('$contents','$username','$image','$spindata1','$spindata2')";
-} else if ($listname == "review"){
-    $sql="insert into review(contents,username,image,spindata1,spindata2) values('$contents','$username','$image','$spindata1','$spindata2')";
-} else if ($listname == "employment"){
-    $sql="insert into employment(contents,username,image,spindata1,spindata2) values('$contents','$username','$image','$spindata1','$spindata2')";
+} else if ($listname == "kbl"){
+    $sql="insert into kbl(title,contents,username,image,spindata) values('$title','$contents','$username','$image','$spindata')";
+} else if ($listname == "nba"){
+    $sql="insert into nba(title,contents,username,image,spindata) values('$title','$contents','$username','$image','$spindata')";
+} else if ($listname == "equip"){
+    $sql="insert into equip(title,contents,username,image,spindata) values('$title','$contents','$username','$image','$spindata')";
+} else if ($listname == "employ"){
+    $sql="insert into employ(title,contents,username,image,spindata) values('$title','$contents','$username','$image','$spindata')";
+} else if ($listname == "compet"){
+    $sql="insert into compet(title,contents,username,image,spindata) values('$title','$contents','$username','$image','$spindata')";
 }
 
 $result=mysqli_query($link,$sql);  
@@ -45,63 +45,6 @@ else{
    echo "SQL문 처리중 에러 발생 : ";
    echo mysqli_error($link);
 }
-
-/*if($listname == "clubtable"){
-    $temp = "select * from clubtable where username = '$username' order by created desc";
-    $result = mysqli_query($link,$temp);
-    mysqli_data_seek($result, 0);
-    $row = mysqli_fetch_array($result);
-    $sql2="insert into clubextension (postidx, corperation, sports, location, phone, etc) values ('$row[idx]','$text1','$text2','$text3','$text4','$text5')";
-} else if ($listname == "freelancer"){
-    $temp = "select * from freelancer where username = '$username' order by created desc";
-    $result = mysqli_query($link,$temp);
-    mysqli_data_seek($result, 0);
-    $row = mysqli_fetch_array($result);
-    $sql2="insert into freeextension (postidx, name, sports, location, phone, etc) values ('$row[idx]','$text1','$text2','$text3','$text4','$text5')";
-} else if ($listname == "competition"){
-    $temp = "select * from competition where username = '$username' order by created desc";
-    $result = mysqli_query($link,$temp);
-    mysqli_data_seek($result, 0);
-    $row = mysqli_fetch_array($result);
-    $sql2="insert into competitionextension (postidx, name, sports, location, phone, etc) values ('$row[idx]','$text1','$text2','$text3','$text4','$text5')";
-} else if ($listname == "dongho"){
-    $temp = "select * from dongho where username = '$username' order by created desc";
-    $result = mysqli_query($link,$temp);
-    mysqli_data_seek($result, 0);
-    $row = mysqli_fetch_array($result);
-    $sql2="insert into donghoextension (postidx, name, sports, location, time, phone) values ('$row[idx]','$text1','$text2','$text3','$text4','$text5')";
-} else if ($listname == "review"){
-    $temp = "select * from review where username = '$username' order by created desc";
-    $result = mysqli_query($link,$temp);
-    mysqli_data_seek($result, 0);
-    $row = mysqli_fetch_array($result);
-    $sql2="insert into reviewextension (postidx, product, wheretobuy, price, grade, etc) values ('$row[idx]','$text1','$text2','$text3','$text4','$text5')";
-} else if ($listname == "employment"){
-    $temp = "select * from employment where username = '$username' order by created desc";
-    $result = mysqli_query($link,$temp);
-    mysqli_data_seek($result, 0);
-    $row = mysqli_fetch_array($result);
-    $sql2="insert into employmentextension (postidx, company, location, salary, calendar, etc) values ('$row[idx]','$text1','$text2','$text3','$text4','$text5')";
-}
-
-$postsql="insert into postlist(username,postidx,listname) values('$username','$row[idx]','$listname')";
-$postresult=mysqli_query($link,$postsql);
-if($postresult){
-   echo "SQL문 처리 성공";
-}
-else{
-   echo "SQL문 처리중 에러 발생 : ";
-   echo mysqli_error($link);
-}
-
-$result2=mysqli_query($link,$sql2);  
-if($result2){
-   echo "SQLex문 처리 성공";
-}
-else{
-   echo "SQLex문 처리중 에러 발생 : ";
-   echo mysqli_error($link);
-}*/
 
 mysqli_close($link);
 ?>

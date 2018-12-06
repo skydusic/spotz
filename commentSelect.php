@@ -17,6 +17,16 @@
 
     if($listname == "freeboard"){
         $sql="select * from freeboardCO where postidx='$postidx'";
+    } else if($listname == "kbl"){
+        $sql="select * from kblCO where postidx='$postidx'";
+    } else if($listname == "nba"){
+        $sql="select * from nbaCO where postidx='$postidx'";
+    } else if($listname == "equip"){
+        $sql="select * from equipCO where postidx='$postidx'";
+    } else if($listname == "employ"){
+        $sql="select * from employCO where postidx='$postidx'";
+    } else if($listname == "compet"){
+        $sql="select * from competCO where postidx='$postidx'";
     }
 
     $result = mysqli_query($connect,$sql);
@@ -31,9 +41,8 @@
         mysqli_data_seek($result, $i);
         $row = mysqli_fetch_array($result);
         
-        if($listname == "freeboard"){
-            echo "{\"listname\":\"freeboard\",\"idx\":\"$row[idx]\",\"username\":\"$row[username]\",\"postidx\":\"$row[postidx]\",\"contents\":\"$row[contents]\",\"created\":\"$row[created]\",\"commentidx\":\"$row[commentidx]\"}";
-        }
+        echo "{\"listname\":\"commentBoard\",\"idx\":\"$row[idx]\",\"username\":\"$row[username]\",\"postidx\":\"$row[postidx]\",\"contents\":\"$row[contents]\",\"created\":\"$row[created]\",\"commentidx\":\"$row[commentidx]\"}";
+        
         
         if($i<$total_record-1){
           echo ",";

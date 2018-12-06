@@ -46,12 +46,12 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
 
     ViewPager mainTopPager;
     int pagerPos = 0;
-    ImageView clubBtn;
-    ImageView freeBtn;
-    ImageView competition;
-    ImageView dongho;
-    ImageView review;
-    ImageView employment;
+    ImageView btnOne;
+    ImageView btnTwo;
+    ImageView btnThree;
+    ImageView btnFour;
+    ImageView btnFive;
+    ImageView btnSix;
 
     Intent intent;
     private static final String TAG = "MainActivity";
@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
 
     static FirebaseAuth mAuth;
     static FirebaseUser mUser;
-    static String mUsername;
+    static public String mUsername;
     static String mUsermail;
     static String mPhotoUrl;
     int makeMsg = 0;
@@ -79,12 +79,12 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
         setContentView(R.layout.activity_main);
 
         mainTopPager = findViewById(R.id.mainTopPager);
-        clubBtn = findViewById(R.id.clubBtn);
-        freeBtn = findViewById(R.id.freeBtn);
-        competition = findViewById(R.id.competition);
-        dongho = findViewById(R.id.dongho);
-        review = findViewById(R.id.review);
-        employment = findViewById(R.id.employment);
+        btnOne = findViewById(R.id.btnOne);
+        btnTwo = findViewById(R.id.btnTwo);
+        btnThree = findViewById(R.id.btnthree);
+        btnFour = findViewById(R.id.btnFour);
+        btnFive = findViewById(R.id.btnFive);
+        btnSix = findViewById(R.id.btnSix);
 
 
 //        메뉴 로그인
@@ -143,12 +143,12 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
         }
 
 //        클릭 리스너
-        clubBtn.setOnClickListener(this);
-        freeBtn.setOnClickListener(this);
-        competition.setOnClickListener(this);
-        dongho.setOnClickListener(this);
-        review.setOnClickListener(this);
-        employment.setOnClickListener(this);
+        btnOne.setOnClickListener(this);
+        btnTwo.setOnClickListener(this);
+        btnThree.setOnClickListener(this);
+        btnFour.setOnClickListener(this);
+        btnFive.setOnClickListener(this);
+        btnSix.setOnClickListener(this);
     }
 
     private void ADset() {
@@ -222,6 +222,7 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
+            /** 슬라이드에 적용 */
             String[] temp = s.split(",");
             for (int i = 0; i < temp.length; i++) {
                 adList.add(new adfrag(temp[i]));
@@ -313,39 +314,39 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case (R.id.clubBtn):
+            case (R.id.btnOne):
+                intent = new Intent(MainActivity.this, ClubList.class);
+                intent.putExtra("listName", "kbl");
+                startActivity(intent);
+                break;
+
+            case (R.id.btnTwo):
+                intent = new Intent(MainActivity.this, ClubList.class);
+                intent.putExtra("listName", "nba");
+                startActivity(intent);
+                break;
+
+            case (R.id.btnthree):
                 intent = new Intent(MainActivity.this, ClubList.class);
                 intent.putExtra("listName", "freeboard");
                 startActivity(intent);
                 break;
 
-            case (R.id.freeBtn):
+            case (R.id.btnFour):
                 intent = new Intent(MainActivity.this, ClubList.class);
-                intent.putExtra("listName", "freelancer");
+                intent.putExtra("listName", "equip");
                 startActivity(intent);
                 break;
 
-            case (R.id.competition):
+            case (R.id.btnFive):
                 intent = new Intent(MainActivity.this, ClubList.class);
-                intent.putExtra("listName", "competition");
+                intent.putExtra("listName", "employ");
                 startActivity(intent);
                 break;
 
-            case (R.id.dongho):
+            case (R.id.btnSix):
                 intent = new Intent(MainActivity.this, ClubList.class);
-                intent.putExtra("listName", "dongho");
-                startActivity(intent);
-                break;
-
-            case (R.id.review):
-                intent = new Intent(MainActivity.this, ClubList.class);
-                intent.putExtra("listName", "review");
-                startActivity(intent);
-                break;
-
-            case (R.id.employment):
-                intent = new Intent(MainActivity.this, ClubList.class);
-                intent.putExtra("listName", "employment");
+                intent.putExtra("listName", "compet");
                 startActivity(intent);
                 break;
 

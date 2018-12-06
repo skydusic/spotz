@@ -5,25 +5,30 @@ import android.graphics.Typeface;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import addup.fpcompany.com.addsup.MainActivity;
 import addup.fpcompany.com.addsup.R;
 import addup.fpcompany.com.addsup.java.commentItem;
 
-public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHolder>{
+public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHolder> implements RecyclerView.OnItemTouchListener{
 
     Context context;
     ArrayList<commentItem> listArr;
     commentItem commentItem;
     private static Typeface mTypeface;
+    private OnItemClickListener mListener;
 
-    public CommentAdapter(Context context, ArrayList<commentItem> itemArr) {
+    public CommentAdapter(Context context, ArrayList<commentItem> itemArr, OnItemClickListener onItemClickListener) {
         this.context = context;
         this.listArr = itemArr;
+        this.mListener = onItemClickListener;
     }
 
     @Override
@@ -35,12 +40,37 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
         commentItem = listArr.get(position);
 
         holder.usernameTv.setText(commentItem.getUsername());
         holder.contentsTv.setText(commentItem.getContents());
         holder.commentCreatedTv.setText(commentItem.getCreated());
+
+        if(listArr.get(position).getUsername().equals(MainActivity.mUsername)) {
+
+            holder.editIv.setVisibility(View.VISIBLE);
+            holder.deleteIv.setVisibility(View.VISIBLE);
+            holder.editIv.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mListener.onItemClick(v, position);
+                }
+            });
+
+            holder.deleteIv.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mListener.onItemClick(v, position);
+                }
+            });
+
+        }
+
+    }
+
+    public interface OnItemClickListener {
+        public void onItemClick(View view, int position);
     }
 
     @Override
@@ -48,13 +78,31 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
         return listArr.size();
     }
 
+    @Override
+    public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
+        return false;
+    }
+
+    @Override
+    public void onTouchEvent(RecyclerView rv, MotionEvent e) {
+
+    }
+
+    @Override
+    public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
+
+    }
+
     class ViewHolder extends RecyclerView.ViewHolder {
         TextView usernameTv, contentsTv, commentCreatedTv;
+        ImageView editIv, deleteIv;
         public ViewHolder(View itemView) {
             super(itemView);
             usernameTv = itemView.findViewById(R.id.usernameTv);
             contentsTv = itemView.findViewById(R.id.contentsTv);
             commentCreatedTv = itemView.findViewById(R.id.commentCreatedTv);
+            editIv = itemView.findViewById(R.id.editIv);
+            deleteIv = itemView.findViewById(R.id.deleteIv);
 
             usernameTv.setTypeface(mTypeface);
             contentsTv.setTypeface(mTypeface);

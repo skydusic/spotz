@@ -11,16 +11,16 @@
 
     if($listname == 'freeboard'){
         $sql = "select * from freeboard where idx='$idx'";
-    } else if ($listname == 'freelancer'){
-        $sql = "select * from freelancer where idx='$idx'";
-    } else if ($listname == 'competition'){
-        $sql = "select * from competition where idx='$idx'";
-    } else if ($listname == 'dongho'){
-        $sql = "select * from dongho where idx='$idx'";
-    } else if ($listname == 'review'){
-        $sql = "select * from review where idx='$idx'";
-    } else if ($listname == 'employment'){
-        $sql = "select * from employment where idx='$idx'";
+    } else if ($listname == 'kbl'){
+        $sql = "select * from kbl where idx='$idx'";
+    } else if ($listname == 'nba'){
+        $sql = "select * from nba where idx='$idx'";
+    } else if ($listname == 'equip'){
+        $sql = "select * from equip where idx='$idx'";
+    } else if ($listname == 'employ'){
+        $sql = "select * from employ where idx='$idx'";
+    } else if ($listname == 'compet'){
+        $sql = "select * from compet where idx='$idx'";
     }
 
 
@@ -34,16 +34,16 @@
 
     if($listname == 'freeboard'){
         $sql = "update freeboard set hit = '$hit' where idx='$idx'";
-    } else if ($listname == 'freelancer'){
-        $sql = "update freelancer set hit = '$hit' where idx='$idx'";
-    } else if ($listname == 'competition'){
-        $sql = "update competition set hit = '$hit' where idx='$idx'";
-    } else if ($listname == 'dongho'){
-        $sql = "update dongho set hit = '$hit' where idx='$idx'";
-    } else if ($listname == 'review'){
-        $sql = "update review set hit = '$hit' where idx='$idx'";
-    } else if ($listname == 'employment'){
-        $sql = "update employment set hit = '$hit' where idx='$idx'";
+    } else if ($listname == 'kbl'){
+        $sql = "update kbl set hit = '$hit' where idx='$idx'";
+    } else if ($listname == 'nba'){
+        $sql = "update nba set hit = '$hit' where idx='$idx'";
+    } else if ($listname == 'equip'){
+        $sql = "update equip set hit = '$hit' where idx='$idx'";
+    } else if ($listname == 'employ'){
+        $sql = "update employ set hit = '$hit' where idx='$idx'";
+    } else if ($listname == 'compet'){
+        $sql = "update compet set hit = '$hit' where idx='$idx'";
     }
     $result2 = mysqli_query($connect,$sql);
 

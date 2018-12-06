@@ -30,12 +30,12 @@
             android:padding="5dp">
 
             <ImageView
-                android:id="@+id/freeBtn"
+                android:id="@+id/btnOne"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:layout_toStartOf="@+id/ver1"
-                android:src="@drawable/mainmenu2" />
+                android:src="@drawable/main1" />
 
             <View
                 android:id="@+id/ver1"
@@ -47,12 +47,12 @@
                 android:background="#acacac" />
 
             <ImageView
-                android:id="@+id/clubBtn"
+                android:id="@+id/btnTwo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:layout_toEndOf="@+id/ver1"
-                android:src="@drawable/mainmenu1" />
+                android:src="@drawable/main2" />
 
             <View
                 android:layout_width="match_parent"
@@ -70,12 +70,12 @@
             android:padding="5dp">
 
             <ImageView
-                android:id="@+id/review"
+                android:id="@+id/btnthree"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:layout_toStartOf="@+id/ver3"
-                android:src="@drawable/mainmenu3"
+                android:src="@drawable/main3"
                 tools:ignore="ContentDescription" />
 
             <View
@@ -88,12 +88,12 @@
                 android:background="#acacac" />
 
             <ImageView
-                android:id="@+id/employment"
+                android:id="@+id/btnFour"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:layout_toEndOf="@+id/ver3"
-                android:src="@drawable/mainmenu4"
+                android:src="@drawable/main4"
                 tools:ignore="ContentDescription" />
 
             <View
@@ -112,12 +112,12 @@
             android:padding="5dp">
 
             <ImageView
-                android:id="@+id/competition"
+                android:id="@+id/btnFive"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:layout_toStartOf="@+id/ver2"
-                android:src="@drawable/mainmenu5" />
+                android:src="@drawable/main5" />
 
             <View
                 android:id="@+id/ver2"
@@ -129,12 +129,12 @@
                 android:background="#acacac" />
 
             <ImageView
-                android:id="@+id/dongho"
+                android:id="@+id/btnSix"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:layout_toEndOf="@+id/ver2"
-                android:src="@drawable/mainmenu6" />
+                android:src="@drawable/main6" />
 
             <View
                 android:layout_width="match_parent"

@@ -108,16 +108,16 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
         //넘어온 경로에 따라 다른리스트를 받는다
         if (listName.equals("freeboard")) {
             listTopName.setText("자유게시판");
-        } else if (listName.equals("freelancer")) {
-            listTopName.setText("스포츠 프리랜서");
-        } else if (listName.equals("competition")) {
-            listTopName.setText("스포츠 대회");
-        } else if (listName.equals("dongho")) {
-            listTopName.setText("스포츠 동호회");
-        } else if (listName.equals("review")) {
-            listTopName.setText("스포츠 제품 리뷰");
-        } else if (listName.equals("employment")) {
-            listTopName.setText("스포츠 취업정보");
+        } else if (listName.equals("nba")) {
+            listTopName.setText("NBA");
+        } else if (listName.equals("kbl")) {
+            listTopName.setText("KBL");
+        } else if (listName.equals("employ")) {
+            listTopName.setText("취업게시판");
+        } else if (listName.equals("equip")) {
+            listTopName.setText("용품게시판");
+        } else if (listName.equals("compet")) {
+            listTopName.setText("대회게시판");
         }
 
 
@@ -310,6 +310,7 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
                     myJSON = response.body().string();
+                    Log.d("heu", "JSON :" +myJSON);
                 }
             });
 

@@ -17,6 +17,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -55,16 +56,18 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
     TextView timeTv;
     EditText commentEt;
     Button inputComment;
-    Button reportBt;
-    Button editpostBT;
-    Button delpostBT;
+    ImageView reportBt;
+    ImageView editpostBT;
+    ImageView delpostBT;
     ViewPager viewPager;
     ImageView favorite;
     ArrayList<String> arr = new ArrayList<>();
     ArrayList<Fragment> fragArr = new ArrayList<>();
     ArrayList<commentItem> listItems = new ArrayList<>();
 
-    RecyclerView recyclerView;
+    //    RecyclerView recyclerView;
+    RecyclerView commentRecycle;
+    View bottombar;
 
     String listname = "";
     String idx = "";
@@ -80,6 +83,8 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
 
     Boolean favoriteFLAG = false;
 
+    int pagerPos = 0;
+
     favoriteItem favoriteTemp;
 
     InputMethodManager imm;
@@ -91,6 +96,12 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
     private static final String TAG_CONTENTS = "contents";
     private static final String TAG_CREATED = "created";
     private static final String TAG_IMAGE = "image";
+
+    //코멘트 수정 삭제
+    LinearLayout editCommentLay;
+    EditText editCommentEt;
+    Button editCommentBt;
+    String commentPosition;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,8 +119,10 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
         editpostBT = findViewById(R.id.editpostBT);
         delpostBT = findViewById(R.id.delpostBT);
         reportBt = findViewById(R.id.reportBt);
+        bottombar = findViewById(R.id.bottombar);
 
-        recyclerView = findViewById(R.id.commentRecycle);
+//        recyclerView = findViewById(R.id.commentRecycle);
+        commentRecycle = findViewById(R.id.commentRecycle);
 
         //레이아웃에 클릭 붙이기 -> 레이아웃 클릭하면 키보드 하이드
         mainLayout = findViewById(R.id.mainLayout);
@@ -117,6 +130,11 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
 
         //댓글버튼
         inputComment = findViewById(R.id.inputComment);
+
+        //댓글 수정
+        editCommentLay = findViewById(R.id.editCommentLay);
+        editCommentBt = findViewById(R.id.editCommentBt);
+        editCommentEt = findViewById(R.id.editCommentEt);
 
         // 인텐트로 정보 가져옴
         intent = getIntent();
@@ -145,7 +163,7 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
         hitUpdate.requestPost();
 
         //히스토리 기록
-        if(MainActivity.mUsername != null) {
+        if (MainActivity.mUsername != null) {
             historyInsert insert = new historyInsert();
             insert.requestPost(listname, idx);
         }
@@ -158,12 +176,12 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
         resetCommentList();
 
         //수정, 삭제 버튼 보여주기
-        if(MainActivity.mUsername != null)
-        if(username.equals(MainActivity.mUsername) || MainActivity.mUsermail.equals("skydusic@gmail.com")){
-            Log.d("heu", "usermail : " + MainActivity.mUsermail);
-            editpostBT.setVisibility(View.VISIBLE);
-            delpostBT.setVisibility(View.VISIBLE);
-        }
+        if (MainActivity.mUsername != null)
+            if (username.equals(MainActivity.mUsername) || MainActivity.mUsermail.equals("skydusic@gmail.com")) {
+                Log.d("heu", "usermail : " + MainActivity.mUsermail);
+                editpostBT.setVisibility(View.VISIBLE);
+                delpostBT.setVisibility(View.VISIBLE);
+            }
 
         favorite.setOnClickListener(this);
         inputComment.setOnClickListener(this);
@@ -172,13 +190,14 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
         editpostBT.setOnClickListener(this);
         delpostBT.setOnClickListener(this);
         reportBt.setOnClickListener(this);
+        editCommentBt.setOnClickListener(this);
     }
 
-    private void resetCommentList(){
+    private void resetCommentList() {
 
-        if (!commentJson.equals("")){
-            commentJson = "";
-        }
+        commentJson = "";
+
+        commentRecycle.removeAllViewsInLayout();
 
         getComment getComment = new getComment();
         getComment.requestPost(idx, listname);
@@ -227,12 +246,12 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
         viewPager.addOnPageChangeListener(DetailList.this);
     }
 
-    private void hideKeyboard()
-    {
+    private void hideKeyboard() {
         imm.hideSoftInputFromWindow(commentEt.getWindowToken(), 0);
     }
 
     listItem postItem;
+
     private void refresh(String Json) {
 
         try {
@@ -243,6 +262,7 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
             for (int i = 0; i < post.length(); i++) {
                 JSONObject c = post.getJSONObject(i);
 //                시간 설정
+                Log.d("heu", "listname : " + listname);
                 postItem = new listItem((String.valueOf(c.getInt(TAG_ID))), c.getString(TAG_TITLE), c.getString(TAG_USERNAME), c.getString(TAG_CONTENTS),
                         c.getString(TAG_IMAGE), c.getString(TAG_CREATED), c.getString("listname"),
                         c.getString("hit"), c.getString("spindata"));
@@ -250,12 +270,20 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
             }
 
         } catch (JSONException e) {
-        e.printStackTrace();
-        Log.d("heu", "adapter Exception : " + e);
+            e.printStackTrace();
+            Log.d("heu", "adapter Exception : " + e);
+        }
+
+
     }
 
-
-
+    public void scrollToEnd(){
+        detailScrollView.post(new Runnable() {
+            @Override
+            public void run() {
+                detailScrollView.scrollBy(0,-300);
+            }
+        });
     }
 
     @Override
@@ -263,11 +291,11 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
         super.onActivityResult(requestCode, resultCode, data);
 
 
-        if(requestCode == 3000){
+        if (requestCode == 3000) {
             // 게시글 초기화
             refreshPost rPost = new refreshPost();
             rPost.requestPost(idx);
-            refreshPostHandler.sendEmptyMessage(300);
+
         }
 
     }
@@ -280,8 +308,8 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
                 break;
             case (R.id.inputComment):
                 String text = commentEt.getText().toString();
-                if(!text.equals("")) {
-                    recyclerView.removeAllViewsInLayout();
+                if (!text.equals("")) {
+                    commentRecycle.removeAllViewsInLayout();
                     commentInsert CI = new commentInsert();
                     CI.requestPost(listname, commentEt.getText().toString(), idx);
                     commentEt.setText("");
@@ -312,7 +340,7 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
 
                 // 삭제
                 postDelete postDelete = new postDelete();
-                postDelete.requestPost(idx, listname, username,title,contents,created);
+                postDelete.requestPost(idx, listname, username, title, contents, created);
                 finish();
 
                 break;
@@ -362,11 +390,89 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
                 MainActivity.getFavorite fav = new MainActivity.getFavorite();
                 fav.requestPost(MainActivity.mUsername);
                 break;
+
+            case (R.id.editCommentBt):
+                //visible 설정
+                editCommentLay.setVisibility(View.GONE);
+                bottombar.setVisibility(View.VISIBLE);
+
+                //댓글 수정
+                commentUpdate CU = new commentUpdate();
+                CU.requestPost(listname, editCommentEt.getText().toString(), idx , commentPosition);
+
+                resetCommentList();
+
+                break;
         }
     }
 
+    private void setCommentlist() {
 
-    int pagerPos = 0;
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        commentRecycle.setLayoutManager(layoutManager);
+        CommentAdapter adapter = new CommentAdapter(getApplicationContext(), listItems, new CommentAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                switch (view.getId()) {
+                    case (R.id.editIv):
+                        //포지션 저장
+                        commentPosition = String.valueOf(position);
+                        editCommentLay.setVisibility(View.VISIBLE);
+                        //포커스 주기
+                        editCommentEt.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                editCommentEt.setFocusableInTouchMode(true);
+                                editCommentEt.requestFocus();
+                                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                                assert imm != null;
+                                imm.showSoftInput(editCommentEt, 0);
+
+                                //바텀바 지우기
+                                bottombar.setVisibility(View.GONE);
+
+                            }
+                        });
+
+                        //스크롤 이동
+                        scrollToEnd();
+
+                        editCommentEt.setText(listItems.get(position).getContents());
+
+                        break;
+                    case (R.id.deleteIv):
+                        commentPosition = String.valueOf(position);
+                        commentDelete CD = new commentDelete();
+                        CD.requestPost(listname, idx, commentPosition);
+                        resetCommentList();
+                        break;
+                }
+            }
+        });
+        commentRecycle.setAdapter(adapter);
+        commentRecycle.setVisibility(View.VISIBLE);
+
+    }
+
+    private void setCommentJson(String commentJson) {
+
+        JSONArray comment;
+        listItems.clear();
+        try {
+            JSONObject jsonObj = new JSONObject(commentJson);
+            comment = jsonObj.getJSONArray(TAG_RESULTS);
+
+            for (int i = 0; i < comment.length(); i++) {
+                JSONObject c = comment.getJSONObject(i);
+                listItems.add(new commentItem(String.valueOf(c.get(TAG_ID)), c.getString("listname"),
+                        c.getString(TAG_USERNAME), c.getString(TAG_CONTENTS), ClubList.settingTimes(c.getString(TAG_CREATED))));
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+            Log.d("heu", "adapter Exception : " + e);
+        }
+    }
 
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -433,7 +539,7 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
 
-            if (!commentJson.equals("")){
+            if (!commentJson.equals("")) {
                 //코멘트 객체화
                 setCommentJson(commentJson);
 
@@ -456,17 +562,15 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
 
             Log.d("heu", "리프레시 핸들러!");
 
-            if(myJSON.equals("")) {
-                Log.d("heu", "이프");
+            if (myJSON.equals("")) {
                 refreshPostHandler.sendEmptyMessageDelayed(300, 200);
 
             } else {
-                Log.d("heu", "엘즈");
-                Log.d("heu", "Json : " + myJSON);
+                removeMessages(300);
                 refresh(myJSON);
+                Log.d("heu", "Json : " + myJSON);
                 titleTv.setText(postItem.getTitle());
                 contentsTv.setText(postItem.getContents());
-                removeMessages(300);
             }
 
         }
@@ -514,35 +618,6 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
         }
     }
 
-    private void setCommentlist() {
-
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
-        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        recyclerView.setLayoutManager(layoutManager);
-        CommentAdapter adapter = new CommentAdapter(getApplicationContext(), listItems);
-        recyclerView.setAdapter(adapter);
-
-    }
-
-    private void setCommentJson(String commentJson){
-
-        JSONArray comment;
-        listItems.clear();
-        try {
-            JSONObject jsonObj = new JSONObject(commentJson);
-            comment = jsonObj.getJSONArray(TAG_RESULTS);
-
-            for (int i = 0; i < comment.length(); i++) {
-                JSONObject c = comment.getJSONObject(i);
-                listItems.add(new commentItem(String.valueOf(c.get(TAG_ID)), c.getString("listname"),
-                        c.getString(TAG_USERNAME), c.getString(TAG_CONTENTS), ClubList.settingTimes(c.getString(TAG_CREATED))));
-            }
-        } catch (JSONException e){
-            e.printStackTrace();
-            Log.d("heu", "adapter Exception : " + e);
-        }
-    }
-
     class commentInsert {
 
         RequestBody requestBody;
@@ -568,7 +643,39 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
 
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
-                    Log.d("heu", "응답(코멘트) :" +response.toString());
+                    Log.d("heu", "응답(코멘트) :" + response.toString());
+                }
+            });
+        }
+    }
+
+    class commentUpdate {
+
+        RequestBody requestBody;
+        OkHttpClient client = new OkHttpClient();
+
+        public void requestPost(final String listname, String contents, String postidx, String commentidx) {
+
+            requestBody = new FormBody.Builder().
+                    add("username", MainActivity.mUsername).
+                    add("postidx", postidx).
+                    add("listname", listname).
+                    add("contents", contents).
+                    add("commentidx", commentidx).
+                    build();
+            String url = "http://spotz.co.kr/var/www/html/commentUpdate.php";
+
+            Request request = new Request.Builder().url(url).post(requestBody).build();
+            client.newCall(request).enqueue(new Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
+                    Log.d("heu", "Connect Server Error is " + e.toString());
+
+                }
+
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+                    Log.d("heu", "응답(코멘트) :" + response.toString());
                 }
             });
         }
@@ -597,6 +704,37 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
                     commentJson = response.body().string();
+                }
+            });
+        }
+    }
+
+    class commentDelete {
+
+        RequestBody requestBody;
+        OkHttpClient client = new OkHttpClient();
+
+        public void requestPost(final String listname, String postidx, String commentidx) {
+
+            requestBody = new FormBody.Builder().
+                    add("username", MainActivity.mUsername).
+                    add("postidx", postidx).
+                    add("listname", listname).
+                    add("commentidx", commentidx).
+                    build();
+            String url = "http://spotz.co.kr/var/www/html/commentDelete.php";
+
+            Request request = new Request.Builder().url(url).post(requestBody).build();
+            client.newCall(request).enqueue(new Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
+                    Log.d("heu", "Connect Server Error is " + e.toString());
+
+                }
+
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+                    Log.d("heu", "응답(코멘트) :" + response.toString());
                 }
             });
         }
@@ -729,6 +867,7 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
 
 
     String myJSON = "";
+
     class refreshPost {
         OkHttpClient client = new OkHttpClient();
         Request request;
@@ -752,10 +891,19 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
                     myJSON = response.body().string();
+                    refreshPostHandler.sendEmptyMessage(300);
                 }
             });
 
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        bottombar.setVisibility(View.VISIBLE);
+        editCommentLay.setVisibility(View.INVISIBLE);
+        editCommentEt.setText("");
     }
 
     @Override

@@ -35,9 +35,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity"/>
+        <activity android:name=".MainActivity">
+        <intent-filter>
+            <category android:name="android.intent.category.BROWSABLE"/>
+        </intent-filter>
+        </activity>
         <activity android:name=".ClubList" />
-        <activity android:name=".DetailList" />
+        <activity android:name=".DetailList"
+            android:windowSoftInputMode="adjustResize"
+        />
 
         <service android:name=".fcm.FirebaseInstanceIDService">
             <intent-filter>

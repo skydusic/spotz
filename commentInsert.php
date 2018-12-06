@@ -17,12 +17,46 @@
     $contents=isset($_POST['contents']) ? $_POST['contents'] : '';
 
     if($listname == "freeboard"){
-        echo "프리보드 들어옴";
         $commentCount = "select * from freeboardCO where postidx='$postidx'";
         $countResult = mysqli_query($connect,$commentCount);
         $count = mysqli_num_rows($countResult);
         
         $sql="insert into freeboardCO(contents,username,postidx,commentidx) 
+        values('$contents','$username','$postidx','$count')";
+    } else if($listname == "kbl"){
+        $commentCount = "select * from kblCO where postidx='$postidx'";
+        $countResult = mysqli_query($connect,$commentCount);
+        $count = mysqli_num_rows($countResult);
+        
+        $sql="insert into kblCO(contents,username,postidx,commentidx) 
+        values('$contents','$username','$postidx','$count')";
+    } else if($listname == "nba"){
+        $commentCount = "select * from nbaCO where postidx='$postidx'";
+        $countResult = mysqli_query($connect,$commentCount);
+        $count = mysqli_num_rows($countResult);
+        
+        $sql="insert into nbaCO(contents,username,postidx,commentidx) 
+        values('$contents','$username','$postidx','$count')";
+    } else if($listname == "equip"){
+        $commentCount = "select * from equipCO where postidx='$postidx'";
+        $countResult = mysqli_query($connect,$commentCount);
+        $count = mysqli_num_rows($countResult);
+        
+        $sql="insert into equipCO(contents,username,postidx,commentidx) 
+        values('$contents','$username','$postidx','$count')";
+    } else if($listname == "employ"){
+        $commentCount = "select * from employCO where postidx='$postidx'";
+        $countResult = mysqli_query($connect,$commentCount);
+        $count = mysqli_num_rows($countResult);
+        
+        $sql="insert into employCO(contents,username,postidx,commentidx) 
+        values('$contents','$username','$postidx','$count')";
+    } else if($listname == "compet"){
+        $commentCount = "select * from competCO where postidx='$postidx'";
+        $countResult = mysqli_query($connect,$commentCount);
+        $count = mysqli_num_rows($countResult);
+        
+        $sql="insert into competCO(contents,username,postidx,commentidx) 
         values('$contents','$username','$postidx','$count')";
     }
 
