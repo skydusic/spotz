@@ -156,10 +156,11 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
                         InsertData task = new InsertData();
                         ConnectServer connectServer = new ConnectServer();
                         for (int i = 0; i < imagePathArr.size(); i++) {
+                            Log.d("heu", "파일 올리기 : " + url + MainActivity.mUsername + listName + uriList.get(i).toString());
                             connectServer.requestPost(url, MainActivity.mUsername, listName, uriList.get(i));
                         }
                         for (int i = 0; i < filenameList.size(); i++) {
-                            imageAddress1 += filenameList.get(i).toString();
+                            imageAddress1 += filenameList.get(i);
                             if (filenameList.size() - 1 > i) {
                                 imageAddress1 += ",";
                             }
@@ -173,7 +174,6 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
 
                     }
                 }
-
 
 
             }
@@ -195,15 +195,15 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
         imgFind.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                DelFolder delFolder = new DelFolder();
-                delFolder.requestPost(MainActivity.mUsername, listName);
+                /*DelFolder delFolder = new DelFolder();
+                delFolder.requestPost(MainActivity.mUsername, listName);*/
                 show();
             }
         });
         checkDangerousPermissions();
     }
 
-    public boolean StringFinder(String text){
+    public boolean StringFinder(String text) {
 
 
         return false;
@@ -368,6 +368,7 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
     private void checkDangerousPermissions() {
         String[] permissions = {
                 Manifest.permission.READ_EXTERNAL_STORAGE,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE,
                 Manifest.permission.CAMERA
         };
 
@@ -450,8 +451,9 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         spinnerNumber2 = position;
-        Log.d("heu", "spin Number : " + position);
+//        Log.d("heu", "spin Number : " + position);
     }
+
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
@@ -466,10 +468,10 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
         protected void request(String title, String contents, String serverURL, String username,
                                String image, String listname, String spindata) {
 
-            if(postNum == 1) {
+            if (postNum == 1) {
                 // 수정일 경우 idx 첨부!
 
-                Log.d("heu", "인서트액티비티 Listname : " + listName);
+//                Log.d("heu", "인서트액티비티 Listname : " + listName);
 
                 requestBody = new FormBody.Builder().
                         add("idx", idx).
@@ -570,10 +572,12 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
         }
     }
 
-    /** 욕설 필터링 기능
-     *  서버에서 욕목록을 받아옴
-     * */
+    /**
+     * 욕설 필터링 기능
+     * 서버에서 욕목록을 받아옴
+     */
     String myJSON = "";
+
     class getStringFinderText {
         OkHttpClient client = new OkHttpClient();
         Request request;
@@ -582,7 +586,7 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
             RequestBody requestBody = new FormBody.Builder().
                     build();
 
-            request = new Request.Builder().url(url+"getStringFinderText/").post(requestBody).build();
+            request = new Request.Builder().url(url + "getStringFinderText/").post(requestBody).build();
             client.newCall(request).enqueue(new okhttp3.Callback() {
                 @Override
                 public void onFailure(Call call, IOException e) {

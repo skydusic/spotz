@@ -105,6 +105,8 @@ public class ActionDetailActivity extends AppCompatActivity {
             Log.d("heu", "adapter ETC Excep : " + e);
         }
 
+        Log.d("heu", "리스트 Arr : " + listArr.toString());
+
         LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
@@ -125,7 +127,6 @@ public class ActionDetailActivity extends AppCompatActivity {
                             Intent intent = new Intent(ActionDetailActivity.this, DetailList.class);
                             intent.putExtra("idx", item.getIdx());
                             intent.putExtra("listname", item.getListname());
-                            intent.putExtra("idx", item.getIdx());
                             intent.putExtra("username", item.getUsername());
                             intent.putExtra("image", item.getImage());
                             intent.putExtra("contents", item.getContents());
@@ -161,6 +162,7 @@ public class ActionDetailActivity extends AppCompatActivity {
             // 0 -> 새글 1 -> 수정
             intent.putExtra("postNum", 1);
             intent.putExtra("idx", item.getIdx());
+            intent.putExtra("title", item.getTitle());
             intent.putExtra("contents", item.getContents());
             intent.putExtra("username", item.getUsername());
             intent.putExtra("image", item.getImage());
@@ -228,7 +230,7 @@ public class ActionDetailActivity extends AppCompatActivity {
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
                     Json = response.body().string();
-
+                    Log.d("heu", "Json : " + Json);
                 }
             });
         }

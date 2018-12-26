@@ -11,7 +11,6 @@ if (!$link)
    exit();
 }  
 
-
 mysqli_set_charset($link,"utf8");  
 
 //POST 값을 읽어온다.
@@ -24,7 +23,6 @@ $spindata=isset($_POST['spindata']) ? $_POST['spindata'] : '';
 
 if($listname == "freeboard"){
     $sql="insert into freeboard(title,contents,username,image,spindata) values('$title','$contents','$username','$image','$spindata')";
-    
 } else if ($listname == "kbl"){
     $sql="insert into kbl(title,contents,username,image,spindata) values('$title','$contents','$username','$image','$spindata')";
 } else if ($listname == "nba"){
@@ -37,7 +35,32 @@ if($listname == "freeboard"){
     $sql="insert into compet(title,contents,username,image,spindata) values('$title','$contents','$username','$image','$spindata')";
 }
 
-$result=mysqli_query($link,$sql);  
+$result=mysqli_query($link,$sql);
+
+if($listname == "freeboard"){
+    $sql = "select * from freeboard WHERE username = '$username' order by created desc";
+} else if($listname == "kbl"){
+    $sql = "select * from kbl WHERE username = '$username' order by created desc";
+} else if($listname == "nba"){
+    $sql = "select * from nba WHERE username = '$username' order by created desc";
+} else if($listname == "equip"){
+    $sql = "select * from equip WHERE username = '$username' order by created desc";
+} else if($listname == "employ"){
+    $sql = "select * from employ WHERE username = '$username' order by created desc";
+} else if($listname == "compet"){
+    $sql = "select * from compet WHERE username = '$username' order by created desc";
+}
+
+$result = mysqli_query($link,$sql);
+$total_record = mysqli_num_rows($result);
+
+mysqli_data_seek($result, 0);
+$row = mysqli_fetch_array($result);
+
+$sql ="insert into postlist (username,postidx,listname) values('$username','$row[idx]','$listname')";
+
+$result = mysqli_query($link,$sql);
+
 if($result){
    echo "SQL문 처리 성공";
 }
@@ -45,6 +68,5 @@ else{
    echo "SQL문 처리중 에러 발생 : ";
    echo mysqli_error($link);
 }
-
 mysqli_close($link);
 ?>

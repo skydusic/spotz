@@ -1,6 +1,8 @@
 package addup.fpcompany.com.addsup;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -15,6 +17,7 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.ads.AdRequest;
@@ -38,6 +41,7 @@ import addup.fpcompany.com.addsup.adapter.PagerAdapter;
 import addup.fpcompany.com.addsup.frag.adfrag;
 import addup.fpcompany.com.addsup.java.favoriteItem;
 import okhttp3.Call;
+import okhttp3.Callback;
 import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -45,9 +49,10 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class MainActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener, View.OnClickListener,
-        GoogleApiClient.OnConnectionFailedListener, View.OnTouchListener{
+        GoogleApiClient.OnConnectionFailedListener, View.OnTouchListener {
 
     ViewPager mainTopPager;
+    TextView hyperLinkTv;
     int pagerPos = 0;
     ImageView btnOne;
     ImageView btnTwo;
@@ -77,6 +82,8 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
     public static String serverUrl = "";
     static ArrayList<String> spinList1 = new ArrayList<>();
 
+    AlertDialog.Builder mDialog;
+
     @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,6 +91,7 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
         setContentView(R.layout.activity_main);
 
         mainTopPager = findViewById(R.id.mainTopPager);
+        hyperLinkTv = findViewById(R.id.hyperLinkTv);
         btnOne = findViewById(R.id.btnOne);
         btnTwo = findViewById(R.id.btnTwo);
         btnThree = findViewById(R.id.btnthree);
@@ -112,8 +120,8 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
 
         // 광고 이미지 주소 받아오기, 프래그먼트 설정
         ADset();
+        handler.sendEmptyMessageDelayed(0, 3500);
 
-        handler.sendEmptyMessageDelayed(0, 2000);
         // 파이어베이스 구글로그인
         if (mUser == null) {
             //로그인 안한 상태
@@ -147,6 +155,14 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
             fav.requestPost(mUsername);
         }
 
+//      블랙리스트
+        getBlackList getB = new getBlackList();
+        getB.requestPost(mUsername);
+
+//        업데이트 확인
+        checkVersion();
+
+
 //        클릭 리스너
         btnOne.setOnClickListener(this);
         btnTwo.setOnClickListener(this);
@@ -154,7 +170,39 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
         btnFour.setOnClickListener(this);
         btnFive.setOnClickListener(this);
         btnSix.setOnClickListener(this);
-        mainTopPager.setOnTouchListener(this);
+        hyperLinkTv.setOnClickListener(this);
+
+    }
+
+    public void checkVersion() {
+
+        mDialog = new AlertDialog.Builder(this);
+
+        if (SplashActivity.store_version.compareTo(SplashActivity.device_version) > 0) {
+            /**
+             *   업데이트 필요
+             * */
+
+            mDialog.setMessage("업데이트 후 사용해주세요.")
+                    .setCancelable(false)
+                    .setPositiveButton("업데이트 바로가기",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog,
+                                                    int id) {
+                                    Intent marketLaunch = new Intent(
+                                            Intent.ACTION_VIEW);
+                                    marketLaunch.setData(Uri
+                                            .parse("https://play.google.com/store/apps/details?id=" + getPackageName()));
+                                    startActivity(marketLaunch);
+                                    finish();
+                                }
+                            });
+            AlertDialog alert = mDialog.create();
+            alert.setTitle("안 내");
+            alert.show();
+
+
+        }
     }
 
     private void ADset() {
@@ -181,12 +229,12 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
         }
     };
 
+    @SuppressLint("ClickableVieswAccessi  bility")
     @Override
     public boolean onTouch(View v, MotionEvent event) {
-        if (event.getAction() == 0xff) {
-            Intent urlintent = new Intent(Intent.ACTION_VIEW, Uri.parse(adUrl.get(pagerPos)));
-            startActivity(urlintent);
-        }
+
+        Intent urlintent = new Intent(Intent.ACTION_VIEW, Uri.parse(adUrl.get(pagerPos)));
+        startActivity(urlintent);
 
         return false;
     }
@@ -235,6 +283,7 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
             return null;
         }
 
+        @SuppressLint("ClickableViewAccessibility")
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
@@ -242,7 +291,6 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
             JSONObject jsonObj = null;
             try {
 
-                Log.d("heu", "JSON : " + s);
                 jsonObj = new JSONObject(s);
 
                 String[] temp = jsonObj.getString("image").split(",");
@@ -349,6 +397,56 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
         }
     }
 
+    public static class getBlackList {
+        //Client 생성
+        OkHttpClient client = new OkHttpClient();
+        String result;
+        ArrayList<String> bList = new ArrayList<>();
+
+        public void requestPost(String username) {
+
+            //Request Body에 서버에 보낼 데이터 작성
+            RequestBody requestBody = new FormBody.Builder().
+                    add("username", username).
+                    build();
+            String url = "http://spotz.co.kr/var/www/html/blackList.php";
+
+            Request request = new Request.Builder().url(url).post(requestBody).build();
+            client.newCall(request).enqueue(new Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
+                    Log.d("heu", "Connect Server Error is " + e.toString());
+                }
+
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+//                    Log.d("heu", "hitupdate res : " + response.body().string());
+                    result = response.body().string();
+
+                    try {
+                        JSONObject jsonObj = new JSONObject(result);
+                        String[] temp = jsonObj.getString("blacklist").split(",");
+                        bList.addAll(Arrays.asList(temp));
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        Log.d("heu", "adapter Exception : " + e);
+                    }
+
+                    Log.d("heu", "블랙리스트 : " + result);
+                    Log.d("heu", "블랙리스트 : " + bList.toString());
+
+                    for (int i = 0; i < bList.size(); i++) {
+                        if (mUsername.equals(bList.get(i))) {
+                            FirebaseAuth.getInstance().signOut();
+                        }
+                    }
+
+                }
+            });
+        }
+    }
+
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
@@ -388,7 +486,10 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
                 startActivity(intent);
                 break;
 
-            case (R.id.mainTopPager):
+            case (R.id.hyperLinkTv):
+
+                Intent urlintent = new Intent(Intent.ACTION_VIEW, Uri.parse(adUrl.get(pagerPos)));
+                startActivity(urlintent);
 
                 break;
 
@@ -429,21 +530,22 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
     @Override
     public void onPageSelected(int position) {
         pagerPos = position;
-        handler.sendEmptyMessageDelayed(0, 2000);
+        handler.sendEmptyMessageDelayed(0, 3500);
     }
 
     @Override
     public void onPageScrollStateChanged(int state) {
         if (state == ViewPager.SCROLL_STATE_IDLE) {
 //            Log.d("heu", "State IDLE");
-            handler.sendEmptyMessageDelayed(0, 2000);
+            hyperLinkTv.setVisibility(View.VISIBLE);
+            handler.sendEmptyMessageDelayed(0, 3500);
 
         } else if (state == ViewPager.SCROLL_STATE_DRAGGING) {
 //            Log.d("heu", "State Draging");
+            hyperLinkTv.setVisibility(View.GONE);
             handler.removeMessages(0);
 
         } else if (state == ViewPager.SCROLL_STATE_SETTLING) {
-
 //            Log.d("heu", "State Settling");
         }
     }

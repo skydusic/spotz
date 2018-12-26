@@ -48,7 +48,7 @@ public class infoActivity extends AppCompatActivity implements View.OnClickListe
     String repoter = "";
     String created = "";
     String image = "";
-    String flag = "";
+    String flag = "info";
     String report = "";
 
     @Override
@@ -66,7 +66,9 @@ public class infoActivity extends AppCompatActivity implements View.OnClickListe
         reportET = findViewById(R.id.reportEt);
 
         Intent infoIntent = getIntent();
-        flag = infoIntent.getStringExtra("flag");
+        if(infoIntent.getStringExtra("flag") != null){
+            flag = infoIntent.getStringExtra("flag");
+        }
         listname = infoIntent.getStringExtra("listname");
         idx = infoIntent.getStringExtra("idx");
         title = infoIntent.getStringExtra("title");

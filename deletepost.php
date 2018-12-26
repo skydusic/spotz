@@ -27,31 +27,20 @@ if($username == 'Duil Song'){
 }
 
 if($listname == "freeboard"){
-    
     $sql1 = "delete from freeboard where idx = '$idx'";
-    $sql2 = "delete from postlist where postidx = '$idx' AND listname = '$listname' AND username = '$username'";
-    
-} else if($listname == "freelancer"){
-    $sql1 = "delete from freelancer where idx = '$idx'";
-    $sql2 = "delete from freeextension where postidx = '$idx'";
-    $sql3 = "delete from postlist where postidx = '$idx' AND listname = '$listname' AND username = '$username'";
-} else if($listname == "competition"){
-    $sql1 = "delete from competition where idx = '$idx'";
-    $sql2 = "delete from competitionextension where postidx = '$idx'";
-    $sql3 = "delete from postlist where postidx = '$idx' AND listname = '$listname' AND username = '$username'";
-} else if($listname == "dongho"){
-    $sql1 = "delete from dongho where idx = '$idx'";
-    $sql2 = "delete from donghoextension where postidx = '$idx'";
-    $sql3 = "delete from postlist where postidx = '$idx' AND listname = '$listname' AND username = '$username'";
-} else if($listname == "review"){
-    $sql1 = "delete from review where idx = '$idx'";
-    $sql2 = "delete from reviewextension where postidx = '$idx'";
-    $sql3 = "delete from postlist where postidx = '$idx' AND listname = '$listname' AND username = '$username'";
-} else if($listname == "employment"){
-    $sql1 = "delete from employment where idx = '$idx'";
-    $sql2 = "delete from employmentextension where postidx = '$idx'";
-    $sql3 = "delete from postlist where postidx = '$idx' AND listname = '$listname' AND username = '$username'";
+} else if($listname == "kbl"){
+    $sql1 = "delete from kbl where idx = '$idx'";
+} else if($listname == "nba"){
+    $sql1 = "delete from nba where idx = '$idx'";
+} else if($listname == "equip"){
+    $sql1 = "delete from equip where idx = '$idx'";
+} else if($listname == "employ"){
+    $sql1 = "delete from employ where idx = '$idx'";
+} else if($listname == "compet"){
+    $sql1 = "delete from compet where idx = '$idx'";
 }
+
+$sql2 = "delete from postlist where postidx = '$idx' AND listname = '$listname' AND username = '$username'";
 
 $delboardIns="insert into DeleteTable(title,contents,username,created,listname,remover) values('$title','$contents','$username','$created','$listname','$removername')";
 

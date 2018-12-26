@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Spotz</string>
+    <string name="app_name">농구박사</string>
     <string name="topbar1">공지사항1</string>
     <string name="topbar2">공지사항2</string>
     <string name="topbar3">공지사항3</string>
@@ -34,6 +34,6 @@
     <string name="input">등록</string>
     <string name="reportText">신고</string>
     <string name="reportTv">신고내용</string>
-
+    <string name="hyperLink">자세히 보기</string>
 
 </resources>

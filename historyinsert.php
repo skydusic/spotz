@@ -62,6 +62,7 @@
 
     $sql ="insert into history (username,postidx,listname) values('$username','$postidx','$listname')";
     $result3 = mysqli_query($link,$sql);
+    
     if($result3){
        echo "SQL문 insert 처리 성공";
     }

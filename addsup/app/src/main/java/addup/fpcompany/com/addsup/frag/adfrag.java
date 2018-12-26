@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
@@ -21,6 +22,7 @@ public class adfrag extends android.support.v4.app.Fragment {
 
     String imgsrc;
     ImageView imgView;
+    TextView hyperLinkTv;
 
     public adfrag(String imgsrc) {
         this.imgsrc = imgsrc;
@@ -33,6 +35,7 @@ public class adfrag extends android.support.v4.app.Fragment {
 
         imgView = layout.findViewById(R.id.imgView);
         Glide.with(this).load(imgsrc).into(imgView);
+        hyperLinkTv = layout.findViewById(R.id.hyperLinkTv);
 
         return layout;
     }

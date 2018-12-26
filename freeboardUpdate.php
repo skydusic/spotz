@@ -24,21 +24,16 @@ $spindata=isset($_POST['spindata']) ? $_POST['spindata'] : '';
 
 if($listname == 'freeboard'){
     $sql="update freeboard set title = '$title',contents = '$contents', image ='$image', spindata = '$spindata' WHERE idx = '$idx'";
-} else if ($listname == 'freelancer'){
-    $sql="update freelancer set contents = '$contents', image ='$image', spindata1 = '$spindata1', spindata2 = '$spindata2' WHERE idx = '$idx'";
-    $sql2="update freeextension set name = '$text1', sports = '$text2', location = '$text3', phone = '$text4', etc = '$text5' WHERE postidx = '$idx'";
-} else if ($listname == 'competition'){
-    $sql="update competition set contents = '$contents', image ='$image', spindata1 = '$spindata1', spindata2 = '$spindata2' WHERE idx = '$idx'";
-    $sql2="update competitionextension set name = '$text1', sports = '$text2', location = '$text3', phone = '$text4', etc = '$text5' WHERE postidx = '$idx'";
-} else if ($listname == 'dongho'){
-    $sql="update dongho set contents = '$contents', image ='$image', spindata1 = '$spindata1', spindata2 = '$spindata2' WHERE idx = '$idx'";
-    $sql2="update donghoextension set name = '$text1', sports = '$text2', location = '$text3', time = '$text4', phone = '$text5' WHERE postidx = '$idx'";
-} else if ($listname == 'review'){
-    $sql="update review set contents = '$contents', image ='$image', spindata1 = '$spindata1', spindata2 = '$spindata2' WHERE idx = '$idx'";
-    $sql2="update reviewextension set product = '$text1', wheretobuy = '$text2', price = '$text3', grade = '$text4', etc = '$text5' WHERE postidx = '$idx'";
-} else if ($listname == 'employment'){
-    $sql="update employment set contents = '$contents', image ='$image', spindata1 = '$spindata1', spindata2 = '$spindata2' WHERE idx = '$idx'";
-    $sql2="update employmentextension set company = '$text1', location = '$text2', salary = '$text3', calendar = '$text4', etc = '$text5' WHERE postidx = '$idx'";
+} else if ($listname == 'kbl'){
+    $sql="update kbl set title = '$title',contents = '$contents', image ='$image', spindata = '$spindata' WHERE idx = '$idx'";
+} else if ($listname == 'nba'){
+    $sql="update nba set title = '$title',contents = '$contents', image ='$image', spindata = '$spindata' WHERE idx = '$idx'";
+} else if ($listname == 'equip'){
+    $sql="update equip set title = '$title',contents = '$contents', image ='$image', spindata = '$spindata' WHERE idx = '$idx'";
+} else if ($listname == 'employ'){
+    $sql="update employ set title = '$title',contents = '$contents', image ='$image', spindata = '$spindata' WHERE idx = '$idx'";
+} else if ($listname == 'compet'){
+    $sql="update compet set title = '$title',contents = '$contents', image ='$image', spindata = '$spindata' WHERE idx = '$idx'";
 }
 $result=mysqli_query($link,$sql);  
 if($result){

@@ -64,4 +64,19 @@ public class listItem {
     public String getSpindata(){
         return spindata;
     }
+
+    @Override
+    public String toString() {
+        return "listItem{" +
+                "idx='" + idx + '\'' +
+                ", title='" + title + '\'' +
+                ", username='" + username + '\'' +
+                ", contents='" + contents + '\'' +
+                ", image='" + image + '\'' +
+                ", created='" + created + '\'' +
+                ", listname='" + listname + '\'' +
+                ", hit='" + hit + '\'' +
+                ", spindata='" + spindata + '\'' +
+                '}';
+    }
 }

@@ -5,7 +5,6 @@ import android.graphics.Typeface;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -17,7 +16,7 @@ import addup.fpcompany.com.addsup.MainActivity;
 import addup.fpcompany.com.addsup.R;
 import addup.fpcompany.com.addsup.java.commentItem;
 
-public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHolder> implements RecyclerView.OnItemTouchListener{
+public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHolder> {
 
     Context context;
     ArrayList<commentItem> listArr;
@@ -76,21 +75,6 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
     @Override
     public int getItemCount() {
         return listArr.size();
-    }
-
-    @Override
-    public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
-        return false;
-    }
-
-    @Override
-    public void onTouchEvent(RecyclerView rv, MotionEvent e) {
-
-    }
-
-    @Override
-    public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
-
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {

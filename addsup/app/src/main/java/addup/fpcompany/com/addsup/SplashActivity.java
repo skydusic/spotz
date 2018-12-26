@@ -29,11 +29,14 @@ public class SplashActivity extends AppCompatActivity {
     private int RC_SIGN_IN = 10;
 
     GoogleSignInAccount account;
-    String store_version = "";
-    String device_version = "";
+    static String store_version = "";
+    static String device_version = "";
+    int device_versionCode;
     static int makeMsg = 0;
 
     Intent intent;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +45,6 @@ public class SplashActivity extends AppCompatActivity {
 //        setContentView(R.layout.splash_act);
 
         intent = new Intent(this, MainActivity.class);
-
 
         //푸시키 받기, 저장된 값이 있는가
 
@@ -58,19 +60,14 @@ public class SplashActivity extends AppCompatActivity {
         //설치된 앱버전
         try {
             device_version = getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
+            device_versionCode = getPackageManager().getPackageInfo(getPackageName(), 0).versionCode;
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
 
-        if (store_version.compareTo(device_version) > 0) {
-            // 업데이트 필요
-
-        } else {
-            // 업데이트 불필요
-        }
-
         Log.d("heu", "마켓 버전 : " + store_version);
         Log.d("heu", "디바이스 버전 : " + device_version);
+        Log.d("heu", "디바이스 버전코드 : " + device_versionCode);
 
         startMain();
 

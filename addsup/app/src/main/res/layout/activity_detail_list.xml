@@ -50,7 +50,7 @@
                 android:layout_alignParentEnd="true"
                 android:padding="5dp"
                 android:src="@drawable/blackstar"
-                android:visibility="invisible" />
+                android:visibility="gone" />
 
             <ImageView
                 android:id="@+id/reportBt"
@@ -84,8 +84,9 @@
             <android.support.v4.view.ViewPager
                 android:id="@+id/viewPager"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="200dp"
                 android:layout_below="@+id/titleTv"
+                android:layout_marginTop="70dp"
                 android:layout_marginBottom="5dp" />
 
 
@@ -260,9 +261,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/viewPager"
-                android:minHeight="300dp"
+                android:minHeight="150dp"
                 android:padding="25dp"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:gravity="center_vertical"/>
 
             <View
                 android:id="@+id/horizontalView"

@@ -7,7 +7,7 @@
     $file_path = "userImageFolder/".$listname."/";
     chdir($file_path);
 
-    if(!is_dir($username)){
+    if(!is_dir("$username")){
         mkdir("$username", 0755, false);
     }
     chdir('../');

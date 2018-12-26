@@ -20,7 +20,8 @@
             android:layout_height="80dp"
             android:layout_gravity="bottom"
             android:gravity="center"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:visibility="gone">
 
             <TextView
                 android:id="@+id/upBtn"

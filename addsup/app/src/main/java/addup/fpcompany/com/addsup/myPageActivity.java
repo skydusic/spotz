@@ -56,6 +56,10 @@ public class myPageActivity extends AppCompatActivity implements View.OnClickLis
 
         getActionList();
 
+//        블랙리스트
+        MainActivity.getBlackList getB = new MainActivity.getBlackList();
+        getB.requestPost(MainActivity.mUsername);
+
         actionList.addOnItemTouchListener(new RecyclerItemClickListener(this, actionList, new RecyclerItemClickListener.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
@@ -75,7 +79,7 @@ public class myPageActivity extends AppCompatActivity implements View.OnClickLis
     private void getActionList() {
 
         actionArr.add("내 글 보기");
-        actionArr.add("즐겨찾기");
+//        actionArr.add("즐겨찾기");
         actionArr.add("최근 본 글");
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());

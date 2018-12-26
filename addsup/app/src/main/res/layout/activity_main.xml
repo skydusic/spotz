@@ -5,22 +5,45 @@
     android:id="@+id/myCoordinator"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="addup.fpcompany.com.addsup.MainActivity"
-    android:background="#ffffff">
+    android:background="#ffffff"
+    tools:context="addup.fpcompany.com.addsup.MainActivity">
 
-    <android.support.v4.view.ViewPager
-        android:id="@+id/mainTopPager"
-        android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:layout_marginBottom="5dp"
-        android:layout_marginTop="5dp" />
+    <RelativeLayout
+        android:id="@+id/topLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="150dp">
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/mainTopPager"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp" />
+
+        <TextView
+            android:id="@+id/hyperLinkTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:padding="3dp"
+            android:layout_margin="5dp"
+            android:textSize="14sp"
+            android:text="@string/hyperLink"
+            android:visibility="visible"
+            android:background="@drawable/back"
+            />
+
+    </RelativeLayout>
+
+
 
     <LinearLayout
         android:id="@+id/categoryLay"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/adView"
-        android:layout_below="@+id/mainTopPager"
+        android:layout_below="@+id/topLayout"
         android:orientation="vertical">
 
         <RelativeLayout

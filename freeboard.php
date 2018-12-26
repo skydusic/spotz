@@ -66,18 +66,19 @@
         $row = mysqli_fetch_array($result);
         
         if($listname == "freeboard"){
-            echo "{\"listname\":\"freeboard\",\"idx\":$row[idx],\"title\":\"$row[title]\",\"contents\":\"$row[contents]\",\"username\":\"$row[username]\",\"created\":\"$row[created]\",\"hit\":\"$row[hit]\",\"image\":\"$row[image]\",\"spindata\":\"$row[spindata]\"}";
+            echo "{\"listname\":\"freeboard\",";
         } else if ($listname == "kbl"){
-            echo "{\"listname\":\"kbl\",\"idx\":$row[idx],\"title\":\"$row[title]\",\"contents\":\"$row[contents]\",\"username\":\"$row[username]\",\"created\":\"$row[created]\",\"hit\":\"$row[hit]\",\"image\":\"$row[image]\",\"spindata\":\"$row[spindata]\"}";
+            echo "{\"listname\":\"kbl\",";
         } else if ($listname == "nba"){
-            echo "{\"listname\":\"nba\",\"idx\":$row[idx],\"title\":\"$row[title]\",\"contents\":\"$row[contents]\",\"username\":\"$row[username]\",\"created\":\"$row[created]\",\"hit\":\"$row[hit]\",\"image\":\"$row[image]\",\"spindata\":\"$row[spindata]\"}";
+            echo "{\"listname\":\"nba\",";
         } else if ($listname == "equip"){
-            echo "{\"listname\":\"equip\",\"idx\":$row[idx],\"title\":\"$row[title]\",\"contents\":\"$row[contents]\",\"username\":\"$row[username]\",\"created\":\"$row[created]\",\"hit\":\"$row[hit]\",\"image\":\"$row[image]\",\"spindata\":\"$row[spindata]\"}";
+            echo "{\"listname\":\"equip\",";
         } else if ($listname == "employ"){
-            echo "{\"listname\":\"employ\",\"idx\":$row[idx],\"title\":\"$row[title]\",\"contents\":\"$row[contents]\",\"username\":\"$row[username]\",\"created\":\"$row[created]\",\"hit\":\"$row[hit]\",\"image\":\"$row[image]\",\"spindata\":\"$row[spindata]\"}";
+            echo "{\"listname\":\"employ\",";
         } else if ($listname == "compet"){
-            echo "{\"listname\":\"compet\",\"idx\":$row[idx],\"title\":\"$row[title]\",\"contents\":\"$row[contents]\",\"username\":\"$row[username]\",\"created\":\"$row[created]\",\"hit\":\"$row[hit]\",\"image\":\"$row[image]\",\"spindata\":\"$row[spindata]\"}";
+            echo "{\"listname\":\"compet\",";
         }
+        echo "\"idx\":$row[idx],\"title\":\"$row[title]\",\"contents\":\"$row[contents]\",\"username\":\"$row[username]\",\"created\":\"$row[created]\",\"hit\":\"$row[hit]\",\"image\":\"$row[image]\",\"spindata\":\"$row[spindata]\"}";
         
         if($i<$total_record-1){
           echo ",";

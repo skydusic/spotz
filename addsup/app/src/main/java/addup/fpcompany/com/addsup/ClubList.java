@@ -270,20 +270,28 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
         String[] temp1 = created.split(" ");
         String[] temp2 = temp1[0].split("-");
 
-        for (int k = 0; k < temp2.length; k++) {
-            result.add(temp2[k]);
-        }
-        String[] temp3 = temp1[1].split(":");
-        for (int j = 0; j < temp3.length; j++) {
-            result.add(temp3[j]);
-        }
+        Log.d("heu", "created : " + created);
+        Log.d("heu", "created length : " + created.length());
 
-        //                yyyy-MM-dd HH:mm:ss
-        String curtime = new SimpleDateFormat("dd").format(new Date(System.currentTimeMillis()));
-      if (result.get(2).equals(curtime)) {
-            time = result.get(3) + " : " + result.get(4);
+        if (created.length() > 10) {
+
+            for (int k = 0; k < temp2.length; k++) {
+                result.add(temp2[k]);
+            }
+            String[] temp3 = temp1[1].split(":");
+            for (int j = 0; j < temp3.length; j++) {
+                result.add(temp3[j]);
+            }
+
+            //                yyyy-MM-dd HH:mm:ss
+            String curtime = new SimpleDateFormat("dd").format(new Date(System.currentTimeMillis()));
+            if (result.get(2).equals(curtime)) {
+                time = result.get(3) + " : " + result.get(4);
+            } else {
+                time = result.get(1) + "/" + result.get(2);
+            }
         } else {
-            time = result.get(1) + "/" + result.get(2);
+            return created;
         }
 
         return time;
@@ -310,7 +318,7 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
                     myJSON = response.body().string();
-                    Log.d("heu", "JSON :" +myJSON);
+                    Log.d("heu", "JSON :" + myJSON);
                 }
             });
 
@@ -346,7 +354,7 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
 
             case (R.id.bottomInfo):
                 intent = new Intent(ClubList.this, infoActivity.class);
-                intent.putExtra("flag","info");
+                intent.putExtra("flag", "info");
                 startActivity(intent);
                 break;
 
