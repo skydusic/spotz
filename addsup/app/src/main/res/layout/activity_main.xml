@@ -52,6 +52,12 @@
             android:layout_weight="1"
             android:padding="5dp">
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_alignParentTop="true"
+                android:background="#acacac" />
+
             <ImageView
                 android:id="@+id/btnOne"
                 android:layout_width="wrap_content"

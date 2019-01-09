@@ -13,7 +13,6 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
@@ -75,7 +74,7 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
     static FirebaseAuth mAuth;
     static FirebaseUser mUser;
     static public String mUsername;
-    static String mUsermail;
+    static public String mUsermail;
     static String mPhotoUrl;
     int makeMsg = 0;
 
@@ -251,7 +250,6 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
             try (Response response = client.newCall(request).execute()) {
                 return response.body().string();
             } catch (IOException e) {
-                Log.d("heu", "서버접속 에러(메인) : " + e);
                 e.printStackTrace();
             }
 
@@ -276,7 +274,7 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
             try (Response response = client.newCall(request).execute()) {
                 return response.body().string();
             } catch (IOException e) {
-                Log.d("heu", "서버접속 에러(메인) : " + e);
+//                Log.d("heu", "서버접속 에러(메인) : " + e);
                 e.printStackTrace();
             }
 
@@ -331,7 +329,6 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
             try (Response response = client.newCall(request).execute()) {
                 return response.body().string();
             } catch (IOException e) {
-                Log.d("heu", "서버접속 에러(메인) : " + e);
                 e.printStackTrace();
             }
 
@@ -352,7 +349,7 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
 
             } catch (JSONException e) {
                 e.printStackTrace();
-                Log.d("heu", "adapter Exception : " + e);
+//                Log.d("heu", "adapter Exception : " + e);
             }
 
         }
@@ -374,7 +371,6 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
             client.newCall(request).enqueue(new okhttp3.Callback() {
                 @Override
                 public void onFailure(Call call, IOException e) {
-                    Log.d(TAG, "Connect Server Error is " + e.toString());
 
                 }
 
@@ -415,7 +411,7 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
             client.newCall(request).enqueue(new Callback() {
                 @Override
                 public void onFailure(Call call, IOException e) {
-                    Log.d("heu", "Connect Server Error is " + e.toString());
+//                    Log.d("heu", "Connect Server Error is " + e.toString());
                 }
 
                 @Override
@@ -430,11 +426,7 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
 
                     } catch (JSONException e) {
                         e.printStackTrace();
-                        Log.d("heu", "adapter Exception : " + e);
                     }
-
-                    Log.d("heu", "블랙리스트 : " + result);
-                    Log.d("heu", "블랙리스트 : " + bList.toString());
 
                     for (int i = 0; i < bList.size(); i++) {
                         if (mUsername.equals(bList.get(i))) {
@@ -464,25 +456,25 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
 
             case (R.id.btnthree):
                 intent = new Intent(MainActivity.this, ClubList.class);
-                intent.putExtra("listName", "freeboard");
+                intent.putExtra("listName", "equip");
                 startActivity(intent);
                 break;
 
             case (R.id.btnFour):
                 intent = new Intent(MainActivity.this, ClubList.class);
-                intent.putExtra("listName", "equip");
+                intent.putExtra("listName", "compet");
                 startActivity(intent);
                 break;
 
             case (R.id.btnFive):
                 intent = new Intent(MainActivity.this, ClubList.class);
-                intent.putExtra("listName", "employ");
+                intent.putExtra("listName", "freeboard");
                 startActivity(intent);
                 break;
 
             case (R.id.btnSix):
                 intent = new Intent(MainActivity.this, ClubList.class);
-                intent.putExtra("listName", "compet");
+                intent.putExtra("listName", "qna");
                 startActivity(intent);
                 break;
 
@@ -537,8 +529,10 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
     public void onPageScrollStateChanged(int state) {
         if (state == ViewPager.SCROLL_STATE_IDLE) {
 //            Log.d("heu", "State IDLE");
-            hyperLinkTv.setVisibility(View.VISIBLE);
-            handler.sendEmptyMessageDelayed(0, 3500);
+            if(!adUrl.get(pagerPos).equals("")){
+                hyperLinkTv.setVisibility(View.VISIBLE);
+                handler.sendEmptyMessageDelayed(0, 3500);
+            }
 
         } else if (state == ViewPager.SCROLL_STATE_DRAGGING) {
 //            Log.d("heu", "State Draging");
@@ -592,7 +586,7 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-        Log.d(TAG, "onConnectionFailed:" + connectionResult);
+//        Log.d(TAG, "onConnectionFailed:" + connectionResult);
     }
 }
 

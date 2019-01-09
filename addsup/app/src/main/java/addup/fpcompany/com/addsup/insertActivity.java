@@ -18,7 +18,6 @@ import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -156,7 +155,6 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
                         InsertData task = new InsertData();
                         ConnectServer connectServer = new ConnectServer();
                         for (int i = 0; i < imagePathArr.size(); i++) {
-                            Log.d("heu", "파일 올리기 : " + url + MainActivity.mUsername + listName + uriList.get(i).toString());
                             connectServer.requestPost(url, MainActivity.mUsername, listName, uriList.get(i));
                         }
                         for (int i = 0; i < filenameList.size(); i++) {
@@ -317,7 +315,7 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
         try {
             filecopy(from, to);
         } catch (FileNotFoundException e) {
-            Log.d(TAG, strFileName + "File not exist");
+//            Log.d(TAG, strFileName + "File not exist");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -357,7 +355,6 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
             out = new FileOutputStream(to).getChannel();
             in.transferTo(0, in.size(), out);
         } catch (Exception e) {
-            Log.d(TAG, "파일이동 E : " + e);
             e.printStackTrace();
         } finally {
             if (out != null) out.close();
@@ -497,12 +494,12 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
             client.newCall(request).enqueue(new Callback() {
                 @Override
                 public void onFailure(Call call, IOException e) {
-                    Log.d(TAG, "Connect Server Error is " + e.toString());
+//                    Log.d(TAG, "Connect Server Error is " + e.toString());
                 }
 
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
-                    Log.d(TAG, "Response Body is " + response.body().string());
+//                    Log.d(TAG, "Response Body is " + response.body().string());
                 }
             });
 
@@ -529,12 +526,12 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
             client.newCall(request).enqueue(new Callback() {
                 @Override
                 public void onFailure(Call call, IOException e) {
-                    Log.d(TAG, "Connect Server Error is " + e.toString());
+//                    Log.d(TAG, "Connect Server Error is " + e.toString());
                 }
 
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
-                    Log.d(TAG, "Response Body is " + response.body().string());
+//                    Log.d(TAG, "Response Body is " + response.body().string());
                 }
             });
         }
@@ -561,12 +558,12 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
             client.newCall(request).enqueue(new Callback() {
                 @Override
                 public void onFailure(Call call, IOException e) {
-                    Log.d(TAG, "Connect Server Error is " + e.toString());
+//                    Log.d(TAG, "Connect Server Error is " + e.toString());
                 }
 
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
-                    Log.d(TAG, "Response Body is " + response.body().string());
+//                    Log.d(TAG, "Response Body is " + response.body().string());
                 }
             });
         }
@@ -590,7 +587,7 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
             client.newCall(request).enqueue(new okhttp3.Callback() {
                 @Override
                 public void onFailure(Call call, IOException e) {
-                    Log.d("heu", "Connect Server Error is " + e.toString());
+//                    Log.d("heu", "Connect Server Error is " + e.toString());
 
                 }
 
@@ -616,12 +613,12 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
             client.newCall(request).enqueue(new Callback() {
                 @Override
                 public void onFailure(Call call, IOException e) {
-                    Log.d(TAG, "Connect Server Error is " + e.toString());
+//                    Log.d(TAG, "Connect Server Error is " + e.toString());
                 }
 
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
-                    Log.d(TAG, "Response Body is " + response.body().string());
+//                    Log.d(TAG, "Response Body is " + response.body().string());
                 }
             });
         }

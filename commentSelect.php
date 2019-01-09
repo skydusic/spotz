@@ -23,8 +23,8 @@
         $sql="select * from nbaCO where postidx='$postidx'";
     } else if($listname == "equip"){
         $sql="select * from equipCO where postidx='$postidx'";
-    } else if($listname == "employ"){
-        $sql="select * from employCO where postidx='$postidx'";
+    } else if($listname == "qna"){
+        $sql="select * from qnaCO where postidx='$postidx'";
     } else if($listname == "compet"){
         $sql="select * from competCO where postidx='$postidx'";
     }

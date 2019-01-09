@@ -8,7 +8,6 @@ import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -126,7 +125,7 @@ public class Notice_Activity extends AppCompatActivity implements View.OnClickLi
             }
         } catch (JSONException e) {
             e.printStackTrace();
-            Log.d("heu", "adapter Exception : " + e);
+//            Log.d("heu", "adapter Exception : " + e);
         }
     }
 
@@ -165,7 +164,7 @@ public class Notice_Activity extends AppCompatActivity implements View.OnClickLi
             client.newCall(request).enqueue(new okhttp3.Callback() {
                 @Override
                 public void onFailure(Call call, IOException e) {
-                    Log.d(TAG, "Connect Server Error is " + e.toString());
+//                    Log.d(TAG, "Connect Server Error is " + e.toString());
 
                 }
 

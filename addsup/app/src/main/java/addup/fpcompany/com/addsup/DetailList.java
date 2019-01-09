@@ -168,6 +168,7 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
 
         //히스토리 기록
         if (MainActivity.mUsername != null) {
+            Log.d("heu", "히스토리 ㄱㄱ 했음");
             historyInsert insert = new historyInsert();
             insert.requestPost(listname, idx);
         }
@@ -182,7 +183,6 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
         //수정, 삭제 버튼 보여주기
         if (MainActivity.mUsername != null)
             if (username.equals(MainActivity.mUsername) || MainActivity.mUsermail.equals("skydusic@gmail.com")) {
-                Log.d("heu", "usermail : " + MainActivity.mUsermail);
                 editpostBT.setVisibility(View.VISIBLE);
                 delpostBT.setVisibility(View.VISIBLE);
             }
@@ -245,8 +245,6 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
             }
         }
 
-        Log.d("heu", "img URL : " + arr.toString());
-
         for (int i = 0; i < arr.size(); i++) {
             fragArr.add(new DetailFrag(arr.get(i)));
         }
@@ -280,7 +278,7 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
 
         } catch (JSONException e) {
             e.printStackTrace();
-            Log.d("heu", "adapter Exception : " + e);
+//            Log.d("heu", "adapter Exception : " + e);
         }
 
 
@@ -290,7 +288,6 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
         detailScrollView.post(new Runnable() {
             @Override
             public void run() {
-                Log.d("heu", "TOP : " + editCommentEt.getTop());
                 detailScrollView.scrollTo(0, editCommentEt.getTop()+500);
 
             }
@@ -329,8 +326,6 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
                 hideKeyboard();
                 break;
             case (R.id.editpostBT):
-
-                Log.d("heu", "디테일 리스트 네임: " + listname);
 
                 // 수정
                 Intent editIntent = new Intent(DetailList.this, insertActivity.class);
@@ -478,7 +473,6 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
             }
         } catch (JSONException e) {
             e.printStackTrace();
-            Log.d("heu", "adapter Exception : " + e);
         }
     }
 
@@ -568,15 +562,12 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
 
-            Log.d("heu", "리프레시 핸들러!");
-
             if (myJSON.equals("")) {
                 refreshPostHandler.sendEmptyMessageDelayed(300, 200);
 
             } else {
                 removeMessages(300);
                 refresh(myJSON);
-                Log.d("heu", "Json : " + myJSON);
                 titleTv.setText(postItem.getTitle());
                 contentsTv.setText(postItem.getContents());
             }
@@ -592,7 +583,6 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
             super.handleMessage(msg);
             scrollToEnd();
             scrollHandler.removeMessages(5000);
-            Log.d("heu", "스크롤뷰 스크롤");
         }
     };
 
@@ -623,7 +613,7 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
             client.newCall(request).enqueue(new Callback() {
                 @Override
                 public void onFailure(Call call, IOException e) {
-                    Log.d("heu", "Connect Server Error is " + e.toString());
+//                    Log.d("heu", "Connect Server Error is " + e.toString());
                 }
 
                 @Override
@@ -653,13 +643,13 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
             client.newCall(request).enqueue(new Callback() {
                 @Override
                 public void onFailure(Call call, IOException e) {
-                    Log.d("heu", "Connect Server Error is " + e.toString());
+//                    Log.d("heu", "Connect Server Error is " + e.toString());
 
                 }
 
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
-                    Log.d("heu", "응답(코멘트) :" + response.toString());
+//                    Log.d("heu", "응답(코멘트) :" + response.toString());
                 }
             });
         }
@@ -685,13 +675,13 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
             client.newCall(request).enqueue(new Callback() {
                 @Override
                 public void onFailure(Call call, IOException e) {
-                    Log.d("heu", "Connect Server Error is " + e.toString());
+//                    Log.d("heu", "Connect Server Error is " + e.toString());
 
                 }
 
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
-                    Log.d("heu", "응답(코멘트) :" + response.toString());
+//                    Log.d("heu", "응답(코멘트) :" + response.toString());
                 }
             });
         }
@@ -713,7 +703,7 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
             client.newCall(request).enqueue(new okhttp3.Callback() {
                 @Override
                 public void onFailure(Call call, IOException e) {
-                    Log.d("heu", "Connect Server Error is " + e.toString());
+//                    Log.d("heu", "Connect Server Error is " + e.toString());
 
                 }
 
@@ -744,13 +734,13 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
             client.newCall(request).enqueue(new Callback() {
                 @Override
                 public void onFailure(Call call, IOException e) {
-                    Log.d("heu", "Connect Server Error is " + e.toString());
+//                    Log.d("heu", "Connect Server Error is " + e.toString());
 
                 }
 
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
-                    Log.d("heu", "응답(코멘트) :" + response.toString());
+//                    Log.d("heu", "응답(코멘트) :" + response.toString());
                 }
             });
         }
@@ -777,7 +767,7 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
             client.newCall(request).enqueue(new Callback() {
                 @Override
                 public void onFailure(Call call, IOException e) {
-                    Log.d("heu", "Connect Server Error is " + e.toString());
+//                    Log.d("heu", "Connect Server Error is " + e.toString());
                 }
 
                 @Override
@@ -806,7 +796,7 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
             client.newCall(request).enqueue(new Callback() {
                 @Override
                 public void onFailure(Call call, IOException e) {
-                    Log.d("heu", "Connect Server Error is " + e.toString());
+//                    Log.d("heu", "Connect Server Error is " + e.toString());
                 }
 
                 @Override
@@ -835,7 +825,7 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
             client.newCall(request).enqueue(new Callback() {
                 @Override
                 public void onFailure(Call call, IOException e) {
-                    Log.d("heu", "Connect Server Error is " + e.toString());
+//                    Log.d("heu", "Connect Server Error is " + e.toString());
                 }
 
                 @Override
@@ -869,7 +859,7 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
             client.newCall(request).enqueue(new Callback() {
                 @Override
                 public void onFailure(Call call, IOException e) {
-                    Log.d("heu", "Connect Server Error is " + e.toString());
+//                    Log.d("heu", "Connect Server Error is " + e.toString());
                 }
 
                 @Override
@@ -900,7 +890,7 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
             client.newCall(request).enqueue(new okhttp3.Callback() {
                 @Override
                 public void onFailure(Call call, IOException e) {
-                    Log.d("heu", "Connect Server Error is " + e.toString());
+//                    Log.d("heu", "Connect Server Error is " + e.toString());
 
                 }
 

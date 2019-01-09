@@ -3,7 +3,6 @@ package addup.fpcompany.com.addsup;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -110,10 +109,6 @@ public class infoActivity extends AppCompatActivity implements View.OnClickListe
                     contents = contentsET.getText().toString().trim();
                 }
 
-                Log.d("heu", "Title : " + title);
-                Log.d("heu", "contents : " + contents);
-                Log.d("heu", "report : " + report);
-
                 if(contents.length() > 300) {
                     Toast.makeText( infoActivity.this, "글자 제한을 초과했습니다. (" + String.valueOf(contents.length()) + " / 300자)", Toast.LENGTH_LONG).show();
                 } else {
@@ -157,8 +152,6 @@ public class infoActivity extends AppCompatActivity implements View.OnClickListe
         public void requestPost(String url, String title , String contents, String username, String report) {
 
 
-            Log.d("heu", "URL : " + url);
-
             RequestBody requestBody = new FormBody.Builder().
                     add("idx", idx).
                     add("listname", listname).
@@ -175,7 +168,7 @@ public class infoActivity extends AppCompatActivity implements View.OnClickListe
             client.newCall(request).enqueue(new okhttp3.Callback() {
                 @Override
                 public void onFailure(Call call, IOException e) {
-                    Log.d(TAG, "Connect Server Error is " + e.toString());
+//                    Log.d(TAG, "Connect Server Error is " + e.toString());
 
                 }
 

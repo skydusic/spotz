@@ -41,11 +41,11 @@
         } else {
             $sql = "select * from equip where spindata = '$spindata' order by created desc";
         }
-    } else if($listname == "employ"){
+    } else if($listname == "qna"){
         if($spindata == "전체"){
-            $sql = "select * from employ order by created desc";
+            $sql = "select * from qna order by created desc";
         } else {
-            $sql = "select * from employ where spindata = '$spindata' order by created desc";
+            $sql = "select * from qna where spindata = '$spindata' order by created desc";
         }
     } else if($listname == "compet"){
         if($spindata == "전체"){
@@ -73,8 +73,8 @@
             echo "{\"listname\":\"nba\",";
         } else if ($listname == "equip"){
             echo "{\"listname\":\"equip\",";
-        } else if ($listname == "employ"){
-            echo "{\"listname\":\"employ\",";
+        } else if ($listname == "qna"){
+            echo "{\"listname\":\"qna\",";
         } else if ($listname == "compet"){
             echo "{\"listname\":\"compet\",";
         }

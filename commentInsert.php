@@ -44,12 +44,12 @@
         
         $sql="insert into equipCO(contents,username,postidx,commentidx) 
         values('$contents','$username','$postidx','$count')";
-    } else if($listname == "employ"){
-        $commentCount = "select * from employCO where postidx='$postidx'";
+    } else if($listname == "qna"){
+        $commentCount = "select * from qnaCO where postidx='$postidx'";
         $countResult = mysqli_query($connect,$commentCount);
         $count = mysqli_num_rows($countResult);
         
-        $sql="insert into employCO(contents,username,postidx,commentidx) 
+        $sql="insert into qnaCO(contents,username,postidx,commentidx) 
         values('$contents','$username','$postidx','$count')";
     } else if($listname == "compet"){
         $commentCount = "select * from competCO where postidx='$postidx'";

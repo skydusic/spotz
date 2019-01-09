@@ -34,8 +34,8 @@ if($listname == "freeboard"){
     $sql1 = "delete from nba where idx = '$idx'";
 } else if($listname == "equip"){
     $sql1 = "delete from equip where idx = '$idx'";
-} else if($listname == "employ"){
-    $sql1 = "delete from employ where idx = '$idx'";
+} else if($listname == "qna"){
+    $sql1 = "delete from qna where idx = '$idx'";
 } else if($listname == "compet"){
     $sql1 = "delete from compet where idx = '$idx'";
 }

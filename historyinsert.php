@@ -19,19 +19,19 @@
     $postidx=isset($_POST['postidx']) ? $_POST['postidx'] : '';
 
 //    $sql = "select * from history where username = '$username' order by idx";
-    $sql = "select * from history where username = '$username' and listname = '$listname' ORDER BY idx";
+    $sql = "select * from history where username = '$username' and listname = '$listname' order by idx";
 
     $result = mysqli_query($link,$sql);
     $total_record = mysqli_num_rows($result);
 
     $limit = 20;
     if($total_record >= $limit){
-        mysqli_data_seek($result, $limit);
+        mysqli_data_seek($result, 0);
         $row = mysqli_fetch_array($result);
         $sql = "delete from history where idx = '$row[idx]'";
         $result2 = mysqli_query($link,$sql);
         
-        if($result){
+        if($result2){
            echo "SQL문 delete 처리 성공";
         }
         else{

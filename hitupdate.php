@@ -17,8 +17,8 @@
         $sql = "select * from nba where idx='$idx'";
     } else if ($listname == 'equip'){
         $sql = "select * from equip where idx='$idx'";
-    } else if ($listname == 'employ'){
-        $sql = "select * from employ where idx='$idx'";
+    } else if ($listname == 'qna'){
+        $sql = "select * from qna where idx='$idx'";
     } else if ($listname == 'compet'){
         $sql = "select * from compet where idx='$idx'";
     }
@@ -40,8 +40,8 @@
         $sql = "update nba set hit = '$hit' where idx='$idx'";
     } else if ($listname == 'equip'){
         $sql = "update equip set hit = '$hit' where idx='$idx'";
-    } else if ($listname == 'employ'){
-        $sql = "update employ set hit = '$hit' where idx='$idx'";
+    } else if ($listname == 'qna'){
+        $sql = "update qna set hit = '$hit' where idx='$idx'";
     } else if ($listname == 'compet'){
         $sql = "update compet set hit = '$hit' where idx='$idx'";
     }

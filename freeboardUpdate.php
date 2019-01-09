@@ -30,8 +30,8 @@ if($listname == 'freeboard'){
     $sql="update nba set title = '$title',contents = '$contents', image ='$image', spindata = '$spindata' WHERE idx = '$idx'";
 } else if ($listname == 'equip'){
     $sql="update equip set title = '$title',contents = '$contents', image ='$image', spindata = '$spindata' WHERE idx = '$idx'";
-} else if ($listname == 'employ'){
-    $sql="update employ set title = '$title',contents = '$contents', image ='$image', spindata = '$spindata' WHERE idx = '$idx'";
+} else if ($listname == 'qna'){
+    $sql="update qna set title = '$title',contents = '$contents', image ='$image', spindata = '$spindata' WHERE idx = '$idx'";
 } else if ($listname == 'compet'){
     $sql="update compet set title = '$title',contents = '$contents', image ='$image', spindata = '$spindata' WHERE idx = '$idx'";
 }

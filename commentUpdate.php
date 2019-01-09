@@ -27,8 +27,8 @@
         $sql="update equipCO set contents = '$contents' WHERE postidx = '$postidx' AND commentidx = '$commentidx'";
     } else if($listname == "employ"){
         $sql="update employCO set contents = '$contents' WHERE postidx = '$postidx' AND commentidx = '$commentidx'";
-    } else if($listname == "compet"){
-        $sql="update competCO set contents = '$contents' WHERE postidx = '$postidx' AND commentidx = '$commentidx'";
+    } else if($listname == "qna"){
+        $sql="update qnaCO set contents = '$contents' WHERE postidx = '$postidx' AND commentidx = '$commentidx'";
     }
 
     $result=mysqli_query($connect,$sql);  

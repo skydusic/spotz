@@ -30,9 +30,9 @@
         } else if($row[listname] == "equip"){
             $sql = "select * from equip where idx = $row[postidx]";
             echo "{\"listname\":\"equip\",";
-        } else if($row[listname] == "employ"){
-            $sql = "select * from employ where idx = $row[postidx]";
-            echo "{\"listname\":\"employ\",";
+        } else if($row[listname] == "qna"){
+            $sql = "select * from qna where idx = $row[postidx]";
+            echo "{\"listname\":\"qna\",";
         } else if($row[listname] == "compet"){
             $sql = "select * from compet where idx = $row[postidx]";
             echo "{\"listname\":\"compet\",";

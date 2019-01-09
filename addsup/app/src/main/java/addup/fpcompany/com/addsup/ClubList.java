@@ -11,7 +11,6 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -112,8 +111,8 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
             listTopName.setText("NBA");
         } else if (listName.equals("kbl")) {
             listTopName.setText("KBL");
-        } else if (listName.equals("employ")) {
-            listTopName.setText("취업게시판");
+        } else if (listName.equals("qna")) {
+            listTopName.setText("질문게시판");
         } else if (listName.equals("equip")) {
             listTopName.setText("용품게시판");
         } else if (listName.equals("compet")) {
@@ -256,7 +255,7 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
             }
         } catch (JSONException e) {
             e.printStackTrace();
-            Log.d("heu", "adapter Exception : " + e);
+//            Log.d("heu", "adapter Exception : " + e);
         }
 
         // 수정
@@ -270,8 +269,6 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
         String[] temp1 = created.split(" ");
         String[] temp2 = temp1[0].split("-");
 
-        Log.d("heu", "created : " + created);
-        Log.d("heu", "created length : " + created.length());
 
         if (created.length() > 10) {
 
@@ -311,14 +308,14 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
             client.newCall(request).enqueue(new okhttp3.Callback() {
                 @Override
                 public void onFailure(Call call, IOException e) {
-                    Log.d("heu", "Connect Server Error is " + e.toString());
+//                    Log.d("heu", "Connect Server Error is " + e.toString());
 
                 }
 
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
                     myJSON = response.body().string();
-                    Log.d("heu", "JSON :" + myJSON);
+//                    Log.d("heu", "JSON :" + myJSON);
                 }
             });
 

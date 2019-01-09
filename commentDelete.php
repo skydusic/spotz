@@ -24,8 +24,8 @@
         $sql="delete from nbaCO WHERE postidx = '$postidx' AND commentidx = '$commentidx'";
     } else if($listname == "equip"){
         $sql="delete from equipCO WHERE postidx = '$postidx' AND commentidx = '$commentidx'";
-    } else if($listname == "employ"){
-        $sql="delete from employCO WHERE postidx = '$postidx' AND commentidx = '$commentidx'";
+    } else if($listname == "qna"){
+        $sql="delete from qnaCO WHERE postidx = '$postidx' AND commentidx = '$commentidx'";
     } else if($listname == "compet"){
         $sql="delete from competCO WHERE postidx = '$postidx' AND commentidx = '$commentidx'";
     }

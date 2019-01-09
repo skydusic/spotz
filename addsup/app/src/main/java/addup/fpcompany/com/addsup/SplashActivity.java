@@ -65,10 +65,6 @@ public class SplashActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        Log.d("heu", "마켓 버전 : " + store_version);
-        Log.d("heu", "디바이스 버전 : " + device_version);
-        Log.d("heu", "디바이스 버전코드 : " + device_versionCode);
-
         startMain();
 
     }
@@ -90,7 +86,6 @@ class MarketVersionChecker {
 
     public static String getMarketVersion(String packageName) {
         try {
-            Log.d("heu", packageName);
             Document doc = Jsoup.connect(
                     "https://play.google.com/store/apps/details?id="
                             + packageName).get();

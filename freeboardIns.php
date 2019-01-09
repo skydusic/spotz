@@ -29,8 +29,8 @@ if($listname == "freeboard"){
     $sql="insert into nba(title,contents,username,image,spindata) values('$title','$contents','$username','$image','$spindata')";
 } else if ($listname == "equip"){
     $sql="insert into equip(title,contents,username,image,spindata) values('$title','$contents','$username','$image','$spindata')";
-} else if ($listname == "employ"){
-    $sql="insert into employ(title,contents,username,image,spindata) values('$title','$contents','$username','$image','$spindata')";
+} else if ($listname == "qna"){
+    $sql="insert into qna(title,contents,username,image,spindata) values('$title','$contents','$username','$image','$spindata')";
 } else if ($listname == "compet"){
     $sql="insert into compet(title,contents,username,image,spindata) values('$title','$contents','$username','$image','$spindata')";
 }
@@ -45,8 +45,8 @@ if($listname == "freeboard"){
     $sql = "select * from nba WHERE username = '$username' order by created desc";
 } else if($listname == "equip"){
     $sql = "select * from equip WHERE username = '$username' order by created desc";
-} else if($listname == "employ"){
-    $sql = "select * from employ WHERE username = '$username' order by created desc";
+} else if($listname == "qna"){
+    $sql = "select * from qna WHERE username = '$username' order by created desc";
 } else if($listname == "compet"){
     $sql = "select * from compet WHERE username = '$username' order by created desc";
 }

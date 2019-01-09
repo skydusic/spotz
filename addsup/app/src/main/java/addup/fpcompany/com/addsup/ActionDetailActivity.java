@@ -8,7 +8,6 @@ import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -99,13 +98,11 @@ public class ActionDetailActivity extends AppCompatActivity {
             }
         } catch (JSONException e) {
             e.printStackTrace();
-            Log.d("heu", "adapter Exception : " + e);
+//            Log.d("heu", "adapter Exception : " + e);
         } catch (Exception e) {
             e.printStackTrace();
-            Log.d("heu", "adapter ETC Excep : " + e);
+//            Log.d("heu", "adapter ETC Excep : " + e);
         }
-
-        Log.d("heu", "리스트 Arr : " + listArr.toString());
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -201,7 +198,6 @@ public class ActionDetailActivity extends AppCompatActivity {
             super.handleMessage(msg);
             handler.removeMessages(50);
             if (!Json.equals("")) {
-                Log.d("heu","목록 JSON : " + Json);
                 showList(Json);
                 Json = "";
             } else {
@@ -224,13 +220,13 @@ public class ActionDetailActivity extends AppCompatActivity {
             client.newCall(request).enqueue(new Callback() {
                 @Override
                 public void onFailure(Call call, IOException e) {
-                    Log.d("heu", "Connect Server Error is " + e.toString());
+//                    Log.d("heu", "Connect Server Error is " + e.toString());
                 }
 
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
                     Json = response.body().string();
-                    Log.d("heu", "Json : " + Json);
+//                    Log.d("heu", "Json : " + Json);
                 }
             });
         }
@@ -254,7 +250,7 @@ public class ActionDetailActivity extends AppCompatActivity {
             client.newCall(request).enqueue(new Callback() {
                 @Override
                 public void onFailure(Call call, IOException e) {
-                    Log.d("heu", "Connect Server Error is " + e.toString());
+//                    Log.d("heu", "Connect Server Error is " + e.toString());
                 }
 
                 @Override
