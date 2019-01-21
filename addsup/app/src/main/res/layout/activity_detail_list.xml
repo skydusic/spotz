@@ -40,8 +40,22 @@
                 android:layout_alignParentEnd="true"
                 android:layout_below="@+id/titleTv"
                 android:layout_margin="5dp"
+                android:paddingEnd="4dp"
                 android:textColor="#999"
-                android:textSize="12sp" />
+                android:textSize="12sp"
+                tools:ignore="RtlSymmetry" />
+
+            <TextView
+                android:id="@+id/writerTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/titleTv"
+                android:layout_margin="5dp"
+                android:paddingStart="4dp"
+                android:textColor="#777"
+                android:textSize="12sp"
+                tools:ignore="RtlSymmetry" />
 
             <ImageView
                 android:id="@+id/favorite"
@@ -52,14 +66,26 @@
                 android:src="@drawable/blackstar"
                 android:visibility="gone" />
 
-            <ImageView
+            <Button
+                android:id="@+id/reportBt"
+                android:layout_width="45dp"
+                android:layout_height="40dp"
+                android:layout_alignParentEnd="true"
+                android:layout_below="@+id/timeTv"
+                android:layout_marginEnd="10dp"
+                android:gravity="center"
+                android:padding="5dp"
+                android:text="@string/reportText"
+                android:textSize="13sp" />
+
+            <!--<ImageView
                 android:id="@+id/reportBt"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
-                android:layout_alignParentEnd="true"
                 android:layout_below="@+id/timeTv"
                 android:layout_margin="10dp"
-                android:src="@drawable/siren_icon" />
+                android:layout_toStartOf="@+id/reportText"
+                android:src="@drawable/siren_icon" />-->
 
             <ImageView
                 android:id="@+id/editpostBT"
@@ -67,6 +93,7 @@
                 android:layout_height="25dp"
                 android:layout_alignTop="@+id/reportBt"
                 android:layout_marginEnd="10dp"
+                android:layout_marginTop="7dp"
                 android:layout_toStartOf="@+id/delpostBT"
                 android:src="@drawable/edit_icon"
                 android:visibility="visible" />
@@ -77,6 +104,8 @@
                 android:layout_height="25dp"
                 android:layout_alignTop="@+id/reportBt"
                 android:layout_below="@+id/contents"
+                android:layout_marginTop="7dp"
+                android:layout_marginEnd="5dp"
                 android:layout_toStartOf="@+id/reportBt"
                 android:src="@drawable/delete_icon"
                 android:visibility="visible" />
@@ -86,8 +115,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:layout_below="@+id/titleTv"
-                android:layout_marginTop="70dp"
-                android:layout_marginBottom="5dp" />
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="80dp" />
 
 
             <!--
@@ -261,10 +290,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/viewPager"
+                android:gravity="center_vertical"
                 android:minHeight="150dp"
-                android:padding="25dp"
-                android:textSize="16sp"
-                android:gravity="center_vertical"/>
+                android:padding="15dp"
+                android:layout_margin="20dp"
+                android:textSize="16sp" />
 
             <View
                 android:id="@+id/horizontalView"
@@ -351,29 +381,30 @@
         style="@android:style/ButtonBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
         android:orientation="horizontal"
         android:visibility="invisible"
-        android:layout_alignParentBottom="true">
+        android:paddingBottom="12dp">
 
         <EditText
             android:id="@+id/editCommentEt"
             android:layout_width="280dp"
             android:layout_height="wrap_content"
-            android:layout_margin="3dp"
+            android:layout_margin="5dp"
+            android:layout_weight="5"
             android:background="@drawable/edittext"
             android:minHeight="45dp"
             android:padding="7dp"
             android:textSize="15sp"
-            tools:ignore="RtlSymmetry"
-            android:layout_weight="5"
-            />
+            tools:ignore="RtlSymmetry" />
 
         <Button
             android:id="@+id/editCommentBt"
             android:layout_width="60dp"
             android:layout_height="wrap_content"
             android:layout_weight="2"
-            android:text="확인" />
+            android:layout_marginTop="5dp"
+            android:text="@string/confirm" />
 
     </LinearLayout>
 
@@ -382,8 +413,8 @@
         layout="@layout/bottombar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="visible"
-        android:layout_alignParentBottom="true" />
+        android:layout_alignParentBottom="true"
+        android:visibility="visible" />
 
 
 </RelativeLayout>

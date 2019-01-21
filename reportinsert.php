@@ -14,17 +14,19 @@ if (!$link)
 mysqli_set_charset($link,"utf8");  
 
 //POST 값을 읽어온다.
-$listname=isset($_POST['listname']) ? $_POST['listname'] : '';
 $idx=isset($_POST['idx']) ? $_POST['idx'] : '';
+$listname=isset($_POST['listname']) ? $_POST['listname'] : '';
 $title=isset($_POST['title']) ? $_POST['title'] : '';
 $contents=isset($_POST['contents']) ? $_POST['contents'] : '';
 $writer=isset($_POST['writer']) ? $_POST['writer'] : '';
-$repoter=isset($_POST['username']) ? $_POST['username'] : '';
+$wemail=isset($_POST['wemail']) ? $_POST['wemail'] : '';
 $created=isset($_POST['created']) ? $_POST['created'] : '';
 $image=isset($_POST['image']) ? $_POST['image'] : '';
-$report=isset($_POST['report']) ? $_POST['report'] : '';
+$report_contents=isset($_POST['report_contents']) ? $_POST['report_contents'] : '';
+$username=isset($_POST['username']) ? $_POST['username'] : '';
+$email=isset($_POST['email']) ? $_POST['email'] : '';
 
-$sql="insert into reportTable(listname,RIdx,RTitle,RContents,RUsername,RCreated,contents,image,reporter) values('$listname','$idx','$title','$contents','$writer','$created','$report','$image','$repoter')";
+$sql="insert into reportTable(listname,RIdx,RTitle,RContents,RUsername,Remail,RCreated,contents,image,reporter,reportermail) values('$listname','$idx','$title','$contents','$writer','$wemail','$created','$report_contents','$image','$username','$email')";
 $result=mysqli_query($link,$sql);
 if($result){
    echo "SQL문 처리 성공";

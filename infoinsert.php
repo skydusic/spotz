@@ -17,8 +17,9 @@ mysqli_set_charset($link,"utf8");
 $title=isset($_POST['title']) ? $_POST['title'] : '';
 $contents=isset($_POST['contents']) ? $_POST['contents'] : '';
 $username=isset($_POST['username']) ? $_POST['username'] : '';
+$email=isset($_POST['email']) ? $_POST['email'] : '';
 
-$sql="insert into infotable(title,contents,username) values('$title','$contents','$username')";
+$sql="insert into infotable(title,contents,username,email) values('$title','$contents','$username','$email')";
 $result=mysqli_query($link,$sql);
 if($result){
    echo "SQL문 처리 성공";

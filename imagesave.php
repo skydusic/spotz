@@ -2,13 +2,14 @@
     /*$connect=mysql_connect( "localhost", "spotz", "tongood77") or die( "Unable to connect to SQL server");
     mysql_query("SET NAMES UTF-8");*/
     $username=isset($_POST['username']) ? $_POST['username'] : '';
+    $email=isset($_POST['email']) ? $_POST['email'] : '';
     $listname=isset($_POST['listname']) ? $_POST['listname'] : '';
-    $username = $username."/";
+    $email = $email."/";
     $file_path = "userImageFolder/".$listname."/";
     chdir($file_path);
 
-    if(!is_dir("$username")){
-        mkdir("$username", 0755, false);
+    if(!is_dir("$email")){
+        mkdir("$email", 0755, false);
     }
     chdir('../');
     chdir('../');
@@ -43,7 +44,7 @@
         exit;
     }
      
-    $file_path = $file_path . $username . basename($_FILES['uploaded_file']['name']);
+    $file_path = $file_path . $email . basename($_FILES['uploaded_file']['name']);
     if(move_uploaded_file($_FILES['uploaded_file']['tmp_name'], $file_path)) {
         echo "success";
     } else{

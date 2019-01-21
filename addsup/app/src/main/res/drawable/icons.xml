@@ -1,20 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<vector xmlns:android="http://schemas.android.com/apk/res/android"
-    android:width="500dp"
-    android:height="500dp"
-    android:viewportWidth="50"
-    android:viewportHeight="50">
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:opacity="opaque">
 
-    <path
-        android:fillColor="#FFFFFF"
-        android:strokeColor="#FFFFFF"
-        android:strokeWidth="1"
-        android:strokeMiterLimit="10"
-        android:pathData="M445.485,385.357 C445.485,415.952,427.424,440.753,405.144,440.753
-L-16.158,440.753 C-38.435,440.753,-56.495,415.952,-56.495,385.357
-L-56.495,-14.74 C-56.495,-45.335,-38.435,-70.138,-16.158,-70.138
-L405.144,-70.138 C427.424,-70.138,445.485,-45.335,445.485,-14.74
-L445.485,385.357 Z" />
-    <path
-        android:pathData="M0,103.168 L362.377,103.168 L362.377,251.684 L0,251.684 L0,103.168 Z" />
-</vector>
+    <item>
+        <bitmap
+            android:src="@drawable/drbasket"
+            android:background="@drawable/edittext"
+            tools:ignore="ResourceCycle" />
+    </item>
+
+</layer-list>

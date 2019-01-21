@@ -14,6 +14,7 @@
     $postidx=isset($_POST['postidx']) ? $_POST['postidx'] : '';
     $listname=isset($_POST['listname']) ? $_POST['listname'] : '';
     $username=isset($_POST['username']) ? $_POST['username'] : '';
+    $email=isset($_POST['email']) ? $_POST['email'] : '';
     $commentidx=isset($_POST['commentidx']) ? $_POST['commentidx'] : '';
 
     if($listname == "freeboard"){

@@ -13,8 +13,9 @@
     session_start();
 
     $username=isset($_POST['username']) ? $_POST['username'] : '';
+    $email=isset($_POST['email']) ? $_POST['email'] : '';
 
-    $sql = "select * from favorite where username = '$username' order by created";
+    $sql = "select * from favorite where email = '$email' order by created";
     $result = mysqli_query($connect,$sql);
     $total_record = mysqli_num_rows($result);
 
@@ -24,11 +25,11 @@
     {
         mysqli_data_seek($result, $i);
         $row = mysqli_fetch_array($result);
-        echo "{\"idx\":\"$row[idx]\",\"postidx\":\"$row[postidx]\",\"username\":\"$row[username]\",\"created\":\"$row[created]\",\"listname\":\"$row[listname]\"}";
+        echo "{\"idx\":\"$row[idx]\",\"postidx\":\"$row[postidx]\",\"username\":\"$row[username]\",\"email\":\"$row[email]\",\"created\":\"$row[created]\",\"listname\":\"$row[listname]\"}";
         
-    if($i<$total_record-1){
-      echo ",";
-    }
+        if($i<$total_record-1){
+          echo ",";
+        }
     }
 
     echo "]}";

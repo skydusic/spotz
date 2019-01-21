@@ -148,14 +148,16 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
                 String title = titleEt.getText().toString().trim();
                 String contents = contentsET.getText().toString().trim();
 
-                if (contents.length() > 300) {
-                    Toast.makeText(insertActivity.this, "글자 제한을 초과했습니다. (" + String.valueOf(contents.length()) + " / 300자)", Toast.LENGTH_LONG).show();
+                if (contents.length() > 900) {
+                    Toast.makeText(insertActivity.this, "내용글자 제한을 초과했습니다. (" + String.valueOf(contents.length()) + " / 900자)", Toast.LENGTH_LONG).show();
+                } else if (title.length() > 100) {
+                    Toast.makeText(insertActivity.this, "제목글자 제한을 초과했습니다. (" + String.valueOf(contents.length()) + " / 100자)", Toast.LENGTH_LONG).show();
                 } else {
                     if (!contents.equals("")) {
                         InsertData task = new InsertData();
                         ConnectServer connectServer = new ConnectServer();
                         for (int i = 0; i < imagePathArr.size(); i++) {
-                            connectServer.requestPost(url, MainActivity.mUsername, listName, uriList.get(i));
+                            connectServer.requestPost(url, MainActivity.mUsername, MainActivity.mUsermail, listName, uriList.get(i));
                         }
                         for (int i = 0; i < filenameList.size(); i++) {
                             imageAddress1 += filenameList.get(i);
@@ -163,7 +165,7 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
                                 imageAddress1 += ",";
                             }
                         }
-                        task.request(title, contents, serverUri, MainActivity.mUsername, imageAddress1,
+                        task.request(title, contents, serverUri, MainActivity.mUsername, MainActivity.mUsermail, imageAddress1,
                                 listName, spindata);
                         setResult(2400, returnIntent);
                         finish();
@@ -379,12 +381,13 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
         }
 
         if (permissionCheck == PackageManager.PERMISSION_GRANTED) {
-            Toast.makeText(this, "Permission Granted", Toast.LENGTH_LONG).show();
+//            Toast.makeText(this, "Permission Granted", Toast.LENGTH_LONG).show();
         } else {
-            Toast.makeText(this, "Permission Denied", Toast.LENGTH_LONG).show();
+//            Toast.makeText(this, "Permission Denied", Toast.LENGTH_LONG).show();
 
             if (ActivityCompat.shouldShowRequestPermissionRationale(this, permissions[0])) {
                 Toast.makeText(this, "외장메모리 권한이 필요합니다", Toast.LENGTH_LONG).show();
+                /** 뭔가 액션이 없네.. */
             } else {
                 ActivityCompat.requestPermissions(this, permissions, 1);
             }
@@ -462,7 +465,7 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
         RequestBody requestBody;
         OkHttpClient client = new OkHttpClient();
 
-        protected void request(String title, String contents, String serverURL, String username,
+        protected void request(String title, String contents, String serverURL, String username, String email,
                                String image, String listname, String spindata) {
 
             if (postNum == 1) {
@@ -475,6 +478,7 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
                         add("title", title).
                         add("contents", contents).
                         add("username", username).
+                        add("email", email).
                         add("image", image).
                         add("listname", listname).
                         add("spindata", spindata).
@@ -484,6 +488,7 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
                         add("title", title).
                         add("contents", contents).
                         add("username", username).
+                        add("email", email).
                         add("image", image).
                         add("listname", listname).
                         add("spindata", spindata).
@@ -537,7 +542,7 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
         }
 
         //POST 방식
-        public void requestPost(String url, String username, String listname, Uri uri) {
+        public void requestPost(String url, String username, String email, String listname, Uri uri) {
             final MediaType MEDIA_TYPE_PNG = MediaType.parse("image/*");
 
             url += "/imagesave.php";
@@ -551,6 +556,7 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
                     .setType(MultipartBody.FORM)
                     .addFormDataPart("uploaded_file", filename, RequestBody.create(MEDIA_TYPE_PNG, file))
                     .addFormDataPart("username", username)
+                    .addFormDataPart("email", email)
                     .addFormDataPart("listname", listname)
                     .build();
 
@@ -603,10 +609,11 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
     private class DelFolder {
         OkHttpClient client = new OkHttpClient();
 
-        public void requestPost(String username, String listname) {
+        public void requestPost(String username, String email, String listname) {
             String url = "http://spotz.co.kr/var/www/html/delfolder.php";
             RequestBody requestBody = new FormBody.Builder().
                     add("username", username).
+                    add("email", email).
                     add("listname", listname).build();
 
             Request request = new Request.Builder().url(url).post(requestBody).build();

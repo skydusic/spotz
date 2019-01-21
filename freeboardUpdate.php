@@ -19,6 +19,7 @@ $listname=isset($_POST['listname']) ? $_POST['listname'] : '';
 $title=isset($_POST['title']) ? $_POST['title'] : '';
 $contents=isset($_POST['contents']) ? $_POST['contents'] : '';
 $username=isset($_POST['username']) ? $_POST['username'] : '';
+$email=isset($_POST['email']) ? $_POST['email'] : '';
 $image=isset($_POST['image']) ? $_POST['image'] : '';
 $spindata=isset($_POST['spindata']) ? $_POST['spindata'] : '';
 

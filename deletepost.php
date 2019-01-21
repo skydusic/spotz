@@ -15,12 +15,15 @@ mysqli_set_charset($link,"utf8");
 $idx=isset($_POST['idx']) ? $_POST['idx'] : '';
 $listname=isset($_POST['listname']) ? $_POST['listname'] : '';
 $username=isset($_POST['username']) ? $_POST['username'] : '';
+$email=isset($_POST['email']) ? $_POST['email'] : '';
 $title=isset($_POST['title']) ? $_POST['title'] : '';
 $contents=isset($_POST['contents']) ? $_POST['contents'] : '';
 $created=isset($_POST['created']) ? $_POST['created'] : '';
 
 
-if($username == 'Duil Song'){
+if($email == 'skydusic@gmail.com'){
+    $removername = "admin";
+} else if ($email == 'drbasketkorea@gmail.com') {
     $removername = "admin";
 } else {
     $removername = "customer";
@@ -40,9 +43,9 @@ if($listname == "freeboard"){
     $sql1 = "delete from compet where idx = '$idx'";
 }
 
-$sql2 = "delete from postlist where postidx = '$idx' AND listname = '$listname' AND username = '$username'";
+$sql2 = "delete from postlist where postidx = '$idx' AND listname = '$listname' AND email = '$email'";
 
-$delboardIns="insert into DeleteTable(title,contents,username,created,listname,remover) values('$title','$contents','$username','$created','$listname','$removername')";
+$delboardIns="insert into DeleteTable(title,contents,username,email,created,listname,remover) values('$title','$contents','$username','$email','$created','$listname','$removername')";
 
 $result1 = mysqli_query($link,$delboardIns);
 $result2 = mysqli_query($link,$sql1);

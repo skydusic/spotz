@@ -3,56 +3,52 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="50dp"
+    android:minHeight="50dp"
     android:background="#ffffff">
 
     <TextView
         android:id="@+id/listTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="18sp"
-        android:text="@string/title"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
         android:layout_marginStart="15dp"
-        android:layout_centerVertical="true"/>
+        android:layout_toStartOf="@+id/created"
+        android:text="@string/title"
+        android:textSize="18sp" />
 
     <ImageView
         android:id="@+id/areImage"
         android:layout_width="40dp"
         android:layout_height="wrap_content"
-        android:src="@drawable/emptyimg"
         android:layout_centerVertical="true"
-        android:paddingTop="4dp"
         android:layout_toEndOf="@+id/listTitle"
-        android:visibility="invisible"/>
+        android:paddingTop="4dp"
+        android:src="@drawable/emptyimg"
+        android:visibility="invisible" />
 
-    <RelativeLayout
-        android:id="@+id/createdLay"
+
+    <TextView
+        android:id="@+id/created"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="15dp"
+        android:layout_toStartOf="@+id/hit"
+        android:fontFamily="@font/dohyeonttf"
+        android:textColor="#5a5a5a"
+        android:textSize="13sp" />
+
+    <TextView
+        android:id="@+id/hit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
-        android:gravity="center_vertical">
-
-        <TextView
-            android:id="@+id/created"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="15dp"
-            android:fontFamily="@font/dohyeonttf"
-            android:layout_centerVertical="true"
-            android:layout_toStartOf="@+id/hit"
-            android:textSize="13sp"
-            android:textColor="#5a5a5a"/>
-        <TextView
-            android:id="@+id/hit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="15dp"
-            android:fontFamily="@font/dohyeonttf"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:textSize="13sp"
-            android:textColor="#5a5a5a"/>
-
-    </RelativeLayout>
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="15dp"
+        android:fontFamily="@font/dohyeonttf"
+        android:textColor="#5a5a5a"
+        android:textSize="13sp" />
 
     <View
         android:layout_width="match_parent"

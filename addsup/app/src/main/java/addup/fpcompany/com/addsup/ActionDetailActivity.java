@@ -8,6 +8,7 @@ import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -45,6 +46,7 @@ public class ActionDetailActivity extends AppCompatActivity {
 
     String pageName;
     String username;
+    String email;
     listItem item;
 
     postDelete delete = new postDelete();
@@ -53,6 +55,7 @@ public class ActionDetailActivity extends AppCompatActivity {
     private static final String TAG_TITLE = "title";
     private static final String TAG_ID = "idx";
     private static final String TAG_USERNAME = "username";
+    private static final String TAG_EMAIL = "email";
     private static final String TAG_CONTENTS = "contents";
     private static final String TAG_CREATED = "created";
     private static final String TAG_IMAGE = "image";
@@ -68,6 +71,7 @@ public class ActionDetailActivity extends AppCompatActivity {
         intent = getIntent();
         pageName = intent.getStringExtra("actionName");
         username = MainActivity.mUsername;
+        email = MainActivity.mUsermail;
         detailTv.setText(pageName);
 
         if (pageName.equals("내 글 보기")) {
@@ -79,7 +83,7 @@ public class ActionDetailActivity extends AppCompatActivity {
         }
 
         getPostedList = new getPostedList();
-        getPostedList.requestPost(url, username);
+        getPostedList.requestPost(url, username, email);
         handler.sendEmptyMessage(50);
 
     }
@@ -92,7 +96,7 @@ public class ActionDetailActivity extends AppCompatActivity {
 
             for (int i = 0; i < post.length(); i++) {
                 JSONObject c = post.getJSONObject(i);
-                listArr.add(new listItem(String.valueOf(c.getInt(TAG_ID)), c.getString(TAG_TITLE), c.getString(TAG_USERNAME), c.getString(TAG_CONTENTS),
+                listArr.add(new listItem(String.valueOf(c.getInt(TAG_ID)), c.getString(TAG_TITLE), c.getString(TAG_USERNAME), c.getString(TAG_EMAIL), c.getString(TAG_CONTENTS),
                         c.getString(TAG_IMAGE), ClubList.settingTimes(c.getString(TAG_CREATED)), c.getString("listname"),
                         c.getString("hit"), c.getString("spindata")));
             }
@@ -125,6 +129,7 @@ public class ActionDetailActivity extends AppCompatActivity {
                             intent.putExtra("idx", item.getIdx());
                             intent.putExtra("listname", item.getListname());
                             intent.putExtra("username", item.getUsername());
+                            intent.putExtra("email", item.getEmail());
                             intent.putExtra("image", item.getImage());
                             intent.putExtra("contents", item.getContents());
                             intent.putExtra("spindata", item.getSpindata());
@@ -162,6 +167,7 @@ public class ActionDetailActivity extends AppCompatActivity {
             intent.putExtra("title", item.getTitle());
             intent.putExtra("contents", item.getContents());
             intent.putExtra("username", item.getUsername());
+            intent.putExtra("email", item.getEmail());
             intent.putExtra("image", item.getImage());
             intent.putExtra("listname", item.getListname());
             intent.putExtra("spindata", item.getSpindata());
@@ -179,12 +185,27 @@ public class ActionDetailActivity extends AppCompatActivity {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            getPostedList.requestPost(url, username);
+            getPostedList.requestPost(url, username, email);
             handler.sendEmptyMessage(50);
+
+        } else if (resultCode == 500) {
+            // 보러가기
+            Log.d("heu", "들어옴");
+            Intent moveIntent = new Intent(ActionDetailActivity.this, DetailList.class);
+            moveIntent.putExtra("idx", item.getIdx());
+            moveIntent.putExtra("title", item.getTitle());
+            moveIntent.putExtra("contents", item.getContents());
+            moveIntent.putExtra("username", item.getUsername());
+            moveIntent.putExtra("email", item.getEmail());
+            moveIntent.putExtra("image", item.getImage());
+            moveIntent.putExtra("listname", item.getListname());
+            moveIntent.putExtra("spindata", item.getSpindata());
+            moveIntent.putExtra("created", item.getCreated());
+            startActivity(moveIntent);
         }
 
         if(resultCode == 2400) {
-            getPostedList.requestPost(url, username);
+            getPostedList.requestPost(url, username, email);
             handler.sendEmptyMessage(50);
         }
 
@@ -211,10 +232,13 @@ public class ActionDetailActivity extends AppCompatActivity {
         //Client 생성
         OkHttpClient client = new OkHttpClient();
 
-        public void requestPost(String url, String username) {
+        public void requestPost(String url, String username, String email) {
 
             //Request Body에 서버에 보낼 데이터 작성
-            RequestBody requestBody = new FormBody.Builder().add("username", username).build();
+            RequestBody requestBody = new FormBody.Builder().
+                    add("username", username).
+                    add("email", email).
+                    build();
 
             Request request = new Request.Builder().url(url).post(requestBody).build();
             client.newCall(request).enqueue(new Callback() {
@@ -244,6 +268,7 @@ public class ActionDetailActivity extends AppCompatActivity {
                     add("idx", item.getIdx()).
                     add("listname", item.getListname()).
                     add("username", item.getUsername()).
+                    add("email", item.getEmail()).
                     build();
 
             Request request = new Request.Builder().url(url).post(requestBody).build();

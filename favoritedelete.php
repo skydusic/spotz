@@ -12,10 +12,10 @@
     session_start();
 
     $postidx=isset($_POST['postidx']) ? $_POST['postidx'] : '';
-    $username=isset($_POST['username']) ? $_POST['username'] : '';
+    $email=isset($_POST['email']) ? $_POST['email'] : '';
     $listname=isset($_POST['listname']) ? $_POST['listname'] : '';
     
-    $sql = "delete from favorite where postidx = '$postidx'AND username = '$username'AND listname = '$listname'";
+    $sql = "delete from favorite where postidx = '$postidx'AND email = '$email'AND listname = '$listname'";
     $result = mysqli_query($connect,$sql);
 
     if($connect){

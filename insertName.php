@@ -15,10 +15,8 @@
 
     $username=isset($_POST['username']) ? $_POST['username'] : '';
     $email=isset($_POST['email']) ? $_POST['email'] : '';
-    $postidx=isset($_POST['postidx']) ? $_POST['postidx'] : '';
-    $listname=isset($_POST['listname']) ? $_POST['listname'] : '';
 
-    $sql ="insert into favorite (username,email,postidx,listname) values('$username','$email','$postidx','$listname')";
+    $sql ="insert into nameDB (username,email) values('$username','$email')";
 
     $result = mysqli_query($link,$sql);
 

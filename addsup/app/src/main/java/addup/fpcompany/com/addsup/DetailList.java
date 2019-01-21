@@ -11,7 +11,6 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -47,16 +46,12 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
 
     Intent intent;
 
-    RelativeLayout mainLayout;
-    RelativeLayout commentLay;
+    RelativeLayout mainLayout, commentLay;
     ScrollView detailScrollView;
-    TextView titleTv;
-    TextView contentsTv;
-    TextView commentCount;
-    TextView timeTv;
+    TextView titleTv, contentsTv, commentCount, timeTv, writerTv;
     EditText commentEt;
     Button inputComment;
-    ImageView reportBt;
+    Button reportBt;
     ImageView editpostBT;
     ImageView delpostBT;
     ViewPager viewPager;
@@ -69,17 +64,7 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
     RecyclerView commentRecycle;
     View bottombar;
 
-    String listname = "";
-    String idx = "";
-    String title = "";
-    String contents = "";
-    String username = "";
-    String created = "";
-    String image = "";
-    String spindata = "";
-
-    String imageurl = "";
-    String commentJson = "";
+    String listname, idx, title, contents, username, email, created, image, spindata, imageurl, commentJson = "";
 
     Boolean favoriteFLAG = false;
 
@@ -93,6 +78,7 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
     private static final String TAG_TITLE = "title";
     private static final String TAG_ID = "idx";
     private static final String TAG_USERNAME = "username";
+    private static final String TAG_EMAIL = "email";
     private static final String TAG_CONTENTS = "contents";
     private static final String TAG_CREATED = "created";
     private static final String TAG_IMAGE = "image";
@@ -111,6 +97,7 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
         titleTv = findViewById(R.id.titleTv);
         contentsTv = findViewById(R.id.contents);
         timeTv = findViewById(R.id.timeTv);
+        writerTv = findViewById(R.id.writerTv);
         viewPager = findViewById(R.id.viewPager);
         favorite = findViewById(R.id.favorite);
         commentCount = findViewById(R.id.commentCount);
@@ -143,6 +130,7 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
         title = intent.getStringExtra("title");
         contents = intent.getStringExtra("contents");
         username = intent.getStringExtra("username");
+        email = intent.getStringExtra("email");
         created = intent.getStringExtra("created");
         spindata = intent.getStringExtra("spindata");
 
@@ -151,6 +139,7 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
         titleTv.setText(title);
         contentsTv.setText(contents);
         timeTv.setText(created);
+        writerTv.setText(username);
         image = intent.getStringExtra("image");
         imageurl = MainActivity.serverUrl + "userImageFolder/" + listname + "/" + username + "/";
 
@@ -167,8 +156,7 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
         hitUpdate.requestPost();
 
         //히스토리 기록
-        if (MainActivity.mUsername != null) {
-            Log.d("heu", "히스토리 ㄱㄱ 했음");
+        if (MainActivity.mUser != null) {
             historyInsert insert = new historyInsert();
             insert.requestPost(listname, idx);
         }
@@ -181,14 +169,14 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
         resetCommentList();
 
         //수정, 삭제 버튼 보여주기
-        if (MainActivity.mUsername != null)
-            if (username.equals(MainActivity.mUsername) || MainActivity.mUsermail.equals("skydusic@gmail.com")) {
+        if (MainActivity.mUser != null)
+            if (email.equals(MainActivity.mUsermail) || MainActivity.mUsermail.equals("skydusic@gmail.com") || MainActivity.mUsermail.equals("drbasketkorea@gmail.com")) {
                 editpostBT.setVisibility(View.VISIBLE);
                 delpostBT.setVisibility(View.VISIBLE);
             }
 
         MainActivity.getBlackList getB = new MainActivity.getBlackList();
-        getB.requestPost(username);
+        getB.requestPost(email);
 
         favorite.setOnClickListener(this);
         inputComment.setOnClickListener(this);
@@ -234,7 +222,7 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
     private void favoriteSet() {
         MainActivity.getFavorite fav = new MainActivity.getFavorite();
         MainActivity.favoriteArr.clear();
-        fav.requestPost(MainActivity.mUsername);
+        fav.requestPost(MainActivity.mUsermail);
     }
 
     private void setRecyclerView() {
@@ -270,7 +258,7 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
                 JSONObject c = post.getJSONObject(i);
 //                시간 설정
 //                Log.d("heu", "listname : " + listname);
-                postItem = new listItem((String.valueOf(c.getInt(TAG_ID))), c.getString(TAG_TITLE), c.getString(TAG_USERNAME), c.getString(TAG_CONTENTS),
+                postItem = new listItem((String.valueOf(c.getInt(TAG_ID))), c.getString(TAG_TITLE), c.getString(TAG_USERNAME), c.getString(TAG_EMAIL), c.getString(TAG_CONTENTS),
                         c.getString(TAG_IMAGE), c.getString(TAG_CREATED), c.getString("listname"),
                         c.getString("hit"), c.getString("spindata"));
 
@@ -288,7 +276,7 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
         detailScrollView.post(new Runnable() {
             @Override
             public void run() {
-                detailScrollView.scrollTo(0, editCommentEt.getTop()+500);
+                detailScrollView.scrollTo(0, editCommentEt.getTop()+600);
 
             }
         });
@@ -335,6 +323,7 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
                 editIntent.putExtra("title", title);
                 editIntent.putExtra("contents", contents);
                 editIntent.putExtra("username", username);
+                editIntent.putExtra("email", email);
                 editIntent.putExtra("image", image);
                 editIntent.putExtra("listname", listname);
 //                intent.putExtra("spindata", );
@@ -346,7 +335,7 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
 
                 // 삭제
                 postDelete postDelete = new postDelete();
-                postDelete.requestPost(idx, listname, username, title, contents, created);
+                postDelete.requestPost(idx, listname, username, email, title, contents, created);
                 finish();
 
                 break;
@@ -359,15 +348,23 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
                 reportItent.putExtra("title", title);
                 reportItent.putExtra("contents", contents);
                 reportItent.putExtra("writer", username);
+                reportItent.putExtra("wemail", email);
                 reportItent.putExtra("created", created);
                 reportItent.putExtra("image", image);
-                reportItent.putExtra("reporter", MainActivity.mUsername);
                 startActivity(reportItent);
 
                 break;
             case (R.id.bottomHome):
                 Intent intent = new Intent(DetailList.this, MainActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+                break;
+            case (R.id.bottomNotice):
+                intent = new Intent(DetailList.this, Notice_Activity.class);
+                startActivity(intent);
+                break;
+            case (R.id.bottomInfo):
+                intent = new Intent(DetailList.this, infoActivity.class);
                 startActivity(intent);
                 break;
             case (R.id.bottomMember):
@@ -394,7 +391,7 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
                     favoriteFLAG = true;
                 }
                 MainActivity.getFavorite fav = new MainActivity.getFavorite();
-                fav.requestPost(MainActivity.mUsername);
+                fav.requestPost(MainActivity.mUsermail);
                 break;
 
             case (R.id.editCommentBt):
@@ -469,7 +466,7 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
             for (int i = 0; i < comment.length(); i++) {
                 JSONObject c = comment.getJSONObject(i);
                 listItems.add(new commentItem(String.valueOf(c.get(TAG_ID)), c.getString("listname"),
-                        c.getString(TAG_USERNAME), c.getString(TAG_CONTENTS), ClubList.settingTimes(c.getString(TAG_CREATED))));
+                        c.getString(TAG_USERNAME), c.getString(TAG_EMAIL), c.getString(TAG_CONTENTS), ClubList.settingTimes(c.getString(TAG_CREATED))));
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -633,6 +630,7 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
 
             requestBody = new FormBody.Builder().
                     add("username", MainActivity.mUsername).
+                    add("email", MainActivity.mUsermail).
                     add("postidx", postidx).
                     add("listname", listname).
                     add("contents", contents).
@@ -664,6 +662,7 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
 
             requestBody = new FormBody.Builder().
                     add("username", MainActivity.mUsername).
+                    add("email", MainActivity.mUsermail).
                     add("postidx", postidx).
                     add("listname", listname).
                     add("contents", contents).
@@ -724,6 +723,7 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
 
             requestBody = new FormBody.Builder().
                     add("username", MainActivity.mUsername).
+                    add("email", MainActivity.mUsermail).
                     add("postidx", postidx).
                     add("listname", listname).
                     add("commentidx", commentidx).
@@ -758,6 +758,7 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
             //Request Body에 서버에 보낼 데이터 작성
             RequestBody requestBody = new FormBody.Builder().
                     add("username", MainActivity.mUsername).
+                    add("email", MainActivity.mUsermail).
                     add("listname", listname).
                     add("postidx", postidx).
                     build();
@@ -787,6 +788,7 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
             //Request Body에 서버에 보낼 데이터 작성
             RequestBody requestBody = new FormBody.Builder().
                     add("username", MainActivity.mUsername).
+                    add("email", MainActivity.mUsermail).
                     add("listname", listname).
                     add("postidx", idx).
                     build();
@@ -816,6 +818,7 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
             //Request Body에 서버에 보낼 데이터 작성
             RequestBody requestBody = new FormBody.Builder().
                     add("username", MainActivity.mUsername).
+                    add("email", MainActivity.mUsermail).
                     add("listname", listname).
                     add("postidx", postidx).
                     build();
@@ -842,7 +845,7 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
         String Json;
         OkHttpClient client = new OkHttpClient();
 
-        public void requestPost(String idx, String listname, String username, String title, String contents, String created) {
+        public void requestPost(String idx, String listname, String username, String email, String title, String contents, String created) {
 
             String url = "http://spotz.co.kr/var/www/html/deletepost.php";
             //Request Body에 서버에 보낼 데이터 작성
@@ -850,6 +853,7 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
                     add("idx", idx).
                     add("listname", listname).
                     add("username", username).
+                    add("email", email).
                     add("title", title).
                     add("contents", contents).
                     add("created", created).

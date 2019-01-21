@@ -69,6 +69,9 @@ public class Notice_Activity extends AppCompatActivity implements View.OnClickLi
         if (MainActivity.mUser != null && MainActivity.mUser.getEmail().equals("skydusic@gmail.com")) {
             noticeIns.setVisibility(View.VISIBLE);
             noticeIns.setOnClickListener(this);
+        } else if (MainActivity.mUser != null && MainActivity.mUser.getEmail().equals("drbasketkorea@gmail.com")) {
+            noticeIns.setVisibility(View.VISIBLE);
+            noticeIns.setOnClickListener(this);
         }
 
         recyclerView.addOnItemTouchListener(

@@ -17,38 +17,39 @@ mysqli_set_charset($link,"utf8");
 $title=isset($_POST['title']) ? $_POST['title'] : '';
 $contents=isset($_POST['contents']) ? $_POST['contents'] : '';
 $username=isset($_POST['username']) ? $_POST['username'] : '';
+$email=isset($_POST['email']) ? $_POST['email'] : '';
 $image=isset($_POST['image']) ? $_POST['image'] : '';
 $listname=isset($_POST['listname']) ? $_POST['listname'] : '';
 $spindata=isset($_POST['spindata']) ? $_POST['spindata'] : '';
 
 if($listname == "freeboard"){
-    $sql="insert into freeboard(title,contents,username,image,spindata) values('$title','$contents','$username','$image','$spindata')";
+    $sql="insert into freeboard(title,contents,username,email,image,spindata) values('$title','$contents','$username','$email','$image','$spindata')";
 } else if ($listname == "kbl"){
-    $sql="insert into kbl(title,contents,username,image,spindata) values('$title','$contents','$username','$image','$spindata')";
+    $sql="insert into kbl(title,contents,username,email,image,spindata) values('$title','$contents','$username','$email','$image','$spindata')";
 } else if ($listname == "nba"){
-    $sql="insert into nba(title,contents,username,image,spindata) values('$title','$contents','$username','$image','$spindata')";
+    $sql="insert into nba(title,contents,username,email,image,spindata) values('$title','$contents','$username','$email','$image','$spindata')";
 } else if ($listname == "equip"){
-    $sql="insert into equip(title,contents,username,image,spindata) values('$title','$contents','$username','$image','$spindata')";
+    $sql="insert into equip(title,contents,username,email,image,spindata) values('$title','$contents','$username','$email','$image','$spindata')";
 } else if ($listname == "qna"){
-    $sql="insert into qna(title,contents,username,image,spindata) values('$title','$contents','$username','$image','$spindata')";
+    $sql="insert into qna(title,contents,username,email,image,spindata) values('$title','$contents','$username','$email','$image','$spindata')";
 } else if ($listname == "compet"){
-    $sql="insert into compet(title,contents,username,image,spindata) values('$title','$contents','$username','$image','$spindata')";
+    $sql="insert into compet(title,contents,username,email,image,spindata) values('$title','$contents','$username','$email','$image','$spindata')";
 }
 
 $result=mysqli_query($link,$sql);
 
 if($listname == "freeboard"){
-    $sql = "select * from freeboard WHERE username = '$username' order by created desc";
+    $sql = "select * from freeboard WHERE email = '$email' order by created desc";
 } else if($listname == "kbl"){
-    $sql = "select * from kbl WHERE username = '$username' order by created desc";
+    $sql = "select * from kbl WHERE email = '$email' order by created desc";
 } else if($listname == "nba"){
-    $sql = "select * from nba WHERE username = '$username' order by created desc";
+    $sql = "select * from nba WHERE email = '$email' order by created desc";
 } else if($listname == "equip"){
-    $sql = "select * from equip WHERE username = '$username' order by created desc";
+    $sql = "select * from equip WHERE email = '$email' order by created desc";
 } else if($listname == "qna"){
-    $sql = "select * from qna WHERE username = '$username' order by created desc";
+    $sql = "select * from qna WHERE email = '$email' order by created desc";
 } else if($listname == "compet"){
-    $sql = "select * from compet WHERE username = '$username' order by created desc";
+    $sql = "select * from compet WHERE email = '$email' order by created desc";
 }
 
 $result = mysqli_query($link,$sql);
@@ -57,7 +58,7 @@ $total_record = mysqli_num_rows($result);
 mysqli_data_seek($result, 0);
 $row = mysqli_fetch_array($result);
 
-$sql ="insert into postlist (username,postidx,listname) values('$username','$row[idx]','$listname')";
+$sql ="insert into postlist (username,email,postidx,listname) values('$username','$email','$row[idx]','$listname')";
 
 $result = mysqli_query($link,$sql);
 

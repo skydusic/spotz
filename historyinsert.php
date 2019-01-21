@@ -15,16 +15,17 @@
     session_start();
 
     $username=isset($_POST['username']) ? $_POST['username'] : '';
+    $email=isset($_POST['email']) ? $_POST['email'] : '';
     $listname=isset($_POST['listname']) ? $_POST['listname'] : '';
     $postidx=isset($_POST['postidx']) ? $_POST['postidx'] : '';
 
 //    $sql = "select * from history where username = '$username' order by idx";
-    $sql = "select * from history where username = '$username' and listname = '$listname' order by idx";
+    $sql = "select * from history where email = '$email' order by idx";
 
     $result = mysqli_query($link,$sql);
     $total_record = mysqli_num_rows($result);
 
-    $limit = 20;
+    $limit = 30;
     if($total_record >= $limit){
         mysqli_data_seek($result, 0);
         $row = mysqli_fetch_array($result);
@@ -40,7 +41,7 @@
         }
     }
 
-    $sql = "select * from history where username = '$username' and postidx = '$postidx' order by idx desc";
+    $sql = "select * from history where email = '$email' and postidx = '$postidx' order by idx desc";
     $result = mysqli_query($link,$sql);
     $row = mysqli_fetch_array($result);
     $posttime = strtotime($row[created]);
@@ -48,7 +49,7 @@
     $time = strtotime($time);
     $temp = $time - $posttime;
 
-    if($temp < 1800){
+    if($temp < 180){
         $sql = "delete from history where idx = $row[idx]";
         $result = mysqli_query($link,$sql);
         if($result){
@@ -60,7 +61,7 @@
         }
     }
 
-    $sql ="insert into history (username,postidx,listname) values('$username','$postidx','$listname')";
+    $sql ="insert into history (username,email,postidx,listname) values('$username','$email','$postidx','$listname')";
     $result3 = mysqli_query($link,$sql);
     
     if($result3){

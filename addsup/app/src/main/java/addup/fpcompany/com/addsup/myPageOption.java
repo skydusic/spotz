@@ -8,10 +8,9 @@ import android.widget.TextView;
 
 public class myPageOption extends Activity implements View.OnClickListener {
 
-    TextView upBtn;
-    TextView superUpBtn;
     TextView editpost;
     TextView delpost;
+    TextView movepost;
     Typeface mTypeface;
 
     @Override
@@ -23,20 +22,17 @@ public class myPageOption extends Activity implements View.OnClickListener {
         setContentView(R.layout.activity_my_page_option);
         mTypeface = Typeface.createFromAsset(getApplicationContext().getAssets(), "fonts/dohyeonttf.ttf");
 
-        upBtn = findViewById(R.id.upBtn);
-        superUpBtn = findViewById(R.id.superUpBtn);
         editpost = findViewById(R.id.editpost);
         delpost = findViewById(R.id.delpost);
+        movepost = findViewById(R.id.movepost);
 
-        upBtn.setTypeface(mTypeface);
-        superUpBtn.setTypeface(mTypeface);
         editpost.setTypeface(mTypeface);
         delpost.setTypeface(mTypeface);
+        movepost.setTypeface(mTypeface);
 
-        upBtn.setOnClickListener(this);
-        superUpBtn.setOnClickListener(this);
         editpost.setOnClickListener(this);
         delpost.setOnClickListener(this);
+        movepost.setOnClickListener(this);
 
     }
 
@@ -44,17 +40,14 @@ public class myPageOption extends Activity implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case (R.id.upBtn):
-                setResult(100);
-                break;
-            case (R.id.superUpBtn):
-                setResult(200);
-                break;
             case (R.id.editpost):
                 setResult(300);
                 break;
             case (R.id.delpost):
                 setResult(400);
+                break;
+            case (R.id.movepost):
+                setResult(500);
                 break;
         }
         finish();

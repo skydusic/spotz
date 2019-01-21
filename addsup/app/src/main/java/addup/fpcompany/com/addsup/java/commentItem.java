@@ -2,16 +2,18 @@ package addup.fpcompany.com.addsup.java;
 
 public class commentItem {
 
-    String idx;
-    String listname;
-    String username;
-    String contents;
-    String created;
+    private String idx;
+    private String listname;
+    private String username;
+    private String email;
+    private String contents;
+    private String created;
 
-    public commentItem(String idx, String listname, String username, String contents, String created) {
+    public commentItem(String idx, String listname, String username, String email, String contents, String created) {
         this.idx = idx;
         this.listname = listname;
         this.username = username;
+        this.email = email;
         this.contents = contents;
         this.created = created;
     }
@@ -26,6 +28,10 @@ public class commentItem {
 
     public String getUsername() {
         return username;
+    }
+
+    public String getEmail() {
+        return email;
     }
 
     public String getContents() {

@@ -126,8 +126,13 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
             //로그인 안한 상태
 
         } else {
+
             mUsername = mUser.getDisplayName();
             mUsermail = mUser.getEmail();
+
+            if (mUsermail.equals("skydusic@gmail.com") || mUsermail.equals("drbasketkorea@gmail.com"))
+//                mUsername = "관리자";
+
             if (mUser.getPhotoUrl() != null) {
                 mPhotoUrl = mUser.getPhotoUrl().toString();
             }
@@ -151,12 +156,13 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
         //favorite 가져오기
         if (mUsername != null) {
             getFavorite fav = new getFavorite();
-            fav.requestPost(mUsername);
+            fav.requestPost(mUsermail);
+
+            //      블랙리스트
+            getBlackList getB = new getBlackList();
+            getB.requestPost(mUsermail);
         }
 
-//      블랙리스트
-        getBlackList getB = new getBlackList();
-        getB.requestPost(mUsername);
 
 //        업데이트 확인
         checkVersion();
@@ -210,6 +216,15 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
         getAd.execute();
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(resultCode == 1414) {
+            //인포 액티비티에서 넘어옴
+            Toast.makeText(getApplicationContext(), "업로드 완료했습니다", Toast.LENGTH_LONG).show();
+        }
+    }
 
     @SuppressLint("HandlerLeak")
     Handler handler = new Handler() {
@@ -498,7 +513,7 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
 
             case (R.id.bottomInfo):
                 intent = new Intent(MainActivity.this, infoActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent,10);
                 break;
 
             case (R.id.bottomMember):
@@ -529,7 +544,7 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
     public void onPageScrollStateChanged(int state) {
         if (state == ViewPager.SCROLL_STATE_IDLE) {
 //            Log.d("heu", "State IDLE");
-            if(!adUrl.get(pagerPos).equals("")){
+            if (!adUrl.get(pagerPos).equals("")) {
                 hyperLinkTv.setVisibility(View.VISIBLE);
                 handler.sendEmptyMessageDelayed(0, 3500);
             }

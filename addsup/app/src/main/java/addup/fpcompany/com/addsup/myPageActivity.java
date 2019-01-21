@@ -56,8 +56,10 @@ public class myPageActivity extends AppCompatActivity implements View.OnClickLis
         getActionList();
 
 //        블랙리스트
-        MainActivity.getBlackList getB = new MainActivity.getBlackList();
-        getB.requestPost(MainActivity.mUsername);
+        if (MainActivity.mUsermail != null) {
+            MainActivity.getBlackList getB = new MainActivity.getBlackList();
+            getB.requestPost(MainActivity.mUsermail);
+        }
 
         actionList.addOnItemTouchListener(new RecyclerItemClickListener(this, actionList, new RecyclerItemClickListener.OnItemClickListener() {
             @Override
@@ -67,6 +69,7 @@ public class myPageActivity extends AppCompatActivity implements View.OnClickLis
                 intent.putExtra("actionName", actionArr.get(position));
                 startActivity(intent);
             }
+
             @Override
             public void onLongItemClick(View view, int position) {
 
@@ -95,10 +98,12 @@ public class myPageActivity extends AppCompatActivity implements View.OnClickLis
             case (R.id.logoutBtn):
                 FirebaseAuth.getInstance().signOut();
                 Toast.makeText(this, "로그아웃 되었습니다", Toast.LENGTH_SHORT).show();
-                finish();
+                Intent intent = new Intent(myPageActivity.this, MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
                 break;
             case (R.id.bottomHome):
-                Intent intent = new Intent(myPageActivity.this, MainActivity.class);
+                intent = new Intent(myPageActivity.this, MainActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
                 break;
@@ -118,7 +123,6 @@ public class myPageActivity extends AppCompatActivity implements View.OnClickLis
     }
 
     private void set() {
-
         FirebaseUser currentUser = MainActivity.mAuth.getCurrentUser();
         MainActivity.mUser = FirebaseAuth.getInstance().getCurrentUser();
         if (currentUser == null) {
@@ -152,10 +156,10 @@ public class myPageActivity extends AppCompatActivity implements View.OnClickLis
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-/*
-*       up = 100
-*       superup = 200
-* */
+        /*
+         *       up = 100
+         *       superup = 200
+         * */
         if (resultCode == 100) {
             upUpdate upUpdate = new upUpdate();
             upUpdate.requestPost();

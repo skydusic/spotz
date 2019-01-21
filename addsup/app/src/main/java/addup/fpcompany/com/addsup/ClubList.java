@@ -54,6 +54,7 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
     private static final String TAG_TITLE = "title";
     private static final String TAG_ID = "idx";
     private static final String TAG_USERNAME = "username";
+    private static final String TAG_EMAIL = "email";
     private static final String TAG_CONTENTS = "contents";
     private static final String TAG_CREATED = "created";
     private static final String TAG_IMAGE = "image";
@@ -153,6 +154,7 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
                         intent.putExtra("listname", listName);
                         intent.putExtra("idx", listItems.get(position).getIdx());
                         intent.putExtra("username", listItems.get(position).getUsername());
+                        intent.putExtra("email", listItems.get(position).getEmail());
                         intent.putExtra("title", listItems.get(position).getTitle());
                         intent.putExtra("contents", listItems.get(position).getContents());
                         intent.putExtra("created", listItems.get(position).getCreated());
@@ -207,7 +209,7 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
         authNum = 0;
         if (MainActivity.mUser == null) {
             authNum = 0;
-        } else if (MainActivity.mUser.getDisplayName() == "skydusic@gmail.com") {
+        } else if (MainActivity.mUser.getDisplayName() == "skydusic@gmail.com" || MainActivity.mUsermail.equals("drbasketkorea@gmail.com")) {
             authNum = 2;
         } else if (MainActivity.mUser != null) {
             authNum = 1;
@@ -248,7 +250,7 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
                 JSONObject c = topic.getJSONObject(i);
 //                시간 설정
 
-                listItems.add(new listItem(String.valueOf(c.getInt(TAG_ID)), c.getString(TAG_TITLE), c.getString(TAG_USERNAME), c.getString(TAG_CONTENTS),
+                listItems.add(new listItem(String.valueOf(c.getInt(TAG_ID)), c.getString(TAG_TITLE), c.getString(TAG_USERNAME), c.getString(TAG_EMAIL), c.getString(TAG_CONTENTS),
                         c.getString(TAG_IMAGE), c.getString(TAG_CREATED), c.getString("listname"),
                         c.getString("hit"), c.getString("spindata")));
 

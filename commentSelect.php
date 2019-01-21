@@ -41,7 +41,7 @@
         mysqli_data_seek($result, $i);
         $row = mysqli_fetch_array($result);
         
-        echo "{\"listname\":\"commentBoard\",\"idx\":\"$row[idx]\",\"username\":\"$row[username]\",\"postidx\":\"$row[postidx]\",\"contents\":\"$row[contents]\",\"created\":\"$row[created]\",\"commentidx\":\"$row[commentidx]\"}";
+        echo "{\"listname\":\"commentBoard\",\"idx\":\"$row[idx]\",\"username\":\"$row[username]\",\"email\":\"$row[email]\",\"postidx\":\"$row[postidx]\",\"contents\":\"$row[contents]\",\"created\":\"$row[created]\",\"commentidx\":\"$row[commentidx]\"}";
         
         
         if($i<$total_record-1){

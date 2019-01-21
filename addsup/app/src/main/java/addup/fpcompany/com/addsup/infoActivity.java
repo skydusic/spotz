@@ -3,6 +3,7 @@ package addup.fpcompany.com.addsup;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -19,16 +20,16 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public class infoActivity extends AppCompatActivity implements View.OnClickListener{
+public class infoActivity extends AppCompatActivity implements View.OnClickListener {
 
     Button insertBtn;
     EditText titleET;
     EditText contentsET;
 
-    String TAG = "heu";
     String myJSON = "";
     String url = "";
     String username = "익명";
+    String email = "익명";
 
     Intent intent;
 
@@ -39,16 +40,8 @@ public class infoActivity extends AppCompatActivity implements View.OnClickListe
     TextView reportContentsET;
     TextView reportET;
 
-    String listname = "";
-    String idx = "";
-    String title = "";
-    String contents = "";
-    String writer = "";
-    String repoter = "";
-    String created = "";
-    String image = "";
+    String listname, idx, title, contents, writer, wemail, created, image, report = "";
     String flag = "info";
-    String report = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,57 +58,65 @@ public class infoActivity extends AppCompatActivity implements View.OnClickListe
         reportET = findViewById(R.id.reportEt);
 
         Intent infoIntent = getIntent();
-        if(infoIntent.getStringExtra("flag") != null){
+        if (infoIntent.getStringExtra("flag") != null) {
             flag = infoIntent.getStringExtra("flag");
         }
-        listname = infoIntent.getStringExtra("listname");
-        idx = infoIntent.getStringExtra("idx");
-        title = infoIntent.getStringExtra("title");
-        contents = infoIntent.getStringExtra("contents");
-        writer = infoIntent.getStringExtra("writer");
-        repoter = infoIntent.getStringExtra("repoter");
-        created = infoIntent.getStringExtra("created");
-        image = infoIntent.getStringExtra("image");
 
         // 인포액티비티 설정부
-        if (flag.equals("report")){
+        if (flag.equals("report")) {
+            idx = infoIntent.getStringExtra("idx");
+            listname = infoIntent.getStringExtra("listname");
+            title = infoIntent.getStringExtra("title");
+            contents = infoIntent.getStringExtra("contents");
+            writer = infoIntent.getStringExtra("writer");
+            wemail = infoIntent.getStringExtra("wemail");
+            created = infoIntent.getStringExtra("created");
+            image = infoIntent.getStringExtra("image");
+
             infoLay.setVisibility(View.INVISIBLE);
             reportLay.setVisibility(View.VISIBLE);
             reportTitleET.setText(title);
             reportContentsET.setText(contents);
-            url = "http://spotz.co.kr/var/www/html/reportinsert.php";
-        } else if(flag.equals("info")){
+        } else if (flag.equals("info")) {
             infoLay.setVisibility(View.VISIBLE);
             reportLay.setVisibility(View.INVISIBLE);
-            url = "http://spotz.co.kr/var/www/html/infoinsert.php";
         }
 
-            insertBtn.setOnClickListener(this);
+        insertBtn.setOnClickListener(this);
 
-        if(MainActivity.mUsername != null)
+        if (MainActivity.mUsername != null) {
             username = MainActivity.mUsername;
+            email = MainActivity.mUsermail;
+        }
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case (R.id.insertBtn):
-                if (flag.equals("report")){
+                if (flag.equals("report")) {
                     title = reportTitleET.getText().toString().trim();
                     contents = reportContentsET.getText().toString().trim();
                     report = reportET.getText().toString().trim();
-                } else if(flag.equals("info")){
+                } else if (flag.equals("info")) {
                     title = titleET.getText().toString().trim();
                     contents = contentsET.getText().toString().trim();
                 }
 
-                if(contents.length() > 300) {
-                    Toast.makeText( infoActivity.this, "글자 제한을 초과했습니다. (" + String.valueOf(contents.length()) + " / 300자)", Toast.LENGTH_LONG).show();
+                if (contents.length() > 300) {
+                    Toast.makeText(infoActivity.this, "글자 제한을 초과했습니다. (" + String.valueOf(contents.length()) + " / 300자)", Toast.LENGTH_LONG).show();
                 } else {
-                    writeInfo writeInfo = new writeInfo();
-                    writeInfo.requestPost(url, title, contents, username, report);
+                    if (flag.equals("report")) {
+                        ReportIns reportIns = new ReportIns();
+                        reportIns.requestPost(title, contents, username, email, report);
+                    } else if (flag.equals("info")) {
+                        InfoIns infoIns = new InfoIns();
+                        infoIns.requestPost(title, contents, username, email);
+                    }
+                    setResult(1414);
                     finish();
                 }
+
                 break;
 
             case (R.id.bottomHome):
@@ -146,20 +147,51 @@ public class infoActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    class writeInfo {
+    class InfoIns {
         OkHttpClient client = new OkHttpClient();
+        String url = "http://spotz.co.kr/var/www/html/infoinsert.php";
 
-        public void requestPost(String url, String title , String contents, String username, String report) {
+        public void requestPost(String title, String contents, String username, String email) {
 
+            RequestBody requestBody = new FormBody.Builder().
+                    add("title", title).
+                    add("contents", contents).
+                    add("username", username).
+                    add("email", email).
+                    build();
+
+            Request request = new Request.Builder().url(url).post(requestBody).build();
+            client.newCall(request).enqueue(new okhttp3.Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
+                    Log.d("heu", "Connect Server Error is " + e.toString());
+
+                }
+
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+                    myJSON = response.body().string();
+                }
+            });
+        }
+    }
+
+    class ReportIns {
+        OkHttpClient client = new OkHttpClient();
+        String url = "http://spotz.co.kr/var/www/html/reportinsert.php";
+
+        public void requestPost(String title, String contents, String username, String email, String report_contents) {
 
             RequestBody requestBody = new FormBody.Builder().
                     add("idx", idx).
                     add("listname", listname).
                     add("title", title).
                     add("contents", contents).
-                    add("username", username).
-                    add("report", report).
                     add("writer", writer).
+                    add("wemail", wemail).
+                    add("username", username).
+                    add("email", email).
+                    add("report_contents", report_contents).
                     add("created", created).
                     add("image", image).
                     build();
@@ -168,13 +200,14 @@ public class infoActivity extends AppCompatActivity implements View.OnClickListe
             client.newCall(request).enqueue(new okhttp3.Callback() {
                 @Override
                 public void onFailure(Call call, IOException e) {
-//                    Log.d(TAG, "Connect Server Error is " + e.toString());
+                    Log.d("heu", "Connect Server Error is " + e.toString());
 
                 }
 
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
                     myJSON = response.body().string();
+                    Log.d("heu", "성공 : " + myJSON);
                 }
             });
         }

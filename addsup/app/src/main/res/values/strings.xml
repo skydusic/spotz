@@ -35,5 +35,7 @@
     <string name="reportText">신고</string>
     <string name="reportTv">신고내용</string>
     <string name="hyperLink">자세히 보기</string>
+    <string name="confirm">확인</string>
+    <string name="movepost">보기</string>
 
 </resources>

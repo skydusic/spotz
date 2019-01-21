@@ -13,8 +13,9 @@
     session_start();
 
     $username=isset($_POST['username']) ? $_POST['username'] : '';
+    $email=isset($_POST['email']) ? $_POST['email'] : '';
 
-    $sql = "select * from history where username = '$username' ORDER BY created DESC";
+    $sql = "select * from history where email = '$email' ORDER BY created DESC";
     $result = mysqli_query($connect,$sql);
     $total_record = mysqli_num_rows($result);
     
@@ -49,7 +50,7 @@
         $re = mysqli_query($connect,$sql1);
         $row1 = mysqli_fetch_array($re);
 
-        echo "\"idx\":$row1[idx],\"title\":\"$row1[title]\",\"contents\":\"$row1[contents]\",\"username\":\"$row1[username]\",\"created\":\"$row1[created]\",\"hit\":\"$row1[hit]\",\"image\":\"$row1[image]\",\"spindata\":\"$row1[spindata]\"}";
+        echo "\"idx\":$row1[idx],\"title\":\"$row1[title]\",\"contents\":\"$row1[contents]\",\"username\":\"$row1[username]\",\"email\":\"$row1[email]\",\"created\":\"$row1[created]\",\"hit\":\"$row1[hit]\",\"image\":\"$row1[image]\",\"spindata\":\"$row1[spindata]\"}";
         
         
         if($i<$total_record-1){

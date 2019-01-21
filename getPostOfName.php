@@ -7,8 +7,9 @@
     session_start();
 
     $username=isset($_POST['username']) ? $_POST['username'] : '';
+    $email=isset($_POST['email']) ? $_POST['email'] : '';
 
-    $sql = "select * from postlist where username = '$username' ORDER BY created DESC";
+    $sql = "select * from postlist where email = '$email' ORDER BY created DESC";
     $result = mysqli_query($connect,$sql);
     $total_record = mysqli_num_rows($result);
 
@@ -41,7 +42,7 @@
         $result1 = mysqli_query($connect,$sql);
         $row1 = mysqli_fetch_array($result1);
         
-        echo "\"idx\":$row1[idx],\"title\":\"$row1[title]\",\"contents\":\"$row1[contents]\",\"username\":\"$row1[username]\",\"created\":\"$row1[created]\",\"hit\":\"$row1[hit]\",\"image\":\"$row1[image]\",\"spindata\":\"$row1[spindata]\"}";
+        echo "\"idx\":$row1[idx],\"title\":\"$row1[title]\",\"contents\":\"$row1[contents]\",\"username\":\"$row1[username]\",\"email\":\"$row1[email]\",\"created\":\"$row1[created]\",\"hit\":\"$row1[hit]\",\"image\":\"$row1[image]\",\"spindata\":\"$row1[spindata]\"}";
         
         if($i<$total_record-1){
           echo ",";
