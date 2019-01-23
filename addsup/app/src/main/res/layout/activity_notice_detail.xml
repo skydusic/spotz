@@ -13,6 +13,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
+        android:textSize="18sp"
         />
 
     <TextView
@@ -21,20 +22,19 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:layout_toEndOf="@id/idxTv"
-        android:text="공지사항" />
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/createdTv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
-        android:layout_margin="10dp"
-        android:text="created" />
+        android:layout_margin="10dp" />
 
     <android.support.v4.view.ViewPager
         android:id="@+id/viewPager"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_below="@id/idxTv"
         android:paddingTop="15dp"
         android:visibility="visible"/>
@@ -45,7 +45,7 @@
         android:layout_height="match_parent"
         android:padding="10dp"
         android:layout_below="@id/idxTv"
-        android:paddingTop="15dp"
+        android:layout_marginTop="40dp"
         android:textSize="16sp"
         android:visibility="gone"/>
 

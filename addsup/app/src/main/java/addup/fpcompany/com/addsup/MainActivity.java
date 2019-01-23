@@ -127,6 +127,7 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
 
         } else {
 
+            /** 닉네임 체크 + 원래 이름 설정! */
             mUsername = mUser.getDisplayName();
             mUsermail = mUser.getEmail();
 
@@ -519,6 +520,7 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
             case (R.id.bottomMember):
                 if (mUser == null) {
                     Intent intent = new Intent(MainActivity.this, SignInActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                     startActivityForResult(intent, 10);
                 } else {
                     Intent intent = new Intent(MainActivity.this, myPageActivity.class);

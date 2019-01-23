@@ -78,12 +78,17 @@ public class ActionDetailActivity extends AppCompatActivity {
             url = "http://spotz.co.kr/var/www/html/getPostOfName.php";
         } else if (pageName.equals("즐겨찾기")) {
             url = "http://spotz.co.kr/var/www/html/favoriteselect.php";
+            getPostedList = new getPostedList();
+            getPostedList.requestPost(url, username, email);
         } else if (pageName.equals("최근 본 글")) {
             url = "http://spotz.co.kr/var/www/html/historyselect.php";
+            getPostedList = new getPostedList();
+            getPostedList.requestPost(url, username, email);
+        } else if (pageName.equals("닉네임 변경")) {
+            url = "http://spotz.co.kr/var/www/html/nameSelect.php";
+
         }
 
-        getPostedList = new getPostedList();
-        getPostedList.requestPost(url, username, email);
         handler.sendEmptyMessage(50);
 
     }
@@ -126,8 +131,9 @@ public class ActionDetailActivity extends AppCompatActivity {
                             startActivityForResult(intent, 1000);
                         } else if (pageName.equals("즐겨찾기") || pageName.equals("최근 본 글")) {
                             Intent intent = new Intent(ActionDetailActivity.this, DetailList.class);
-                            intent.putExtra("idx", item.getIdx());
                             intent.putExtra("listname", item.getListname());
+                            intent.putExtra("idx", item.getIdx());
+                            intent.putExtra("title", item.getTitle());
                             intent.putExtra("username", item.getUsername());
                             intent.putExtra("email", item.getEmail());
                             intent.putExtra("image", item.getImage());
@@ -135,6 +141,11 @@ public class ActionDetailActivity extends AppCompatActivity {
                             intent.putExtra("spindata", item.getSpindata());
                             intent.putExtra("created", item.getCreated());
                             startActivityForResult(intent, 2000);
+                        } else if (pageName.equals("닉네임 변경")) {
+                            Intent intent = new Intent(ActionDetailActivity.this, nameChange.class);
+                            intent.putExtra("username", MainActivity.mUsername);
+                            intent.putExtra("email", MainActivity.mUsermail);
+                            startActivity(intent);
                         }
                     }
 

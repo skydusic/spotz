@@ -83,6 +83,7 @@ public class myPageActivity extends AppCompatActivity implements View.OnClickLis
         actionArr.add("내 글 보기");
 //        actionArr.add("즐겨찾기");
         actionArr.add("최근 본 글");
+        actionArr.add("닉네임 변경");
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);

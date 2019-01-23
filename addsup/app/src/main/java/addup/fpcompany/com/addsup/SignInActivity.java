@@ -79,10 +79,10 @@ public class SignInActivity extends AppCompatActivity implements GoogleApiClient
                 GoogleSignInAccount account = result.getSignInAccount();
                 firebaseAuthWithGoogle(account);
 
-                Intent intent = new Intent(SignInActivity.this, MainActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                Intent intent = new Intent(this, myPageActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                 startActivity(intent);
-
+                this.finish();
 
             } else {
                 // Google Sign In failed, update UI appropriately
@@ -101,6 +101,7 @@ public class SignInActivity extends AppCompatActivity implements GoogleApiClient
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             FirebaseUser user = mAuth.getCurrentUser();
+
                         } else {
                             // If sign in fails, display a message to the user.
 
@@ -136,5 +137,4 @@ public class SignInActivity extends AppCompatActivity implements GoogleApiClient
                 break;
         }
     }
-
 }
