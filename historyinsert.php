@@ -25,7 +25,7 @@
     $result = mysqli_query($link,$sql);
     $total_record = mysqli_num_rows($result);
 
-    $limit = 30;
+    $limit = 20;
     if($total_record >= $limit){
         mysqli_data_seek($result, 0);
         $row = mysqli_fetch_array($result);

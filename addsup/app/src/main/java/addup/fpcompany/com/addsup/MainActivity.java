@@ -128,11 +128,14 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
         } else {
 
             /** 닉네임 체크 + 원래 이름 설정! */
-            mUsername = mUser.getDisplayName();
             mUsermail = mUser.getEmail();
 
-            if (mUsermail.equals("skydusic@gmail.com") || mUsermail.equals("drbasketkorea@gmail.com"))
-//                mUsername = "관리자";
+            if (mUsermail.equals("skydusic@gmail.com") || mUsermail.equals("drbasketkorea@gmail.com")) {
+                mUsername = "관리자";
+                nicknameCheck(mUsermail);
+            } else {
+                nicknameCheck(mUsermail);
+            }
 
             if (mUser.getPhotoUrl() != null) {
                 mPhotoUrl = mUser.getPhotoUrl().toString();
@@ -143,11 +146,11 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
         connectServer.execute();
 
         if (SplashActivity.makeMsg < 1) {
+            SplashActivity.makeMsg++;
             if (mUsername != null) {
                 Toast.makeText(this, MainActivity.mUsername + "님 환영합니다", Toast.LENGTH_SHORT).show();
             }
         }
-        SplashActivity.makeMsg++;
 
         //스피너정보 가져오기
         spinList1.clear();
@@ -178,6 +181,24 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
         btnSix.setOnClickListener(this);
         hyperLinkTv.setOnClickListener(this);
 
+    }
+
+    private void nicknameCheck(String email) {
+        GetName getName = new GetName();
+        getName.requestPost(email);
+
+    }
+
+    private void settingName(String json) {
+        try {
+            JSONObject jsonObj = new JSONObject(json);
+            String num = jsonObj.getString("num_results");
+            if(num.equals("1")){
+                mUsername = jsonObj.getString("username");
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     public void checkVersion() {
@@ -417,7 +438,6 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
 
         public void requestPost(String username) {
 
-            //Request Body에 서버에 보낼 데이터 작성
             RequestBody requestBody = new FormBody.Builder().
                     add("username", username).
                     build();
@@ -450,6 +470,35 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
                         }
                     }
 
+                }
+            });
+        }
+    }
+
+    private class GetName {
+        //Client 생성
+        OkHttpClient client = new OkHttpClient();
+        String result;
+
+        public void requestPost(String email) {
+
+            RequestBody requestBody = new FormBody.Builder().
+                    add("email", email).
+                    build();
+            String url = "http://spotz.co.kr/var/www/html/nameSelect.php";
+
+            Request request = new Request.Builder().url(url).post(requestBody).build();
+            client.newCall(request).enqueue(new Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
+//                    Log.d("heu", "Connect Server Error is " + e.toString());
+                }
+
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+//                    Log.d("heu", "hitupdate res : " + response.body().string());
+                    result = response.body().string();
+                    settingName(result);
                 }
             });
         }

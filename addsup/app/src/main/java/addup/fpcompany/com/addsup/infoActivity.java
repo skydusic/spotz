@@ -3,7 +3,6 @@ package addup.fpcompany.com.addsup;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -164,7 +163,7 @@ public class infoActivity extends AppCompatActivity implements View.OnClickListe
             client.newCall(request).enqueue(new okhttp3.Callback() {
                 @Override
                 public void onFailure(Call call, IOException e) {
-                    Log.d("heu", "Connect Server Error is " + e.toString());
+//                    Log.d("heu", "Connect Server Error is " + e.toString());
 
                 }
 
@@ -200,14 +199,13 @@ public class infoActivity extends AppCompatActivity implements View.OnClickListe
             client.newCall(request).enqueue(new okhttp3.Callback() {
                 @Override
                 public void onFailure(Call call, IOException e) {
-                    Log.d("heu", "Connect Server Error is " + e.toString());
+//                    Log.d("heu", "Connect Server Error is " + e.toString());
 
                 }
 
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
                     myJSON = response.body().string();
-                    Log.d("heu", "성공 : " + myJSON);
                 }
             });
         }

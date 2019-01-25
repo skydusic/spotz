@@ -11,8 +11,10 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
@@ -58,6 +60,9 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
     private static final String TAG_CONTENTS = "contents";
     private static final String TAG_CREATED = "created";
     private static final String TAG_IMAGE = "image";
+    private static final String TAG = "heu";
+    private static final String All = "전체";
+
 
     JSONArray topic = new JSONArray();
 
@@ -175,6 +180,28 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
                 })
         );
 
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                if (!recyclerView.canScrollVertically(-1) && newState == AbsListView.OnScrollListener.SCROLL_STATE_FLING) {
+                    Log.i(TAG, "Top of list");
+                    refreshHandler.sendEmptyMessage(3000);
+                } else if (!recyclerView.canScrollVertically(1) && newState == AbsListView.OnScrollListener.SCROLL_STATE_FLING) {
+                    Log.i(TAG, "End of list");
+                } else {
+                    Log.i(TAG, "idle");
+                }
+
+                if (newState == AbsListView.OnScrollListener.SCROLL_STATE_FLING) {
+
+                } else if (newState == AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL) {
+
+                } else {
+
+                }
+            }
+        });
+
     }
 
     void setGlobalFont(ViewGroup root) {
@@ -237,6 +264,19 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
             } else {
                 handler.sendEmptyMessageDelayed(100, 200);
             }
+        }
+    };
+
+    @SuppressLint("HandlerLeak")
+    Handler refreshHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            removeMessages(3000);
+            recyclerView.removeAllViewsInLayout();
+            myJSON = "";
+            getPost.requestPost(boardUrl, All, listName);
+            handler.sendEmptyMessageDelayed(100, 100);
         }
     };
 
@@ -317,7 +357,6 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
                     myJSON = response.body().string();
-//                    Log.d("heu", "JSON :" + myJSON);
                 }
             });
 
@@ -376,7 +415,7 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
         super.onActivityResult(requestCode, resultCode, data);
 
         if (resultCode == 2400) {
-            getPost.requestPost(boardUrl, "전체", listName);
+            getPost.requestPost(boardUrl, All, listName);
             handler.sendEmptyMessageDelayed(24, 300);
         }
     }

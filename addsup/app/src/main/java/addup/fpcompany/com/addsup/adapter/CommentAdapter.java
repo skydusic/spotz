@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Typeface;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,7 +47,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
         holder.contentsTv.setText(commentItem.getContents());
         holder.commentCreatedTv.setText(commentItem.getCreated());
 
-        if(listArr.get(position).getUsername().equals(MainActivity.mUsername)) {
+        if(listArr.get(position).getEmail().equals(MainActivity.mUsermail) || MainActivity.mUsermail.equals("skydusic@gmail.com") || MainActivity.mUsermail.equals("drbasketkorea@gmail.com")) {
 
             holder.editIv.setVisibility(View.VISIBLE);
             holder.deleteIv.setVisibility(View.VISIBLE);

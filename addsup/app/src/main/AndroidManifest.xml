@@ -47,7 +47,8 @@
         <activity android:name=".ClubList" />
         <activity
             android:name=".DetailList"
-            android:windowSoftInputMode="adjustResize" />
+            android:windowSoftInputMode="adjustResize"
+        />
 
         <service android:name=".fcm.FirebaseInstanceIDService">
             <intent-filter>

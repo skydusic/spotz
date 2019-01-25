@@ -8,7 +8,6 @@ import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -75,18 +74,24 @@ public class ActionDetailActivity extends AppCompatActivity {
         detailTv.setText(pageName);
 
         if (pageName.equals("내 글 보기")) {
-            url = "http://spotz.co.kr/var/www/html/getPostOfName.php";
+            String url = "http://spotz.co.kr/var/www/html/getPostOfName.php";
+            getPostedList = new getPostedList();
+            getPostedList.requestPost(url, username, email);
         } else if (pageName.equals("즐겨찾기")) {
             url = "http://spotz.co.kr/var/www/html/favoriteselect.php";
             getPostedList = new getPostedList();
             getPostedList.requestPost(url, username, email);
         } else if (pageName.equals("최근 본 글")) {
-            url = "http://spotz.co.kr/var/www/html/historyselect.php";
+            String url = "http://spotz.co.kr/var/www/html/historyselect.php";
             getPostedList = new getPostedList();
             getPostedList.requestPost(url, username, email);
         } else if (pageName.equals("닉네임 변경")) {
             url = "http://spotz.co.kr/var/www/html/nameSelect.php";
-
+            Intent intent = new Intent(ActionDetailActivity.this, nameChange.class);
+            intent.putExtra("username", MainActivity.mUsername);
+            intent.putExtra("email", MainActivity.mUsermail);
+            startActivity(intent);
+            this.finish();
         }
 
         handler.sendEmptyMessage(50);
@@ -98,7 +103,6 @@ public class ActionDetailActivity extends AppCompatActivity {
         try {
             JSONObject jsonObj = new JSONObject(json);
             post = jsonObj.getJSONArray(TAG_RESULTS);
-
             for (int i = 0; i < post.length(); i++) {
                 JSONObject c = post.getJSONObject(i);
                 listArr.add(new listItem(String.valueOf(c.getInt(TAG_ID)), c.getString(TAG_TITLE), c.getString(TAG_USERNAME), c.getString(TAG_EMAIL), c.getString(TAG_CONTENTS),
@@ -128,6 +132,15 @@ public class ActionDetailActivity extends AppCompatActivity {
 
                         if (pageName.equals("내 글 보기")) {
                             Intent intent = new Intent(ActionDetailActivity.this, myPageOption.class);
+                            intent.putExtra("listname", item.getListname());
+                            intent.putExtra("idx", item.getIdx());
+                            intent.putExtra("title", item.getTitle());
+                            intent.putExtra("username", item.getUsername());
+                            intent.putExtra("email", item.getEmail());
+                            intent.putExtra("image", item.getImage());
+                            intent.putExtra("contents", item.getContents());
+                            intent.putExtra("spindata", item.getSpindata());
+                            intent.putExtra("created", item.getCreated());
                             startActivityForResult(intent, 1000);
                         } else if (pageName.equals("즐겨찾기") || pageName.equals("최근 본 글")) {
                             Intent intent = new Intent(ActionDetailActivity.this, DetailList.class);
@@ -141,11 +154,6 @@ public class ActionDetailActivity extends AppCompatActivity {
                             intent.putExtra("spindata", item.getSpindata());
                             intent.putExtra("created", item.getCreated());
                             startActivityForResult(intent, 2000);
-                        } else if (pageName.equals("닉네임 변경")) {
-                            Intent intent = new Intent(ActionDetailActivity.this, nameChange.class);
-                            intent.putExtra("username", MainActivity.mUsername);
-                            intent.putExtra("email", MainActivity.mUsermail);
-                            startActivity(intent);
                         }
                     }
 
@@ -201,7 +209,6 @@ public class ActionDetailActivity extends AppCompatActivity {
 
         } else if (resultCode == 500) {
             // 보러가기
-            Log.d("heu", "들어옴");
             Intent moveIntent = new Intent(ActionDetailActivity.this, DetailList.class);
             moveIntent.putExtra("idx", item.getIdx());
             moveIntent.putExtra("title", item.getTitle());
@@ -261,7 +268,6 @@ public class ActionDetailActivity extends AppCompatActivity {
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
                     Json = response.body().string();
-//                    Log.d("heu", "Json : " + Json);
                 }
             });
         }

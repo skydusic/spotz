@@ -299,6 +299,8 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
     @Override
     public void onClick(View v) {
         hideKeyboard();
+        editCommentLay.setVisibility(View.GONE);
+        bottombar.setVisibility(View.VISIBLE);
         switch (v.getId()) {
             case (R.id.mainLayout):
                 break;
@@ -332,12 +334,14 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
 
                 break;
             case (R.id.delpostBT):
-
                 // 삭제
                 postDelete postDelete = new postDelete();
                 postDelete.requestPost(idx, listname, username, email, title, contents, created);
-                finish();
-
+                Intent again = new Intent(DetailList.this, ClubList.class);
+                again.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                again.putExtra("listName", listname);
+                startActivity(again);
+                this.finish();
                 break;
             case (R.id.reportBt):
 
@@ -395,9 +399,9 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
                 break;
 
             case (R.id.editCommentBt):
-                //visible 설정
-                editCommentLay.setVisibility(View.GONE);
-                bottombar.setVisibility(View.VISIBLE);
+                // visible 설정
+                // editCommentLay.setVisibility(View.GONE);
+                // bottombar.setVisibility(View.VISIBLE);
 
                 //댓글 수정
                 commentUpdate CU = new commentUpdate();
@@ -661,8 +665,6 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
         public void requestPost(final String listname, String contents, String postidx, String commentidx) {
 
             requestBody = new FormBody.Builder().
-                    add("username", MainActivity.mUsername).
-                    add("email", MainActivity.mUsermail).
                     add("postidx", postidx).
                     add("listname", listname).
                     add("contents", contents).
@@ -910,10 +912,10 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
         bottombar.setVisibility(View.VISIBLE);
         editCommentLay.setVisibility(View.INVISIBLE);
         editCommentEt.setText("");
+        super.onBackPressed();
     }
 
     @Override

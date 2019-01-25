@@ -470,9 +470,6 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
 
             if (postNum == 1) {
                 // 수정일 경우 idx 첨부!
-
-//                Log.d("heu", "인서트액티비티 Listname : " + listName);
-
                 requestBody = new FormBody.Builder().
                         add("idx", idx).
                         add("title", title).
