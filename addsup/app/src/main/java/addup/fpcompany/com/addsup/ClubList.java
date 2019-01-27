@@ -11,7 +11,6 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
@@ -53,16 +52,21 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
     String myJSON = "";
 
     private static final String TAG_RESULTS = "results";
+    private static final String TAG_FLAG = "endpage";
     private static final String TAG_TITLE = "title";
+    private static final String TAG_LISTNAME = "listname";
     private static final String TAG_ID = "idx";
     private static final String TAG_USERNAME = "username";
     private static final String TAG_EMAIL = "email";
     private static final String TAG_CONTENTS = "contents";
     private static final String TAG_CREATED = "created";
+    private static final String TAG_SPIN = "spindata";
+    private static final String TAG_HIT = "hit";
     private static final String TAG_IMAGE = "image";
     private static final String TAG = "heu";
     private static final String All = "전체";
-
+    private static final String TAG_EMAIL1 = "skydusic@gmail.com";
+    private static final String TAG_EMAIL2 = "drbasketkorea@gmail.com";
 
     JSONArray topic = new JSONArray();
 
@@ -78,6 +82,8 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
 
     getPost getPost = new getPost();
     private static Typeface mTypeface;
+
+    int pageOrder = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -184,12 +190,14 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 if (!recyclerView.canScrollVertically(-1) && newState == AbsListView.OnScrollListener.SCROLL_STATE_FLING) {
-                    Log.i(TAG, "Top of list");
                     refreshHandler.sendEmptyMessage(3000);
                 } else if (!recyclerView.canScrollVertically(1) && newState == AbsListView.OnScrollListener.SCROLL_STATE_FLING) {
-                    Log.i(TAG, "End of list");
+//                    Log.i(TAG, "End of list");
+                    myJSON = "";
+                    GetAddPost getAddPost = new GetAddPost();
+                    getAddPost.requestPost(boardUrl, All, listName, pageOrder);
+                    addPageHandler.sendEmptyMessageDelayed(4000, 200);
                 } else {
-                    Log.i(TAG, "idle");
                 }
 
                 if (newState == AbsListView.OnScrollListener.SCROLL_STATE_FLING) {
@@ -236,7 +244,7 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
         authNum = 0;
         if (MainActivity.mUser == null) {
             authNum = 0;
-        } else if (MainActivity.mUser.getDisplayName() == "skydusic@gmail.com" || MainActivity.mUsermail.equals("drbasketkorea@gmail.com")) {
+        } else if (MainActivity.mUser.getDisplayName().equals(TAG_EMAIL1) || MainActivity.mUsermail.equals(TAG_EMAIL2)) {
             authNum = 2;
         } else if (MainActivity.mUser != null) {
             authNum = 1;
@@ -273,10 +281,23 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             removeMessages(3000);
+            pageOrder = 0;
             recyclerView.removeAllViewsInLayout();
-            myJSON = "";
             getPost.requestPost(boardUrl, All, listName);
-            handler.sendEmptyMessageDelayed(100, 100);
+        }
+    };
+
+    @SuppressLint("HandlerLeak")
+    Handler addPageHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            removeMessages(4000);
+            if (myJSON.equals("")) {
+                addPageHandler.sendEmptyMessageDelayed(4000, 100);
+            } else {
+                addList(myJSON);
+            }
         }
     };
 
@@ -288,13 +309,14 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
 
             for (int i = 0; i < topic.length(); i++) {
                 JSONObject c = topic.getJSONObject(i);
-//                시간 설정
 
                 listItems.add(new listItem(String.valueOf(c.getInt(TAG_ID)), c.getString(TAG_TITLE), c.getString(TAG_USERNAME), c.getString(TAG_EMAIL), c.getString(TAG_CONTENTS),
-                        c.getString(TAG_IMAGE), c.getString(TAG_CREATED), c.getString("listname"),
-                        c.getString("hit"), c.getString("spindata")));
+                        c.getString(TAG_IMAGE), c.getString(TAG_CREATED), c.getString(TAG_LISTNAME),
+                        c.getString(TAG_HIT), c.getString(TAG_SPIN)));
 
             }
+            pageOrder++;
+
         } catch (JSONException e) {
             e.printStackTrace();
 //            Log.d("heu", "adapter Exception : " + e);
@@ -302,6 +324,29 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
 
         // 수정
 //        checkSelect();
+    }
+
+    private void addList(String json) {
+
+        try {
+            JSONObject jsonObj = new JSONObject(json);
+            topic = jsonObj.getJSONArray(TAG_RESULTS);
+            String flag = jsonObj.getString(TAG_FLAG);
+            if(!flag.equals(TAG_FLAG)) {
+                for (int i = 0; i < topic.length(); i++) {
+                    JSONObject c = topic.getJSONObject(i);
+//                시간 설정
+                    listItems.add(new listItem(String.valueOf(c.getInt(TAG_ID)), c.getString(TAG_TITLE), c.getString(TAG_USERNAME), c.getString(TAG_EMAIL), c.getString(TAG_CONTENTS),
+                            c.getString(TAG_IMAGE), c.getString(TAG_CREATED), c.getString(TAG_LISTNAME),
+                            c.getString(TAG_HIT), c.getString(TAG_SPIN)));
+                }
+                adapter.notifyItemInserted(0);
+                pageOrder++;
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+//            Log.d("heu", "adapter Exception : " + e);
+        }
     }
 
     //    쓴날짜가 오늘일 때 써진시간으로 보여주는 메소드
@@ -344,6 +389,37 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
             RequestBody requestBody = new FormBody.Builder().
                     add("spindata", spindata).
                     add("listname", listname).
+                    add("pageOrder", "0").
+                    build();
+
+            request = new Request.Builder().url(url).post(requestBody).build();
+            client.newCall(request).enqueue(new okhttp3.Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
+//                    Log.d("heu", "Connect Server Error is " + e.toString());
+
+                }
+
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+                    myJSON = response.body().string();
+                    handler.sendEmptyMessage(100);
+
+                }
+            });
+
+        }
+    }
+
+    class GetAddPost {
+        OkHttpClient client = new OkHttpClient();
+        Request request;
+
+        public void requestPost(String url, String spindata, String listname, final int pageOrder) {
+            RequestBody requestBody = new FormBody.Builder().
+                    add("spindata", spindata).
+                    add("listname", listname).
+                    add("pageorder", String.valueOf(pageOrder)).
                     build();
 
             request = new Request.Builder().url(url).post(requestBody).build();

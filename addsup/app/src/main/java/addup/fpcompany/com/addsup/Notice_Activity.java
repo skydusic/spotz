@@ -50,6 +50,8 @@ public class Notice_Activity extends AppCompatActivity implements View.OnClickLi
     private static final String TAG_CONTENTS = "contents";
     private static final String TAG_CREATED = "created";
     private static final String TAG_IMAGE = "image";
+    private static final String TAG_EMAIL1 = "skydusic@gmail.com";
+    private static final String TAG_EMAIL2 = "drbasketkorea@gmail.com";
 
     JSONArray topic = new JSONArray();
     getPost getPost = new getPost();
@@ -66,10 +68,10 @@ public class Notice_Activity extends AppCompatActivity implements View.OnClickLi
         getPost.requestPost(url);
         handler.sendEmptyMessage(100);
 
-        if (MainActivity.mUser != null && MainActivity.mUser.getEmail().equals("skydusic@gmail.com")) {
+        if (MainActivity.mUser != null && MainActivity.mUser.getEmail().equals(TAG_EMAIL1)) {
             noticeIns.setVisibility(View.VISIBLE);
             noticeIns.setOnClickListener(this);
-        } else if (MainActivity.mUser != null && MainActivity.mUser.getEmail().equals("drbasketkorea@gmail.com")) {
+        } else if (MainActivity.mUser != null && MainActivity.mUser.getEmail().equals(TAG_EMAIL2)) {
             noticeIns.setVisibility(View.VISIBLE);
             noticeIns.setOnClickListener(this);
         }

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 
 import com.google.android.gms.auth.api.Auth;
@@ -87,6 +88,7 @@ public class SignInActivity extends AppCompatActivity implements GoogleApiClient
             } else {
                 // Google Sign In failed, update UI appropriately
                 // ...
+                Log.d("heu", "사인 실패!");
             }
         }
     }

@@ -35,3 +35,7 @@
 -keep public class com.google.android.gms.measurement.AppMeasurement {
     public *;
 }
+
+-keep interface com.birbit.android.jobqueue.** { *; }
+
+-dontwarn okio.**

@@ -13,6 +13,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
@@ -78,6 +79,9 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
     static String mPhotoUrl;
     int makeMsg = 0;
 
+    private static final String TAG_EMAIL1 = "skydusic@gmail.com";
+    private static final String TAG_EMAIL2 = "drbasketkorea@gmail.com";
+
     public static String serverUrl = "";
     static ArrayList<String> spinList1 = new ArrayList<>();
 
@@ -124,19 +128,10 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
         // 파이어베이스 구글로그인
         if (mUser == null) {
             //로그인 안한 상태
-
+            Log.d("heu", "유저 : null");
         } else {
-
-            /** 닉네임 체크 + 원래 이름 설정! */
             mUsermail = mUser.getEmail();
-
-            if (mUsermail.equals("skydusic@gmail.com") || mUsermail.equals("drbasketkorea@gmail.com")) {
-                mUsername = "관리자";
-                nicknameCheck(mUsermail);
-            } else {
-                nicknameCheck(mUsermail);
-            }
-
+            nicknameCheck(mUsermail);
             if (mUser.getPhotoUrl() != null) {
                 mPhotoUrl = mUser.getPhotoUrl().toString();
             }
@@ -195,6 +190,8 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
             String num = jsonObj.getString("num_results");
             if(num.equals("1")){
                 mUsername = jsonObj.getString("username");
+            } else {
+                mUsername = mUser.getDisplayName();
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -206,10 +203,6 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
         mDialog = new AlertDialog.Builder(this);
 
         if (SplashActivity.store_version.compareTo(SplashActivity.device_version) > 0) {
-            /**
-             *   업데이트 필요
-             * */
-
             mDialog.setMessage("업데이트 후 사용해주세요.")
                     .setCancelable(false)
                     .setPositiveButton("업데이트 바로가기",
@@ -227,8 +220,6 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
             AlertDialog alert = mDialog.create();
             alert.setTitle("안 내");
             alert.show();
-
-
         }
     }
 
@@ -463,10 +454,11 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-
-                    for (int i = 0; i < bList.size(); i++) {
-                        if (mUsername.equals(bList.get(i))) {
-                            FirebaseAuth.getInstance().signOut();
+                    if(MainActivity.mUser != null) {
+                        for (int i = 0; i < bList.size(); i++) {
+                            if (mUsermail.equals(bList.get(i))) {
+                                FirebaseAuth.getInstance().signOut();
+                            }
                         }
                     }
 

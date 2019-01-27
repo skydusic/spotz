@@ -75,13 +75,21 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
     InputMethodManager imm;
 
     private static final String TAG_RESULTS = "results";
+    private static final String TAG_FLAG = "endpage";
     private static final String TAG_TITLE = "title";
+    private static final String TAG_LISTNAME = "listname";
     private static final String TAG_ID = "idx";
     private static final String TAG_USERNAME = "username";
     private static final String TAG_EMAIL = "email";
     private static final String TAG_CONTENTS = "contents";
     private static final String TAG_CREATED = "created";
+    private static final String TAG_SPIN = "spindata";
+    private static final String TAG_HIT = "hit";
     private static final String TAG_IMAGE = "image";
+    private static final String TAG = "heu";
+    private static final String All = "전체";
+    private static final String TAG_EMAIL1 = "skydusic@gmail.com";
+    private static final String TAG_EMAIL2 = "drbasketkorea@gmail.com";
 
     //코멘트 수정 삭제
     LinearLayout editCommentLay;
@@ -170,7 +178,7 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
 
         //수정, 삭제 버튼 보여주기
         if (MainActivity.mUser != null)
-            if (email.equals(MainActivity.mUsermail) || MainActivity.mUsermail.equals("skydusic@gmail.com") || MainActivity.mUsermail.equals("drbasketkorea@gmail.com")) {
+            if (email.equals(MainActivity.mUsermail) || MainActivity.mUsermail.equals(TAG_EMAIL1) || MainActivity.mUsermail.equals(TAG_EMAIL2)) {
                 editpostBT.setVisibility(View.VISIBLE);
                 delpostBT.setVisibility(View.VISIBLE);
             }
@@ -250,26 +258,18 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
     private void refresh(String Json) {
 
         try {
-
             JSONObject jsonObj = new JSONObject(Json);
-            JSONArray post = jsonObj.getJSONArray("results");
-
+            JSONArray post = jsonObj.getJSONArray(TAG_RESULTS);
             for (int i = 0; i < post.length(); i++) {
                 JSONObject c = post.getJSONObject(i);
-//                시간 설정
-//                Log.d("heu", "listname : " + listname);
                 postItem = new listItem((String.valueOf(c.getInt(TAG_ID))), c.getString(TAG_TITLE), c.getString(TAG_USERNAME), c.getString(TAG_EMAIL), c.getString(TAG_CONTENTS),
-                        c.getString(TAG_IMAGE), c.getString(TAG_CREATED), c.getString("listname"),
-                        c.getString("hit"), c.getString("spindata"));
-
+                        c.getString(TAG_IMAGE), c.getString(TAG_CREATED), c.getString(TAG_LISTNAME),
+                        c.getString(TAG_HIT), c.getString(TAG_SPIN));
             }
-
         } catch (JSONException e) {
             e.printStackTrace();
 //            Log.d("heu", "adapter Exception : " + e);
         }
-
-
     }
 
     public void scrollToEnd() {
@@ -469,7 +469,7 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
 
             for (int i = 0; i < comment.length(); i++) {
                 JSONObject c = comment.getJSONObject(i);
-                listItems.add(new commentItem(String.valueOf(c.get(TAG_ID)), c.getString("listname"),
+                listItems.add(new commentItem(String.valueOf(c.get(TAG_ID)), c.getString(TAG_LISTNAME),
                         c.getString(TAG_USERNAME), c.getString(TAG_EMAIL), c.getString(TAG_CONTENTS), ClubList.settingTimes(c.getString(TAG_CREATED))));
             }
         } catch (JSONException e) {
@@ -493,13 +493,10 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
         if (state == ViewPager.SCROLL_STATE_IDLE) {
 //            Log.d("heu", "State IDLE");
             handler.sendEmptyMessageDelayed(0, 2000);
-
         } else if (state == ViewPager.SCROLL_STATE_DRAGGING) {
 //            Log.d("heu", "State Draging");
             handler.removeMessages(0);
-
         } else if (state == ViewPager.SCROLL_STATE_SETTLING) {
-
 //            Log.d("heu", "State Settling");
         }
     }
@@ -511,7 +508,6 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
             super.handleMessage(msg);
             handler.removeMessages(0);
             pagerPos++;
-
             if (pagerPos >= arr.size()) {
                 pagerPos = 0;
                 viewPager.setCurrentItem(pagerPos, false);
@@ -545,7 +541,6 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
             if (!commentJson.equals("")) {
                 //코멘트 객체화
                 setCommentJson(commentJson);
-
                 //코멘트 어댑터 적용
                 setCommentlist();
                 removeMessages(500);
@@ -565,14 +560,12 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
 
             if (myJSON.equals("")) {
                 refreshPostHandler.sendEmptyMessageDelayed(300, 200);
-
             } else {
                 removeMessages(300);
                 refresh(myJSON);
                 titleTv.setText(postItem.getTitle());
                 contentsTv.setText(postItem.getContents());
             }
-
         }
     };
 
@@ -602,7 +595,6 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
         OkHttpClient client = new OkHttpClient();
 
         public void requestPost() {
-
             //Request Body에 서버에 보낼 데이터 작성
             RequestBody requestBody = new FormBody.Builder().
                     add("listname", listname).
@@ -646,9 +638,7 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
                 @Override
                 public void onFailure(Call call, IOException e) {
 //                    Log.d("heu", "Connect Server Error is " + e.toString());
-
                 }
-
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
 //                    Log.d("heu", "응답(코멘트) :" + response.toString());
@@ -663,7 +653,6 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
         OkHttpClient client = new OkHttpClient();
 
         public void requestPost(final String listname, String contents, String postidx, String commentidx) {
-
             requestBody = new FormBody.Builder().
                     add("postidx", postidx).
                     add("listname", listname).
@@ -677,9 +666,7 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
                 @Override
                 public void onFailure(Call call, IOException e) {
 //                    Log.d("heu", "Connect Server Error is " + e.toString());
-
                 }
-
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
 //                    Log.d("heu", "응답(코멘트) :" + response.toString());
@@ -689,10 +676,8 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
     }
 
     class getComment {
-
         OkHttpClient client = new OkHttpClient();
         Request request;
-
         public void requestPost(String idx, String listname) {
             RequestBody requestBody = new FormBody.Builder().
                     add("postidx", idx).
@@ -737,9 +722,7 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
                 @Override
                 public void onFailure(Call call, IOException e) {
 //                    Log.d("heu", "Connect Server Error is " + e.toString());
-
                 }
-
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
 //                    Log.d("heu", "응답(코멘트) :" + response.toString());
@@ -848,7 +831,6 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
         OkHttpClient client = new OkHttpClient();
 
         public void requestPost(String idx, String listname, String username, String email, String title, String contents, String created) {
-
             String url = "http://spotz.co.kr/var/www/html/deletepost.php";
             //Request Body에 서버에 보낼 데이터 작성
             RequestBody requestBody = new FormBody.Builder().

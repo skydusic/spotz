@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.Typeface;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +22,8 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
     ArrayList<commentItem> listArr;
     commentItem commentItem;
     private static Typeface mTypeface;
+    private static final String TAG_EMAIL1 = "skydusic@gmail.com";
+    private static final String TAG_EMAIL2 = "drbasketkorea@gmail.com";
     private OnItemClickListener mListener;
 
     public CommentAdapter(Context context, ArrayList<commentItem> itemArr, OnItemClickListener onItemClickListener) {
@@ -47,7 +48,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
         holder.contentsTv.setText(commentItem.getContents());
         holder.commentCreatedTv.setText(commentItem.getCreated());
 
-        if(listArr.get(position).getEmail().equals(MainActivity.mUsermail) || MainActivity.mUsermail.equals("skydusic@gmail.com") || MainActivity.mUsermail.equals("drbasketkorea@gmail.com")) {
+        if(listArr.get(position).getEmail().equals(MainActivity.mUsermail) || MainActivity.mUsermail.equals(TAG_EMAIL1) || MainActivity.mUsermail.equals(TAG_EMAIL2)) {
 
             holder.editIv.setVisibility(View.VISIBLE);
             holder.deleteIv.setVisibility(View.VISIBLE);

@@ -126,12 +126,12 @@ public class myPageActivity extends AppCompatActivity implements View.OnClickLis
     private void set() {
         FirebaseUser currentUser = MainActivity.mAuth.getCurrentUser();
         MainActivity.mUser = FirebaseAuth.getInstance().getCurrentUser();
-        if (currentUser == null) {
-
-        } else {
+        if (currentUser != null) {
             if (currentUser.getPhotoUrl() != null) {
                 MainActivity.mPhotoUrl = currentUser.getPhotoUrl().toString();
             }
+            MainActivity.mUsername = currentUser.getDisplayName();
+            MainActivity.mUsermail = currentUser.getEmail();
             userId.setText(MainActivity.mUsername);
             handler.removeMessages(100);
             progressBar.setVisibility(View.GONE);
