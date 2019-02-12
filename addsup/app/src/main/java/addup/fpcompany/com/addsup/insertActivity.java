@@ -1,6 +1,7 @@
 package addup.fpcompany.com.addsup;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.ClipData;
 import android.content.Intent;
@@ -14,6 +15,8 @@ import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Message;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -29,6 +32,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -79,12 +86,15 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
     String serverUri;
     String imagePath;
     String imageAddress1 = "";
-    String listName = "";
+    String listname = "";
     String contents;
     String image;
     String spindata;
     String url = MainActivity.serverUrl;
     int postNum;
+
+    private static final String TAG_RESULTS = "results";
+    private static final String TAG_CONTENTS = "contents";
 
     ArrayList<String> filenameList = new ArrayList<>();
     ArrayList<String> imagePathArr = new ArrayList<>();
@@ -114,7 +124,7 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
         title = clubInt.getStringExtra("title");
         postNum = clubInt.getIntExtra("postNum", 0);
         contents = clubInt.getStringExtra("contents");
-        listName = clubInt.getStringExtra("listname");
+        listname = clubInt.getStringExtra("listname");
         image = clubInt.getStringExtra("image");
 
         spinnerAdapter1 = new ArrayAdapter<>(this, R.layout.support_simple_spinner_dropdown_item, MainActivity.spinList1);
@@ -127,8 +137,7 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
             serverUri = "http://spotz.co.kr/var/www/html/freeboardUpdate.php";
 
             titleEt.setText(clubInt.getStringExtra("title"));
-            contentsET.setText(clubInt.getStringExtra("contents"));
-            listName = clubInt.getStringExtra("listname");
+            listname = clubInt.getStringExtra("listname");
             spindata = clubInt.getStringExtra("spindata");
 
             /** 이미지 테스트 해봐야 함 */
@@ -157,7 +166,7 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
                         InsertData task = new InsertData();
                         ConnectServer connectServer = new ConnectServer();
                         for (int i = 0; i < imagePathArr.size(); i++) {
-                            connectServer.requestPost(url, MainActivity.mUsername, MainActivity.mUsermail, listName, uriList.get(i));
+                            connectServer.requestPost(url, MainActivity.mUsername, MainActivity.mUsermail, listname, uriList.get(i));
                         }
                         for (int i = 0; i < filenameList.size(); i++) {
                             imageAddress1 += filenameList.get(i);
@@ -166,7 +175,7 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
                             }
                         }
                         task.request(title, contents, serverUri, MainActivity.mUsername, MainActivity.mUsermail, imageAddress1,
-                                listName, spindata);
+                                listname, spindata);
                         setResult(2400, returnIntent);
                         finish();
                     } else {
@@ -460,6 +469,32 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
 
     }
 
+    @SuppressLint("HandlerLeak")
+    Handler refreshPostHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+
+            if (myJSON.equals("")) {
+                refreshPostHandler.sendEmptyMessageDelayed(300, 200);
+            } else {
+                refreshPostHandler.removeMessages(300);
+                try {
+                    JSONObject jsonObj = new JSONObject(myJSON);
+                    JSONArray post = jsonObj.getJSONArray(TAG_RESULTS);
+                    for (int i = 0; i < post.length(); i++) {
+                        JSONObject c = post.getJSONObject(i);
+                        contents = c.getString(TAG_CONTENTS);
+                        contentsET.setText(contents);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+//            Log.d("heu", "adapter Exception : " + e);
+                }
+            }
+        }
+    };
+
     class InsertData {
         ProgressDialog progressDialog;
         RequestBody requestBody;
@@ -507,6 +542,36 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
 
         }
 
+    }
+
+    class refreshPost {
+        OkHttpClient client = new OkHttpClient();
+        Request request;
+
+        public void requestPost(String idx) {
+
+            String url = "http://spotz.co.kr/var/www/html/refreshPost.php";
+            RequestBody requestBody = new FormBody.Builder().
+                    add("idx", idx).
+                    add("listname", listname).
+                    build();
+
+            request = new Request.Builder().url(url).post(requestBody).build();
+            client.newCall(request).enqueue(new okhttp3.Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
+//                    Log.d("heu", "Connect Server Error is " + e.toString());
+
+                }
+
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+                    myJSON = response.body().string();
+                    refreshPostHandler.sendEmptyMessage(300);
+                }
+            });
+
+        }
     }
 
     class ConnectServer {
@@ -626,5 +691,11 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
                 }
             });
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        refreshPostHandler.removeMessages(300);
     }
 }

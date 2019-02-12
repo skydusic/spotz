@@ -10,20 +10,18 @@ public class listItem {
     private String title;
     private String username;
     private String email;
-    private String contents;
     private String image;
     private String created;
     private String listname;
     private String hit;
     private String spindata;
 
-    public listItem(String idx, String title, String username, String email, String contents, String image, String created,
+    public listItem(String idx, String title, String username, String email, String image, String created,
                     String listname, String hit, String spindata) {
         this.idx = idx;
         this.title = title;
         this.username = username;
         this.email = email;
-        this.contents = contents;
         this.image = image;
         this.created = created;
         this.listname = listname;
@@ -60,10 +58,6 @@ public class listItem {
         return email;
     }
 
-    public String getContents() {
-        return contents;
-    }
-
     public String getImage() {
         return image;
     }
@@ -79,7 +73,6 @@ public class listItem {
                 ", title='" + title + '\'' +
                 ", username='" + username + '\'' +
                 ", email='" + email + '\'' +
-                ", contents='" + contents + '\'' +
                 ", image='" + image + '\'' +
                 ", created='" + created + '\'' +
                 ", listname='" + listname + '\'' +

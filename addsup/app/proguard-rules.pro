@@ -38,4 +38,7 @@
 
 -keep interface com.birbit.android.jobqueue.** { *; }
 
+-keepattributes Signature
+-keepattributes *Annotation*
+
 -dontwarn okio.**

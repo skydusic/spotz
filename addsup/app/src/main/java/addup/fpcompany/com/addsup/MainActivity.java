@@ -13,7 +13,6 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
@@ -128,7 +127,6 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
         // 파이어베이스 구글로그인
         if (mUser == null) {
             //로그인 안한 상태
-            Log.d("heu", "유저 : null");
         } else {
             mUsermail = mUser.getEmail();
             nicknameCheck(mUsermail);
@@ -203,8 +201,12 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
         mDialog = new AlertDialog.Builder(this);
 
         if (SplashActivity.store_version.compareTo(SplashActivity.device_version) > 0) {
-            mDialog.setMessage("업데이트 후 사용해주세요.")
-                    .setCancelable(false)
+            mDialog.setMessage("새로운 버전이 확인되었습니다.")
+                    .setCancelable(true)
+                    .setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {finish();}
+                    })
                     .setPositiveButton("업데이트 바로가기",
                             new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog,
@@ -218,7 +220,7 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
                                 }
                             });
             AlertDialog alert = mDialog.create();
-            alert.setTitle("안 내");
+            alert.setTitle("업데이트 확인");
             alert.show();
         }
     }

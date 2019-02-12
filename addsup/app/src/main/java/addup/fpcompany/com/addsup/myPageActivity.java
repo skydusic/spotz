@@ -40,6 +40,10 @@ public class myPageActivity extends AppCompatActivity implements View.OnClickLis
     String listname = "";
     String idx = "";
 
+    private static final String TAG_EMAIL1 = "skydusic@gmail.com";
+    private static final String TAG_EMAIL2 = "drbasketkorea@gmail.com";
+    private static final String TAG_ADMIN = "관리자";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -130,9 +134,14 @@ public class myPageActivity extends AppCompatActivity implements View.OnClickLis
             if (currentUser.getPhotoUrl() != null) {
                 MainActivity.mPhotoUrl = currentUser.getPhotoUrl().toString();
             }
-            MainActivity.mUsername = currentUser.getDisplayName();
+            if(currentUser.getEmail().equals(TAG_EMAIL1) || currentUser.getEmail().equals(TAG_EMAIL2)){
+                MainActivity.mUsername = TAG_ADMIN;
+                userId.setText(TAG_ADMIN);
+            } else {
+                MainActivity.mUsername = currentUser.getDisplayName();
+                userId.setText(MainActivity.mUsername);
+            }
             MainActivity.mUsermail = currentUser.getEmail();
-            userId.setText(MainActivity.mUsername);
             handler.removeMessages(100);
             progressBar.setVisibility(View.GONE);
         }

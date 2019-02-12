@@ -5,22 +5,25 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.firebase.auth.FirebaseAuth;
 
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
+import org.json.JSONException;
+import org.json.JSONObject;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.FormBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
+
+import static addup.fpcompany.com.addsup.SplashActivity.store_version;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -33,6 +36,7 @@ public class SplashActivity extends AppCompatActivity {
     static String device_version = "";
     int device_versionCode;
     static int makeMsg = 0;
+    static String pac;
 
     Intent intent;
 
@@ -45,7 +49,7 @@ public class SplashActivity extends AppCompatActivity {
 //        setContentView(R.layout.splash_act);
 
         intent = new Intent(this, MainActivity.class);
-
+        pac = getPackageName();
         //푸시키 받기, 저장된 값이 있는가
 
         //앱을 클릭했냐, 푸시키를 클릭했나
@@ -55,7 +59,9 @@ public class SplashActivity extends AppCompatActivity {
 
         //버전 체크
         //스토어버전
-//        store_version = MarketVersionChecker.getMarketVersion(getPackageName());
+        GetVersion getVersion = new GetVersion();
+        getVersion.requestPost();
+
 
         //설치된 앱버전
         try {
@@ -66,7 +72,6 @@ public class SplashActivity extends AppCompatActivity {
         }
 
         startMain();
-
     }
 
     private void startMain() {
@@ -82,79 +87,59 @@ public class SplashActivity extends AppCompatActivity {
 
 }
 
-class MarketVersionChecker {
+/*
+@SuppressLint("StaticFieldLeak")
+class ConnectServer extends AsyncTask<String, Void, String> {
 
-    public static String getMarketVersion(String packageName) {
-        try {
-            Document doc = Jsoup.connect(
-                    "https://play.google.com/store/apps/details?id="
-                            + packageName).get();
-            Elements Version = doc.select(".content");
+    @Override
+    protected String doInBackground(String... strings) {
 
-            for (Element mElement : Version) {
-                if (mElement.attr("itemprop").equals("softwareVersion")) {
-                    return mElement.text().trim();
-                }
-            }
+        Request request = new Request.Builder().url("http://spotz.co.kr/var/www/html/getImage.php").build();
 
-        } catch (IOException ex) {
-            ex.printStackTrace();
+        try (Response response = client.newCall(request).execute()) {
+            return response.body().string();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
         return null;
     }
 
-    public static String getMarketVersionFast(String packageName) {
-        String mData = "", mVer = null;
+    @Override
+    protected void onPostExecute(String s) {
+        super.onPostExecute(s);
+        serverUrl = s;
+    }
+}*/
 
-        try {
-            URL mUrl = new URL("https://play.google.com/store/apps/details?id="
-                    + packageName);
-            HttpURLConnection mConnection = (HttpURLConnection) mUrl
-                    .openConnection();
+class GetVersion {
+    //Client 생성
+    OkHttpClient client = new OkHttpClient();
+    String result;
+    String url = "http://spotz.co.kr/var/www/html/version_check.php";
+    String ver = "version";
 
-            if (mConnection == null)
-                return null;
+    public void requestPost() {
 
-            mConnection.setConnectTimeout(5000);
-            mConnection.setUseCaches(false);
-            mConnection.setDoOutput(true);
+        RequestBody requestBody = new FormBody.Builder().build();
 
-            if (mConnection.getResponseCode() == HttpURLConnection.HTTP_OK) {
-                BufferedReader mReader = new BufferedReader(
-                        new InputStreamReader(mConnection.getInputStream()));
-
-                while (true) {
-                    String line = mReader.readLine();
-                    if (line == null)
-                        break;
-                    mData += line;
-                }
-
-                mReader.close();
+        Request request = new Request.Builder().url(url).post(requestBody).build();
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+//                    Log.d("heu", "Connect Server Error is " + e.toString());
             }
 
-            mConnection.disconnect();
-
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            return null;
-        }
-
-        String startToken = "softwareVersion\">";
-        String endToken = "<";
-        int index = mData.indexOf(startToken);
-
-        if (index == -1) {
-            mVer = null;
-
-        } else {
-            mVer = mData.substring(index + startToken.length(), index
-                    + startToken.length() + 100);
-            mVer = mVer.substring(0, mVer.indexOf(endToken)).trim();
-        }
-
-        return mVer;
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+//                    Log.d("heu", "hitupdate res : " + response.body().string());
+                result = response.body().string();
+                try {
+                    store_version = new JSONObject(result).getString(ver);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 }
-

@@ -105,7 +105,7 @@ public class ActionDetailActivity extends AppCompatActivity {
             post = jsonObj.getJSONArray(TAG_RESULTS);
             for (int i = 0; i < post.length(); i++) {
                 JSONObject c = post.getJSONObject(i);
-                listArr.add(new listItem(String.valueOf(c.getInt(TAG_ID)), c.getString(TAG_TITLE), c.getString(TAG_USERNAME), c.getString(TAG_EMAIL), c.getString(TAG_CONTENTS),
+                listArr.add(new listItem(String.valueOf(c.getInt(TAG_ID)), c.getString(TAG_TITLE), c.getString(TAG_USERNAME), c.getString(TAG_EMAIL),
                         c.getString(TAG_IMAGE), ClubList.settingTimes(c.getString(TAG_CREATED)), c.getString("listname"),
                         c.getString("hit"), c.getString("spindata")));
             }
@@ -138,7 +138,6 @@ public class ActionDetailActivity extends AppCompatActivity {
                             intent.putExtra("username", item.getUsername());
                             intent.putExtra("email", item.getEmail());
                             intent.putExtra("image", item.getImage());
-                            intent.putExtra("contents", item.getContents());
                             intent.putExtra("spindata", item.getSpindata());
                             intent.putExtra("created", item.getCreated());
                             startActivityForResult(intent, 1000);
@@ -150,7 +149,6 @@ public class ActionDetailActivity extends AppCompatActivity {
                             intent.putExtra("username", item.getUsername());
                             intent.putExtra("email", item.getEmail());
                             intent.putExtra("image", item.getImage());
-                            intent.putExtra("contents", item.getContents());
                             intent.putExtra("spindata", item.getSpindata());
                             intent.putExtra("created", item.getCreated());
                             startActivityForResult(intent, 2000);
@@ -184,7 +182,6 @@ public class ActionDetailActivity extends AppCompatActivity {
             intent.putExtra("postNum", 1);
             intent.putExtra("idx", item.getIdx());
             intent.putExtra("title", item.getTitle());
-            intent.putExtra("contents", item.getContents());
             intent.putExtra("username", item.getUsername());
             intent.putExtra("email", item.getEmail());
             intent.putExtra("image", item.getImage());
@@ -212,7 +209,6 @@ public class ActionDetailActivity extends AppCompatActivity {
             Intent moveIntent = new Intent(ActionDetailActivity.this, DetailList.class);
             moveIntent.putExtra("idx", item.getIdx());
             moveIntent.putExtra("title", item.getTitle());
-            moveIntent.putExtra("contents", item.getContents());
             moveIntent.putExtra("username", item.getUsername());
             moveIntent.putExtra("email", item.getEmail());
             moveIntent.putExtra("image", item.getImage());

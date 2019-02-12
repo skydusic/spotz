@@ -136,16 +136,17 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
         listname = intent.getStringExtra("listname");
         idx = intent.getStringExtra("idx");
         title = intent.getStringExtra("title");
-        contents = intent.getStringExtra("contents");
         username = intent.getStringExtra("username");
         email = intent.getStringExtra("email");
         created = intent.getStringExtra("created");
         spindata = intent.getStringExtra("spindata");
 
+        refreshPost rPost = new refreshPost();
+        rPost.requestPost(idx);
+
         imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 
         titleTv.setText(title);
-        contentsTv.setText(contents);
         timeTv.setText(created);
         writerTv.setText(username);
         image = intent.getStringExtra("image");
@@ -262,9 +263,10 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
             JSONArray post = jsonObj.getJSONArray(TAG_RESULTS);
             for (int i = 0; i < post.length(); i++) {
                 JSONObject c = post.getJSONObject(i);
-                postItem = new listItem((String.valueOf(c.getInt(TAG_ID))), c.getString(TAG_TITLE), c.getString(TAG_USERNAME), c.getString(TAG_EMAIL), c.getString(TAG_CONTENTS),
+                postItem = new listItem((String.valueOf(c.getInt(TAG_ID))), c.getString(TAG_TITLE), c.getString(TAG_USERNAME), c.getString(TAG_EMAIL),
                         c.getString(TAG_IMAGE), c.getString(TAG_CREATED), c.getString(TAG_LISTNAME),
                         c.getString(TAG_HIT), c.getString(TAG_SPIN));
+                contents = c.getString(TAG_CONTENTS);
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -305,15 +307,21 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
             case (R.id.mainLayout):
                 break;
             case (R.id.inputComment):
-                String text = commentEt.getText().toString();
-                if (!text.equals("")) {
-                    commentRecycle.removeAllViewsInLayout();
-                    commentInsert CI = new commentInsert();
-                    CI.requestPost(listname, commentEt.getText().toString(), idx);
-                    commentEt.setText("");
+                if (MainActivity.mUser == null) {
+                    Intent intent = new Intent(this, SignInActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                    startActivityForResult(intent, 10);
+                } else {
+                    String text = commentEt.getText().toString();
+                    if (!text.equals("")) {
+                        commentRecycle.removeAllViewsInLayout();
+                        commentInsert CI = new commentInsert();
+                        CI.requestPost(listname, commentEt.getText().toString(), idx);
+                        commentEt.setText("");
+                    }
+                    resetCommentList();
+                    hideKeyboard();
                 }
-                resetCommentList();
-                hideKeyboard();
                 break;
             case (R.id.editpostBT):
 
@@ -409,6 +417,22 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
 
                 resetCommentList();
 
+                break;
+        }
+    }
+
+    @Override
+    public void onFocusChange(View v, boolean hasFocus) {
+        switch (v.getId()) {
+            case (R.id.commentEt):
+                //스크롤 이동
+                if(MainActivity.mUser == null) {
+                    Intent intent = new Intent(this, SignInActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                    startActivityForResult(intent, 10);
+                } else {
+                    scrollHandler.sendEmptyMessageDelayed(5000, 500);
+                }
                 break;
         }
     }
@@ -564,7 +588,7 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
                 removeMessages(300);
                 refresh(myJSON);
                 titleTv.setText(postItem.getTitle());
-                contentsTv.setText(postItem.getContents());
+                contentsTv.setText(contents);
             }
         }
     };
@@ -579,16 +603,6 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
             scrollHandler.removeMessages(5000);
         }
     };
-
-    @Override
-    public void onFocusChange(View v, boolean hasFocus) {
-        switch (v.getId()) {
-            case (R.id.commentEt):
-                //스크롤 이동
-                scrollHandler.sendEmptyMessageDelayed(5000, 500);
-                break;
-        }
-    }
 
     class hitUpdate {
         //Client 생성

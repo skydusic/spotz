@@ -48,24 +48,23 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
         holder.contentsTv.setText(commentItem.getContents());
         holder.commentCreatedTv.setText(commentItem.getCreated());
 
-        if(listArr.get(position).getEmail().equals(MainActivity.mUsermail) || MainActivity.mUsermail.equals(TAG_EMAIL1) || MainActivity.mUsermail.equals(TAG_EMAIL2)) {
-
-            holder.editIv.setVisibility(View.VISIBLE);
-            holder.deleteIv.setVisibility(View.VISIBLE);
-            holder.editIv.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    mListener.onItemClick(v, position);
-                }
-            });
-
-            holder.deleteIv.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    mListener.onItemClick(v, position);
-                }
-            });
-
+        if (MainActivity.mUsermail != null) {
+            if (listArr.get(position).getEmail().equals(MainActivity.mUsermail) || MainActivity.mUsermail.equals(TAG_EMAIL1) || MainActivity.mUsermail.equals(TAG_EMAIL2)) {
+                holder.editIv.setVisibility(View.VISIBLE);
+                holder.deleteIv.setVisibility(View.VISIBLE);
+                holder.editIv.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mListener.onItemClick(v, position);
+                    }
+                });
+                holder.deleteIv.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mListener.onItemClick(v, position);
+                    }
+                });
+            }
         }
 
     }
@@ -82,6 +81,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
     class ViewHolder extends RecyclerView.ViewHolder {
         TextView usernameTv, contentsTv, commentCreatedTv;
         ImageView editIv, deleteIv;
+
         public ViewHolder(View itemView) {
             super(itemView);
             usernameTv = itemView.findViewById(R.id.usernameTv);

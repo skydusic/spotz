@@ -102,8 +102,12 @@ public class infoActivity extends AppCompatActivity implements View.OnClickListe
                     contents = contentsET.getText().toString().trim();
                 }
 
-                if (contents.length() > 300) {
-                    Toast.makeText(infoActivity.this, "글자 제한을 초과했습니다. (" + String.valueOf(contents.length()) + " / 300자)", Toast.LENGTH_LONG).show();
+                if (title.length() > 90) {
+                    Toast.makeText(infoActivity.this, "제목의 길이 제한을 초과했습니다. (" + String.valueOf(title.length()) + " / 90자)", Toast.LENGTH_LONG).show();
+                } else if (contents.length() > 900) {
+                    Toast.makeText(infoActivity.this, "내용의 길이 제한을 초과했습니다. (" + String.valueOf(contents.length()) + " / 900자)", Toast.LENGTH_LONG).show();
+                } else if (title.length() == 0 || contents.length() == 0) {
+                    Toast.makeText(infoActivity.this, "내용을 입력해주세요.", Toast.LENGTH_LONG).show();
                 } else {
                     if (flag.equals("report")) {
                         ReportIns reportIns = new ReportIns();
@@ -115,7 +119,6 @@ public class infoActivity extends AppCompatActivity implements View.OnClickListe
                     setResult(1414);
                     finish();
                 }
-
                 break;
 
             case (R.id.bottomHome):

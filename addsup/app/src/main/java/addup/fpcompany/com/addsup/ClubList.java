@@ -137,7 +137,7 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
         //권한 체크 순서
 //        showList() -> checkSelect() -> setRecyclerView();
 
-        authorityChk();
+//        authorityChk();
 
         insertBtn.setOnClickListener(this);
 
@@ -167,7 +167,6 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
                         intent.putExtra("username", listItems.get(position).getUsername());
                         intent.putExtra("email", listItems.get(position).getEmail());
                         intent.putExtra("title", listItems.get(position).getTitle());
-                        intent.putExtra("contents", listItems.get(position).getContents());
                         intent.putExtra("created", listItems.get(position).getCreated());
                         intent.putExtra("spindata", listItems.get(position).getSpindata());
 
@@ -251,11 +250,13 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
         }
 
 //        버튼 보이기
-        if (authNum == 0) {
+        /*if (authNum == 0) {
             insertBtn.setVisibility(View.INVISIBLE);
         } else if (authNum == 1) {
             insertBtn.setVisibility(View.VISIBLE);
-        }
+        }*/
+
+
         return authNum;
     }
 
@@ -310,7 +311,7 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
             for (int i = 0; i < topic.length(); i++) {
                 JSONObject c = topic.getJSONObject(i);
 
-                listItems.add(new listItem(String.valueOf(c.getInt(TAG_ID)), c.getString(TAG_TITLE), c.getString(TAG_USERNAME), c.getString(TAG_EMAIL), c.getString(TAG_CONTENTS),
+                listItems.add(new listItem(String.valueOf(c.getInt(TAG_ID)), c.getString(TAG_TITLE), c.getString(TAG_USERNAME), c.getString(TAG_EMAIL),
                         c.getString(TAG_IMAGE), c.getString(TAG_CREATED), c.getString(TAG_LISTNAME),
                         c.getString(TAG_HIT), c.getString(TAG_SPIN)));
 
@@ -336,7 +337,7 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
                 for (int i = 0; i < topic.length(); i++) {
                     JSONObject c = topic.getJSONObject(i);
 //                시간 설정
-                    listItems.add(new listItem(String.valueOf(c.getInt(TAG_ID)), c.getString(TAG_TITLE), c.getString(TAG_USERNAME), c.getString(TAG_EMAIL), c.getString(TAG_CONTENTS),
+                    listItems.add(new listItem(String.valueOf(c.getInt(TAG_ID)), c.getString(TAG_TITLE), c.getString(TAG_USERNAME), c.getString(TAG_EMAIL),
                             c.getString(TAG_IMAGE), c.getString(TAG_CREATED), c.getString(TAG_LISTNAME),
                             c.getString(TAG_HIT), c.getString(TAG_SPIN)));
                 }
@@ -441,20 +442,20 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
 
     @Override
     public void onClick(View view) {
+        Intent intent;
         switch (view.getId()) {
             case (R.id.insertBtn):
-                Intent intent = new Intent(this, addup.fpcompany.com.addsup.insertActivity.class);
-                intent.putExtra("listname", listName);
-                intent.putExtra("username", username);
-                /**
-                 * if (postNum == 1) {
-                 intent.putExtra("title", postHashmap.get(TAG_TITLE));
-                 intent.putExtra("contents", postHashmap.get(TAG_CONTENTS));
-                 intent.putExtra("image", postHashmap.get(TAG_IMAGE));
-                 }*/
-                startActivityForResult(intent, 2000);
+                if(MainActivity.mUser == null){
+                    intent = new Intent(this, SignInActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                    startActivityForResult(intent, 10);
+                } else {
+                    intent = new Intent(this, addup.fpcompany.com.addsup.insertActivity.class);
+                    intent.putExtra("listname", listName);
+                    intent.putExtra("username", username);
+                    startActivityForResult(intent, 2000);
+                }
                 break;
-
             case (R.id.bottomHome):
                 Intent intent3 = new Intent(ClubList.this, MainActivity.class);
                 intent3.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
