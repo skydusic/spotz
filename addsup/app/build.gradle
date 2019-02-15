@@ -15,10 +15,10 @@ android {
     }
     buildTypes {
         release {
+            shrinkResources true
             minifyEnabled true
             debuggable false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt')
-            proguardFile 'proguard-rules.pro'
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
         debug {
             ext.enableCrashlutic = false

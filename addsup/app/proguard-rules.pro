@@ -36,9 +36,16 @@
     public *;
 }
 
+#### -- OkHttp --
+
+-dontwarn com.squareup.okhttp.internal.**
+
 -keep interface com.birbit.android.jobqueue.** { *; }
 
 -keepattributes Signature
 -keepattributes *Annotation*
 
 -dontwarn okio.**
+
+-ignorewarnings
+

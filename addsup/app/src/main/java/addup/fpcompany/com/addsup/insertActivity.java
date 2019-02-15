@@ -64,14 +64,7 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
     EditText titleEt;
     EditText contentsET;
 
-    ImageView imgFind;
-    ImageView imView1;
-    ImageView imView2;
-    ImageView imView3;
-    ImageView imView4;
-    ImageView imView5;
-    ImageView imView6;
-    ImageView imView7;
+    ImageView imgFind, imView1, imView2, imView3, imView4, imView5, imView6, imView7;
     HorizontalScrollView horScrollView;
     Spinner spinner;
     TextView buttonInsert;
@@ -81,15 +74,8 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
 
     private final int GALLERY_CODE = 1112;
 
-    String idx = "";
-    String title;
-    String serverUri;
-    String imagePath;
-    String imageAddress1 = "";
-    String listname = "";
-    String contents;
-    String image;
-    String spindata;
+    String idx, imageAddress1, listname = "";
+    String title, serverUri, imagePath, contents, image, spindata;
     String url = MainActivity.serverUrl;
     int postNum;
 
