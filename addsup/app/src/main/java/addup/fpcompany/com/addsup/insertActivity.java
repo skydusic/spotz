@@ -140,6 +140,10 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
             listname = clubInt.getStringExtra("listname");
             spindata = clubInt.getStringExtra("spindata");
 
+            //getcontents
+            GetContents getContents = new GetContents();
+            getContents.requestPost(idx);
+
             /** 이미지 테스트 해봐야 함 */
             image = clubInt.getStringExtra("image");
 //            imageAddress1 = clubInt.getStringExtra("image");
@@ -222,6 +226,7 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
+        //리절트
         if (resultCode == RESULT_OK) {
             switch (requestCode) {
                 case GALLERY_CODE:
@@ -457,6 +462,8 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
         startActivityForResult(Intent.createChooser(intent2, "사진을 선택하세요"), GALLERY_CODE);
     }
 
+
+
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         spinnerNumber2 = position;
@@ -474,7 +481,6 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-
             if (myJSON.equals("")) {
                 refreshPostHandler.sendEmptyMessageDelayed(300, 200);
             } else {
@@ -485,8 +491,8 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
                     for (int i = 0; i < post.length(); i++) {
                         JSONObject c = post.getJSONObject(i);
                         contents = c.getString(TAG_CONTENTS);
-                        contentsET.setText(contents);
                     }
+                    contentsET.setText(contents);
                 } catch (JSONException e) {
                     e.printStackTrace();
 //            Log.d("heu", "adapter Exception : " + e);
@@ -544,7 +550,7 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
 
     }
 
-    class refreshPost {
+    class GetContents {
         OkHttpClient client = new OkHttpClient();
         Request request;
 

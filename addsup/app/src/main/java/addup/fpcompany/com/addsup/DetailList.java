@@ -159,7 +159,7 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
             viewPager.setVisibility(View.GONE);
         }
         // 이미지 페이지 넘기는 핸들러
-        handler.sendEmptyMessageDelayed(0, 2000);
+        handler.sendEmptyMessageDelayed(0, 3000);
 
         hitUpdate hitUpdate = new hitUpdate();
         hitUpdate.requestPost();
@@ -172,7 +172,6 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
 
         //즐겨찾기 플래그
         favImageSet();
-
 
         //코멘트 가져오기
         resetCommentList();

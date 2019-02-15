@@ -43,7 +43,7 @@ public class SignInActivity extends AppCompatActivity implements GoogleApiClient
         loginBtn = (SignInButton) findViewById(R.id.loginBtn);
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(getString(R.string.default_web_client_id))
+                .requestIdToken(getString(R.string.cid))
                 .requestEmail()
                 .build();
 

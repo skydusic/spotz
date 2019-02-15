@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="addup.fpcompany.com.addsup">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -15,7 +16,8 @@
         android:roundIcon="@drawable/icons"
         android:screenOrientation="portrait"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        tools:ignore="AllowBackup,GoogleAppIndexingWarning">
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="ca-app-pub-2853131389378363~3503669931" />
@@ -72,7 +74,7 @@
         <activity android:name=".NoticeInsertActivity" />
         <activity android:name=".infoActivity" />
         <activity android:name=".ActionDetailActivity" />
-        <activity android:name=".nameChange"></activity>
+        <activity android:name=".nameChange" />
     </application>
 
 </manifest>
