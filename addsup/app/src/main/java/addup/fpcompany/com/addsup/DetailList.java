@@ -150,7 +150,7 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
         timeTv.setText(created);
         writerTv.setText(username);
         image = intent.getStringExtra("image");
-        imageurl = MainActivity.serverUrl + "userImageFolder/" + listname + "/" + username + "/";
+        imageurl = MainActivity.serverUrl + "userImageFolder/" + listname + "/" + email + "/";
 
         // 이미지 세팅
         if(!image.equals("")){

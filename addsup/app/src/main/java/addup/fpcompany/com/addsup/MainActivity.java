@@ -106,6 +106,23 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
         mAuth = FirebaseAuth.getInstance();
         mUser = mAuth.getCurrentUser();
 
+        // 파이어베이스 구글로그인
+        if (mUser == null) {
+            //로그인 안한 상태
+        } else {
+            mUsermail = mUser.getEmail();
+            nicknameCheck(mUsermail);
+            if (mUser.getPhotoUrl() != null) {
+                mPhotoUrl = mUser.getPhotoUrl().toString();
+            }
+
+            if (SplashActivity.makeMsg < 1) {
+                SplashActivity.makeMsg++;
+                Toast.makeText(this, MainActivity.mUsername + "님 환영합니다", Toast.LENGTH_SHORT).show();
+            }
+
+        }
+
 
         // 파이어베이스 notifications
         String firebaseToken = FirebaseInstanceId.getInstance().getToken();
@@ -113,7 +130,6 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
 
         // 파이어베이스 admob
         MobileAds.initialize(this, "ca-app-pub-3940256099942544~3347511713");
-
         AdView mAdView = (AdView) findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
@@ -124,26 +140,8 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
         ADset();
         handler.sendEmptyMessageDelayed(0, 3500);
 
-        // 파이어베이스 구글로그인
-        if (mUser == null) {
-            //로그인 안한 상태
-        } else {
-            mUsermail = mUser.getEmail();
-            nicknameCheck(mUsermail);
-            if (mUser.getPhotoUrl() != null) {
-                mPhotoUrl = mUser.getPhotoUrl().toString();
-            }
-        }
-
         ConnectServer connectServer = new ConnectServer();
         connectServer.execute();
-
-        if (SplashActivity.makeMsg < 1) {
-            SplashActivity.makeMsg++;
-            if (mUsername != null) {
-                Toast.makeText(this, MainActivity.mUsername + "님 환영합니다", Toast.LENGTH_SHORT).show();
-            }
-        }
 
         //스피너정보 가져오기
         spinList1.clear();

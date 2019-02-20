@@ -21,6 +21,7 @@ import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -74,8 +75,8 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
 
     private final int GALLERY_CODE = 1112;
 
-    String idx, imageAddress1, listname = "";
-    String title, serverUri, imagePath, contents, image, spindata;
+    String idx, listname, image = "";
+    String title, serverUri, imagePath, contents, spindata;
     String url = MainActivity.serverUrl;
     int postNum;
 
@@ -111,7 +112,6 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
         postNum = clubInt.getIntExtra("postNum", 0);
         contents = clubInt.getStringExtra("contents");
         listname = clubInt.getStringExtra("listname");
-        image = clubInt.getStringExtra("image");
 
         spinnerAdapter1 = new ArrayAdapter<>(this, R.layout.support_simple_spinner_dropdown_item, MainActivity.spinList1);
 
@@ -158,6 +158,7 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
                         for (int i = 0; i < imagePathArr.size(); i++) {
                             connectServer.requestPost(url, MainActivity.mUsername, MainActivity.mUsermail, listname, uriList.get(i));
                         }
+                        String imageAddress1 = "";
                         for (int i = 0; i < filenameList.size(); i++) {
                             imageAddress1 += filenameList.get(i);
                             if (filenameList.size() - 1 > i) {
@@ -217,20 +218,23 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
             switch (requestCode) {
                 case GALLERY_CODE:
 
-                    imView1.setImageResource(0);
+                    /*imView1.setImageResource(0);
                     imView2.setImageResource(0);
-                    imView3.setImageResource(0);
+                    imView3.setImageResource(0);*/
 
                     //ClipData 또는 Uri를 가져온다
                     Uri uri = data.getData();
                     ClipData clipData = data.getClipData();
 
+
                     if (clipData != null) {
+                        Log.d("heu", "clipData : " + clipData.getItemAt(0).getUri());
                         for (int i = 0; i < clipData.getItemCount(); i++) {
                             if (i == 7) {
                                 break;
                             }
                             Uri urione = clipData.getItemAt(i).getUri();
+                            Log.d("heu", "clipData getReal : " + getRealPathFromURI(urione));
                             File sourceFile = new File(getRealPathFromURI(urione));
                             filenameList.add(sourceFile.getName().toString());
                             imagePathArr.add(getRealPathFromURI(urione));
@@ -266,10 +270,12 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
                                     break;
                             }
                         }
-                        horScrollView.setVisibility(View.VISIBLE);
                     } else if (uri != null) {
-                        imView1.setImageURI(uri);
+                        Log.d("heu", "uri : " + getRealPathFromURI(uri));
+                        Glide.with(this).load(getRealPathFromURI(uri)).into(imView1);
+                        imView1.setVisibility(View.VISIBLE);
                     }
+                    horScrollView.setVisibility(View.VISIBLE);
                     break;
                 default:
                     break;
@@ -387,7 +393,6 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
 
             if (ActivityCompat.shouldShowRequestPermissionRationale(this, permissions[0])) {
                 Toast.makeText(this, "외장메모리 권한이 필요합니다", Toast.LENGTH_LONG).show();
-                /** 뭔가 액션이 없네.. */
             } else {
                 ActivityCompat.requestPermissions(this, permissions, 1);
             }
@@ -446,6 +451,23 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
         intent2.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
         intent2.setType(MediaStore.Images.Media.CONTENT_TYPE);
         startActivityForResult(Intent.createChooser(intent2, "사진을 선택하세요"), GALLERY_CODE);
+        /**
+         *
+         * 원본
+         Intent intent2 = new Intent(Intent.ACTION_PICK);
+         intent2.setType("image/*");
+         intent2.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+         intent2.setType(MediaStore.Images.Media.CONTENT_TYPE);
+         startActivityForResult(Intent.createChooser(intent2, "사진을 선택하세요"), GALLERY_CODE);
+
+         Intent intent2 = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+         intent2.setType("image/*");
+         intent2.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+         intent2.setType(MediaStore.Images.Media.CONTENT_TYPE);
+         startActivityForResult(Intent.createChooser(intent2, "사진을 선택하세요"), GALLERY_CODE);
+
+         */
+
     }
 
 
@@ -570,31 +592,6 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
         //Client 생성
         OkHttpClient client = new OkHttpClient();
 
-        //GET 방식
-        public void requestGet(String url, String searchKey) {
-            //URL에 포함할 Query문 작성 Name&Value
-            HttpUrl.Builder urlBuilder = HttpUrl.parse(url).newBuilder();
-            urlBuilder.addEncodedQueryParameter("searchKey", searchKey);
-            String requestUrl = urlBuilder.build().toString();
-
-            //Query문이 들어간 URL을 토대로 Request 생성
-            Request request = new Request.Builder().url(requestUrl).build();
-
-            //만들어진 Request를 서버로 요청할 Client 생성
-            //Callback을 통해 비동기 방식으로 통신을 하여 서버로부터 받은 응답을 어떻게 처리 할 지 정의함
-            client.newCall(request).enqueue(new Callback() {
-                @Override
-                public void onFailure(Call call, IOException e) {
-//                    Log.d(TAG, "Connect Server Error is " + e.toString());
-                }
-
-                @Override
-                public void onResponse(Call call, Response response) throws IOException {
-//                    Log.d(TAG, "Response Body is " + response.body().string());
-                }
-            });
-        }
-
         //POST 방식
         public void requestPost(String url, String username, String email, String listname, Uri uri) {
             final MediaType MEDIA_TYPE_PNG = MediaType.parse("image/*");
@@ -603,6 +600,9 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
 
             File file = new File(fileToBitmap(uri));
             String filename = file.getName();
+
+            Log.d("heu", "파일 : " + filename);
+            Log.d("heu", "이메일 : " + email);
 
             //Request Body에 서버에 보낼 데이터 작성
 //            RequestBody requestBody = new FormBody.Builder().add("userId", id).add("userPassword", password).build();

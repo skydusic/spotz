@@ -32,7 +32,7 @@ import okhttp3.Response;
 
 public class Notice_Activity extends AppCompatActivity implements View.OnClickListener, RecyclerView.OnItemTouchListener {
 
-    TextView noticeTv;
+    TextView appVersionTv;
     Button noticeIns;
     RecyclerView recyclerView;
     NoticeAdapter adapter;
@@ -56,17 +56,20 @@ public class Notice_Activity extends AppCompatActivity implements View.OnClickLi
     JSONArray topic = new JSONArray();
     getPost getPost = new getPost();
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notice_);
 
-        noticeTv = findViewById(R.id.noticeTv);
+        appVersionTv = findViewById(R.id.appVersionTv);
         noticeIns = findViewById(R.id.noticeIns);
         recyclerView = findViewById(R.id.recyclerView);
 
         getPost.requestPost(url);
         handler.sendEmptyMessage(100);
+
+        appVersionTv.setText("v" + SplashActivity.device_version);
 
         if (MainActivity.mUser != null && MainActivity.mUser.getEmail().equals(TAG_EMAIL1)) {
             noticeIns.setVisibility(View.VISIBLE);
