@@ -9,6 +9,12 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
 
+    <uses-feature android:name="andrid.hardware.camera" />
+    <uses-feature
+        android:name="android.hardware.camera.autofocus"
+        android:required="false" />
+
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/icons"
@@ -26,10 +32,12 @@
             android:name="android.support.v4.content.FileProvider"
             android:authorities="addup.fpcompany.com.addsup"
             android:exported="false"
-            android:grantUriPermissions="true">
+            android:grantUriPermissions="true"
+            tools:replace="android:authorities">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_path" />
+                android:resource="@xml/file_path"
+                tools:replace="android:resource" />
         </provider>
 
         <activity
@@ -49,8 +57,7 @@
         <activity android:name=".ClubList" />
         <activity
             android:name=".DetailList"
-            android:windowSoftInputMode="adjustResize"
-        />
+            android:windowSoftInputMode="adjustResize" />
 
         <service android:name=".fcm.FirebaseInstanceIDService">
             <intent-filter>

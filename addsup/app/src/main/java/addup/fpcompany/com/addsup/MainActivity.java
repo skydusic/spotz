@@ -111,6 +111,7 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
             //로그인 안한 상태
         } else {
             mUsermail = mUser.getEmail();
+            mUsername = mUser.getDisplayName();
             nicknameCheck(mUsermail);
             if (mUser.getPhotoUrl() != null) {
                 mPhotoUrl = mUser.getPhotoUrl().toString();
@@ -118,7 +119,7 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
 
             if (SplashActivity.makeMsg < 1) {
                 SplashActivity.makeMsg++;
-                Toast.makeText(this, MainActivity.mUsername + "님 환영합니다", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, mUsername + "님 환영합니다", Toast.LENGTH_SHORT).show();
             }
 
         }

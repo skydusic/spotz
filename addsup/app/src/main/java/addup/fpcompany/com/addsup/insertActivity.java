@@ -10,6 +10,7 @@ import android.content.res.Configuration;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.Matrix;
 import android.media.ExifInterface;
 import android.net.Uri;
@@ -33,6 +34,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.esafirm.imagepicker.features.ImagePicker;
+import com.esafirm.imagepicker.features.ReturnMode;
+import com.esafirm.imagepicker.model.Image;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -46,7 +50,10 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.channels.FileChannel;
 import java.util.ArrayList;
+import java.util.List;
 
+import addup.fpcompany.com.addsup.adapter.PagerAdapter;
+import addup.fpcompany.com.addsup.frag.DetailFrag;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.FormBody;
@@ -65,7 +72,7 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
     EditText titleEt;
     EditText contentsET;
 
-    ImageView imgFind, imView1, imView2, imView3, imView4, imView5, imView6, imView7;
+    ImageView imgFind, imView1, imView2, imView3, imView4, imView5, imView6, imView7, imView8, imView9, imView10;
     HorizontalScrollView horScrollView;
     Spinner spinner;
     TextView buttonInsert;
@@ -75,8 +82,8 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
 
     private final int GALLERY_CODE = 1112;
 
-    String idx, listname, image = "";
-    String title, serverUri, imagePath, contents, spindata;
+    String idx, listname, image, imageurl = "";
+    String title, serverUri, imagePath, contents, spindata, email;
     String url = MainActivity.serverUrl;
     int postNum;
 
@@ -84,8 +91,9 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
     private static final String TAG_CONTENTS = "contents";
 
     ArrayList<String> filenameList = new ArrayList<>();
-    ArrayList<String> imagePathArr = new ArrayList<>();
+    ArrayList<String> pathList = new ArrayList<>();
     ArrayList<Uri> uriList = new ArrayList<>();
+    ArrayList<String> imageList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,6 +108,9 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
         imView5 = findViewById(R.id.imView5);
         imView6 = findViewById(R.id.imView6);
         imView7 = findViewById(R.id.imView7);
+        imView8 = findViewById(R.id.imView8);
+        imView9 = findViewById(R.id.imView9);
+        imView10 = findViewById(R.id.imView10);
         imgFind = findViewById(R.id.imgFind);
         titleEt = findViewById(R.id.titleET);
         contentsET = findViewById(R.id.contentsET);
@@ -125,6 +136,7 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
             titleEt.setText(clubInt.getStringExtra("title"));
             listname = clubInt.getStringExtra("listname");
             spindata = clubInt.getStringExtra("spindata");
+            email = clubInt.getStringExtra("email");
 
             //getcontents
             GetContents getContents = new GetContents();
@@ -132,12 +144,13 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
 
             /** 이미지 테스트 해봐야 함 */
             image = clubInt.getStringExtra("image");
-//            imageAddress1 = clubInt.getStringExtra("image");
-/*            text1.setText(clubInt.getStringExtra("text1"));
-            text2.setText(clubInt.getStringExtra("text2"));
-            text3.setText(clubInt.getStringExtra("text3"));
-            text4.setText(clubInt.getStringExtra("text4"));
-            text5.setText(clubInt.getStringExtra("text5"));*/
+
+            imageurl = MainActivity.serverUrl + "userImageFolder/" + listname + "/" + email + "/";
+            if (!image.equals("")) {
+                setImageView(image);
+            } else {
+                horScrollView.setVisibility(View.GONE);
+            }
         }
 
         buttonInsert.setOnClickListener(new View.OnClickListener() {
@@ -155,8 +168,8 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
                     if (!contents.equals("")) {
                         InsertData task = new InsertData();
                         ConnectServer connectServer = new ConnectServer();
-                        for (int i = 0; i < imagePathArr.size(); i++) {
-                            connectServer.requestPost(url, MainActivity.mUsername, MainActivity.mUsermail, listname, uriList.get(i));
+                        for (int i = 0; i < uriList.size(); i++) {
+                            connectServer.requestPost(url, MainActivity.mUsername, MainActivity.mUsermail, listname, uriList.get(i), pathList.get(i));
                         }
                         String imageAddress1 = "";
                         for (int i = 0; i < filenameList.size(); i++) {
@@ -197,90 +210,107 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
             public void onClick(View view) {
                 /*DelFolder delFolder = new DelFolder();
                 delFolder.requestPost(MainActivity.mUsername, listName);*/
-                show();
+                moveGallery();
             }
         });
         checkDangerousPermissions();
-    }
-
-    public boolean StringFinder(String text) {
-
-
-        return false;
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        //리절트
-        if (resultCode == RESULT_OK) {
-            switch (requestCode) {
-                case GALLERY_CODE:
-
-                    /*imView1.setImageResource(0);
-                    imView2.setImageResource(0);
-                    imView3.setImageResource(0);*/
-
-                    //ClipData 또는 Uri를 가져온다
-                    Uri uri = data.getData();
-                    ClipData clipData = data.getClipData();
-
-
-                    if (clipData != null) {
-                        Log.d("heu", "clipData : " + clipData.getItemAt(0).getUri());
-                        for (int i = 0; i < clipData.getItemCount(); i++) {
-                            if (i == 7) {
-                                break;
-                            }
-                            Uri urione = clipData.getItemAt(i).getUri();
-                            Log.d("heu", "clipData getReal : " + getRealPathFromURI(urione));
-                            File sourceFile = new File(getRealPathFromURI(urione));
-                            filenameList.add(sourceFile.getName().toString());
-                            imagePathArr.add(getRealPathFromURI(urione));
-                            uriList.add(urione);
-                            switch (i) {
-                                case 0:
-                                    Glide.with(this).load(urione).into(imView1);
-                                    imView1.setVisibility(View.VISIBLE);
-                                    break;
-                                case 1:
-                                    Glide.with(this).load(urione).into(imView2);
-                                    imView2.setVisibility(View.VISIBLE);
-                                    break;
-                                case 2:
-                                    Glide.with(this).load(urione).into(imView3);
-                                    imView3.setVisibility(View.VISIBLE);
-                                    break;
-                                case 3:
-                                    Glide.with(this).load(urione).into(imView4);
-                                    imView4.setVisibility(View.VISIBLE);
-                                    break;
-                                case 4:
-                                    Glide.with(this).load(urione).into(imView5);
-                                    imView5.setVisibility(View.VISIBLE);
-                                    break;
-                                case 5:
-                                    Glide.with(this).load(urione).into(imView6);
-                                    imView6.setVisibility(View.VISIBLE);
-                                    break;
-                                case 6:
-                                    Glide.with(this).load(urione).into(imView7);
-                                    imView7.setVisibility(View.VISIBLE);
-                                    break;
-                            }
-                        }
-                    } else if (uri != null) {
-                        Log.d("heu", "uri : " + getRealPathFromURI(uri));
-                        Glide.with(this).load(getRealPathFromURI(uri)).into(imView1);
-                        imView1.setVisibility(View.VISIBLE);
-                    }
-                    horScrollView.setVisibility(View.VISIBLE);
-                    break;
-                default:
-                    break;
+        if (ImagePicker.shouldHandle(requestCode, resultCode, data)) {
+            //Reset List
+            imageSettingReset();
+            //Receiving data
+            List<Image> images = ImagePicker.getImages(data);
+            //Setting Image
+            for (int i = 0; i < images.size(); i++) {
+                Uri tempUri = Uri.fromFile(new File(images.get(i).getPath()));
+                filenameList.add(images.get(i).getName());
+                pathList.add(images.get(i).getPath());
+                uriList.add(tempUri);
+                imageSet(images.get(i).getPath(), i);
+                /*Log.d("heu", "ID : " + images.get(i).getId());
+                Log.d("heu", "NAME : " + images.get(i).getName());
+                Log.d("heu", "PATH : " + images.get(i).getPath());*/
             }
+
+            horScrollView.setVisibility(View.VISIBLE);
         }
+    }
+
+    private void imageSet(String path, int i) {
+        switch (i) {
+            case 0:
+                Glide.with(this).load(path).into(imView1);
+                imView1.setVisibility(View.VISIBLE);
+                break;
+            case 1:
+                Glide.with(this).load(path).into(imView2);
+                imView2.setVisibility(View.VISIBLE);
+                break;
+            case 2:
+                Glide.with(this).load(path).into(imView3);
+                imView3.setVisibility(View.VISIBLE);
+                break;
+            case 3:
+                Glide.with(this).load(path).into(imView4);
+                imView4.setVisibility(View.VISIBLE);
+                break;
+            case 4:
+                Glide.with(this).load(path).into(imView5);
+                imView5.setVisibility(View.VISIBLE);
+                break;
+            case 5:
+                Glide.with(this).load(path).into(imView6);
+                imView6.setVisibility(View.VISIBLE);
+                break;
+            case 6:
+                Glide.with(this).load(path).into(imView7);
+                imView7.setVisibility(View.VISIBLE);
+                break;
+            case 7:
+                Glide.with(this).load(path).into(imView7);
+                imView8.setVisibility(View.VISIBLE);
+                break;
+            case 8:
+                Glide.with(this).load(path).into(imView7);
+                imView9.setVisibility(View.VISIBLE);
+                break;
+            case 9:
+                Glide.with(this).load(path).into(imView7);
+                imView10.setVisibility(View.VISIBLE);
+                break;
+        }
+    }
+
+    private void imageSettingReset() {
+        horScrollView.setVisibility(View.INVISIBLE);
+        imView1.setVisibility(View.GONE);
+        imView2.setVisibility(View.GONE);
+        imView3.setVisibility(View.GONE);
+        imView4.setVisibility(View.GONE);
+        imView5.setVisibility(View.GONE);
+        imView6.setVisibility(View.GONE);
+        imView7.setVisibility(View.GONE);
+        imView8.setVisibility(View.GONE);
+        imView9.setVisibility(View.GONE);
+        imView10.setVisibility(View.GONE);
+        filenameList.clear();
+        uriList.clear();
+    }
+
+    private void setImageView(String image) {
+        String[] temp = image.split(",");
+        for (String aTemp : temp) {
+            imageList.add(imageurl + aTemp);
+        }
+        for (int i = 0; i < imageList.size(); i++) {
+            imageSet(imageList.get(i), i);
+        }
+        horScrollView.setVisibility(View.VISIBLE);
     }
 
     private Bitmap resize(Bitmap bm) {
@@ -301,9 +331,9 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
         return bm;
     }
 
-    private String fileToBitmap(Uri imgUri) {
+    private String fileToBitmap(String path) {
 
-        File sourceFile = new File(getRealPathFromURI(imgUri));
+        File sourceFile = new File(path);
 
         String strNewFolder = "CacheFolder" + File.separator;
         String strFileName = sourceFile.getName();
@@ -372,6 +402,7 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
 
     private void checkDangerousPermissions() {
         String[] permissions = {
+                Manifest.permission.INTERNET,
                 Manifest.permission.READ_EXTERNAL_STORAGE,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE,
                 Manifest.permission.CAMERA
@@ -445,32 +476,33 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
         return cursor.getString(column_index);
     }
 
-    void show() {
-        Intent intent2 = new Intent(Intent.ACTION_PICK);
+    void moveGallery() {
+        /*Intent intent2 = new Intent(Intent.ACTION_PICK);
         intent2.setType("image/*");
         intent2.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
         intent2.setType(MediaStore.Images.Media.CONTENT_TYPE);
-        startActivityForResult(Intent.createChooser(intent2, "사진을 선택하세요"), GALLERY_CODE);
-        /**
-         *
-         * 원본
-         Intent intent2 = new Intent(Intent.ACTION_PICK);
-         intent2.setType("image/*");
-         intent2.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
-         intent2.setType(MediaStore.Images.Media.CONTENT_TYPE);
-         startActivityForResult(Intent.createChooser(intent2, "사진을 선택하세요"), GALLERY_CODE);
+        startActivityForResult(Intent.createChooser(intent2, "사진을 선택하세요"), GALLERY_CODE);*/
 
-         Intent intent2 = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-         intent2.setType("image/*");
-         intent2.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
-         intent2.setType(MediaStore.Images.Media.CONTENT_TYPE);
-         startActivityForResult(Intent.createChooser(intent2, "사진을 선택하세요"), GALLERY_CODE);
-
-         */
+        ImagePicker.create(this)
+                .returnMode(ReturnMode.NONE) // set whether pick and / or camera action should return immediate result or not.
+                .folderMode(false) // folder mode (false by default)
+                .toolbarFolderTitle("폴더") // folder selection title
+                .toolbarImageTitle("사진 선택") // image selection title
+                .toolbarArrowColor(Color.BLACK) // Toolbar 'up' arrow color
+                .includeVideo(false) // Show video on image picker
+                .multi() // multi mode (default mode)
+                .limit(10) // max images can be selected (99 by default)
+                .showCamera(false) // show camera or not (true by default)
+                .imageDirectory("Camera") // directory name for captured image  ("Camera" folder by default)
+                //.origin(images) // original selected images, used in multi mode
+                //.exclude(images) // exclude anything that in image.getPath()
+                //.excludeFiles(files) // same as exclude but using ArrayList<File>
+                //.theme(R.style.CustomImagePickerTheme) // must inherit ef_BaseTheme. please refer to sample
+                //.enableLog(false) // disabling log
+                //.imageLoader(new GrayscaleImageLoder()) // custom image loader, must be serializeable
+                .start(); // start image picker activity with request code
 
     }
-
-
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -593,16 +625,14 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
         OkHttpClient client = new OkHttpClient();
 
         //POST 방식
-        public void requestPost(String url, String username, String email, String listname, Uri uri) {
+        public void requestPost(String url, String username, String email, String listname, Uri uri, String path) {
             final MediaType MEDIA_TYPE_PNG = MediaType.parse("image/*");
 
             url += "/imagesave.php";
 
-            File file = new File(fileToBitmap(uri));
+            File file = new File(fileToBitmap(path));
             String filename = file.getName();
 
-            Log.d("heu", "파일 : " + filename);
-            Log.d("heu", "이메일 : " + email);
 
             //Request Body에 서버에 보낼 데이터 작성
 //            RequestBody requestBody = new FormBody.Builder().add("userId", id).add("userPassword", password).build();
