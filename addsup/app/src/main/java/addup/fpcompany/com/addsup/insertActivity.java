@@ -220,6 +220,14 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
+        if(postNum == 1 || ImagePicker.shouldHandle(requestCode, resultCode, data)) {
+            // editpost + image reset
+            for (int i = 0; i < imageList.size(); i++) {
+                DeleteImage deleteImage = new DeleteImage();
+                deleteImage.requestPost(imageList.get(i));
+            }
+        }
+
         if (ImagePicker.shouldHandle(requestCode, resultCode, data)) {
             //Reset List
             imageSettingReset();
@@ -690,26 +698,31 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
         }
     }
 
-    private class DelFolder {
+    class DeleteImage {
+        //Client 생성
         OkHttpClient client = new OkHttpClient();
 
-        public void requestPost(String username, String email, String listname) {
-            String url = "http://spotz.co.kr/var/www/html/delfolder.php";
+        public void requestPost(String imagepath) {
+            String url = "http://spotz.co.kr/var/www/html/deleteImage.php";
+            //Request Body에 서버에 보낼 데이터 작성
+
+            File file = new File(imagepath);
+            String[] path = file.getPath().split("/html");
+
             RequestBody requestBody = new FormBody.Builder().
-                    add("username", username).
-                    add("email", email).
-                    add("listname", listname).build();
+                    add("imagepath", path[1]).
+                    build();
 
             Request request = new Request.Builder().url(url).post(requestBody).build();
             client.newCall(request).enqueue(new Callback() {
                 @Override
                 public void onFailure(Call call, IOException e) {
-//                    Log.d(TAG, "Connect Server Error is " + e.toString());
+//                    Log.d("heu", "Connect Server Error is " + e.toString());
                 }
 
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
-//                    Log.d(TAG, "Response Body is " + response.body().string());
+
                 }
             });
         }

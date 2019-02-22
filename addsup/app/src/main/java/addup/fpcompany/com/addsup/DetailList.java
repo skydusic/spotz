@@ -11,6 +11,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -25,6 +26,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -56,15 +58,15 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
     ImageView delpostBT;
     ViewPager viewPager;
     ImageView favorite;
-    ArrayList<String> arr = new ArrayList<>();
-    ArrayList<Fragment> fragArr = new ArrayList<>();
+    ArrayList<String> arr;
+    ArrayList<Fragment> fragArr;
     ArrayList<commentItem> listItems = new ArrayList<>();
 
     //    RecyclerView recyclerView;
     RecyclerView commentRecycle;
     View bottombar;
 
-    String listname, idx, title, contents, username, email, created, image, spindata, imageurl, commentJson = "";
+    String listname, idx, title, contents, username, email, created, image, spindata, imagepath, commentJson = "";
 
     Boolean favoriteFLAG = false;
 
@@ -150,14 +152,8 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
         timeTv.setText(created);
         writerTv.setText(username);
         image = intent.getStringExtra("image");
-        imageurl = MainActivity.serverUrl + "userImageFolder/" + listname + "/" + email + "/";
+        imagepath = MainActivity.serverUrl + "userImageFolder/" + listname + "/" + email + "/";
 
-        // 이미지 세팅
-        if(!image.equals("")){
-            setRecyclerView();
-        } else {
-            viewPager.setVisibility(View.GONE);
-        }
         // 이미지 페이지 넘기는 핸들러
         handler.sendEmptyMessageDelayed(0, 3000);
 
@@ -233,14 +229,19 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
         fav.requestPost(MainActivity.mUsermail);
     }
 
-    private void setRecyclerView() {
+    private void setRecyclerView(String image) {
+        arr = new ArrayList<>();
+        fragArr = new ArrayList<>();
+        Log.d("heu", "image : " + image);
         if (!image.equals("")) {
             String[] temp = image.split(",");
             for (String aTemp : temp) {
-                arr.add(imageurl + aTemp);
+                arr.add(imagepath + aTemp);
             }
         }
-
+        for(int i=0; i < arr.size(); i++){
+            Log.d("heu", "arr : " + arr.get(i));
+        }
         for (int i = 0; i < arr.size(); i++) {
             fragArr.add(new DetailFrag(arr.get(i)));
         }
@@ -267,6 +268,7 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
                         c.getString(TAG_HIT), c.getString(TAG_SPIN));
                 contents = c.getString(TAG_CONTENTS);
             }
+
         } catch (JSONException e) {
             e.printStackTrace();
 //            Log.d("heu", "adapter Exception : " + e);
@@ -290,6 +292,7 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
 
         if (requestCode == 3000) {
             // 게시글 초기화
+            Log.d("heu", "액티비티 리절트");
             refreshPost rPost = new refreshPost();
             rPost.requestPost(idx);
 
@@ -335,6 +338,8 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
                 editIntent.putExtra("email", email);
                 editIntent.putExtra("image", image);
                 editIntent.putExtra("listname", listname);
+                editIntent.putExtra("image", image);
+                editIntent.putExtra("imagepath", imagepath);
 //                intent.putExtra("spindata", );
                 editIntent.putExtra("created", created);
                 startActivityForResult(editIntent, 3000);
@@ -344,6 +349,12 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
                 // 삭제
                 postDelete postDelete = new postDelete();
                 postDelete.requestPost(idx, listname, username, email, title, contents, created);
+                DeleteImage deleteImage = new DeleteImage();
+
+                for (int i = 0; i < arr.size(); i++) {
+                    deleteImage.requestPost(arr.get(i));
+                }
+
                 Intent again = new Intent(DetailList.this, ClubList.class);
                 again.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 again.putExtra("listName", listname);
@@ -580,14 +591,20 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-
-            if (myJSON.equals("")) {
-                refreshPostHandler.sendEmptyMessageDelayed(300, 200);
-            } else {
-                removeMessages(300);
+            this.removeMessages(300);
+            if (!myJSON.equals("")) {
                 refresh(myJSON);
                 titleTv.setText(postItem.getTitle());
                 contentsTv.setText(contents);
+                viewPager.removeAllViews();
+                Log.d("heu", "핸들러!");
+                if(!image.equals("")){
+                    setRecyclerView(postItem.getImage());
+                } else {
+                    viewPager.setVisibility(View.GONE);
+                }
+            } else {
+                this.sendEmptyMessage(300);
             }
         }
     };
@@ -866,6 +883,36 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
                     Json = response.body().string();
+                }
+            });
+        }
+    }
+
+    class DeleteImage {
+        //Client 생성
+        OkHttpClient client = new OkHttpClient();
+
+        public void requestPost(String imagepath) {
+            String url = "http://spotz.co.kr/var/www/html/deleteImage.php";
+            //Request Body에 서버에 보낼 데이터 작성
+            Log.d("heu", "image path : " + imagepath);
+
+            File file = new File(imagepath);
+            String[] path = file.getPath().split("/html");
+
+            RequestBody requestBody = new FormBody.Builder().
+                    add("imagepath", path[1]).
+                    build();
+
+            Request request = new Request.Builder().url(url).post(requestBody).build();
+            client.newCall(request).enqueue(new Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
+//                    Log.d("heu", "Connect Server Error is " + e.toString());
+                }
+
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
 
                 }
             });
