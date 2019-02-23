@@ -23,7 +23,7 @@
         android:layout_width="wrap_content"
         android:layout_height="30dp"
         android:textSize="14sp"
-        android:layout_alignEnd="@+id/noticeTv"
+        android:layout_toEndOf="@+id/noticeTv"
         android:layout_alignTop="@+id/noticeTv"
         android:gravity="center_vertical"
         android:layout_marginStart="10dp"
@@ -44,7 +44,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/bottombar"
-        android:layout_below="@+id/noticeTv" />
+        android:layout_below="@+id/noticeTv"
+        />
 
     <include
         android:id="@+id/bottombar"

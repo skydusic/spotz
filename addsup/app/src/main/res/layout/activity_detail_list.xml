@@ -11,17 +11,16 @@
         android:id="@+id/detailScrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
         android:layout_marginTop="10dp"
         android:focusable="true"
-        android:focusableInTouchMode="true"
-        android:layout_alignParentTop="true"
-        >
+        android:focusableInTouchMode="true">
 
         <RelativeLayout
             android:id="@+id/mainLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            >
+            android:descendantFocusability="blocksDescendants">
 
             <TextView
                 android:id="@+id/titleTv"
@@ -117,7 +116,8 @@
                 android:layout_height="250dp"
                 android:layout_below="@+id/titleTv"
                 android:layout_marginTop="80dp"
-                android:layout_marginBottom="5dp" />
+                android:layout_marginBottom="5dp"
+                android:descendantFocusability="blocksDescendants" />
 
             <TextView
                 android:id="@+id/contents"
@@ -145,9 +145,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/horizontalView"
+                android:layout_marginBottom="60dp"
                 android:minHeight="100dp"
                 android:padding="7dp"
-                android:layout_marginBottom="60dp">
+                android:descendantFocusability="blocksDescendants">
 
                 <TextView
                     android:id="@+id/commentTv"
@@ -169,9 +170,9 @@
                     android:id="@+id/commentEt"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_below="@id/commentTv"
                     android:layout_margin="5dp"
                     android:background="@drawable/edittext"
-                    android:layout_below="@id/commentTv"
                     android:gravity="center_vertical"
                     android:minHeight="50dp"
                     android:padding="7dp"
@@ -184,9 +185,9 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/commentEt"
                     android:layout_alignParentEnd="true"
+                    android:layout_marginBottom="20dp"
                     android:text="@string/input"
-                    android:textSize="12sp"
-                    android:layout_marginBottom="20dp"/>
+                    android:textSize="12sp" />
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/commentRecycle"
@@ -194,6 +195,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/inputComment"
                     android:layout_marginTop="15dp"
+                    android:descendantFocusability="blocksDescendants"
                     android:visibility="gone" />
 
 
@@ -208,9 +210,9 @@
         style="@android:style/ButtonBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/detailScrollView"
         android:layout_alignParentBottom="true"
         android:orientation="horizontal"
-        android:layout_below="@id/detailScrollView"
         android:paddingBottom="12dp"
         android:visibility="invisible">
 
