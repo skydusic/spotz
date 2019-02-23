@@ -142,17 +142,17 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
         email = intent.getStringExtra("email");
         created = intent.getStringExtra("created");
         spindata = intent.getStringExtra("spindata");
+        image = intent.getStringExtra("image");
+        imagepath = MainActivity.serverUrl + "userImageFolder/" + listname + "/" + email + "/";
 
         refreshPost rPost = new refreshPost();
         rPost.requestPost(idx);
 
+        //keyboard
         imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 
-        titleTv.setText(title);
-        timeTv.setText(created);
-        writerTv.setText(username);
-        image = intent.getStringExtra("image");
-        imagepath = MainActivity.serverUrl + "userImageFolder/" + listname + "/" + email + "/";
+        //image set
+        setRecyclerView(image);
 
         // 이미지 페이지 넘기는 핸들러
         handler.sendEmptyMessageDelayed(0, 3000);
@@ -182,6 +182,8 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
         MainActivity.getBlackList getB = new MainActivity.getBlackList();
         getB.requestPost(email);
 
+        topScrollHandler.sendEmptyMessageDelayed(2000,30);
+
         favorite.setOnClickListener(this);
         inputComment.setOnClickListener(this);
         mainLayout.setOnClickListener(this);
@@ -200,8 +202,6 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
 
         getComment getComment = new getComment();
         getComment.requestPost(idx, listname);
-
-        commentHandler.sendEmptyMessage(500);
 
     }
 
@@ -232,15 +232,11 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
     private void setRecyclerView(String image) {
         arr = new ArrayList<>();
         fragArr = new ArrayList<>();
-        Log.d("heu", "image : " + image);
         if (!image.equals("")) {
             String[] temp = image.split(",");
             for (String aTemp : temp) {
                 arr.add(imagepath + aTemp);
             }
-        }
-        for(int i=0; i < arr.size(); i++){
-            Log.d("heu", "arr : " + arr.get(i));
         }
         for (int i = 0; i < arr.size(); i++) {
             fragArr.add(new DetailFrag(arr.get(i)));
@@ -279,8 +275,7 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
         detailScrollView.post(new Runnable() {
             @Override
             public void run() {
-                detailScrollView.scrollTo(0, editCommentEt.getTop()+600);
-
+                detailScrollView.scrollTo(0, editCommentEt.getTop()+1000);
             }
         });
     }
@@ -471,7 +466,7 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
                                 imm.showSoftInput(editCommentEt, 0);
 
                                 //바텀바 지우기
-                                bottombar.setVisibility(View.GONE);
+                                bottombar.setVisibility(View.INVISIBLE);
 
                             }
                         });
@@ -579,7 +574,7 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
                 setCommentlist();
                 removeMessages(500);
                 commentJson = "";
-
+                detailScrollView.smoothScrollTo(0,0);
             } else {
                 commentHandler.sendEmptyMessageDelayed(500, 300);
             }
@@ -597,12 +592,12 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
                 titleTv.setText(postItem.getTitle());
                 contentsTv.setText(contents);
                 viewPager.removeAllViews();
-                Log.d("heu", "핸들러!");
                 if(!image.equals("")){
                     setRecyclerView(postItem.getImage());
                 } else {
                     viewPager.setVisibility(View.GONE);
                 }
+                detailScrollView.smoothScrollTo(0,0);
             } else {
                 this.sendEmptyMessage(300);
             }
@@ -611,12 +606,20 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
 
     @SuppressLint("HandlerLeak")
     Handler scrollHandler = new Handler() {
-
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             scrollToEnd();
             scrollHandler.removeMessages(5000);
+        }
+    };
+
+    @SuppressLint("HandlerLeak")
+    Handler topScrollHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            detailScrollView.smoothScrollTo(0,0);
         }
     };
 
@@ -726,6 +729,7 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
                     commentJson = response.body().string();
+                    commentHandler.sendEmptyMessage(500);
                 }
             });
         }
@@ -968,5 +972,6 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
         handler2.removeMessages(1000);
         refreshPostHandler.removeMessages(300);
         scrollHandler.removeMessages(5000);
+        topScrollHandler.removeMessages(2000);
     }
 }

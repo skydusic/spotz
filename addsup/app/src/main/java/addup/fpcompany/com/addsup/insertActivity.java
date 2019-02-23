@@ -325,14 +325,14 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
         Configuration config = getResources().getConfiguration();
         if (bm.getWidth() < bm.getHeight()) {
             if (config.smallestScreenWidthDp >= 1024)
-                bm = Bitmap.createScaledBitmap(bm, 615, 1024, true);
+                bm = Bitmap.createScaledBitmap(bm, 1920, 1080, true);
             else
-                bm = Bitmap.createScaledBitmap(bm, 360, 600, true);
+                bm = Bitmap.createScaledBitmap(bm, 720, 1280, true);
         } else {
             if (config.smallestScreenWidthDp >= 1024)
-                bm = Bitmap.createScaledBitmap(bm, 1024, 615, true);
+                bm = Bitmap.createScaledBitmap(bm, 1080, 1920, true);
             else
-                bm = Bitmap.createScaledBitmap(bm, 600, 360, true);
+                bm = Bitmap.createScaledBitmap(bm, 1280, 720, true);
         }
 
 //        bm = Bitmap.createScaledBitmap(bm, bm.getWidth()/3, bm.getHeight()/3, true);
@@ -384,7 +384,8 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
 
         try {
             OutputStream outputStream = new FileOutputStream(souceFile);
-            resize(rotate(bitmap, exifDegree)).compress(Bitmap.CompressFormat.PNG, 100, outputStream);
+
+            resize(bitmap).compress(Bitmap.CompressFormat.PNG, 100, outputStream);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
