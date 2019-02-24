@@ -14,10 +14,6 @@
 
     $postidx=isset($_POST['postidx']) ? $_POST['postidx'] : '';
     $listname=isset($_POST['listname']) ? $_POST['listname'] : '';
-    $pageorder=isset($_POST['pageorder']) ? $_POST['pageorder'] : '';
-    $orderNum = 10;
-    $pageend = ((int)$pageorder+1) * $orderNum;
-    $pageorder = (int)$pageorder * $orderNum;
 
     if($listname == "freeboard"){
         $sql="select * from freeboardCO where postidx='$postidx'";
@@ -39,23 +35,19 @@
 
     echo "{\"status\":\"OK\",\"num_results\":\"$total_record\",\"results\":[";
 
-    if ($total_record >= $pageorder) {
-        if($total_record <= $pageend) {
-            $pageend = $total_record;
+
+    for ($i=0; $i < $total_record; $i++)
+    {
+        mysqli_data_seek($result, $i);
+        $row = mysqli_fetch_array($result);
+        
+        echo "{\"listname\":\"commentBoard\",\"idx\":\"$row[idx]\",\"username\":\"$row[username]\",\"email\":\"$row[email]\",\"postidx\":\"$row[postidx]\",\"contents\":\"$row[contents]\",\"created\":\"$row[created]\",\"commentidx\":\"$row[commentidx]\"}";
+        
+        
+        if($i<$total_record-1){
+          echo ",";
         }
-        for ($i=$pageorder; $i < $pageend; $i++)
-        {
-            mysqli_data_seek($result, $i);
-            $row = mysqli_fetch_array($result);
-
-            echo "{\"listname\":\"commentBoard\",\"idx\":\"$row[idx]\",\"username\":\"$row[username]\",\"email\":\"$row[email]\",\"postidx\":\"$row[postidx]\",\"contents\":\"$row[contents]\",\"created\":\"$row[created]\",\"commentidx\":\"$row[commentidx]\"}";
-
-
-            if($i<$total_record-1){
-              echo ",";
-            }
-
-        }
+        
     }
 
     echo "]}";

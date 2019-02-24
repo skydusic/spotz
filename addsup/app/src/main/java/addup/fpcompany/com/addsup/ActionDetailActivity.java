@@ -95,6 +95,7 @@ public class ActionDetailActivity extends AppCompatActivity {
         }
 
         handler.sendEmptyMessage(50);
+
     }
 
     protected String showList(String json) {
@@ -200,7 +201,6 @@ public class ActionDetailActivity extends AppCompatActivity {
                         c.getString(TAG_IMAGE), ClubList.settingTimes(c.getString(TAG_CREATED)), c.getString("listname"),
                         c.getString("hit"), c.getString("spindata")));
             }
-            adapter.notifyItemInserted(0);
             pageOrder++;
         } catch (JSONException e) {
             e.printStackTrace();
