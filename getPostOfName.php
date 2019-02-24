@@ -15,9 +15,9 @@
 
     echo "{\"status\":\"OK\",\"num_results\":\"$total_record\",\"results\":[";
 
+    mysqli_data_seek($result, $i);
+    $row = mysqli_fetch_array($result);
     for ($i=0; $i < $total_record; $i++) {
-        mysqli_data_seek($result, $i);
-        $row = mysqli_fetch_array($result);
         
         if($row[listname] == "freeboard"){
             $sql = "select * from freeboard where idx = $row[postidx]";

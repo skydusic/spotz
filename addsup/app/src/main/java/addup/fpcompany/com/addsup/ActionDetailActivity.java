@@ -8,7 +8,9 @@ import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
+import android.widget.AbsListView;
 import android.widget.TextView;
 
 import org.json.JSONArray;
@@ -38,17 +40,16 @@ public class ActionDetailActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     MainListAdater adapter;
     Intent intent;
-    String url = "";
-    String Json = "";
     JSONArray post;
     ArrayList<listItem> listArr = new ArrayList<>();
-
-    String pageName;
-    String username;
-    String email;
     listItem item;
 
+    String pageName, username, email;
+    String url, Json = "";
+    int pageOrder = 0;
+
     postDelete delete = new postDelete();
+    getPostedList getPostedList;
 
     private static final String TAG_RESULTS = "results";
     private static final String TAG_TITLE = "title";
@@ -59,7 +60,6 @@ public class ActionDetailActivity extends AppCompatActivity {
     private static final String TAG_CREATED = "created";
     private static final String TAG_IMAGE = "image";
 
-    getPostedList getPostedList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,17 +74,17 @@ public class ActionDetailActivity extends AppCompatActivity {
         detailTv.setText(pageName);
 
         if (pageName.equals("내 글 보기")) {
-            String url = "http://spotz.co.kr/var/www/html/getPostOfName.php";
+            url = "http://spotz.co.kr/var/www/html/getPostOfName.php";
             getPostedList = new getPostedList();
-            getPostedList.requestPost(url, username, email);
+            getPostedList.requestPost(url, username, email, pageOrder);
         } else if (pageName.equals("즐겨찾기")) {
             url = "http://spotz.co.kr/var/www/html/favoriteselect.php";
             getPostedList = new getPostedList();
-            getPostedList.requestPost(url, username, email);
+            getPostedList.requestPost(url, username, email, pageOrder);
         } else if (pageName.equals("최근 본 글")) {
-            String url = "http://spotz.co.kr/var/www/html/historyselect.php";
+            url = "http://spotz.co.kr/var/www/html/historyselect.php";
             getPostedList = new getPostedList();
-            getPostedList.requestPost(url, username, email);
+            getPostedList.requestPost(url, username, email, pageOrder);
         } else if (pageName.equals("닉네임 변경")) {
             url = "http://spotz.co.kr/var/www/html/nameSelect.php";
             Intent intent = new Intent(ActionDetailActivity.this, nameChange.class);
@@ -109,6 +109,7 @@ public class ActionDetailActivity extends AppCompatActivity {
                         c.getString(TAG_IMAGE), ClubList.settingTimes(c.getString(TAG_CREATED)), c.getString("listname"),
                         c.getString("hit"), c.getString("spindata")));
             }
+            pageOrder++;
         } catch (JSONException e) {
             e.printStackTrace();
 //            Log.d("heu", "adapter Exception : " + e);
@@ -154,15 +155,61 @@ public class ActionDetailActivity extends AppCompatActivity {
                             startActivityForResult(intent, 2000);
                         }
                     }
-
                     @Override
                     public void onLongItemClick(View view, int position) {
 
                     }
                 })
         );
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                if (!recyclerView.canScrollVertically(-1) && newState == AbsListView.OnScrollListener.SCROLL_STATE_FLING) {
+                    Log.d("heu", "url : " + url);
+                    Log.d("heu", "초기화 : " + pageOrder);
+                    refreshHandler.sendEmptyMessage(3000);
+                } else if (!recyclerView.canScrollVertically(1) && newState == AbsListView.OnScrollListener.SCROLL_STATE_FLING) {
+//                    Log.i(TAG, "End of list");
+                    Json = "";
+                    Log.d("heu", "url : " + url);
+                    Log.d("heu", "다음페이지 : " + pageOrder);
 
+                    getPostedList.requestPost(url,username,email,pageOrder);
+                    addPageHandler.sendEmptyMessageDelayed(4000, 200);
+                } else {
+                }
+
+                if (newState == AbsListView.OnScrollListener.SCROLL_STATE_FLING) {
+
+                } else if (newState == AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL) {
+
+                } else {
+
+                }
+            }
+        });
         return "finish";
+    }
+
+    private void addList(String json) {
+        try {
+            JSONObject jsonObj = new JSONObject(json);
+            post = jsonObj.getJSONArray(TAG_RESULTS);
+            for (int i = 0; i < post.length(); i++) {
+                JSONObject c = post.getJSONObject(i);
+                listArr.add(new listItem(String.valueOf(c.getInt(TAG_ID)), c.getString(TAG_TITLE), c.getString(TAG_USERNAME), c.getString(TAG_EMAIL),
+                        c.getString(TAG_IMAGE), ClubList.settingTimes(c.getString(TAG_CREATED)), c.getString("listname"),
+                        c.getString("hit"), c.getString("spindata")));
+            }
+            pageOrder++;
+        } catch (JSONException e) {
+            e.printStackTrace();
+//            Log.d("heu", "adapter Exception : " + e);
+        } catch (Exception e) {
+            e.printStackTrace();
+//            Log.d("heu", "adapter ETC Excep : " + e);
+        }
+
     }
 
     @Override
@@ -193,6 +240,7 @@ public class ActionDetailActivity extends AppCompatActivity {
         } else if (resultCode == 400) {
             // 삭제
 
+            String url = "http://spotz.co.kr/var/www/html/deletepost.php";
             delete.requestPost(item);
             Json = "";
             listArr.clear();
@@ -201,7 +249,7 @@ public class ActionDetailActivity extends AppCompatActivity {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            getPostedList.requestPost(url, username, email);
+            getPostedList.requestPost(url, username, email, 0);
             handler.sendEmptyMessage(50);
 
         } else if (resultCode == 500) {
@@ -218,10 +266,10 @@ public class ActionDetailActivity extends AppCompatActivity {
             startActivity(moveIntent);
         }
 
-        if(resultCode == 2400) {
+        /*if(resultCode == 2400) {
             getPostedList.requestPost(url, username, email);
             handler.sendEmptyMessage(50);
-        }
+        }*/
 
 
     }
@@ -241,17 +289,45 @@ public class ActionDetailActivity extends AppCompatActivity {
         }
     };
 
+    @SuppressLint("HandlerLeak")
+    Handler refreshHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            removeMessages(3000);
+            pageOrder = 0;
+            recyclerView.removeAllViewsInLayout();
+            getPostedList.requestPost(url, username, email, pageOrder);
+            handler.sendEmptyMessage(50);
+        }
+    };
+
+    @SuppressLint("HandlerLeak")
+    Handler addPageHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            removeMessages(4000);
+            if (Json.equals("")) {
+                addPageHandler.sendEmptyMessageDelayed(4000, 100);
+            } else {
+                addList(Json);
+            }
+        }
+    };
+
     // 올린 글을 찾아온다
     class getPostedList {
         //Client 생성
         OkHttpClient client = new OkHttpClient();
 
-        public void requestPost(String url, String username, String email) {
+        public void requestPost(String url, String username, String email, int pageOrder) {
 
             //Request Body에 서버에 보낼 데이터 작성
             RequestBody requestBody = new FormBody.Builder().
                     add("username", username).
                     add("email", email).
+                    add("pageorder", String.valueOf(pageOrder)).
                     build();
 
             Request request = new Request.Builder().url(url).post(requestBody).build();

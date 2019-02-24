@@ -59,9 +59,7 @@
     $total_record = mysqli_num_rows($result);
     $flag = $pageend - $total_record;
     echo "{\"status\":\"OK\",\"total\":\"$total_record\",\"results\":[";
-    if ($total_record < $pageorder) {
-        echo "{\"listname\":\"none\",\"idx\":0,\"title\":\" \",\"contents\":\" \",\"username\":\" \",\"email\":\" \",\"created\":\" \",\"hit\":\" \",\"image\":\" \",\"spindata\":\" \"}],\"endpage\":\"endpage\"}";
-    } else {
+    if ($total_record >= $pageorder) {
         if($total_record <= $pageend) {
             $pageend = $total_record;
         }
@@ -82,7 +80,7 @@
             } else if ($listname == "compet"){
                 echo "{\"listname\":\"compet\",";
             }
-            echo "\"idx\":$row[idx],\"title\":\"$row[title]\",\"contents\":\"$row[contents]\",\"username\":\"$row[username]\",\"email\":\"$row[email]\",\"created\":\"$row[created]\",\"hit\":\"$row[hit]\",\"image\":\"$row[image]\",\"spindata\":\"$row[spindata]\"}";
+            echo "\"idx\":$row[idx],\"title\":\"$row[title]\",\"username\":\"$row[username]\",\"email\":\"$row[email]\",\"created\":\"$row[created]\",\"hit\":\"$row[hit]\",\"image\":\"$row[image]\",\"spindata\":\"$row[spindata]\"}";
             if($i<$pageend-1){
               echo ",";
             }

@@ -78,15 +78,6 @@
                 android:text="@string/reportText"
                 android:textSize="13sp" />
 
-            <!--<ImageView
-                android:id="@+id/reportBt"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:layout_below="@+id/timeTv"
-                android:layout_margin="10dp"
-                android:layout_toStartOf="@+id/reportText"
-                android:src="@drawable/siren_icon" />-->
-
             <ImageView
                 android:id="@+id/editpostBT"
                 android:layout_width="25dp"

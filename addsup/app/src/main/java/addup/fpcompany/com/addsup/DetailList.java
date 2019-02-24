@@ -70,7 +70,7 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
 
     Boolean favoriteFLAG = false;
 
-    int pagerPos = 0;
+    int pagerPos, commentCounter = 0;
 
     favoriteItem favoriteTemp;
 
@@ -497,10 +497,15 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
             comment = jsonObj.getJSONArray(TAG_RESULTS);
 
             for (int i = 0; i < comment.length(); i++) {
+                commentCounter++;
                 JSONObject c = comment.getJSONObject(i);
                 listItems.add(new commentItem(String.valueOf(c.get(TAG_ID)), c.getString(TAG_LISTNAME),
                         c.getString(TAG_USERNAME), c.getString(TAG_EMAIL), c.getString(TAG_CONTENTS), ClubList.settingTimes(c.getString(TAG_CREATED))));
             }
+
+            //counter set
+            commentCount.setText(String.valueOf(commentCounter));
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -589,6 +594,8 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
             this.removeMessages(300);
             if (!myJSON.equals("")) {
                 refresh(myJSON);
+                writerTv.setText(postItem.getUsername());
+                timeTv.setText(postItem.getCreated());
                 titleTv.setText(postItem.getTitle());
                 contentsTv.setText(contents);
                 viewPager.removeAllViews();

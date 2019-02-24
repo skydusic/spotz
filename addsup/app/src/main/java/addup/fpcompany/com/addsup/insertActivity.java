@@ -169,7 +169,7 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
                         InsertData task = new InsertData();
                         ConnectServer connectServer = new ConnectServer();
                         for (int i = 0; i < uriList.size(); i++) {
-                            connectServer.requestPost(url, MainActivity.mUsername, MainActivity.mUsermail, listname, uriList.get(i), pathList.get(i));
+                            connectServer.requestPost(url, MainActivity.mUsername, MainActivity.mUsermail, listname, uriList.get(i), filenameList.get(i), pathList.get(i));
                         }
                         String imageAddress1 = "";
                         for (int i = 0; i < filenameList.size(); i++) {
@@ -240,9 +240,8 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
                 pathList.add(images.get(i).getPath());
                 uriList.add(tempUri);
                 imageSet(images.get(i).getPath(), i);
-                /*Log.d("heu", "ID : " + images.get(i).getId());
                 Log.d("heu", "NAME : " + images.get(i).getName());
-                Log.d("heu", "PATH : " + images.get(i).getPath());*/
+                Log.d("heu", "PATH : " + images.get(i).getPath());
             }
 
             horScrollView.setVisibility(View.VISIBLE);
@@ -323,16 +322,20 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
 
     private Bitmap resize(Bitmap bm) {
         Configuration config = getResources().getConfiguration();
-        if (bm.getWidth() < bm.getHeight()) {
-            if (config.smallestScreenWidthDp >= 1024)
-                bm = Bitmap.createScaledBitmap(bm, 1920, 1080, true);
-            else
-                bm = Bitmap.createScaledBitmap(bm, 720, 1280, true);
+        if(bm == null){
+            return bm;
         } else {
-            if (config.smallestScreenWidthDp >= 1024)
-                bm = Bitmap.createScaledBitmap(bm, 1080, 1920, true);
-            else
-                bm = Bitmap.createScaledBitmap(bm, 1280, 720, true);
+            if (bm.getWidth() < bm.getHeight()) {
+                if (config.smallestScreenWidthDp >= 1024)
+                    bm = Bitmap.createScaledBitmap(bm, 1920, 1080, true);
+                else
+                    bm = Bitmap.createScaledBitmap(bm, 720, 1280, true);
+            } else {
+                if (config.smallestScreenWidthDp >= 1024)
+                    bm = Bitmap.createScaledBitmap(bm, 1080, 1920, true);
+                else
+                    bm = Bitmap.createScaledBitmap(bm, 1280, 720, true);
+            }
         }
 
 //        bm = Bitmap.createScaledBitmap(bm, bm.getWidth()/3, bm.getHeight()/3, true);
@@ -384,7 +387,6 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
 
         try {
             OutputStream outputStream = new FileOutputStream(souceFile);
-
             resize(bitmap).compress(Bitmap.CompressFormat.PNG, 100, outputStream);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -468,7 +470,7 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
         // Matrix 객체 생성
         Matrix matrix = new Matrix();
         // 회전 각도 셋팅
-        matrix.postRotate(degree);
+        matrix.postRotate(0);
         // 이미지와 Matrix 를 셋팅해서 Bitmap 객체 생성
         return Bitmap.createBitmap(src, 0, 0, src.getWidth(),
                 src.getHeight(), matrix, true);
@@ -634,14 +636,12 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
         OkHttpClient client = new OkHttpClient();
 
         //POST 방식
-        public void requestPost(String url, String username, String email, String listname, Uri uri, String path) {
+        public void requestPost(String url, String username, String email, String listname, Uri uri,String filename, String path) {
             final MediaType MEDIA_TYPE_PNG = MediaType.parse("image/*");
 
             url += "/imagesave.php";
 
-            File file = new File(fileToBitmap(path));
-            String filename = file.getName();
-
+            File file = new File(path);
 
             //Request Body에 서버에 보낼 데이터 작성
 //            RequestBody requestBody = new FormBody.Builder().add("userId", id).add("userPassword", password).build();
