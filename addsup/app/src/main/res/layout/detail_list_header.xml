@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <RelativeLayout
+        android:id="@+id/mainLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/titleTv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/blueback"
+            android:minHeight="25dp"
+            android:padding="15dp"
+            android:textColor="#fff"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/timeTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/titleTv"
+            android:layout_alignParentEnd="true"
+            android:layout_margin="5dp"
+            android:paddingEnd="4dp"
+            android:textColor="#999"
+            android:textSize="12sp"
+            />
+
+        <TextView
+            android:id="@+id/writerTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/titleTv"
+            android:layout_alignParentStart="true"
+            android:layout_margin="5dp"
+            android:paddingStart="4dp"
+            android:textColor="#777"
+            android:textSize="12sp"
+            />
+
+        <ImageView
+            android:id="@+id/favorite"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentEnd="true"
+            android:padding="5dp"
+            android:src="@drawable/blackstar"
+            android:visibility="gone" />
+
+        <Button
+            android:id="@+id/reportBt"
+            android:layout_width="45dp"
+            android:layout_height="40dp"
+            android:layout_below="@+id/timeTv"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="10dp"
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="@string/reportText"
+            android:textSize="13sp" />
+
+        <ImageView
+            android:id="@+id/editpostBT"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_alignTop="@+id/reportBt"
+            android:layout_marginTop="7dp"
+            android:layout_marginEnd="10dp"
+            android:layout_toStartOf="@+id/delpostBT"
+            android:src="@drawable/edit_icon"
+            android:visibility="visible" />
+
+        <ImageView
+            android:id="@+id/delpostBT"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_below="@+id/contents"
+            android:layout_alignTop="@+id/reportBt"
+            android:layout_marginTop="7dp"
+            android:layout_marginEnd="5dp"
+            android:layout_toStartOf="@+id/reportBt"
+            android:src="@drawable/delete_icon"
+            android:visibility="visible" />
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/viewPager"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:layout_below="@+id/titleTv"
+            android:layout_marginTop="80dp"
+            android:layout_marginBottom="5dp" />
+
+        <TextView
+            android:id="@+id/contents"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/viewPager"
+            android:layout_margin="20dp"
+            android:gravity="center_vertical"
+            android:minHeight="150dp"
+            android:padding="15dp"
+            android:textSize="16sp" />
+
+        <View
+            android:id="@+id/horizontalView"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/contents"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:background="#a4a4a4" />
+
+        <!--댓글기능-->
+        <RelativeLayout
+            android:id="@+id/commentLay"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/horizontalView"
+            android:minHeight="100dp"
+            android:padding="7dp">
+
+            <TextView
+                android:id="@+id/commentTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="3dp"
+                android:text="@string/comment"
+                android:textSize="13sp" />
+
+            <TextView
+                android:id="@+id/commentCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/commentTv"
+                android:layout_toEndOf="@id/commentTv"
+                android:textSize="12sp" />
+
+            <EditText
+                android:id="@+id/commentEt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/commentTv"
+                android:layout_margin="5dp"
+                android:background="@drawable/edittext"
+                android:gravity="center_vertical"
+                android:minHeight="50dp"
+                android:padding="7dp"
+                android:textSize="15sp"
+                />
+
+            <Button
+                android:id="@+id/inputComment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/commentEt"
+                android:layout_alignParentEnd="true"
+                android:layout_marginBottom="20dp"
+                android:text="@string/input"
+                android:textSize="12sp" />
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/editCommentLay"
+            style="@android:style/ButtonBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingBottom="12dp"
+            android:visibility="invisible">
+
+            <EditText
+                android:id="@+id/editCommentEt"
+                android:layout_width="280dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_weight="5"
+                android:background="@drawable/edittext"
+                android:minHeight="45dp"
+                android:padding="7dp"
+                android:textSize="15sp"
+                />
+
+            <Button
+                android:id="@+id/editCommentBt"
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_weight="2"
+                android:text="@string/confirm" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</RelativeLayout>

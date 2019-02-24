@@ -13,11 +13,16 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AbsListView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -31,6 +36,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import addup.fpcompany.com.addsup.adapter.CommentAdapter;
+import addup.fpcompany.com.addsup.adapter.CommentListAdapter;
 import addup.fpcompany.com.addsup.adapter.PagerAdapter;
 import addup.fpcompany.com.addsup.frag.DetailFrag;
 import addup.fpcompany.com.addsup.java.commentItem;
@@ -47,9 +53,8 @@ import okhttp3.Response;
 public class DetailList extends AppCompatActivity implements View.OnClickListener, ViewPager.OnPageChangeListener, View.OnFocusChangeListener {
 
     Intent intent;
-
     RelativeLayout mainLayout, commentLay;
-    ScrollView detailScrollView;
+    ListView detailListview, commentRecycle;
     TextView titleTv, contentsTv, commentCount, timeTv, writerTv;
     EditText commentEt;
     Button inputComment;
@@ -61,16 +66,16 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
     ArrayList<String> arr;
     ArrayList<Fragment> fragArr;
     ArrayList<commentItem> listItems = new ArrayList<>();
+    View header, footer;
 
     //    RecyclerView recyclerView;
-    RecyclerView commentRecycle;
     View bottombar;
 
     String listname, idx, title, contents, username, email, created, image, spindata, imagepath, commentJson = "";
 
     Boolean favoriteFLAG = false;
 
-    int pagerPos, commentCounter = 0;
+    int pagerPos, commentCounter, pageOrder = 0;
 
     favoriteItem favoriteTemp;
 
@@ -104,36 +109,41 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_list);
 
-        titleTv = findViewById(R.id.titleTv);
-        contentsTv = findViewById(R.id.contents);
-        timeTv = findViewById(R.id.timeTv);
-        writerTv = findViewById(R.id.writerTv);
-        viewPager = findViewById(R.id.viewPager);
-        favorite = findViewById(R.id.favorite);
-        commentCount = findViewById(R.id.commentCount);
-        commentEt = findViewById(R.id.commentEt);
-        detailScrollView = findViewById(R.id.detailScrollView);
-        editpostBT = findViewById(R.id.editpostBT);
-        delpostBT = findViewById(R.id.delpostBT);
-        reportBt = findViewById(R.id.reportBt);
+        //listview set
+        detailListview = findViewById(R.id.detailListview);
+        header = getLayoutInflater().inflate(R.layout.detail_list_header, null, false);
+        footer = getLayoutInflater().inflate(R.layout.detail_list_footer, null, false);
+        detailListview.addHeaderView(header);
+        detailListview.addFooterView(footer);
+
+        titleTv = header.findViewById(R.id.titleTv);
+        contentsTv = header.findViewById(R.id.contents);
+        timeTv = header.findViewById(R.id.timeTv);
+        writerTv = header.findViewById(R.id.writerTv);
+        viewPager = header.findViewById(R.id.viewPager);
+        favorite = header.findViewById(R.id.favorite);
+        commentCount = header.findViewById(R.id.commentCount);
+        commentEt = header.findViewById(R.id.commentEt);
+        editpostBT = header.findViewById(R.id.editpostBT);
+        delpostBT = header.findViewById(R.id.delpostBT);
+        reportBt = header.findViewById(R.id.reportBt);
         bottombar = findViewById(R.id.bottombar);
+        commentRecycle = footer.findViewById(R.id.commentRecycle);
 
-//        recyclerView = findViewById(R.id.commentRecycle);
-        commentRecycle = findViewById(R.id.commentRecycle);
 
-        //레이아웃에 클릭 붙이기 -> 레이아웃 클릭하면 키보드 하이드
+
+        //keyboard hide
+        imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         mainLayout = findViewById(R.id.mainLayout);
         commentLay = findViewById(R.id.commentLay);
 
-        //댓글버튼
+        //comment
         inputComment = findViewById(R.id.inputComment);
-
-        //댓글 수정
         editCommentLay = findViewById(R.id.editCommentLay);
         editCommentBt = findViewById(R.id.editCommentBt);
         editCommentEt = findViewById(R.id.editCommentEt);
 
-        // 인텐트로 정보 가져옴
+        //get intent
         intent = getIntent();
         listname = intent.getStringExtra("listname");
         idx = intent.getStringExtra("idx");
@@ -148,8 +158,6 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
         refreshPost rPost = new refreshPost();
         rPost.requestPost(idx);
 
-        //keyboard
-        imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 
         //image set
         setRecyclerView(image);
@@ -184,6 +192,28 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
 
         topScrollHandler.sendEmptyMessageDelayed(2000,30);
 
+        //scrollview is at bottom!
+        detailListview.setOnScrollListener(new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+
+            }
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                if(firstVisibleItem + visibleItemCount == totalItemCount && totalItemCount != 0) {
+                    Log.d("heu", "bottom!" + visibleItemCount);
+                    myJSON = "";
+                    pageOrder++;
+                    getComment getComment = new getComment();
+                    getComment.requestPost(idx, listname, pageOrder);
+                }
+            }
+        });
+
+        final ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1);
+        detailListview.setAdapter(adapter);
+
         favorite.setOnClickListener(this);
         inputComment.setOnClickListener(this);
         mainLayout.setOnClickListener(this);
@@ -192,16 +222,17 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
         delpostBT.setOnClickListener(this);
         reportBt.setOnClickListener(this);
         editCommentBt.setOnClickListener(this);
+
     }
 
     private void resetCommentList() {
 
         commentJson = "";
-
+        pageOrder = 0;
         commentRecycle.removeAllViewsInLayout();
 
         getComment getComment = new getComment();
-        getComment.requestPost(idx, listname);
+        getComment.requestPost(idx, listname, pageOrder);
 
     }
 
@@ -272,10 +303,10 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
     }
 
     public void scrollToEnd() {
-        detailScrollView.post(new Runnable() {
+        detailListview.post(new Runnable() {
             @Override
             public void run() {
-                detailScrollView.scrollTo(0, editCommentEt.getTop()+1000);
+                detailListview.scrollTo(0, editCommentEt.getTop());
             }
         });
     }
@@ -444,7 +475,7 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
 
     private void setCommentlist() {
 
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+        /*LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         commentRecycle.setLayoutManager(layoutManager);
         CommentAdapter adapter = new CommentAdapter(getApplicationContext(), listItems, new CommentAdapter.OnItemClickListener() {
@@ -483,9 +514,17 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
                 }
             }
         });
-        commentRecycle.setAdapter(adapter);
-        commentRecycle.setVisibility(View.VISIBLE);
 
+        commentRecycle.setAdapter(adapter);
+        commentRecycle.setVisibility(View.VISIBLE);*/
+
+        CommentListAdapter commentListAdapter = new CommentListAdapter();
+        for (int i = 0; i < listItems.size(); i++) {
+            commentListAdapter.addItem(listItems.get(i));
+        }
+
+        commentRecycle.setAdapter(commentListAdapter);
+        commentRecycle.setVisibility(View.VISIBLE);
     }
 
     private void setCommentJson(String commentJson) {
@@ -579,7 +618,8 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
                 setCommentlist();
                 removeMessages(500);
                 commentJson = "";
-                detailScrollView.smoothScrollTo(0,0);
+                Log.d("heu", "포커스 : " + getCurrentFocus());
+                detailListview.setDescendantFocusability(ViewGroup.FOCUS_BEFORE_DESCENDANTS);
             } else {
                 commentHandler.sendEmptyMessageDelayed(500, 300);
             }
@@ -604,7 +644,6 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
                 } else {
                     viewPager.setVisibility(View.GONE);
                 }
-                detailScrollView.smoothScrollTo(0,0);
             } else {
                 this.sendEmptyMessage(300);
             }
@@ -626,7 +665,8 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            detailScrollView.smoothScrollTo(0,0);
+            detailListview.smoothScrollToPosition(0);
+
         }
     };
 
@@ -718,7 +758,7 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
     class getComment {
         OkHttpClient client = new OkHttpClient();
         Request request;
-        public void requestPost(String idx, String listname) {
+        public void requestPost(String idx, String listname, int pageOrder) {
             RequestBody requestBody = new FormBody.Builder().
                     add("postidx", idx).
                     add("listname", listname).
