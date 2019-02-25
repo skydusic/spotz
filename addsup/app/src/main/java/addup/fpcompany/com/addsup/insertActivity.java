@@ -172,12 +172,16 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
                             connectServer.requestPost(url, MainActivity.mUsername, MainActivity.mUsermail, listname, uriList.get(i), filenameList.get(i), pathList.get(i));
                         }
                         String imageAddress1 = "";
+                        if(postNum == 1) {
+                            imageAddress1 = image;
+                        }
                         for (int i = 0; i < filenameList.size(); i++) {
                             imageAddress1 += filenameList.get(i);
                             if (filenameList.size() - 1 > i) {
                                 imageAddress1 += ",";
                             }
                         }
+
                         task.request(title, contents, serverUri, MainActivity.mUsername, MainActivity.mUsermail, imageAddress1,
                                 listname, spindata);
                         setResult(2400, returnIntent);
@@ -240,8 +244,6 @@ public class insertActivity extends AppCompatActivity implements AdapterView.OnI
                 pathList.add(images.get(i).getPath());
                 uriList.add(tempUri);
                 imageSet(images.get(i).getPath(), i);
-                Log.d("heu", "NAME : " + images.get(i).getName());
-                Log.d("heu", "PATH : " + images.get(i).getPath());
             }
 
             horScrollView.setVisibility(View.VISIBLE);

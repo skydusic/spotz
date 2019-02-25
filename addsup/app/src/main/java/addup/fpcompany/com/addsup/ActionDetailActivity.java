@@ -165,15 +165,10 @@ public class ActionDetailActivity extends AppCompatActivity {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 if (!recyclerView.canScrollVertically(-1) && newState == AbsListView.OnScrollListener.SCROLL_STATE_FLING) {
-                    Log.d("heu", "url : " + url);
-                    Log.d("heu", "초기화 : " + pageOrder);
                     refreshHandler.sendEmptyMessage(3000);
                 } else if (!recyclerView.canScrollVertically(1) && newState == AbsListView.OnScrollListener.SCROLL_STATE_FLING) {
 //                    Log.i(TAG, "End of list");
                     Json = "";
-                    Log.d("heu", "url : " + url);
-                    Log.d("heu", "다음페이지 : " + pageOrder);
-
                     getPostedList.requestPost(url,username,email,pageOrder);
                     addPageHandler.sendEmptyMessageDelayed(4000, 200);
                 } else {

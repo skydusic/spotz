@@ -13,6 +13,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -70,7 +71,7 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
 
     Boolean favoriteFLAG = false;
 
-    int pagerPos, commentCounter = 0;
+    int pagerPos, commentCounter, commentPosition = 0;
 
     favoriteItem favoriteTemp;
 
@@ -88,6 +89,7 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
     private static final String TAG_SPIN = "spindata";
     private static final String TAG_HIT = "hit";
     private static final String TAG_IMAGE = "image";
+    private static final String TAG_COMMENTIDX = "commentidx";
     private static final String TAG = "heu";
     private static final String All = "전체";
     private static final String TAG_EMAIL1 = "skydusic@gmail.com";
@@ -97,7 +99,6 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
     LinearLayout editCommentLay;
     EditText editCommentEt;
     Button editCommentBt;
-    String commentPosition;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -182,7 +183,14 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
         MainActivity.getBlackList getB = new MainActivity.getBlackList();
         getB.requestPost(email);
 
-        topScrollHandler.sendEmptyMessageDelayed(2000,30);
+        //scrollview event
+        /*detailScrollView.getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
+            @Override
+            public void onScrollChanged() {
+                int scrollY = detailScrollView.getScrollY();
+                int scrollX = detailScrollView.getScrollX();
+            }
+        });*/
 
         favorite.setOnClickListener(this);
         inputComment.setOnClickListener(this);
@@ -195,16 +203,11 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
     }
 
     private void resetCommentList() {
-
         commentJson = "";
-
         commentRecycle.removeAllViewsInLayout();
-
         getComment getComment = new getComment();
         getComment.requestPost(idx, listname);
-
     }
-
 
     private void favImageSet() {
         for (int i = 0; i < MainActivity.favoriteArr.size(); i++) {
@@ -283,16 +286,11 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
-
         if (requestCode == 3000) {
             // 게시글 초기화
-            Log.d("heu", "액티비티 리절트");
             refreshPost rPost = new refreshPost();
             rPost.requestPost(idx);
-
         }
-
     }
 
     @Override
@@ -412,16 +410,10 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
                 break;
 
             case (R.id.editCommentBt):
-                // visible 설정
-                // editCommentLay.setVisibility(View.GONE);
-                // bottombar.setVisibility(View.VISIBLE);
-
                 //댓글 수정
                 commentUpdate CU = new commentUpdate();
                 CU.requestPost(listname, editCommentEt.getText().toString(), idx, commentPosition);
-
                 resetCommentList();
-
                 break;
         }
     }
@@ -453,7 +445,8 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
                 switch (view.getId()) {
                     case (R.id.editIv):
                         //포지션 저장
-                        commentPosition = String.valueOf(position);
+                        commentPosition = listItems.get(position).getCommentidx();
+                        Log.d("heu", "start : " + commentPosition);
                         editCommentLay.setVisibility(View.VISIBLE);
                         //포커스 주기
                         editCommentEt.post(new Runnable() {
@@ -467,15 +460,14 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
 
                                 //바텀바 지우기
                                 bottombar.setVisibility(View.INVISIBLE);
-
                             }
                         });
-
                         editCommentEt.setText(listItems.get(position).getContents());
-
                         break;
                     case (R.id.deleteIv):
-                        commentPosition = String.valueOf(position);
+                        commentPosition = listItems.get(position).getCommentidx();
+                        Log.d("heu", "포지션 : " + position);
+                        Log.d("heu", "list item : " + listItems.get(position).getCommentidx());
                         commentDelete CD = new commentDelete();
                         CD.requestPost(listname, idx, commentPosition);
                         resetCommentList();
@@ -489,23 +481,19 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
     }
 
     private void setCommentJson(String commentJson) {
-
         JSONArray comment;
         listItems.clear();
         try {
             JSONObject jsonObj = new JSONObject(commentJson);
+            commentCounter = Integer.parseInt(jsonObj.getString("num_results"));
             comment = jsonObj.getJSONArray(TAG_RESULTS);
-
             for (int i = 0; i < comment.length(); i++) {
-                commentCounter++;
                 JSONObject c = comment.getJSONObject(i);
                 listItems.add(new commentItem(String.valueOf(c.get(TAG_ID)), c.getString(TAG_LISTNAME),
-                        c.getString(TAG_USERNAME), c.getString(TAG_EMAIL), c.getString(TAG_CONTENTS), ClubList.settingTimes(c.getString(TAG_CREATED))));
+                        c.getString(TAG_USERNAME), c.getString(TAG_EMAIL), c.getString(TAG_CONTENTS), ClubList.settingTimes(c.getString(TAG_CREATED)), c.getInt(TAG_COMMENTIDX)));
             }
-
             //counter set
             commentCount.setText(String.valueOf(commentCounter));
-
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -621,15 +609,6 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
         }
     };
 
-    @SuppressLint("HandlerLeak")
-    Handler topScrollHandler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            detailScrollView.smoothScrollTo(0,0);
-        }
-    };
-
     class hitUpdate {
         //Client 생성
         OkHttpClient client = new OkHttpClient();
@@ -692,12 +671,13 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
         RequestBody requestBody;
         OkHttpClient client = new OkHttpClient();
 
-        public void requestPost(final String listname, String contents, String postidx, String commentidx) {
+        public void requestPost(final String listname, String contents, String postidx, int commentidx) {
+            Log.d("heu", "cidx : " + commentidx);
             requestBody = new FormBody.Builder().
                     add("postidx", postidx).
                     add("listname", listname).
                     add("contents", contents).
-                    add("commentidx", commentidx).
+                    add("commentidx", String.valueOf(commentidx)).
                     build();
             String url = "http://spotz.co.kr/var/www/html/commentUpdate.php";
 
@@ -747,14 +727,14 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
         RequestBody requestBody;
         OkHttpClient client = new OkHttpClient();
 
-        public void requestPost(final String listname, String postidx, String commentidx) {
+        public void requestPost(final String listname, String postidx, int commentidx) {
 
             requestBody = new FormBody.Builder().
                     add("username", MainActivity.mUsername).
                     add("email", MainActivity.mUsermail).
                     add("postidx", postidx).
                     add("listname", listname).
-                    add("commentidx", commentidx).
+                    add("commentidx", String.valueOf(commentidx)).
                     build();
             String url = "http://spotz.co.kr/var/www/html/commentDelete.php";
 
@@ -906,8 +886,6 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
         public void requestPost(String imagepath) {
             String url = "http://spotz.co.kr/var/www/html/deleteImage.php";
             //Request Body에 서버에 보낼 데이터 작성
-            Log.d("heu", "image path : " + imagepath);
-
             File file = new File(imagepath);
             String[] path = file.getPath().split("/html");
 
@@ -979,6 +957,5 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
         handler2.removeMessages(1000);
         refreshPostHandler.removeMessages(300);
         scrollHandler.removeMessages(5000);
-        topScrollHandler.removeMessages(2000);
     }
 }

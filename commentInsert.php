@@ -18,45 +18,51 @@
     $contents=isset($_POST['contents']) ? $_POST['contents'] : '';
 
     if($listname == "freeboard"){
-        $commentCount = "select * from freeboardCO where postidx='$postidx'";
+        $commentCount = "SELECT * FROM freeboardCO WHERE postidx='$postidx' ORDER BY commentidx DESC";
         $countResult = mysqli_query($connect,$commentCount);
-        $count = mysqli_num_rows($countResult);
-        
+        mysqli_data_seek($countResult, 0);
+        $row = mysqli_fetch_array($countResult);
+        $count = $row[commentidx] + 1;
         $sql="insert into freeboardCO(contents,username,email,postidx,commentidx) 
         values('$contents','$username','$email','$postidx','$count')";
     } else if($listname == "kbl"){
-        $commentCount = "select * from kblCO where postidx='$postidx'";
+        $commentCount = "SELECT * FROM kblCO WHERE postidx='$postidx' ORDER BY commentidx DESC";
         $countResult = mysqli_query($connect,$commentCount);
-        $count = mysqli_num_rows($countResult);
-        
+        mysqli_data_seek($countResult, 0);
+        $row = mysqli_fetch_array($countResult);
+        $count = $row[commentidx] + 1;
         $sql="insert into kblCO(contents,username,email,postidx,commentidx) 
         values('$contents','$username','$email','$postidx','$count')";
     } else if($listname == "nba"){
-        $commentCount = "select * from nbaCO where postidx='$postidx'";
+        $commentCount = "SELECT * FROM nbaCO WHERE postidx='$postidx' ORDER BY commentidx DESC";
         $countResult = mysqli_query($connect,$commentCount);
-        $count = mysqli_num_rows($countResult);
-        
+        mysqli_data_seek($countResult, 0);
+        $row = mysqli_fetch_array($countResult);
+        $count = $row[commentidx] + 1;
         $sql="insert into nbaCO(contents,username,email,postidx,commentidx) 
         values('$contents','$username','$email','$postidx','$count')";
     } else if($listname == "equip"){
-        $commentCount = "select * from equipCO where postidx='$postidx'";
+        $commentCount = "SELECT * FROM equipCO WHERE postidx='$postidx' ORDER BY commentidx DESC";
         $countResult = mysqli_query($connect,$commentCount);
-        $count = mysqli_num_rows($countResult);
-        
+        mysqli_data_seek($countResult, 0);
+        $row = mysqli_fetch_array($countResult);
+        $count = $row[commentidx] + 1;
         $sql="insert into equipCO(contents,username,email,postidx,commentidx) 
         values('$contents','$username','$email','$postidx','$count')";
     } else if($listname == "qna"){
-        $commentCount = "select * from qnaCO where postidx='$postidx'";
+        $commentCount = "SELECT * FROM qnaCO WHERE postidx='$postidx' ORDER BY commentidx DESC";
         $countResult = mysqli_query($connect,$commentCount);
-        $count = mysqli_num_rows($countResult);
-        
+        mysqli_data_seek($countResult, 0);
+        $row = mysqli_fetch_array($countResult);
+        $count = $row[commentidx] + 1;
         $sql="insert into qnaCO(contents,username,email,postidx,commentidx) 
         values('$contents','$username','$email','$postidx','$count')";
     } else if($listname == "compet"){
-        $commentCount = "select * from competCO where postidx='$postidx'";
+        $commentCount = "SELECT * FROM competCO WHERE postidx='$postidx' ORDER BY commentidx DESC";
         $countResult = mysqli_query($connect,$commentCount);
-        $count = mysqli_num_rows($countResult);
-        
+        mysqli_data_seek($countResult, 0);
+        $row = mysqli_fetch_array($countResult);
+        $count = $row[commentidx] + 1;
         $sql="insert into competCO(contents,username,email,postidx,commentidx) 
         values('$contents','$username','$email','$postidx','$count')";
     }

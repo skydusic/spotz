@@ -14,13 +14,13 @@
         android:layout_alignParentTop="true"
         android:layout_marginTop="10dp"
         android:focusable="true"
+        android:layout_above="@+id/editCommentLay"
         android:focusableInTouchMode="true">
 
         <RelativeLayout
             android:id="@+id/mainLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:descendantFocusability="blocksDescendants">
+            android:layout_height="wrap_content">
 
             <TextView
                 android:id="@+id/titleTv"
@@ -107,8 +107,7 @@
                 android:layout_height="250dp"
                 android:layout_below="@+id/titleTv"
                 android:layout_marginTop="80dp"
-                android:layout_marginBottom="5dp"
-                android:descendantFocusability="blocksDescendants" />
+                android:layout_marginBottom="5dp" />
 
             <TextView
                 android:id="@+id/contents"
@@ -136,10 +135,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/horizontalView"
-                android:layout_marginBottom="60dp"
+                android:layout_marginBottom="10dp"
                 android:minHeight="100dp"
-                android:padding="7dp"
-                android:descendantFocusability="blocksDescendants">
+                android:padding="7dp">
 
                 <TextView
                     android:id="@+id/commentTv"
@@ -176,19 +174,24 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/commentEt"
                     android:layout_alignParentEnd="true"
-                    android:layout_marginBottom="20dp"
                     android:text="@string/input"
                     android:textSize="12sp" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/commentLay"
+                android:layout_marginBottom="50dp"
+                android:descendantFocusability="blocksDescendants">
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/commentRecycle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/inputComment"
                     android:layout_marginTop="15dp"
-                    android:descendantFocusability="blocksDescendants"
                     android:visibility="gone" />
-
 
             </RelativeLayout>
 
@@ -201,11 +204,11 @@
         style="@android:style/ButtonBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/detailScrollView"
         android:layout_alignParentBottom="true"
         android:orientation="horizontal"
         android:paddingBottom="12dp"
-        android:visibility="invisible">
+        android:visibility="invisible"
+        >
 
         <EditText
             android:id="@+id/editCommentEt"

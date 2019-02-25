@@ -8,14 +8,16 @@ public class commentItem {
     private String email;
     private String contents;
     private String created;
+    private int commentidx;
 
-    public commentItem(String idx, String listname, String username, String email, String contents, String created) {
+    public commentItem(String idx, String listname, String username, String email, String contents, String created, int commentidx) {
         this.idx = idx;
         this.listname = listname;
         this.username = username;
         this.email = email;
         this.contents = contents;
         this.created = created;
+        this.commentidx = commentidx;
     }
 
     public String getIdx() {
@@ -42,4 +44,7 @@ public class commentItem {
         return created;
     }
 
+    public int getCommentidx() {
+        return commentidx;
+    }
 }

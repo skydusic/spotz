@@ -14,7 +14,7 @@
 
     $username=isset($_POST['username']) ? $_POST['username'] : '';
     $email=isset($_POST['email']) ? $_POST['email'] : '';
-    $orderNum = 12;
+    $orderNum = 15;
     $pageend = ((int)$pageorder+1) * $orderNum;
     $pageorder = (int)$pageorder * $orderNum;
 
