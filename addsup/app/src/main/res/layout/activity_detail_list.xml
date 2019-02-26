@@ -74,6 +74,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_marginEnd="10dp"
                 android:gravity="center"
+                android:visibility="invisible"
                 android:padding="5dp"
                 android:text="@string/reportText"
                 android:textSize="13sp" />
@@ -87,7 +88,7 @@
                 android:layout_marginEnd="10dp"
                 android:layout_toStartOf="@+id/delpostBT"
                 android:src="@drawable/edit_icon"
-                android:visibility="visible" />
+                android:visibility="invisible" />
 
             <ImageView
                 android:id="@+id/delpostBT"
@@ -99,7 +100,7 @@
                 android:layout_marginEnd="5dp"
                 android:layout_toStartOf="@+id/reportBt"
                 android:src="@drawable/delete_icon"
-                android:visibility="visible" />
+                android:visibility="invisible" />
 
             <android.support.v4.view.ViewPager
                 android:id="@+id/viewPager"

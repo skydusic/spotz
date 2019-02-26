@@ -130,7 +130,7 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
 //        Log.d("heu", "Refreshed token : " + firebaseToken);
 
         // 파이어베이스 admob
-        MobileAds.initialize(this, "ca-app-pub-3940256099942544~3347511713");
+        MobileAds.initialize(this, "ca-app-pub-8378848228124757~9483337034");
         AdView mAdView = (AdView) findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
@@ -204,7 +204,7 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
                     .setCancelable(true)
                     .setNegativeButton("취소", new DialogInterface.OnClickListener() {
                         @Override
-                        public void onClick(DialogInterface dialog, int which) {finish();}
+                        public void onClick(DialogInterface dialog, int which) {}
                     })
                     .setPositiveButton("업데이트 바로가기",
                             new DialogInterface.OnClickListener() {

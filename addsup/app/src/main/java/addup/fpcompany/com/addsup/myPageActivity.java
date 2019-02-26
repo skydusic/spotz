@@ -106,6 +106,10 @@ public class myPageActivity extends AppCompatActivity implements View.OnClickLis
                 Intent intent = new Intent(myPageActivity.this, MainActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
+                MainActivity.mUser = null;
+                MainActivity.mUsername = "";
+                MainActivity.mUsermail = "";
+                this.finish();
                 break;
             case (R.id.bottomHome):
                 intent = new Intent(myPageActivity.this, MainActivity.class);
