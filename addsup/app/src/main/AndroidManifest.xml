@@ -20,7 +20,7 @@
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-8378848228124757~9483337034" />
+            android:value="ca-app-pub-2853131389378363~3503669931" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"

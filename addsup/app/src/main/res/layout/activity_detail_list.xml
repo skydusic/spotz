@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -11,10 +12,10 @@
         android:id="@+id/detailScrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_above="@+id/editCommentLay"
         android:layout_alignParentTop="true"
         android:layout_marginTop="10dp"
         android:focusable="true"
-        android:layout_above="@+id/editCommentLay"
         android:focusableInTouchMode="true">
 
         <RelativeLayout
@@ -74,10 +75,10 @@
                 android:layout_alignParentEnd="true"
                 android:layout_marginEnd="10dp"
                 android:gravity="center"
-                android:visibility="invisible"
                 android:padding="5dp"
                 android:text="@string/reportText"
-                android:textSize="13sp" />
+                android:textSize="13sp"
+                android:visibility="invisible" />
 
             <ImageView
                 android:id="@+id/editpostBT"
@@ -115,17 +116,29 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/viewPager"
-                android:layout_margin="20dp"
                 android:gravity="center_vertical"
+                android:layout_marginTop="50dp"
                 android:minHeight="150dp"
-                android:padding="15dp"
+                android:padding="35dp"
+                android:text="asdasd"
                 android:textSize="16sp" />
+
+            <com.google.android.gms.ads.AdView
+                android:id="@+id/detailBanner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/contents"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="30dp"
+                android:layout_marginBottom="10dp"
+                ads:adSize="BANNER"
+                ads:adUnitId="@string/banner_ad_unit_id2" />
 
             <View
                 android:id="@+id/horizontalView"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_below="@+id/contents"
+                android:layout_below="@+id/detailBanner"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
                 android:background="#a4a4a4" />
@@ -208,8 +221,7 @@
         android:layout_alignParentBottom="true"
         android:orientation="horizontal"
         android:paddingBottom="12dp"
-        android:visibility="invisible"
-        >
+        android:visibility="invisible">
 
         <EditText
             android:id="@+id/editCommentEt"

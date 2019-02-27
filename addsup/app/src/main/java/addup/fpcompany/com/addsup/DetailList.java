@@ -23,6 +23,9 @@ import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -76,6 +79,8 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
     favoriteItem favoriteTemp;
 
     InputMethodManager imm;
+
+    AdView detailBanner;
 
     private static final String TAG_RESULTS = "results";
     private static final String TAG_FLAG = "endpage";
@@ -133,6 +138,10 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
         editCommentLay = findViewById(R.id.editCommentLay);
         editCommentBt = findViewById(R.id.editCommentBt);
         editCommentEt = findViewById(R.id.editCommentEt);
+
+        detailBanner = findViewById(R.id.detailBanner);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        detailBanner.loadAd(adRequest);
 
         // 인텐트로 정보 가져옴
         intent = getIntent();

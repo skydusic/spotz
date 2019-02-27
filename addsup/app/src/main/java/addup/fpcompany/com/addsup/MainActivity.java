@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
 
     private long backPressedTime = 0;
 
-    //상단 광고
+    //main top ads
     ArrayList<Fragment> adList = new ArrayList<>();
     ArrayList<String> adUrl = new ArrayList<>();
 
@@ -130,7 +130,7 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
 //        Log.d("heu", "Refreshed token : " + firebaseToken);
 
         // 파이어베이스 admob
-        MobileAds.initialize(this, "ca-app-pub-8378848228124757~9483337034");
+        MobileAds.initialize(this, "ca-app-pub-2853131389378363~3503669931");
         AdView mAdView = (AdView) findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
