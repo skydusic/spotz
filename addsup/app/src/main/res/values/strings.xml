@@ -39,5 +39,8 @@
     <string name="confirm">확인</string>
     <string name="movepost">보기</string>
     <string name="cid">688533934226-c7vhkr61cp1osjmhcd2p22oq8njk3b0n.apps.googleusercontent.com</string>
+    <string name="noticewrite">공지쓰기</string>
+    <string name="commonnotice">일반공지</string>
+    <string name="topnotice">상단공지</string>
 
 </resources>

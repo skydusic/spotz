@@ -48,9 +48,11 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
     String listName;
     TextView listTopName;
     ArrayList<listItem> listItems = new ArrayList<>();
+    ArrayList<String> noticeContentsArr = new ArrayList<>();
 
-    String myJSON = "";
+    String myJSON, topNotice = "";
 
+    private static final String TAG_IDX = "idx";
     private static final String TAG_RESULTS = "results";
     private static final String TAG_FLAG = "endpage";
     private static final String TAG_TITLE = "title";
@@ -67,10 +69,12 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
     private static final String All = "전체";
     private static final String TAG_EMAIL1 = "skydusic@gmail.com";
     private static final String TAG_EMAIL2 = "drbasketkorea@gmail.com";
+    private static final String TAG_ADMIN = "관리자";
+
 
     JSONArray topic = new JSONArray();
 
-    int authNum = 0;
+    int authNum, noticeCounter = 0;
     String boardUrl;
 
     HashMap<String, String> postHashmap = new HashMap<>();
@@ -80,7 +84,9 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
     ArrayAdapter<String> spinnerAdapter1;
     int spinner1Num = 0;
 
+
     getPost getPost = new getPost();
+    GetTopNotice getTopNotice = new GetTopNotice();
     private static Typeface mTypeface;
 
     int pageOrder = 0;
@@ -99,10 +105,8 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
             @NonNull
             @Override
             public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-
                 mTypeface = Typeface.createFromAsset(getApplicationContext().getAssets(), "fonts/dohyeonttf.ttf");
                 setGlobalFont(parent);
-
                 return super.getView(position, convertView, parent);
             }
         };
@@ -112,7 +116,7 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
         listName = intent.getStringExtra("listName");
 
         //Json 확인
-        handler.sendEmptyMessage(100);
+//        handler.sendEmptyMessage(100);
 
         boardUrl = "http://spotz.co.kr/var/www/html/freeboard.php";
 
@@ -145,9 +149,9 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
         spinner1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                getPost.requestPost(boardUrl, MainActivity.spinList1.get(position), listName);
+                getTopNotice.requestPost();
                 spinner1Num = position;
-                handler.sendEmptyMessage(100);
+                getPost.requestPost(boardUrl, MainActivity.spinList1.get(position), listName);
             }
 
             @Override
@@ -160,22 +164,33 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
                 new RecyclerItemClickListener(this, recyclerView, new RecyclerItemClickListener.OnItemClickListener() {
                     @Override
                     public void onItemClick(View v, int position) {
-                        // do whatever
-                        Intent intent = new Intent(v.getContext(), DetailList.class);
-                        intent.putExtra("listname", listName);
-                        intent.putExtra("idx", listItems.get(position).getIdx());
-                        intent.putExtra("username", listItems.get(position).getUsername());
-                        intent.putExtra("email", listItems.get(position).getEmail());
-                        intent.putExtra("title", listItems.get(position).getTitle());
-                        intent.putExtra("created", listItems.get(position).getCreated());
-                        intent.putExtra("spindata", listItems.get(position).getSpindata());
 
-                        /** 해야할 일 이미지 -> 리사이클러뷰 */
-                        String image = listItems.get(position).getImage();
-                        String[] temp = image.split(",");
-                        intent.putExtra("image", image);
-                        v.getContext().startActivity(intent);
+                        if (position < noticeCounter) {
 
+                            Intent intent = new Intent(v.getContext(), Notice_Detail.class);
+                            intent.putExtra("listname", "topNotice");
+                            intent.putExtra("idx", listItems.get(position).getIdx());
+                            intent.putExtra("title", listItems.get(position).getTitle());
+                            intent.putExtra("contents", noticeContentsArr.get(position));
+                            intent.putExtra("created", listItems.get(position).getCreated());
+                            intent.putExtra("image", listItems.get(position).getImage());
+                            v.getContext().startActivity(intent);
+
+                        } else {
+                            Intent intent = new Intent(v.getContext(), DetailList.class);
+                            intent.putExtra("listname", listName);
+                            intent.putExtra("idx", listItems.get(position).getIdx());
+                            intent.putExtra("username", listItems.get(position).getUsername());
+                            intent.putExtra("email", listItems.get(position).getEmail());
+                            intent.putExtra("title", listItems.get(position).getTitle());
+                            intent.putExtra("created", listItems.get(position).getCreated());
+                            intent.putExtra("spindata", listItems.get(position).getSpindata());
+
+                            /** 해야할 일 이미지 -> 리사이클러뷰 */
+                            String image = listItems.get(position).getImage();
+                            intent.putExtra("image", image);
+                            v.getContext().startActivity(intent);
+                        }
                     }
 
                     @Override
@@ -189,6 +204,7 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 if (!recyclerView.canScrollVertically(-1) && newState == AbsListView.OnScrollListener.SCROLL_STATE_FLING) {
+                    recyclerView.removeAllViewsInLayout();
                     refreshHandler.sendEmptyMessage(3000);
                 } else if (!recyclerView.canScrollVertically(1) && newState == AbsListView.OnScrollListener.SCROLL_STATE_FLING) {
 //                    Log.i(TAG, "End of list");
@@ -265,7 +281,7 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            if (!myJSON.equals("")) {
+            if (myJSON != null && !myJSON.equals("")) {
                 showList();
                 setRecyclerView();
                 removeMessages(100);
@@ -277,13 +293,29 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
     };
 
     @SuppressLint("HandlerLeak")
+    Handler noticeHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            if (!topNotice.equals("")) {
+                setNotice(topNotice);
+                removeMessages(200);
+                topNotice = "";
+            } else {
+                noticeHandler.sendEmptyMessageDelayed(200, 200);
+            }
+        }
+    };
+
+
+    @SuppressLint("HandlerLeak")
     Handler refreshHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             removeMessages(3000);
             pageOrder = 0;
-            recyclerView.removeAllViewsInLayout();
+            getTopNotice.requestPost();
             getPost.requestPost(boardUrl, All, listName);
         }
     };
@@ -302,8 +334,26 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
         }
     };
 
-    protected void showList() {
+    protected void setNotice(String notice) {
         listItems.clear();
+        try {
+            JSONObject jsonObj = new JSONObject(notice);
+            topic = jsonObj.getJSONArray(TAG_RESULTS);
+
+            for (int i = 0; i < topic.length(); i++) {
+                JSONObject c = topic.getJSONObject(i);
+                listItems.add(new listItem(c.getString(TAG_IDX), c.getString(TAG_TITLE), TAG_ADMIN, "", c.getString(TAG_IMAGE), "",
+                        ClubList.settingTimes(c.getString(TAG_CREATED)), c.getString(TAG_HIT), ""));
+                noticeContentsArr.add(c.getString(TAG_CONTENTS));
+                noticeCounter++;
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+//            Log.d("heu", "adapter Exception : " + e);
+        }
+    }
+
+    protected void showList() {
         try {
             JSONObject jsonObj = new JSONObject(myJSON);
             topic = jsonObj.getJSONArray(TAG_RESULTS);
@@ -333,7 +383,7 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
             JSONObject jsonObj = new JSONObject(json);
             topic = jsonObj.getJSONArray(TAG_RESULTS);
             String flag = jsonObj.getString(TAG_FLAG);
-            if(!flag.equals(TAG_FLAG)) {
+            if (!flag.equals(TAG_FLAG)) {
                 for (int i = 0; i < topic.length(); i++) {
                     JSONObject c = topic.getJSONObject(i);
 //                시간 설정
@@ -380,6 +430,33 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
         }
 
         return time;
+    }
+
+    class GetTopNotice {
+        OkHttpClient client = new OkHttpClient();
+        Request request;
+
+        public void requestPost() {
+            String url = "http://spotz.co.kr/var/www/html/topnoticeselect.php";
+            RequestBody requestBody = new FormBody.Builder().
+                    build();
+
+            request = new Request.Builder().url(url).post(requestBody).build();
+            client.newCall(request).enqueue(new okhttp3.Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
+//                    Log.d("heu", "Connect Server Error is " + e.toString());
+
+                }
+
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+                    topNotice = response.body().string();
+                    noticeHandler.sendEmptyMessage(200);
+                }
+            });
+
+        }
     }
 
     class getPost {
@@ -445,7 +522,7 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
         Intent intent;
         switch (view.getId()) {
             case (R.id.insertBtn):
-                if(MainActivity.mUser == null){
+                if (MainActivity.mUser == null) {
                     intent = new Intent(this, SignInActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                     startActivityForResult(intent, 10);
@@ -502,6 +579,8 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
         super.onStop();
         handler.removeMessages(100);
         handler.removeMessages(200);
+        handler.removeMessages(3000);
+        handler.removeMessages(4000);
     }
 
     @Override
@@ -509,6 +588,8 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
         super.onDestroy();
         handler.removeMessages(100);
         handler.removeMessages(200);
+        handler.removeMessages(3000);
+        handler.removeMessages(4000);
     }
 
     @Override

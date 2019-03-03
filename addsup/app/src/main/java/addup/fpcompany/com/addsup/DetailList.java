@@ -455,7 +455,6 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
                     case (R.id.editIv):
                         //포지션 저장
                         commentPosition = listItems.get(position).getCommentidx();
-                        Log.d("heu", "start : " + commentPosition);
                         editCommentLay.setVisibility(View.VISIBLE);
                         //포커스 주기
                         editCommentEt.post(new Runnable() {
@@ -475,8 +474,6 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
                         break;
                     case (R.id.deleteIv):
                         commentPosition = listItems.get(position).getCommentidx();
-                        Log.d("heu", "포지션 : " + position);
-                        Log.d("heu", "list item : " + listItems.get(position).getCommentidx());
                         commentDelete CD = new commentDelete();
                         CD.requestPost(listname, idx, commentPosition);
                         resetCommentList();
@@ -681,7 +678,6 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
         OkHttpClient client = new OkHttpClient();
 
         public void requestPost(final String listname, String contents, String postidx, int commentidx) {
-            Log.d("heu", "cidx : " + commentidx);
             requestBody = new FormBody.Builder().
                     add("postidx", postidx).
                     add("listname", listname).

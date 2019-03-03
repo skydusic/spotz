@@ -4,7 +4,9 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.IOException;
 
@@ -23,7 +25,8 @@ public class NoticeInsertActivity extends AppCompatActivity implements View.OnCl
     EditText titleEt;
     EditText contentsEt;
     TextView insertBtn;
-    String url = "http://spotz.co.kr/var/www/html/noticeinsert.php";
+    String url = "";
+    RadioButton commonNotice, topNotice;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,27 +36,58 @@ public class NoticeInsertActivity extends AppCompatActivity implements View.OnCl
         titleEt = findViewById(R.id.titleEt);
         contentsEt = findViewById(R.id.contentsEt);
         insertBtn = findViewById(R.id.insertBtn);
+        commonNotice = findViewById(R.id.commonNotice);
+        topNotice = findViewById(R.id.topNotice);
+
+        RadioButton.OnClickListener optionOnClickListener
+                = new RadioButton.OnClickListener() {
+
+            public void onClick(View v) {
+
+                if (commonNotice.isChecked()) {
+                    url = "http://spotz.co.kr/var/www/html/noticeinsert.php";
+                } else if (topNotice.isChecked()) {
+                    url = "http://spotz.co.kr/var/www/html/topnoticeinsert.php";
+                }
+
+                Toast.makeText(
+                        NoticeInsertActivity.this,
+                        "URL : " + url,
+                        Toast.LENGTH_LONG).show();
+
+            }
+        };
+
         insertBtn.setOnClickListener(this);
+        commonNotice.setOnClickListener(optionOnClickListener);
+        topNotice.setOnClickListener(optionOnClickListener);
     }
 
     @Override
     public void onClick(View v) {
-        String title = titleEt.getText().toString().trim();
-        String contents = contentsEt.getText().toString().trim();
+        if(!commonNotice.isChecked() && !topNotice.isChecked()){
+            Toast.makeText(NoticeInsertActivity.this, "라디오버튼을 체크하세요!",Toast.LENGTH_LONG).show();
+        } else {
 
-        writeNot writeNot = new writeNot();
-        writeNot.requestPost(url, title, contents);
-        finish();
+            String title = titleEt.getText().toString().trim();
+            String contents = contentsEt.getText().toString().trim();
+            String image = "";
+
+            writeNot writeNot = new writeNot();
+            writeNot.requestPost(url, title, contents, image);
+            finish();
+        }
     }
 
     class writeNot {
         OkHttpClient client = new OkHttpClient();
 
-        public void requestPost(String url, String title, String contents) {
+        public void requestPost(String url, String title, String contents, String image) {
 
             RequestBody requestBody = new FormBody.Builder().
                     add("title", title).
                     add("contents", contents).
+                    add("image", image).
                     build();
 
             Request request = new Request.Builder().url(url).post(requestBody).build();

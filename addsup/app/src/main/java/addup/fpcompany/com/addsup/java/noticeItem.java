@@ -3,18 +3,15 @@ package addup.fpcompany.com.addsup.java;
 
 public class noticeItem {
 
-    String idx;
-    String title;
-    String contents;
-    String image;
-    String created;
+    private String idx, title, contents, image, created, hit;
 
-    public noticeItem(String idx, String title, String contents, String image, String created) {
+    public noticeItem(String idx, String title, String contents, String image, String created, String hit) {
         this.idx = idx;
         this.title = title;
         this.contents = contents;
         this.image = image;
         this.created = created;
+        this.hit = hit;
     }
 
     public String getIdx() {
@@ -35,5 +32,9 @@ public class noticeItem {
 
     public String getCreated() {
         return created;
+    }
+
+    public String getHit() {
+        return hit;
     }
 }

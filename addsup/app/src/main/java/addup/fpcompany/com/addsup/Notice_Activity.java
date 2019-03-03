@@ -50,6 +50,7 @@ public class Notice_Activity extends AppCompatActivity implements View.OnClickLi
     private static final String TAG_CONTENTS = "contents";
     private static final String TAG_CREATED = "created";
     private static final String TAG_IMAGE = "image";
+    private static final String TAG_HIT = "hit";
     private static final String TAG_EMAIL1 = "skydusic@gmail.com";
     private static final String TAG_EMAIL2 = "drbasketkorea@gmail.com";
 
@@ -129,7 +130,7 @@ public class Notice_Activity extends AppCompatActivity implements View.OnClickLi
 
             for (int i = 0; i < topic.length(); i++) {
                 JSONObject c = topic.getJSONObject(i);
-                noticeArr.add(new noticeItem(c.getString(TAG_IDX), c.getString(TAG_TITLE), c.getString(TAG_CONTENTS), c.getString(TAG_IMAGE), ClubList.settingTimes(c.getString(TAG_CREATED))));
+                noticeArr.add(new noticeItem(c.getString(TAG_IDX), c.getString(TAG_TITLE), c.getString(TAG_CONTENTS), c.getString(TAG_IMAGE), ClubList.settingTimes(c.getString(TAG_CREATED)), c.getString(TAG_HIT)));
             }
         } catch (JSONException e) {
             e.printStackTrace();

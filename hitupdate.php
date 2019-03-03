@@ -21,6 +21,8 @@
         $sql = "select * from qna where idx='$idx'";
     } else if ($listname == 'compet'){
         $sql = "select * from compet where idx='$idx'";
+    } else if ($listname == 'topNotice') {
+        $sql = "select * from topnotice where idx='$idx'";
     }
 
 
@@ -44,6 +46,8 @@
         $sql = "update qna set hit = '$hit' where idx='$idx'";
     } else if ($listname == 'compet'){
         $sql = "update compet set hit = '$hit' where idx='$idx'";
+    } else if ($listname == 'topNotice'){
+        $sql = "update topnotice set hit = '$hit' where idx='$idx'";
     }
     $result2 = mysqli_query($connect,$sql);
 

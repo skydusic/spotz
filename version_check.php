@@ -1,3 +1,3 @@
 <?php
-echo "{\"version\":\"1.1.3"}";
+echo "{\"version\":\"1.1.6\"}";
 ?>
