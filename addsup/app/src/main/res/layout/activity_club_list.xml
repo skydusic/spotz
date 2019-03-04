@@ -68,6 +68,16 @@
         android:layout_below="@+id/detailTopLay"
         />
 
+    <ProgressBar
+        android:id="@+id/progressBar2"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/bottombar"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/detailTopLay"
+        android:visibility="invisible"/>
+
     <include
         android:id="@+id/bottombar"
         layout="@layout/bottombar"

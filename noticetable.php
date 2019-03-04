@@ -24,7 +24,7 @@
     {
       mysqli_data_seek($result, $i);
       $row = mysqli_fetch_array($result);
-      echo "{\"idx\":$row[idx],\"title\":\"$row[title]\",\"contents\":\"$row[contents]\",\"image\":\"$row[image]\",\"created\":\"$row[created]\"}";
+      echo "{\"idx\":$row[idx],\"title\":\"$row[title]\",\"contents\":\"$row[contents]\",\"image\":\"$row[image]\",\"created\":\"$row[created]\",\"hit\":\"0\"}";
 
     if($i<$total_record-1){
       echo ",";

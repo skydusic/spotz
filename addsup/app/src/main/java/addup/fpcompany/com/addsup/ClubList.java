@@ -11,13 +11,17 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import com.google.firebase.auth.FirebaseAuth;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -43,14 +47,21 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
 
     RecyclerView recyclerView;
     MainListAdater adapter;
-    TextView insertBtn;
+    TextView insertBtn, listTopName;
+    ProgressBar progressBar2;
+    Spinner spinner1;
 
-    String listName;
-    TextView listTopName;
     ArrayList<listItem> listItems = new ArrayList<>();
     ArrayList<String> noticeContentsArr = new ArrayList<>();
+    ArrayAdapter<String> spinnerAdapter1;
 
-    String myJSON, topNotice = "";
+    String myJSON, topNotice, listName, boardUrl = "";
+    String username = MainActivity.mUsername;
+    int noticeCounter, spinner1Num, pageOrder = 0;
+
+    JSONArray topic = new JSONArray();
+    getPost getPost = new getPost();
+    GetTopNotice getTopNotice = new GetTopNotice();
 
     private static final String TAG_IDX = "idx";
     private static final String TAG_RESULTS = "results";
@@ -65,31 +76,9 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
     private static final String TAG_SPIN = "spindata";
     private static final String TAG_HIT = "hit";
     private static final String TAG_IMAGE = "image";
-    private static final String TAG = "heu";
     private static final String All = "전체";
-    private static final String TAG_EMAIL1 = "skydusic@gmail.com";
-    private static final String TAG_EMAIL2 = "drbasketkorea@gmail.com";
     private static final String TAG_ADMIN = "관리자";
-
-
-    JSONArray topic = new JSONArray();
-
-    int authNum, noticeCounter = 0;
-    String boardUrl;
-
-    HashMap<String, String> postHashmap = new HashMap<>();
-    String username = MainActivity.mUsername;
-
-    Spinner spinner1;
-    ArrayAdapter<String> spinnerAdapter1;
-    int spinner1Num = 0;
-
-
-    getPost getPost = new getPost();
-    GetTopNotice getTopNotice = new GetTopNotice();
     private static Typeface mTypeface;
-
-    int pageOrder = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,6 +89,7 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
         listTopName = findViewById(R.id.listTopName);
         insertBtn = findViewById(R.id.insertBtn);
         spinner1 = findViewById(R.id.spinner1);
+        progressBar2 = findViewById(R.id.progressBar2);
 
         spinnerAdapter1 = new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item, MainActivity.spinList1) {
             @NonNull
@@ -135,20 +125,17 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
             listTopName.setText("대회게시판");
         }
 
-
-        /** 메뉴별 화면 만들기! */
-
         //권한 체크 순서
 //        showList() -> checkSelect() -> setRecyclerView();
-
 //        authorityChk();
 
-        insertBtn.setOnClickListener(this);
 
         spinner1.setAdapter(spinnerAdapter1);
         spinner1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                progressBar2.setVisibility(View.VISIBLE);
+                recyclerView.setVisibility(View.INVISIBLE);
                 getTopNotice.requestPost();
                 spinner1Num = position;
                 getPost.requestPost(boardUrl, MainActivity.spinList1.get(position), listName);
@@ -164,9 +151,7 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
                 new RecyclerItemClickListener(this, recyclerView, new RecyclerItemClickListener.OnItemClickListener() {
                     @Override
                     public void onItemClick(View v, int position) {
-
                         if (position < noticeCounter) {
-
                             Intent intent = new Intent(v.getContext(), Notice_Detail.class);
                             intent.putExtra("listname", "topNotice");
                             intent.putExtra("idx", listItems.get(position).getIdx());
@@ -175,7 +160,6 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
                             intent.putExtra("created", listItems.get(position).getCreated());
                             intent.putExtra("image", listItems.get(position).getImage());
                             v.getContext().startActivity(intent);
-
                         } else {
                             Intent intent = new Intent(v.getContext(), DetailList.class);
                             intent.putExtra("listname", listName);
@@ -185,14 +169,11 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
                             intent.putExtra("title", listItems.get(position).getTitle());
                             intent.putExtra("created", listItems.get(position).getCreated());
                             intent.putExtra("spindata", listItems.get(position).getSpindata());
-
-                            /** 해야할 일 이미지 -> 리사이클러뷰 */
                             String image = listItems.get(position).getImage();
                             intent.putExtra("image", image);
                             v.getContext().startActivity(intent);
                         }
                     }
-
                     @Override
                     public void onLongItemClick(View view, int position) {
                         // do whatever
@@ -204,6 +185,8 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 if (!recyclerView.canScrollVertically(-1) && newState == AbsListView.OnScrollListener.SCROLL_STATE_FLING) {
+                    recyclerView.setVisibility(View.INVISIBLE);
+                    progressBar2.setVisibility(View.VISIBLE);
                     recyclerView.removeAllViewsInLayout();
                     refreshHandler.sendEmptyMessage(3000);
                 } else if (!recyclerView.canScrollVertically(1) && newState == AbsListView.OnScrollListener.SCROLL_STATE_FLING) {
@@ -211,19 +194,19 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
                     myJSON = "";
                     GetAddPost getAddPost = new GetAddPost();
                     getAddPost.requestPost(boardUrl, All, listName, pageOrder);
-                    addPageHandler.sendEmptyMessageDelayed(4000, 200);
-                } else {
-                }
 
-                if (newState == AbsListView.OnScrollListener.SCROLL_STATE_FLING) {
+                }
+                /*if (newState == AbsListView.OnScrollListener.SCROLL_STATE_FLING) {
 
                 } else if (newState == AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL) {
 
                 } else {
 
-                }
+                }*/
             }
         });
+
+        insertBtn.setOnClickListener(this);
 
     }
 
@@ -254,38 +237,18 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
 
     }
 
-    public int authorityChk() {
-        MainActivity.mUser = MainActivity.mAuth.getInstance().getCurrentUser();
-        authNum = 0;
-        if (MainActivity.mUser == null) {
-            authNum = 0;
-        } else if (MainActivity.mUser.getDisplayName().equals(TAG_EMAIL1) || MainActivity.mUsermail.equals(TAG_EMAIL2)) {
-            authNum = 2;
-        } else if (MainActivity.mUser != null) {
-            authNum = 1;
-        }
-
-//        버튼 보이기
-        /*if (authNum == 0) {
-            insertBtn.setVisibility(View.INVISIBLE);
-        } else if (authNum == 1) {
-            insertBtn.setVisibility(View.VISIBLE);
-        }*/
-
-
-        return authNum;
-    }
-
     @SuppressLint("HandlerLeak")
     Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
+            removeMessages(100);
             if (myJSON != null && !myJSON.equals("")) {
                 showList();
                 setRecyclerView();
-                removeMessages(100);
                 myJSON = "";
+                progressBar2.setVisibility(View.INVISIBLE);
+                recyclerView.setVisibility(View.VISIBLE);
             } else {
                 handler.sendEmptyMessageDelayed(100, 200);
             }
@@ -297,10 +260,11 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
+            removeMessages(200);
             if (!topNotice.equals("")) {
                 setNotice(topNotice);
-                removeMessages(200);
                 topNotice = "";
+                handler.sendEmptyMessage(100);
             } else {
                 noticeHandler.sendEmptyMessageDelayed(200, 200);
             }
@@ -314,8 +278,8 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             removeMessages(3000);
-            pageOrder = 0;
             getTopNotice.requestPost();
+            pageOrder = 0;
             getPost.requestPost(boardUrl, All, listName);
         }
     };
@@ -327,7 +291,7 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
             super.handleMessage(msg);
             removeMessages(4000);
             if (myJSON.equals("")) {
-                addPageHandler.sendEmptyMessageDelayed(4000, 100);
+                addPageHandler.sendEmptyMessageDelayed(4000, 200);
             } else {
                 addList(myJSON);
             }
@@ -481,8 +445,6 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
                     myJSON = response.body().string();
-                    handler.sendEmptyMessage(100);
-
                 }
             });
 
@@ -511,6 +473,7 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
                     myJSON = response.body().string();
+                    addPageHandler.sendEmptyMessage(4000);
                 }
             });
 
@@ -570,7 +533,7 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
 
         if (resultCode == 2400) {
             getPost.requestPost(boardUrl, All, listName);
-            handler.sendEmptyMessageDelayed(24, 300);
+            handler.sendEmptyMessageDelayed(100, 300);
         }
     }
 
