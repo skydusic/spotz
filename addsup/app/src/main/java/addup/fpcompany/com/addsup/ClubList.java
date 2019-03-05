@@ -250,7 +250,7 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
                 progressBar2.setVisibility(View.INVISIBLE);
                 recyclerView.setVisibility(View.VISIBLE);
             } else {
-                handler.sendEmptyMessageDelayed(100, 200);
+                handler.sendEmptyMessageDelayed(100, 100);
             }
         }
     };
@@ -266,7 +266,7 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
                 topNotice = "";
                 handler.sendEmptyMessage(100);
             } else {
-                noticeHandler.sendEmptyMessageDelayed(200, 200);
+                noticeHandler.sendEmptyMessageDelayed(200, 100);
             }
         }
     };
@@ -291,7 +291,7 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
             super.handleMessage(msg);
             removeMessages(4000);
             if (myJSON.equals("")) {
-                addPageHandler.sendEmptyMessageDelayed(4000, 200);
+                addPageHandler.sendEmptyMessageDelayed(4000, 100);
             } else {
                 addList(myJSON);
             }
@@ -533,7 +533,7 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
 
         if (resultCode == 2400) {
             getPost.requestPost(boardUrl, All, listName);
-            handler.sendEmptyMessageDelayed(100, 300);
+            handler.sendEmptyMessageDelayed(100, 100);
         }
     }
 
