@@ -13,6 +13,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
@@ -35,6 +36,7 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 
 import addup.fpcompany.com.addsup.adapter.PagerAdapter;
 import addup.fpcompany.com.addsup.frag.adfrag;
@@ -53,18 +55,10 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
     ViewPager mainTopPager;
     TextView hyperLinkTv;
     int pagerPos = 0;
-    ImageView btnOne;
-    ImageView btnTwo;
-    ImageView btnThree;
-    ImageView btnFour;
-    ImageView btnFive;
-    ImageView btnSix;
-
+    ImageView btnOne, btnTwo, btnThree, btnFour, btnFive, btnSix;
     Intent intent;
     private static final String TAG = "MainActivity";
-
     static ArrayList<favoriteItem> favoriteArr = new ArrayList<>();
-
     private long backPressedTime = 0;
 
     //main top ads
@@ -100,7 +94,6 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
         btnFour = findViewById(R.id.btnFour);
         btnFive = findViewById(R.id.btnFive);
         btnSix = findViewById(R.id.btnSix);
-
 
 //        메뉴 로그인
         mAuth = FirebaseAuth.getInstance();
@@ -141,13 +134,10 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
         ADset();
         handler.sendEmptyMessageDelayed(0, 3500);
 
-        ConnectServer connectServer = new ConnectServer();
-        connectServer.execute();
-
         //스피너정보 가져오기
         spinList1.clear();
         getSpinner getSpinner = new getSpinner();
-        getSpinner.execute();
+        getSpinner.requestPost();
 
         //favorite 가져오기
         if (mUsername != null) {
@@ -163,7 +153,6 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
 //        업데이트 확인
         checkVersion();
 
-
 //        클릭 리스너
         btnOne.setOnClickListener(this);
         btnTwo.setOnClickListener(this);
@@ -178,7 +167,6 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
     private void nicknameCheck(String email) {
         GetName getName = new GetName();
         getName.requestPost(email);
-
     }
 
     private void settingName(String json) {
@@ -199,7 +187,7 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
 
         mDialog = new AlertDialog.Builder(this);
 
-        if (SplashActivity.store_version.compareTo(SplashActivity.device_version) > 0) {
+        if (SplashActivity.device_versionCode < SplashActivity.store_versionCode) {
             mDialog.setMessage("새로운 버전이 확인되었습니다.")
                     .setCancelable(true)
                     .setNegativeButton("취소", new DialogInterface.OnClickListener() {
@@ -227,7 +215,7 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
     private void ADset() {
 
         getAd getAd = new getAd();
-        getAd.execute();
+        getAd.requestPost();
     }
 
     @Override
@@ -267,120 +255,72 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
         return false;
     }
 
-    @SuppressLint("StaticFieldLeak")
-    class ConnectServer extends AsyncTask<String, Void, String> {
+    class getAd {
         OkHttpClient client = new OkHttpClient();
+        public void requestPost() {
+            String url = "http://spotz.co.kr/var/www/html/getadsrc.php";
+            RequestBody requestBody = new FormBody.Builder().
+                    build();
+            Request request = new Request.Builder().url(url).post(requestBody).build();
+            client.newCall(request).enqueue(new okhttp3.Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
 
-        @Override
-        protected String doInBackground(String... strings) {
+                }
 
-            Request request = new Request.Builder().url("http://spotz.co.kr/var/www/html/getImage.php").build();
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+                    String result = response.body().string();
+                    JSONObject jsonObj = null;
+                    try {
 
-            try (Response response = client.newCall(request).execute()) {
-                return response.body().string();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+                        jsonObj = new JSONObject(result);
+                        String[] temp = jsonObj.getString("image").split(",");
 
-            return null;
-        }
+                        for (String aTemp : temp) {
+                            adList.add(new adfrag(aTemp));
+                        }
 
-        @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-            serverUrl = s;
+                        String[] temp2 = jsonObj.getString("url").split(",");
+                        adUrl.addAll(Arrays.asList(temp2));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    final PagerAdapter adapter = new PagerAdapter(getSupportFragmentManager(), adList);
+                    mainTopPager.setAdapter(adapter);
+                    mainTopPager.addOnPageChangeListener(MainActivity.this);
+                }
+            });
         }
     }
 
-    class getAd extends AsyncTask<String, Void, String> {
+    class getSpinner {
         OkHttpClient client = new OkHttpClient();
+        public void requestPost() {
+            String url = "http://spotz.co.kr/var/www/html/getspinner.php";
+            RequestBody requestBody = new FormBody.Builder().
+                    build();
+            Request request = new Request.Builder().url(url).post(requestBody).build();
+            client.newCall(request).enqueue(new okhttp3.Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
 
-        @Override
-        protected String doInBackground(String... strings) {
-
-            Request request = new Request.Builder().url("http://spotz.co.kr/var/www/html/getadsrc.php").build();
-
-            try (Response response = client.newCall(request).execute()) {
-                return response.body().string();
-            } catch (IOException e) {
-//                Log.d("heu", "서버접속 에러(메인) : " + e);
-                e.printStackTrace();
-            }
-
-            return null;
-        }
-
-        @SuppressLint("ClickableViewAccessibility")
-        @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-            /** 슬라이드에 적용 */
-            JSONObject jsonObj = null;
-            try {
-
-                jsonObj = new JSONObject(s);
-
-                String[] temp = jsonObj.getString("image").split(",");
-
-                for (int i = 0; i < temp.length; i++) {
-                    adList.add(new adfrag(temp[i]));
                 }
 
-                String[] temp2 = jsonObj.getString("url").split(",");
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+                    String result = response.body().string();
+                    try {
+                        JSONObject jsonObj = new JSONObject(result);
+                        String[] temp = jsonObj.getString("spindata").split(",");
+                        Collections.addAll(spinList1, temp);
 
-                adUrl.addAll(Arrays.asList(temp2));
-
-                /*
-                for (int i = 0; i < temp2.length; i++) {
-                    adUrl.add(temp2[i]);
-                }
-                */
-
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-
-            final PagerAdapter adapter = new PagerAdapter(getSupportFragmentManager(), adList);
-            mainTopPager.setAdapter(adapter);
-            mainTopPager.addOnPageChangeListener(MainActivity.this);
-
-        }
-    }
-
-    class getSpinner extends AsyncTask<String, Void, String> {
-        OkHttpClient client = new OkHttpClient();
-
-        @Override
-        protected String doInBackground(String... strings) {
-
-            Request request = new Request.Builder().url("http://spotz.co.kr/var/www/html/getspinner.php").build();
-
-            try (Response response = client.newCall(request).execute()) {
-                return response.body().string();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-
-            String json = s;
-            try {
-                JSONObject jsonObj = new JSONObject(json);
-                String[] temp = jsonObj.getString("spindata").split(",");
-                for (int i = 0; i < temp.length; i++) {
-                    spinList1.add(temp[i]);
-                }
-
-            } catch (JSONException e) {
-                e.printStackTrace();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
 //                Log.d("heu", "adapter Exception : " + e);
-            }
-
+                    }
+                }
+            });
         }
     }
 
@@ -462,7 +402,6 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
                             }
                         }
                     }
-
                 }
             });
         }
@@ -569,7 +508,6 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
                     startActivityForResult(intent, 1000);
                 }
                 break;
-
         }
     }
 

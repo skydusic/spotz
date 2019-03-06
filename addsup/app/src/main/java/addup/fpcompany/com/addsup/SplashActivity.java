@@ -24,6 +24,7 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 import static addup.fpcompany.com.addsup.SplashActivity.store_version;
+import static addup.fpcompany.com.addsup.SplashActivity.store_versionCode;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -33,8 +34,9 @@ public class SplashActivity extends AppCompatActivity {
 
     GoogleSignInAccount account;
     static String store_version = "";
+    static int store_versionCode;
     static String device_version = "";
-    int device_versionCode;
+    static int device_versionCode;
     static int makeMsg = 0;
     static String pac;
 
@@ -118,6 +120,7 @@ class GetVersion {
     String result;
     String url = "http://spotz.co.kr/var/www/html/version_check.php";
     String ver = "version";
+    String verCode = "code";
 
     public void requestPost() {
 
@@ -136,6 +139,7 @@ class GetVersion {
                 result = response.body().string();
                 try {
                     store_version = new JSONObject(result).getString(ver);
+                    store_versionCode = Integer.parseInt(new JSONObject(result).getString(verCode));
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
