@@ -71,7 +71,7 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
     View bottombar;
 
     String listname, idx, title, contents, username, email, created, image, spindata, imagepath, commentJson = "";
-
+    String idxSt =  ". ";
     Boolean favoriteFLAG = false;
 
     int pagerPos, commentCounter, commentPosition = 0;
@@ -590,7 +590,7 @@ public class DetailList extends AppCompatActivity implements View.OnClickListene
                 refresh(myJSON);
                 writerTv.setText(postItem.getUsername());
                 timeTv.setText(postItem.getCreated());
-                titleTv.setText(postItem.getTitle());
+                titleTv.setText(postItem.getIdx()+idxSt+postItem.getTitle());
                 contentsTv.setText(contents);
                 viewPager.removeAllViews();
                 if(!image.equals("")){

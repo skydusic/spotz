@@ -9,8 +9,8 @@ android {
         applicationId 'addup.fpcompany.com.addsup'
         minSdkVersion 22
         targetSdkVersion 28
-        versionCode 21
-        versionName "1.2.0"
+        versionCode 22
+        versionName "1.2.1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {

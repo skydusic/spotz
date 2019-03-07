@@ -300,6 +300,7 @@ public class ClubList extends AppCompatActivity implements View.OnClickListener,
 
     protected void setNotice(String notice) {
         listItems.clear();
+        noticeCounter = 0;
         try {
             JSONObject jsonObj = new JSONObject(notice);
             topic = jsonObj.getJSONArray(TAG_RESULTS);

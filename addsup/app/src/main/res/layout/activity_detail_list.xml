@@ -120,7 +120,6 @@
                 android:layout_marginTop="50dp"
                 android:minHeight="150dp"
                 android:padding="35dp"
-                android:text="asdasd"
                 android:textSize="16sp" />
 
             <com.google.android.gms.ads.AdView
