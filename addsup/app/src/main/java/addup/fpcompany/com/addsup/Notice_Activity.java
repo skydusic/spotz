@@ -205,10 +205,10 @@ public class Notice_Activity extends AppCompatActivity implements View.OnClickLi
                 }
                 break;
 
-            case (R.id.bottomNotice):
+            /*case (R.id.bottomNotice):
                 intent = new Intent(Notice_Activity.this, Notice_Activity.class);
                 startActivity(intent);
-                break;
+                break;*/
 
             case (R.id.bottomInfo):
                 intent = new Intent(Notice_Activity.this, infoActivity.class);

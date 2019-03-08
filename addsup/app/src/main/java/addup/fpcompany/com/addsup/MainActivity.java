@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
     static FirebaseUser mUser;
     static public String mUsername;
     static public String mUsermail;
-    static String mPhotoUrl;
+    static String mPhotoUrl, adJson;
     int makeMsg = 0;
 
     private static final String TAG_EMAIL1 = "skydusic@gmail.com";
@@ -149,6 +149,7 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
 
         // 광고 이미지 주소 받아오기, 프래그먼트 설정
         ADset();
+        adHandler.sendEmptyMessage(100);
         handler.sendEmptyMessageDelayed(0, 3500);
 
 //        업데이트 확인
@@ -239,7 +240,6 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
         final PagerAdapter adapter = new PagerAdapter(getSupportFragmentManager(), adList);
         mainTopPager.setAdapter(adapter);
         mainTopPager.addOnPageChangeListener(MainActivity.this);
-
     }
 
     @Override
@@ -259,12 +259,25 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
             super.handleMessage(msg);
             handler.removeMessages(0);
             pagerPos++;
-
             if (pagerPos >= adList.size()) {
                 pagerPos = 0;
                 mainTopPager.setCurrentItem(pagerPos, false);
             } else {
                 mainTopPager.setCurrentItem(pagerPos);
+            }
+        }
+    };
+
+    @SuppressLint("HandlerLeak")
+    Handler adHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            adHandler.removeMessages(100);
+            if(!adJson.equals("")){
+                setADadapter(adJson);
+            } else {
+                adHandler.sendEmptyMessageDelayed(100, 100);
             }
         }
     };
@@ -295,8 +308,7 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
 
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
-                    String result = response.body().string();
-                    setADadapter(result);
+                    adJson = response.body().string();
                 }
             });
         }
@@ -587,6 +599,7 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
         makeMsg = 0;
         handler.removeMessages(0);
         handler.removeMessages(1);
+        adHandler.removeMessages(100);
         super.onDestroy();
     }
 

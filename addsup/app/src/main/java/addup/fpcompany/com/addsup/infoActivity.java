@@ -132,10 +132,10 @@ public class infoActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(intent);
                 break;
 
-            case (R.id.bottomInfo):
+            /*case (R.id.bottomInfo):
                 intent = new Intent(infoActivity.this, infoActivity.class);
                 startActivity(intent);
-                break;
+                break;*/
 
             case (R.id.bottomMember):
                 if (MainActivity.mUser == null) {
