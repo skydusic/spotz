@@ -20,6 +20,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
@@ -41,6 +42,7 @@ import java.util.Collections;
 import addup.fpcompany.com.addsup.adapter.PagerAdapter;
 import addup.fpcompany.com.addsup.frag.adfrag;
 import addup.fpcompany.com.addsup.java.favoriteItem;
+import io.fabric.sdk.android.Fabric;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.FormBody;
@@ -130,10 +132,6 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
 
         intent = new Intent(this, addup.fpcompany.com.addsup.ClubList.class);
 
-        // 광고 이미지 주소 받아오기, 프래그먼트 설정
-        ADset();
-        handler.sendEmptyMessageDelayed(0, 3500);
-
         //스피너정보 가져오기
         spinList1.clear();
         getSpinner getSpinner = new getSpinner();
@@ -149,6 +147,9 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
             getB.requestPost(mUsermail);
         }
 
+        // 광고 이미지 주소 받아오기, 프래그먼트 설정
+        ADset();
+        handler.sendEmptyMessageDelayed(0, 3500);
 
 //        업데이트 확인
         checkVersion();
@@ -173,7 +174,7 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
         try {
             JSONObject jsonObj = new JSONObject(json);
             String num = jsonObj.getString("num_results");
-            if(num.equals("1")){
+            if (num.equals("1")) {
                 mUsername = jsonObj.getString("username");
             } else {
                 mUsername = mUser.getDisplayName();
@@ -192,7 +193,8 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
                     .setCancelable(true)
                     .setNegativeButton("취소", new DialogInterface.OnClickListener() {
                         @Override
-                        public void onClick(DialogInterface dialog, int which) {}
+                        public void onClick(DialogInterface dialog, int which) {
+                        }
                     })
                     .setPositiveButton("업데이트 바로가기",
                             new DialogInterface.OnClickListener() {
@@ -218,11 +220,33 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
         getAd.requestPost();
     }
 
+    private void setADadapter(String result) {
+        JSONObject jsonObj = null;
+        try {
+
+            jsonObj = new JSONObject(result);
+            String[] temp = jsonObj.getString("image").split(",");
+
+            for (String aTemp : temp) {
+                adList.add(new adfrag(aTemp));
+            }
+
+            String[] temp2 = jsonObj.getString("url").split(",");
+            adUrl.addAll(Arrays.asList(temp2));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        final PagerAdapter adapter = new PagerAdapter(getSupportFragmentManager(), adList);
+        mainTopPager.setAdapter(adapter);
+        mainTopPager.addOnPageChangeListener(MainActivity.this);
+
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(resultCode == 1414) {
+        if (resultCode == 1414) {
             //인포 액티비티에서 넘어옴
             Toast.makeText(getApplicationContext(), "업로드 완료했습니다", Toast.LENGTH_LONG).show();
         }
@@ -257,6 +281,7 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
 
     class getAd {
         OkHttpClient client = new OkHttpClient();
+
         public void requestPost() {
             String url = "http://spotz.co.kr/var/www/html/getadsrc.php";
             RequestBody requestBody = new FormBody.Builder().
@@ -271,24 +296,7 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
                     String result = response.body().string();
-                    JSONObject jsonObj = null;
-                    try {
-
-                        jsonObj = new JSONObject(result);
-                        String[] temp = jsonObj.getString("image").split(",");
-
-                        for (String aTemp : temp) {
-                            adList.add(new adfrag(aTemp));
-                        }
-
-                        String[] temp2 = jsonObj.getString("url").split(",");
-                        adUrl.addAll(Arrays.asList(temp2));
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                    final PagerAdapter adapter = new PagerAdapter(getSupportFragmentManager(), adList);
-                    mainTopPager.setAdapter(adapter);
-                    mainTopPager.addOnPageChangeListener(MainActivity.this);
+                    setADadapter(result);
                 }
             });
         }
@@ -296,6 +304,7 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
 
     class getSpinner {
         OkHttpClient client = new OkHttpClient();
+
         public void requestPost() {
             String url = "http://spotz.co.kr/var/www/html/getspinner.php";
             RequestBody requestBody = new FormBody.Builder().
@@ -395,7 +404,7 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                    if(MainActivity.mUser != null) {
+                    if (MainActivity.mUser != null) {
                         for (int i = 0; i < bList.size(); i++) {
                             if (mUsermail.equals(bList.get(i))) {
                                 FirebaseAuth.getInstance().signOut();
@@ -495,7 +504,7 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
 
             case (R.id.bottomInfo):
                 intent = new Intent(MainActivity.this, infoActivity.class);
-                startActivityForResult(intent,10);
+                startActivityForResult(intent, 10);
                 break;
 
             case (R.id.bottomMember):
