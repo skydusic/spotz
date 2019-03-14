@@ -8,7 +8,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
-    
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/icons"
@@ -16,6 +16,7 @@
         android:roundIcon="@drawable/icons"
         android:screenOrientation="portrait"
         android:supportsRtl="true"
+        android:largeHeap="true"
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
         <meta-data
@@ -23,7 +24,7 @@
             android:value="ca-app-pub-2853131389378363~3503669931" />
 
         <provider
-            android:name="android.support.v4.content.FileProvider"
+            android:name="androidx.core.content.FileProvider"
             android:authorities="addup.fpcompany.com.addsup"
             android:exported="false"
             android:grantUriPermissions="true"
@@ -53,12 +54,16 @@
             android:name=".DetailList"
             android:windowSoftInputMode="adjustResize" />
 
-        <service android:name=".fcm.FirebaseInstanceIDService">
+        <service
+            android:name=".fcm.FirebaseInstanceIDService"
+            tools:ignore="ExportedService">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
-        <service android:name=".fcm.FirebaseMessagingService">
+        <service
+            android:name=".fcm.FirebaseMessagingService"
+            tools:ignore="ExportedService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>

@@ -1,12 +1,12 @@
 package addup.fpcompany.com.addsup;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 
-import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.firebase.auth.FirebaseAuth;
@@ -16,7 +16,6 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 
-import io.fabric.sdk.android.Fabric;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.FormBody;
@@ -51,6 +50,7 @@ public class SplashActivity extends AppCompatActivity {
 //        setTheme(R.style.SplashTheme);
         super.onCreate(savedInstanceState);
 //        setContentView(R.layout.splash_act);
+
 
         intent = new Intent(this, MainActivity.class);
         pac = getPackageName();
@@ -149,3 +149,4 @@ class GetVersion {
         });
     }
 }
+

@@ -2,7 +2,7 @@ package addup.fpcompany.com.addsup.frag;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,13 +11,14 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 
 import addup.fpcompany.com.addsup.R;
+import androidx.fragment.app.Fragment;
 
 /**
  * Created by song02 on 2018-03-12.
  */
 
 @SuppressLint("ValidFragment")
-public class DetailFrag extends android.support.v4.app.Fragment {
+public class DetailFrag extends Fragment {
 
     String imgsrc;
     ImageView imgView;

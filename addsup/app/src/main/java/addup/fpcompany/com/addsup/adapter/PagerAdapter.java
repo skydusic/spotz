@@ -1,9 +1,9 @@
 package addup.fpcompany.com.addsup.adapter;
 
 import android.graphics.Typeface;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentStatePagerAdapter;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentStatePagerAdapter;
 import android.view.View;
 
 import java.util.ArrayList;
@@ -23,7 +23,7 @@ public class PagerAdapter extends FragmentStatePagerAdapter implements View.OnCl
     }
 
     @Override
-    public android.support.v4.app.Fragment getItem(int position) {
+    public Fragment getItem(int position) {
 
         return dataArr.get(position);
 

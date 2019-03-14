@@ -15,14 +15,6 @@
       },
       "oauth_client": [
         {
-          "client_id": "688533934226-030f447hm58fd1btgf352c0qtqnmdifs.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "addup.fpcompany.com.addsup",
-            "certificate_hash": "b16fc89906b433560fac7153c333482343c11b05"
-          }
-        },
-        {
           "client_id": "688533934226-9cnfo78jifpctpi48mfv0dru0s1ttlmj.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
@@ -31,11 +23,19 @@
           }
         },
         {
-          "client_id": "688533934226-l37i519d7oas3fb8fa5l9qlnb5d9rgjv.apps.googleusercontent.com",
+          "client_id": "688533934226-0hncvg525ctublh49s8nlsem46ma0d8o.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "addup.fpcompany.com.addsup",
-            "certificate_hash": "eef812f483537a13296ddeedfa8ec66d28fb592e"
+            "certificate_hash": "352c2338980feb8f37c68f7fe68bfbcdcba6dbfc"
+          }
+        },
+        {
+          "client_id": "688533934226-030f447hm58fd1btgf352c0qtqnmdifs.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "addup.fpcompany.com.addsup",
+            "certificate_hash": "b16fc89906b433560fac7153c333482343c11b05"
           }
         },
         {
@@ -64,7 +64,8 @@
         "ads_service": {
           "status": 2
         }
-      }
+      },
+      "admob_app_id": "ca-app-pub-8378848228124757~9483337034"
     }
   ],
   "configuration_version": "1"

@@ -5,22 +5,20 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.viewpager.widget.ViewPager;
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
@@ -42,7 +40,6 @@ import java.util.Collections;
 import addup.fpcompany.com.addsup.adapter.PagerAdapter;
 import addup.fpcompany.com.addsup.frag.adfrag;
 import addup.fpcompany.com.addsup.java.favoriteItem;
-import io.fabric.sdk.android.Fabric;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.FormBody;
@@ -274,8 +271,12 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             adHandler.removeMessages(100);
-            if(!adJson.equals("")){
-                setADadapter(adJson);
+            if(adJson != null) {
+                if (!adJson.equals("")) {
+                    setADadapter(adJson);
+                } else {
+                    adHandler.sendEmptyMessageDelayed(100, 100);
+                }
             } else {
                 adHandler.sendEmptyMessageDelayed(100, 100);
             }
